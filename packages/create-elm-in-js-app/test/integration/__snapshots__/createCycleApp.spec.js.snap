@@ -1,0 +1,22 @@
+exports[`create-elm-in-js-app when invoked with the the correct arguments it generate a correct package.json file 1`] = `
+"{
+  \"name\": \"MYELMINJSAPP\",
+  \"version\": \"0.1.0\",
+  \"private\": true,
+  \"devDependencies\": {
+    \"reggie\": \"1.0.3\"
+  },
+  \"dependencies\": {},
+  \"scripts\": {
+    \"start\": \"reggie start\",
+    \"test\": \"reggie test\",
+    \"build\": \"reggie build\",
+    \"eject\": \"reggie eject\"
+  },
+  \"babel\": {
+    \"presets\": [
+      \"es2015\"
+    ]
+  }
+}"
+`;

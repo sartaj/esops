@@ -1,0 +1,42 @@
+{
+  "name": "reggie-cli",
+  "version": "0.1.0",
+  "description": "Elm principles in JS apps with zero configuration.",
+  "private": true,
+  "scripts": {
+    "update-authors": "./bin/update-authors.sh",
+    "precommit": "standard && npm run test",
+    "postinstall": "lerna bootstrap",
+    "test": "lerna run test",
+    "publish": "lerna publish",
+    "updated": "lerna updated"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sartaj/elm-in-js.git"
+  },
+  "author": "Sartaj <sartaj@sartaj.me>",
+  "contributors": [
+  ],
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sartaj/elm-in-js/issues"
+  },
+  "homepage": "https://github.com/sartaj/elm-in-js#readme",
+  "standard": {
+    "globals": [
+      "describe",
+      "test",
+      "it",
+      "expect",
+      "jest",
+      "beforeEach",
+      "afterEach"
+    ]
+  },
+  "devDependencies": {
+    "husky": "^0.13.1",
+    "lerna": "2.0.0-beta.36",
+    "standard": "^8.3.0"
+  }
+}
