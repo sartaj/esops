@@ -1,7 +1,7 @@
 {
   "name": "reggie-cli",
   "version": "0.1.0",
-  "description": "Elm principles in JS apps with zero configuration.",
+  "description": "Elm principles in JS/JSX modules with zero configuration.",
   "private": true,
   "scripts": {
     "update-authors": "./bin/update-authors.sh",
