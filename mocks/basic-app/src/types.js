@@ -1,89 +1,89 @@
-/* @flow */
+// /* @flow */
 
-import type { Observable } from 'rxjs'
-import type { Store } from 'redux'
+// import type { Observable } from 'rxjs'
+// import type { Store } from 'redux'
 
-/**
- * Device
- */
+// /**
+//  * Device
+//  */
 
-export type DeviceId = string
+// export type DeviceId = string
 
-export type DeviceCore = {
-  +id: DeviceId,
-}
+// export type DeviceCore = {
+//   +id: DeviceId,
+// }
 
-export type GlovesV1DeviceSpecific = {
-  +connectionType: 'bluetooth-low-energy',
-  +serviceId: string,
-  +characteristicId: string
-}
+// export type GlovesV1DeviceSpecific = {
+//   +connectionType: 'bluetooth-low-energy',
+//   +serviceId: string,
+//   +characteristicId: string
+// }
 
-export type GlovesV1 = DeviceCore & GlovesV1DeviceSpecific
+// export type GlovesV1 = DeviceCore & GlovesV1DeviceSpecific
 
-export type Device = GlovesV1
+// export type Device = GlovesV1
 
-/**
- * Instrument
- */
+// /**
+//  * Instrument
+//  */
 
-export type DeviceMap = any
+// export type DeviceMap = any
 
-export type Instrument = {
-  +type: string,
-  +config: any,
-  +devices: Array<DeviceId>,
-  +deviceMap: DeviceMap
-}
+// export type Instrument = {
+//   +type: string,
+//   +config: any,
+//   +devices: Array<DeviceId>,
+//   +deviceMap: DeviceMap
+// }
 
-/**
- * Tracks
- */
+// /**
+//  * Tracks
+//  */
 
-export type Filter = any
+// export type Filter = any
 
-export type Bus = any
+// export type Bus = any
 
-export type Track = {
-  +instrument: Instrument,
-  +filter: Array<Filter>,
-  +bus: Array<Bus>
-}
+// export type Track = {
+//   +instrument: Instrument,
+//   +filter: Array<Filter>,
+//   +bus: Array<Bus>
+// }
 
-/**
- * Session
- */
+// /**
+//  * Session
+//  */
 
-export type SessionTracks = Array<Track>
+// export type SessionTracks = Array<Track>
 
-export type Session = {
-  +tracks: SessionTracks
-}
+// export type Session = {
+//   +tracks: SessionTracks
+// }
 
-export type Sessions = Array<Session>
+// export type Sessions = Array<Session>
 
-/**
- * Workspace
- */
+// /**
+//  * Workspace
+//  */
 
-export type Workspace = {
-  +sessions: Sessions
-}
+// export type Workspace = {
+//   +sessions: Sessions
+// }
 
-/**
- * App State
- */
+// /**
+//  * App State
+//  */
 
-export type AppState = {
-  +workspace?: Workspace,
-  +devices?: Array<Device>
-}
+// export type AppState = {
+//   +workspace?: Workspace,
+//   +devices?: Array<Device>
+// }
 
-/**
- * App Driver
- */
+// /**
+//  * App Driver
+//  */
 
-export type AppDriver = {
-  +store: Store,
-  +state$: Observable<any>
-}
+// export type AppDriver = {
+//   +store: Store,
+//   +state$: Observable<any>
+// }

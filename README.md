@@ -40,6 +40,8 @@ $ reggie release
 
 * **No Lock-In:** Specifically made for beginners and to provide fast bootstrap for new projects, reggie doesn't intend to be the tool you have to use. Soon you may outgrow, reggie, which in case you can do reggie eject.
 
+* **Code Editor Setup**: Currently for VSCode only. Setup VSCode with recommended settings.
+
 ## Why Use This?
 
 JavaScript is a multi-paradigm language, which is a great thing for such a heavily used language. However, when designing systems, it's important to follow certain design patterns.

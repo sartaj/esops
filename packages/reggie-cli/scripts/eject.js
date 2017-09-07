@@ -78,4 +78,5 @@ inquirer.prompt([ejectConfirmation]).then(answers => {
   fs.copySync(path.join(__dirname, '../', 'configs', 'webpackDevServer.config.js'), path.join(appPath, 'configs', 'webpackDevServer.config.js'))
 
   // TODO sucess message
-})
+});
+

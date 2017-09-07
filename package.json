@@ -5,7 +5,7 @@
   "private": true,
   "scripts": {
     "update-authors": "./bin/update-authors.sh",
-    "precommit": "standard && npm run test",
+    "precommit": "reggie-lint && npm run test",
     "postinstall": "lerna bootstrap",
     "test": "lerna run test",
     "publish": "lerna publish",
@@ -16,14 +16,13 @@
     "url": "git+https://github.com/sartaj/elm-in-js.git"
   },
   "author": "Sartaj <sartaj@sartaj.me>",
-  "contributors": [
-  ],
+  "contributors": [],
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/sartaj/elm-in-js/issues"
   },
   "homepage": "https://github.com/sartaj/elm-in-js#readme",
-  "standard": {
+  "reggie-lint": {
     "globals": [
       "describe",
       "test",
@@ -37,6 +36,9 @@
   "devDependencies": {
     "husky": "^0.13.1",
     "lerna": "2.0.0-beta.36",
-    "standard": "^8.3.0"
+    "reggie-lint": "file:packages/reggie-lint"
+  },
+  "dependencies": {
+    "standard": "^10.0.3"
   }
 }
