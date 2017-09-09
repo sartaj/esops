@@ -6,13 +6,8 @@
   "bugs": {
     "url": "https://github.com/sartaj/reggie-cli/issues"
   },
-  "bin": {
-    "reggie": "bin.js"
-  },
   "peerDependencies": {
-    "eslint": "^3.19.0"   
-  },
-  "dependencies": {
+    "eslint": "^3.19.0",
     "babel-eslint": "^7.2.3",
     "eslint-config-standard": "^10.2.1",
     "eslint-config-standard-jsx": "^4.0.1",
@@ -26,7 +21,18 @@
     "eslint-plugin-standard": "^3.0.1"
   },
   "devDependencies": {
-    "eslint": "^3.19.0"    
+    "eslint": "^3.19.0",
+    "babel-eslint": "^7.2.3",
+    "eslint-config-standard": "^10.2.1",
+    "eslint-config-standard-jsx": "^4.0.1",
+    "eslint-plugin-flowtype": "^2.35.1",
+    "eslint-plugin-fp": "^2.3.0",
+    "eslint-plugin-immutable": "^1.0.0",
+    "eslint-plugin-import": "^2.2.0",
+    "eslint-plugin-node": "^4.2.3",
+    "eslint-plugin-promise": "^3.5.0",
+    "eslint-plugin-react": "^6.10.3",
+    "eslint-plugin-standard": "^3.0.1"
   },
   "homepage": "https://github.com/sartaj/reggie-cli",
   "keywords": [
@@ -59,7 +65,7 @@
     "style linter",
     "verify"
   ],
-  "license": "ISC",
+  "license": "MIT",
   "main": "index.js",
   "repository": {
     "type": "git",

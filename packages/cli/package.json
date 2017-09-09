@@ -1,39 +1,77 @@
 {
   "name": "@reggie/cli",
-  "version": "1.1.0",
-  "description": "elm-in-js core flavor",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Maybe later\""
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/sartaj/elm-in-js.git"
-  },
-  "author": "Sartaj <sartaj@sartaj.me>",
-  "contributors": [],
-  "license": "MIT",
+  "description": "Linting standards designed to encourage elm patterns in js/react",
+  "version": "1.0.0",
+  "author": "Sartaj <sartaj@sartaj.com>",
   "bugs": {
-    "url": "https://github.com/sartaj/elm-in-js/issues"
+    "url": "https://github.com/sartaj/reggie-cli/issues"
   },
-  "homepage": "https://github.com/sartaj/elm-in-js#readme",
   "bin": {
-    "reggie": "./index.js"
+    "reggie": "bin.js"
   },
   "dependencies": {
-    "babel-core": "^6.26.0",
-    "babel-loader": "^6.4.1",
-    "babel-plugin-transform-object-rest-spread": "^6.26.0",
-    "babel-plugin-transform-react-jsx": "^6.24.1",
-    "babel-preset-env": "^1.6.0",
-    "chalk": "^1.1.3",
-    "cross-spawn": "^5.1.0",
-    "fs-extra": "^2.1.2",
-    "html-webpack-plugin": "^2.30.1",
-    "inquirer": "^3.2.3",
-    "jest": "^19.0.2",
-    "react-dev-utils": "^0.5.2",
-    "webpack": "^2.7.0",
-    "webpack-dev-server": "^2.7.1"
+    "babel-eslint": "^7.2.3",
+    "eslint": "^3.19.0",
+    "eslint-config-standard": "^10.2.1",
+    "eslint-config-standard-jsx": "^4.0.2",
+    "eslint-plugin-flowtype": "^2.35.1",
+    "eslint-plugin-fp": "^2.3.0",
+    "eslint-plugin-immutable": "^1.0.0",
+    "eslint-plugin-import": "^2.7.0",
+    "eslint-plugin-node": "^4.2.3",
+    "eslint-plugin-promise": "^3.5.0",
+    "eslint-plugin-react": "^6.10.3",
+    "eslint-plugin-standard": "^3.0.1",
+    "standard-engine": "^7.1.0",
+    "@reggie/eslint-config": "latest"
+  },
+  "devDependencies": {
+    "fixpack": "^2.3.1",
+    "merge": "^1.2.0",
+    "mkdirp": "^0.5.1",
+    "rimraf": "^2.6.1",
+    "run-series": "^1.1.4",
+    "standard": "^10.0.3",
+    "tape": "^4.8.0",
+    "xtend": "^4.0.1",
+    "@reggie/eslint-config": "file:../eslint-config"
+  },
+  "homepage": "https://github.com/sartaj/reggie-cli",
+  "keywords": [
+    "JavaScript Standard Style",
+    "bikeshed",
+    "check",
+    "checker",
+    "code",
+    "code checker",
+    "code linter",
+    "code standards",
+    "code style",
+    "enforce",
+    "eslint",
+    "hint",
+    "jscs",
+    "jshint",
+    "lint",
+    "policy",
+    "quality",
+    "semicolon",
+    "semicolon after that semicolon",
+    "simple",
+    "standard",
+    "standard style",
+    "style",
+    "style checker",
+    "style linter",
+    "verify"
+  ],
+  "license": "ISC",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sartaj/reggie-cli.git"
+  },
+  "scripts": {
+    "test": "node bin.js"
   }
 }

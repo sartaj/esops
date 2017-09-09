@@ -1,0 +1,3 @@
+{
+  "extends": "@reggie/eslint-config"
+}
