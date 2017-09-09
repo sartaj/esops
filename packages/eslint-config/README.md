@@ -1,4 +1,4 @@
-# @reggie/eslint-config
+# eslint-config-reggie
 
 Linting to help recreate elm in js.
 
