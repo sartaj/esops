@@ -15,11 +15,7 @@ A best faith effort to create a 0 config CLI tool that JS environment instantly 
 
 ```sh
 $ npm install -g reggie-cli
-$ reggie dev . -o /dist
-$ reggie build . -o ./dist
 $ reggie lint
-$ reggie fix
-$ reggie release
 ```
 
 ## Principles

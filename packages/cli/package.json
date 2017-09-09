@@ -7,7 +7,7 @@
     "url": "https://github.com/sartaj/reggie-cli/issues"
   },
   "bin": {
-    "reggie": "bin.js"
+    "reggie": "index.js"
   },
   "dependencies": {
     "babel-eslint": "^7.2.3",
