@@ -22,7 +22,7 @@
     "url": "https://github.com/sartaj/elm-in-js/issues"
   },
   "homepage": "https://github.com/sartaj/elm-in-js#readme",
-  "reggie-lint": {
+  "eslint": {
     "globals": [
       "describe",
       "test",
