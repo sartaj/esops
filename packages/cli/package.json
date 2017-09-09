@@ -1,5 +1,5 @@
 {
-  "name": "reggie-cli",
+  "name": "@reggie/cli",
   "version": "1.1.0",
   "description": "elm-in-js core flavor",
   "main": "index.js",

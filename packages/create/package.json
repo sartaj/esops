@@ -1,6 +1,6 @@
 {
-  "name": "create-elm-in-js-app",
-  "version": "3.0.8",
+  "name": "@reggie/create",
+  "version": "1.0.0",
   "description": "Create Elm inspired environment for JS with no build configuration.",
   "scripts": {
     "test": "jest"
@@ -24,10 +24,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/sartaj/elm-in-js.git"
+    "url": "git+https://github.com/sartaj/reggie-cli.git"
   },
   "bugs": {
-    "url": "https://github.com/sartaj/elm-in-js/issues"
+    "url": "https://github.com/sartaj/reggie-cli/issues"
   },
-  "homepage": "https://github.com/sartaj/elm-in-js#readme"
+  "homepage": "https://github.com/sartaj/reggie-cli#readme"
 }
