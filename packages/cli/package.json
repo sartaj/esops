@@ -1,5 +1,5 @@
 {
-  "name": "@reggie/cli",
+  "name": "regglie-cli",
   "description": "Linting standards designed to encourage elm patterns in js/react",
   "version": "1.0.0",
   "author": "Sartaj <sartaj@sartaj.com>",
@@ -12,6 +12,7 @@
   "dependencies": {
     "babel-eslint": "^7.2.3",
     "eslint": "^3.19.0",
+    "eslint-config-reggie": "^v1.0.0",
     "eslint-config-standard": "^10.2.1",
     "eslint-config-standard-jsx": "^4.0.2",
     "eslint-plugin-flowtype": "^2.35.1",
@@ -22,8 +23,7 @@
     "eslint-plugin-promise": "^3.5.0",
     "eslint-plugin-react": "^6.10.3",
     "eslint-plugin-standard": "^3.0.1",
-    "standard-engine": "^7.1.0",
-    "@reggie/eslint-config": "latest"
+    "standard-engine": "^7.1.0"
   },
   "devDependencies": {
     "fixpack": "^2.3.1",
