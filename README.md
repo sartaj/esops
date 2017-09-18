@@ -6,11 +6,6 @@ Includes support for react and react-native.
 
 A best faith effort to create a 0 config CLI tool that JS environment instantly gives you an environment with similar principles to elm, but with javascript + react/react-native.
 
-* [Principles](#principles) – The philosophy behind create-cycle-app
-* [Why Use This](#why-use-this) – When to use create-cycle-app
-* [Getting Started](#getting-started) – How to create a new app.
-* [Custom Flavors](#flavors) – How to develop and publish new flavors
-
 ## Quick Start
 
 ```sh
