@@ -1,7 +1,7 @@
 {
-  "name": "reggie-cli",
+  "name": "devops-designer",
   "version": "1.3.0",
-  "description": "Elm principles in JS/JSX modules with zero configuration.",
+  "description": "JavaScript devops for dummies.",
   "private": true,
   "scripts": {
     "update-authors": "./bin/update-authors.sh",
@@ -12,15 +12,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/sartaj/elm-in-js.git"
+    "url": "git+https://github.com/sartaj/devops-designer.git"
   },
   "author": "Sartaj <sartaj@sartaj.me>",
   "contributors": [],
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/sartaj/elm-in-js/issues"
+    "url": "https://github.com/sartaj/devops-designer/issues"
   },
-  "homepage": "https://github.com/sartaj/elm-in-js#readme",
+  "homepage": "https://github.com/sartaj/devops-designer#readme",
   "eslint": {
     "globals": [
       "describe",

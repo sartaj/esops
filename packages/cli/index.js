@@ -1,32 +1,58 @@
-#!/usr/bin/env node
+#!/usr/bin/env babel-node --
 
-const spawn = require('cross-spawn')
-const script = process.argv[2]
-const args = process.argv.slice(3)
+/* eslint-disable no-console */
 
-function spawnScript (script) {
-  const result = spawn.sync(
-    'node',
-    [require.resolve('./scripts/' + script)].concat(args),
-    {stdio: 'inherit'}
-  )
-  process.exit(result.status)
-}
+import opn from 'opn';
 
-switch (script) {
-  // case 'start':
-  // case 'build':
-  case 'lint':
-  case 'eject':
-    spawnScript(script)
-    break
-  default:
-    console.log('Unknown script "' + script + '".')
-    console.log('Perhaps you need to upgrade reggie?')
-    break
-}
+import log from '../logger';
+import { compile, bootstrap } from '../index';
+import wizard from './wizard';
 
-// programmatic usage for linter
-var Linter = require('standard-engine').linter
-var opts = require('./lint-options.js')
-module.exports = new Linter(opts)
+// Do this as the first thing so that any code reading it knows the right env.
+process.env.BABEL_ENV = 'production';
+process.env.NODE_ENV = 'production';
+
+
+const runCommand = (command) => {
+
+  // Get current working directory
+  const cwd = process.cwd();
+
+  // Choose command
+  switch (command) {
+    case 'start':
+    case 'dev':
+      compile({
+        cwd,
+        devMode: true,
+      });
+      break;
+    case 'setup':
+      wizard({ cwd });
+      break;
+    case 'build':
+    case 'compile':
+      compile();
+      break;
+    case 'setup:base':
+      bootstrap.base({ cwd });
+      break;
+    case 'setup:react':
+      bootstrap.react({ cwd });
+      break;
+    case 'help':
+      log.info('opening help documentation in your browser...');
+      opn('http://cdd-docs.apps.system.pcf.ntrs.com/ui/overview/', { wait: false });
+      break;
+    default:
+      log.help();
+      process.exit(1);
+  }
+};
+
+const init = () => {
+  const command = process.argv[2];
+  runCommand(command);
+};
+
+init();
