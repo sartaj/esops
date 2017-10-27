@@ -1,0 +1,17 @@
+{
+    "name": "npm-example",
+    "private": true,
+    "main": "lib/index.js",    
+    "scripts": {
+        "start": "devops-designer start"
+    },
+    "devDependencies": {
+        "devops-designer": "latest"
+    },
+    "devOps": {
+        "entry": "src/index.js",
+        "platform": "node",
+        "tests": "jest",
+        "linting": "airbnb"
+    }
+}
