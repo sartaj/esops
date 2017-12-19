@@ -1,4 +1,3 @@
-/* @flow */
 
 import type { AppState } from './types'
 
