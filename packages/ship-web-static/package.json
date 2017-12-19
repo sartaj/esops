@@ -1,8 +1,8 @@
 {
     "name": "@esops/ship-web-static",
-    "version": "1.0.1",
+    "version": "1.0.3",
     "dependencies": {
         "@esops/compiler-babel": "^1.0.0",
-        "@esops/compiler-react-native-web": "^1.0.1"
+        "@esops/compiler-react-native-web": "^1.0.3"
     }
 }
