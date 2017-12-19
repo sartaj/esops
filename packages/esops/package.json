@@ -1,0 +1,35 @@
+{
+  "name": "esops",
+  "version": "1.0.0",
+  "description": "esops CLI",
+  "private": true,
+  "bin": {
+    "esops": "bin/esops"
+  },
+  "scripts": {
+    "format": "prettier --write **/*.{js,json} && standard --fix",
+    "lint": "standard",
+    "test": "ava",
+    "watch": "ava --watch",
+    "coverage": "nyc ava"
+  },
+  "files": [
+    "LICENSE",
+    "readme.md",
+    "docs",
+    "bin",
+    "src"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "@esops/babel-preset-kitchen-sink": "^1.0.0",
+    "@esops/ship-web-static": "^1.0.0",
+    "@esops/utils-logger": "^1.0.0",
+    "gluegun": "^2.0.0-alpha.14"
+  },
+  "devDependencies": {
+    "ava": "^0.22.0",
+    "@esops/eslint-config-esops-contributor": "^1.0.0",
+    "nyc": "^11.2.1"
+  }
+}

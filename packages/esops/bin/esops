@@ -1,0 +1,7 @@
+#!/usr/bin/env node
+
+
+require('@esops/babel-preset-kitchen-sink/node')
+
+// run the CLI with the current process arguments
+require('../src/cli')(process.argv)
