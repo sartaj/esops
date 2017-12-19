@@ -6,6 +6,10 @@ Designed for startups, learners, and coders who prefer to not think about DevOps
 
 ## Features
 
+### Validate, Compile, Test, Document, & Publish multiple types of javascript-based products from 1 `devDependency`
+
+By leveraging great tools already created, esops helps you choose the kind of product you want, the language you prefer, and the places you want to publish it, and it creates the appropriate configuration to help with the release flow of "validate, compile, test, document, & publish"
+
 ### 1 `devDependency`, Multiple Platforms
 
 Ship multiple types of language-agnostic JS Apps based on production guidelines.
