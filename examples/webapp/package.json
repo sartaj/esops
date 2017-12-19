@@ -1,0 +1,11 @@
+{
+    "name": "static-web-example",
+    "private": true,
+    "scripts": {
+        "dev": "esops web static dev",
+        "ship": "esops web static ship"        
+    },
+    "devDependencies": {
+        "esops": "1.0.0"
+    }
+}

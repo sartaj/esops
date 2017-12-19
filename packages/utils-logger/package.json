@@ -1,0 +1,33 @@
+{
+    "name": "@esops/utils-logger",
+    "version": "1.0.0",
+    "description": "Logging system for devops designer. Requires node environment.",
+    "main": "./index.js",
+    "bin": {
+        "devops-designer": "./bin/index.js"
+    },
+    "bugs": {
+        "url": "https://github.com/sartaj/devops-designer/issues"
+    },
+    "homepage": "https://github.com/sartaj/devops-designer#readme",
+    "scripts": {
+        "test": "echo \"Maybe Later\""
+    },
+    "dependencies": {
+        "chalk": "^2.3.0",
+        "draftlog": "^1.0.12",
+        "imaging": "^2.1.2",
+        "inquirer": "^3.3.0",
+        "intercept-stdout": "^0.1.2",
+        "log-update": "^2.3.0",
+        "loglevel": "^1.6.0",
+        "opn": "^5.1.0",
+        "picture-tube": "^1.0.0",
+        "pretty-error": "^2.1.1",
+        "shelljs": "^0.7.8",
+        "term-img": "^2.1.0"
+    },
+    "devDependencies": {
+        "@esops/eslint-config-esops-contributor": "^1.0.0"
+    }
+}

@@ -1,42 +1,26 @@
 {
-  "name": "devops-designer",
-  "version": "1.3.0",
-  "description": "JavaScript devops for dummies.",
   "private": true,
-  "scripts": {
-    "update-authors": "./bin/update-authors.sh",
-    "postinstall": "lerna bootstrap",
-    "test": "lerna run test",
-    "publish": "lerna publish",
-    "updated": "lerna updated"
-  },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/sartaj/devops-designer.git"
+    "url": "git+https://github.com/sartaj/esops.git"
   },
-  "author": "Sartaj <sartaj@sartaj.me>",
-  "contributors": [],
-  "license": "ISC",
   "bugs": {
     "url": "https://github.com/sartaj/devops-designer/issues"
   },
-  "homepage": "https://github.com/sartaj/devops-designer#readme",
-  "eslint": {
-    "globals": [
-      "describe",
-      "test",
-      "it",
-      "expect",
-      "jest",
-      "beforeEach",
-      "afterEach"
-    ]
+  "author": "Sartaj <sartaj@sartaj.me>",
+  "license": "see LICENSE in LICENSE",
+  "scripts": {
+    "publish:npm": "lerna publish",    
+    "link-cli": "cd packages/esops && yarn link",
+    "reset": "yarn reset:node-modules && yarn reset:logs && yarn reset:dist && yarn reset:yarn && yarn reset:npm",
+    "reset:node-modules": "find . -name 'node_modules' -type d -exec rm -rf '{}' +",
+    "reset:logs": "find . -name '*.log' -type f -delete",
+    "reset:dist": "find . -name 'dist' -type d -exec rm -rf '{}' +",
+    "reset:yarn": "find . -name 'yarn.lock' -type f -delete",
+    "reset:npm": "find . -name 'package-lock.json' -type f -delete"
   },
-  "devDependencies": {
-    "husky": "^0.13.1",
-    "lerna": "2.0.0-beta.36"
-  },
-  "dependencies": {
-    "standard": "^10.0.3"
-  }
+  "workspaces": [
+    "packages/*"
+  ]
 }
+
