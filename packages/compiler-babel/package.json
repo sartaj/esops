@@ -1,6 +1,6 @@
 {
     "name": "@esops/compiler-babel",
-    "version": "1.0.0",
+    "version": "1.0.4",
     "entry": "preset.js",
     "dependencies": {
         "babel-cli": "^6.26.0",

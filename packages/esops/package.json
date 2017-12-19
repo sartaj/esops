@@ -1,6 +1,6 @@
 {
   "name": "esops",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "esops CLI",
   "bin": {
     "esops": "bin/esops"
@@ -21,8 +21,8 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "@esops/compiler-babel": "^1.0.0",
-    "@esops/ship-web-static": "^1.0.3",
+    "@esops/compiler-babel": "^1.0.4",
+    "@esops/ship-web-static": "^1.0.4",
     "@esops/utils-logger": "^1.0.3",
     "gluegun": "^2.0.0-alpha.14"
   },
