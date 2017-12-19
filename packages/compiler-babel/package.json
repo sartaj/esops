@@ -1,5 +1,5 @@
 {
-    "name": "@esops/babel-preset-kitchen-sink",
+    "name": "@esops/compiler-babel",
     "version": "1.0.0",
     "entry": "preset.js",
     "dependencies": {

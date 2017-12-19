@@ -22,7 +22,7 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "@esops/babel-preset-kitchen-sink": "^1.0.0",
+    "@esops/compiler-babel": "^1.0.0",
     "@esops/ship-web-static": "^1.0.0",
     "@esops/utils-logger": "^1.0.0",
     "gluegun": "^2.0.0-alpha.14"
