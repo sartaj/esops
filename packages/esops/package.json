@@ -2,7 +2,6 @@
   "name": "esops",
   "version": "1.0.0",
   "description": "esops CLI",
-  "private": true,
   "bin": {
     "esops": "bin/esops"
   },
@@ -28,8 +27,8 @@
     "gluegun": "^2.0.0-alpha.14"
   },
   "devDependencies": {
-    "ava": "^0.22.0",
     "@esops/eslint-config-esops-contributor": "^1.0.0",
+    "ava": "^0.22.0",
     "nyc": "^11.2.1"
   }
 }
