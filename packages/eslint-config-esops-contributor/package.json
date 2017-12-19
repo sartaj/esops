@@ -1,7 +1,7 @@
 {
   "name": "@esops/eslint-config-esops-contributor",
   "description": "Linting standards designed to encourage elm patterns in js/react",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "author": "Sartaj <sartaj@sartaj.com>",
   "homepage": "https://github.com/sartaj/esops",
   "keywords": [
