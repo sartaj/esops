@@ -2,7 +2,7 @@
     "name": "@esops/ship-web-static",
     "version": "1.0.0",
     "dependencies": {
-        "@esops/babel-preset-kitchen-sink": "^1.0.0",
+        "@esops/compiler-babel": "^1.0.0",
         "@esops/compiler-react-native-web": "^1.0.0"
     }
 }

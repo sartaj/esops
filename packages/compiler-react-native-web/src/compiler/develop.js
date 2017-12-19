@@ -39,7 +39,7 @@ export const configDeployedMiddleware = (app, opts) => {
 const serverListeningTemplate = port => (`
 
 ===========================================================
-                 🌎  Your server is live! 🌎
+             🌎  Your dev environment is live! 🌎
                    http://localhost:${port}
             Please open this link in your browser 
                to begin initial webpack build.
