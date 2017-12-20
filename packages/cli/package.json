@@ -1,0 +1,34 @@
+{
+  "name": "@esops/cli",
+  "version": "1.0.4",
+  "description": "esops CLI",
+  "bin": {
+    "esops": "bin/esops"
+  },
+  "scripts": {
+    "format": "prettier --write **/*.{js,json} && standard --fix",
+    "lint": "standard",
+    "test": "ava",
+    "watch": "ava --watch",
+    "coverage": "nyc ava"
+  },
+  "files": [
+    "LICENSE",
+    "readme.md",
+    "docs",
+    "bin",
+    "src"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "@esops/compiler-babel": "^1.0.4",
+    "@esops/ship-web-static": "^1.0.4",
+    "@esops/utils-logger": "^1.0.3",
+    "gluegun": "^2.0.0-alpha.14"
+  },
+  "devDependencies": {
+    "@esops/eslint-config-esops-contributor": "^1.0.3",
+    "ava": "^0.22.0",
+    "nyc": "^11.2.1"
+  }
+}
