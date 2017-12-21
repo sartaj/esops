@@ -1,6 +1,7 @@
 
 const { build } = require('gluegun')
 const { initLogger } = require('@esops/utils-logger')
+const path = require('path');
 
 /**
  * Create the cli and kick it off
@@ -11,7 +12,7 @@ async function run (argv) {
   const cli = build()
     .brand('esops')
     .src(`${__dirname}`)
-    .plugins('./node_modules', { matching: 'esops-*', hidden: true })
+    .plugins(path.join(__dirname, '../plugins'))
     .create()
 
   // and run it

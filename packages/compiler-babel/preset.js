@@ -1,11 +1,8 @@
 module.exports = () => ({
   "presets": [
-    "env",
-    "react",
-    "flow"
+    "react-native"
   ],
   "plugins": [
-    "syntax-dynamic-import",
-    "transform-object-rest-spread"
+    "babel-plugin-transform-decorators-legacy"
   ]
 })

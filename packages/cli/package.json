@@ -27,7 +27,7 @@
     "@esops/compiler-babel": "^1.1.0",
     "@esops/ship-web-static": "^1.1.0",
     "@esops/utils-logger": "^1.0.3",
-    "gluegun": "^2.0.0-alpha.14"
+    "gluegun": "^2.0.0-alpha.17"
   },
   "devDependencies": {
     "@esops/eslint-config-esops-contributor": "^1.0.3",

@@ -1,6 +1,11 @@
 {
     "name": "@esops/ship-web-static",
     "version": "1.1.0",
+    "files": [
+        "README.md",
+        "plugin.js",
+        "commands"
+    ],
     "dependencies": {
         "@esops/compiler-babel": "^1.1.0",
         "@esops/compiler-react-native-web": "^1.1.0"
