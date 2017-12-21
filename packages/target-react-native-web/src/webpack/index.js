@@ -10,7 +10,7 @@ import * as html from './features/html'
  * Generates webpack config from preferences
 */
 export default ({
-  cwd, buildPath, buildDir, devMode, indexHtmlPath, entryPath
+  cwd, buildPath, buildDir, devMode, indexHtmlPath, entryPath, logoPath
 }) => {
   /*eslint-disable*/
   process.env.BABEL_ENV = devMode
@@ -41,7 +41,7 @@ export default ({
       ...core.plugins({ cwd, buildPath, chunk: true }),
       ...css.plugins(),
       ...html.plugins({ indexHtmlPath }),
-      ...assets.plugins(),
+      ...assets.plugins({ logoPath }),
       ...(devMode ? devtools.plugins({ cwd, buildDir }) : [])
     ]
   })

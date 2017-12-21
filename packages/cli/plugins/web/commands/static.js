@@ -1,4 +1,4 @@
-const compile = require('@esops/compiler-react-native-web');
+const compile = require('@esops/target-react-native-web');
 
 // eslint-disable-next-line
 module.exports = {

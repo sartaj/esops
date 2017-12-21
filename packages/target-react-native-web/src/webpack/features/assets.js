@@ -1,4 +1,5 @@
 import ManifestPlugin from 'webpack-manifest-plugin'
+import FaviconsWebpackPlugin from 'favicons-webpack-plugin'
 
 export const urls = {
   test: [/\.bmp$/, /\.gif$/, /\.jpe?g$/, /\.png$/],
@@ -21,8 +22,9 @@ export const files = {
   }
 }
 
-export const plugins = () => [
+export const plugins = ({ logoPath }) => [
   new ManifestPlugin({
     fileName: 'asset-manifest.json'
-  })
+  }),
+  logoPath ? new FaviconsWebpackPlugin(logoPath) : null
 ]

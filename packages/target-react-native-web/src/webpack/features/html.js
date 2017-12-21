@@ -1,12 +1,9 @@
-/* eslint-disable import/prefer-default-export */
-
 import HtmlWebpackPlugin from 'html-webpack-plugin'
-// import PreloadWebpackPlugin from 'preload-webpack-plugin'
 
 export const plugins = ({ indexHtmlPath }) => [
   new HtmlWebpackPlugin({
     inject: true,
-    // template: indexHtmlPath || null,
+    template: indexHtmlPath,
     minify: {
       removeComments: true,
       collapseWhitespace: true,
@@ -20,5 +17,4 @@ export const plugins = ({ indexHtmlPath }) => [
       minifyURLs: true
     }
   })
-  // new PreloadWebpackPlugin(),
 ]

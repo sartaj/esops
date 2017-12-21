@@ -1,0 +1,1 @@
+uses https://github.com/rafrex/spa-github-pages

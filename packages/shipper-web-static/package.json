@@ -1,13 +1,16 @@
 {
     "name": "@esops/ship-web-static",
     "version": "1.2.0",
+    "publishConfig": {
+        "access": "public"
+    },
     "files": [
         "README.md",
         "plugin.js",
         "commands"
     ],
     "dependencies": {
-        "@esops/compiler-babel": "^1.2.0",
-        "@esops/compiler-react-native-web": "^1.2.0"
+        "@esops/language-babel": "^1.2.0",
+        "@esops/target-react-native-web": "^1.2.0"
     }
 }

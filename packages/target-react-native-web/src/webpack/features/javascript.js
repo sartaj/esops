@@ -7,7 +7,7 @@ export const rules = {
     babelrc: false,
     compact: false,
     presets: [
-      require.resolve('@esops/compiler-babel/preset')
+      require.resolve('@esops/language-babel/preset')
     ]
   }
 }

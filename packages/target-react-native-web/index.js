@@ -1,4 +1,4 @@
-require('@esops/compiler-babel/node')
+require('@esops/language-babel/node')
 
 const compiler = require('./src').default
 
