@@ -1,6 +1,6 @@
 {
     "name": "@esops/language-babel",
-    "version": "1.2.0",
+    "version": "1.3.0",
     "entry": "./preset.js",
     "publishConfig": {
         "access": "public"
