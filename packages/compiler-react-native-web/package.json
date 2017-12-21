@@ -1,17 +1,17 @@
 {
   "name": "@esops/compiler-react-native-web",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "main": "./index.js",
   "scripts": {
     "test": "echo \"Maybe Later\"",
     "postinstall": "bash ./postinstall.sh"
   },
   "dependencies": {
-    "@esops/compiler-babel": "^1.1.0",
+    "@esops/compiler-babel": "^1.2.0",
     "autoprefixer": "^7.1.5",
     "awaiting": "^3.0.0",
-    "babel-loader": "^7.1",
     "babel-core": "^6.23.1",
+    "babel-loader": "^7.1",
     "clean-webpack-plugin": "latest",
     "copy-webpack-plugin": "^4.1.1",
     "css-loader": "0.28.7",

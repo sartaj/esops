@@ -1,6 +1,6 @@
 {
     "name": "@esops/compiler-babel",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "entry": "./preset.js",
     "publishConfig": {
         "access": "public"
