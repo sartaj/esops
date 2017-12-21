@@ -7,13 +7,7 @@ export const rules = {
     babelrc: false,
     compact: false,
     presets: [
-      'env',
-      'react',
-      'flow'
-    ].map(dep => require.resolve(`babel-preset-${dep}`)),
-    plugins: [
-      'syntax-dynamic-import',
-      'transform-object-rest-spread'
-    ].map(dep => require.resolve(`babel-plugin-${dep}`))
+      require.resolve('@esops/compiler-babel/preset')
+    ]
   }
 }

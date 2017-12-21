@@ -1,9 +1,4 @@
-require('babel-register')({
-  presets: ['env', 'react', 'flow'],
-  plugins: ['transform-object-rest-spread', 'syntax-dynamic-import']
-})
-
-require('babel-polyfill')
+require('@esops/compiler-babel/node')
 
 const compiler = require('./src').default
 
