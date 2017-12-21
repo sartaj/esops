@@ -1,5 +1,5 @@
 {
-    "name": "@esops/compiler-babel",
+    "name": "@esops/language-babel",
     "version": "1.2.0",
     "entry": "./preset.js",
     "publishConfig": {
