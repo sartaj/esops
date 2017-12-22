@@ -1,6 +1,6 @@
 {
     "name": "@esops/publish-github-pages",
-    "version": "1.3.0",
+    "version": "1.5.0",
     "entry": "index.js",
     "publishConfig": {
         "access": "public"
