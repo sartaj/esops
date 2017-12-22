@@ -46,7 +46,7 @@ const serverListeningTemplate = port => (`
 ===========================================================
 `)
 
-export default function start (opts, webpackConfig) {
+export default async function start (opts, webpackConfig) {
   const { port } = opts
   const config = webpackConfig
   const isDeveloping = opts.devMode
