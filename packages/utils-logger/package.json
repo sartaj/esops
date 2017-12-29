@@ -28,6 +28,7 @@
         "term-img": "^2.1.0"
     },
     "devDependencies": {
+        "@esops/eslint-config-contributor": "^1.0.3",
         "@esops/eslint-config-esops-contributor": "^1.0.3"
     }
 }

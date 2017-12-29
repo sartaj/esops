@@ -9,5 +9,8 @@
         "branchsite": "^4.0.2",
         "gh-pages": "^1.1.0",
         "ghp": "^1.1.4"
+    },
+    "devDependencies": {
+        "@esops/eslint-config-contributor": "^1.0.3"
     }
 }
