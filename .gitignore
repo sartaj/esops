@@ -3,6 +3,7 @@
 
 # Dependency directories
 node_modules
+.tmp
 
 # OS fs specifics
 .DS_Store
