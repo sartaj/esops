@@ -35,6 +35,9 @@
     "verify"
   ],
   "license": "see LICENSE in LICENSE",
+  "scripts": {
+    "test": "echo 'Maybe later'"
+  },
   "main": "index.js",
   "repository": {
     "type": "git",
@@ -42,9 +45,6 @@
   },
   "bugs": {
     "url": "https://github.com/sartaj/esops/issues"
-  },
-  "scripts": {
-    "test": "node bin.js"
   },
   "dependencies": {
     "babel-eslint": "^7.2.3",
