@@ -16,22 +16,21 @@ const ini = require('ini')
 
 const readFile = promisify(fs.readFile)
 
-module.exports.getGitConfig = async ({ cwd = process.cwd() } = {}) => {
+module.exports.getGitConfig = async (cwd = process.cwd()) => {
   try {
     const gitDirectory = findParentDir.sync(cwd, '.git')
+    if (!gitDirectory) return false
+
     const gitConfig = await readFile(
       path.join(gitDirectory, './.git/config'),
       'utf8'
     )
+
     return ini.decode(gitConfig)
   } catch (e) {
-    if (e.code === 'ENOENT') {
-      return { status: 'not-found' }
-    } else {
-      return Promise.reject(
-        new Error('Error while trying to retrieve git config', e)
-      )
-    }
+    return Promise.reject(
+      new Error('Error while trying to retrieve git config', e)
+    )
   }
 }
 
