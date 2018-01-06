@@ -2,12 +2,12 @@
 
 const log = require('npmlog')
 
-const APP_NAME = 'esops'
+const NAME = 'esops'
 
 module.exports = function(service) {
   try {
     const keytar = require('keytar')
-    const key = `${APP_NAME}:${service}`
+    const key = `${NAME}:${service}`
     return {
       get: username => keytar.getPassword(key, username),
       set: (username, password) => keytar.setPassword(key, username, password)

@@ -1,6 +1,6 @@
 const fs = require('fs')
-const { promisify } = require('util')
 const path = require('path')
+const { promisify } = require('util')
 const url = require('url')
 const ini = require('ini')
 const findParentDir = require('find-parent-dir')

@@ -5,7 +5,7 @@
   "repository": "http://github.com/sartaj/esops",
   "author": "sartaj<sartaj@sartaj.me>",
   "license": "MIT",
-  "private": false,
+  "private": true,
   "scripts": {
     "test": "ava --verbose",
     "watch": "yarn test --watch"

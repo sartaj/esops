@@ -5,7 +5,6 @@ const { getGitConfig, getRemoteUrl } = require('./')
 
 const MOCK_URL = 'git@github.com:example/example.git'
 const HTTPS_URL = 'https://github.com/example/example.git'
-
 const GIT_CONFIG_TEMPLATE = `
 [core]
   repositoryformatversion = 0
