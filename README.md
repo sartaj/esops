@@ -10,7 +10,7 @@ yarn global add esops
 
 This dependency is completely ready to build and develop web apps using webpack
 
-## Commnads
+## Commands
 
 Run this command in your package.json and have a entry file that follows best practice conventions.
 
