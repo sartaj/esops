@@ -1,0 +1,1 @@
+[https://medium.com/the-react-native-log/checklist-to-deploy-react-native-to-production-47157f8f85ed](https://medium.com/the-react-native-log/checklist-to-deploy-react-native-to-production-47157f8f85ed)
