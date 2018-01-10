@@ -6,6 +6,10 @@ An attempt to create a single devops packages that can publish to any many ecosy
 
 ## Current Capabilities
 
+## Primary Commands
+
+Every command will have two options, `dev`, and `ship`. For example `esops web static dev` and `esops web static ship`.
+
 ### Languages
 
 * ESNext JavaScript + Flow
