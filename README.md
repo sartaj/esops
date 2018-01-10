@@ -6,6 +6,11 @@ An attempt to create a single devops packages that can publish to any many ecosy
 
 ## Current Capabilities
 
+### Languages
+
+* ESNext JavaScript + Flow
+* TypeScript
+
 ### Build
 
 * Static Web (with React Native)
@@ -47,3 +52,22 @@ esops web static ship
 ```
 
 This will attempt to publish to the GitHub Pages of the repo you are on.
+
+## Roadmap Overview
+
+### Targets
+
+* React Native iOS
+* React Native Android
+* Node Serverless
+* Node Server
+* Arduino Compatible Hardware
+
+### Publish
+
+* iOS App Store
+* Mac App Store
+* Google Play Store
+* NPM
+* AWS
+* IBM
