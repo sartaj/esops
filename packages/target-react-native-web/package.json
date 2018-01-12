@@ -1,6 +1,6 @@
 {
   "name": "@esops/target-react-native-web",
-  "version": "1.6.0",
+  "version": "1.6.1",
   "main": "./index.js",
   "publishConfig": {
     "access": "public"
@@ -10,7 +10,7 @@
     "postinstall": "bash ./postinstall.sh"
   },
   "dependencies": {
-    "@esops/language-babel": "^1.6.0",
+    "@esops/language-babel": "^1.6.1",
     "autoprefixer": "^7.1.5",
     "awaiting": "^3.0.0",
     "babel-core": "^6.23.1",
@@ -50,7 +50,7 @@
     "webpack-node-externals": "^1.6.0"
   },
   "devDependencies": {
-    "@esops/eslint-config-contributor": "^1.6.0",
+    "@esops/eslint-config-contributor": "^1.6.1",
     "@esops/eslint-config-esops-contributor": "^1.0.3"
   }
 }
