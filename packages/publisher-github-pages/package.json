@@ -8,7 +8,9 @@
     "dependencies": {
         "branchsite": "^4.0.2",
         "gh-pages": "^1.1.0",
-        "ghp": "^1.1.4"
+        "ghp": "^1.1.4",
+        "git-url-parse": "^7.0.2",
+        "parse-git-config": "^1.1.1"
     },
     "devDependencies": {
         "@esops/eslint-config-contributor": "^1.0.3"

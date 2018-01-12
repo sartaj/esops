@@ -1,8 +1,18 @@
 # esops
 
-Cross platform JavaScript Devops through a CLI. Write once & ship anywhere in a (mostly) professional manner.
+Cross platform JavaScript Devops through a CLI. The goal is for you to be able to learn as little as possible and maximize how many different kinds of products you can ship in a (mostly) professional manner.
 
 Designed for startups, learners, and coders who prefer to not think about DevOps but want code to certain standards.
+
+# Primary Learning Curves
+
+* Git
+* CSS + CSS in JS
+* HTML + JSX
+* ES6 JavaScript
+* React.js Design Patterns
+* Async Management (through user preferred system)
+* State Management (through user preferred system)
 
 ## Features
 
@@ -35,7 +45,7 @@ Ship multiple types of language-agnostic JS Apps based on production guidelines.
 
 * A CLI that strives to suggest what to do/learn over just provide an error. When any tasks are needed to complete that the CLI can't do, it strives to provide suggestions.
 * Keep the CLI beginner/startup friendly. Provide wizards and errors that can go into wizard mode.
-* Support primary Developer Experience flow of init, edit, debug, and ship. When scripts can't do it, Provide suggesstions and best practice.
+* Support primary Developer Experience flow of init, edit, debug, and ship. When scripts can't do it, Provide suggestions and best practice.
 * Allow for default and easy path configs.
 
 ### Bare Minimal Code Scaffolding
@@ -48,7 +58,7 @@ Configure everything below based on target, language choice, user preference, & 
 
 * Linting
 * Code Editor Integration
-* Continious Integration
+* Continuous Integration
 * Dependency auto-add/install/update
 * Testing
 * Documentation, Readmes, and Readme Badges
@@ -118,24 +128,22 @@ Yes, you can use Vue.js, Angular, or anything else you'd like, but we encourage 
 * @esops/editor-atom
 * @esops/editor-vscode
 * @esops/cli
-* esops -> @esops/cli
-* @esops/publish-googleplay
-* @esops/publish-appleappstore
-* @esops/publish-electron
-* @esops/publish-githubpages
-* @esops/publish-npm
-* @esops/ship-ios
-* @esops/ship-node-api
-* @esops/ship-node-serverless
-* @esops/ship-web-desktop
-* @esops/ship-web-isomorphic
-* @esops/ship-web-static
-* @esops/test-jest
-* @esops/utils-dependencies
-* @esops/utils-logger
-* @esops/validator-a11y
-* @esops/validator-eslint
-* @esops/validator-flow
-* @esops/validator-prettier
-* @esops/validator-security
-* @esops/validator-spellcheck
+- [esops](#esops)
+- [Primary Learning Curves](#primary-learning-curves)
+    - [Features](#features)
+        - [Validate, Compile, Test, Document, & Publish multiple types of javascript-based products from 1 `devDependency`](#validate-compile-test-document-publish-multiple-types-of-javascript-based-products-from-1-devdependency)
+        - [1 `devDependency`, Multiple Platforms](#1-devdependency-multiple-platforms)
+        - [Out of the box Multi Language Support](#out-of-the-box-multi-language-support)
+        - [Developer Experience](#developer-experience)
+        - [Bare Minimal Code Scaffolding](#bare-minimal-code-scaffolding)
+        - [Code Quality Helpers](#code-quality-helpers)
+            - [Static Analysis](#static-analysis)
+            - [IDE Integrations](#ide-integrations)
+            - [Tests/Specs](#testsspecs)
+            - [Documentation](#documentation)
+            - [Continious Integration](#continious-integration)
+        - [Making it Live](#making-it-live)
+    - [Your Main Options](#your-main-options)
+    - [Separate Target Specifc Code (default `true` for most targets)](#separate-target-specifc-code-default-true-for-most-targets)
+    - [React Native Base (default `true` for any targets featuring a UI)](#react-native-base-default-true-for-any-targets-featuring-a-ui)
+    - [Packages Roadmap](#packages-roadmap)

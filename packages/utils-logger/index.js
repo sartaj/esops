@@ -5,7 +5,7 @@ import intercept from 'intercept-stdout'
 
 import * as template from './template'
 
-const setupInfoHandler = () => (message) => {
+const setupInfoHandler = () => message => {
   if (!message) return
   console.log(message)
 }
@@ -33,7 +33,7 @@ const setupErrorHandler = ({ beforeError }) => {
     .skipNodeFiles()
     .skipPackage('babel-cli')
 
-  return (err) => {
+  return err => {
     console.error(template.error(err))
     beforeError()
     console.log(prettyError.render(err))
@@ -45,7 +45,7 @@ const initLoggingSystem = () => {
   // Run header before console intercept.
   header()
 
-  const endIntercept = intercept((message) => {
+  const endIntercept = intercept(message => {
     return template.info(message)
   })
 

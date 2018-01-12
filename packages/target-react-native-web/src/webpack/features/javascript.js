@@ -6,8 +6,7 @@ export const rules = {
   query: {
     babelrc: false,
     compact: false,
-    presets: [
-      require.resolve('@esops/language-babel/preset')
-    ]
+    presets: [require.resolve('@esops/language-babel/preset')],
+    plugins: [require.resolve('babel-plugin-react-native-web')]
   }
 }
