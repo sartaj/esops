@@ -1,16 +1,24 @@
 # esops
 
-Learn once. Publish everywhere.
+Learn once. Publish everywhere. 1 `devDependency`.
 
-An attempt to create a single devops packages that can publish to any many ecosystems as possible. Built on top of React Native.
+An attempt to create a single devops package that can create developer environments, build packages, and assist in publishing to any many ecosystems as possible.
 
-## Current Capabilities
+User Interfaces are designed to be built on top of React Native, but don't require it for web and desktop-web.
+
+Node apps (libraries, servers, serverless) are dependency free.
+
+Arduino Apps are designed to use `johnny-five`.
+
+Designed and tested to be used with `yarn`.
 
 ## Primary Commands
 
 Every command will have two options, `dev`, and `ship`. For example `esops web static dev` and `esops web static ship`.
 
-### Languages
+## Current Capabilities
+
+### Language Support
 
 * ESNext JavaScript + Flow
 * TypeScript
@@ -29,10 +37,18 @@ Every command will have two options, `dev`, and `ship`. For example `esops web s
 * Local Node.js
 * Yarn
 
-### Install
+## Install
+
+### Globally
 
 ```bash
 yarn global add esops
+```
+
+### Locally
+
+```bash
+yarn add esops --dev
 ```
 
 ## Commands
