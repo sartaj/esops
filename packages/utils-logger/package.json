@@ -1,6 +1,6 @@
 {
     "name": "@esops/utils-logger",
-    "version": "1.6.2",
+    "version": "1.6.3",
     "description": "Logging system for devops designer. Requires node environment.",
     "main": "./index.js",
     "bin": {
