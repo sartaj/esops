@@ -10,17 +10,18 @@
   "author": "Sartaj <sartaj@sartaj.me>",
   "license": "see LICENSE in LICENSE",
   "scripts": {
-    "publish:npm": "lerna publish",
-    "link-cli": "cd packages/esops && yarn link",
+    "ship:npm": "lerna publish",
     "test": "lerna run test",
     "reset":
-      "yarn reset:node-modules && yarn reset:logs && yarn reset:dist && yarn reset:yarn && yarn reset:npm",
+      "yarn reset:node-modules && yarn reset:logs && yarn reset:dist && yarn reset:yarn && yarn reset:npm && yarn reset:links",
     "reset:node-modules":
       "find . -name 'node_modules' -type d -exec rm -rf '{}' +",
     "reset:logs": "find . -name '*.log' -type f -delete",
     "reset:dist": "find . -name 'dist' -type d -exec rm -rf '{}' +",
     "reset:yarn": "find . -name 'yarn.lock' -type f -delete",
-    "reset:npm": "find . -name 'package-lock.json' -type f -delete"
+    "reset:npm": "find . -name 'package-lock.json' -type f -delete",
+    "reset:links": "cd packages/esops && yarn unlink",
+    "link-cli": "cd packages/esops && yarn link"
   },
   "workspaces": ["packages/*"]
 }
