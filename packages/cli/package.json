@@ -5,6 +5,9 @@
   "publishConfig": {
     "access": "public"
   },
+  "bin": {
+    "esops-cli": "bin/esops"
+  },
   "entry": "cli/index.js",
   "scripts": {
     "format": "prettier --write **/*.{js,json} && standard --fix",
@@ -16,9 +19,8 @@
   "files": [
     "LICENSE",
     "readme.md",
-    "docs",
     "bin",
-    "src"
+    "cli"
   ],
   "license": "MIT",
   "dependencies": {
