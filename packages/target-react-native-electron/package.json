@@ -1,0 +1,11 @@
+{
+  "name": "@esops/target-react-native-electron",
+  "version": "1.6.2",
+  "main": "./index.js",
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "test": "echo \"Maybe Later\""
+  }
+}
