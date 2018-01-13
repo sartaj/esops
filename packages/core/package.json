@@ -1,0 +1,19 @@
+{
+  "name": "@esops/core",
+  "version": "1.6.2",
+  "description": "esops core",
+  "publishConfig": {
+    "access": "public"
+  },
+  "entry": "main.js",
+  "scripts": {
+  },
+  "files": [
+  ],
+  "license": "MIT",
+  "dependencies": {
+  },
+  "devDependencies": {
+    "@esops/eslint-config-contributor": "^1.6.1",
+  }
+}
