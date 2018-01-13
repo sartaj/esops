@@ -11,7 +11,6 @@ Where something hasn't been automated, it will try to output documentation on wh
 ### Targets
 
 * Static Web App
-* Desktop Web App
 
 ### Publishers
 
