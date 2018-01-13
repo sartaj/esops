@@ -1,6 +1,6 @@
 {
     "name": "@esops/publish-github-pages",
-    "version": "1.5.0",
+    "version": "1.6.2",
     "entry": "index.js",
     "publishConfig": {
         "access": "public"
@@ -8,9 +8,11 @@
     "dependencies": {
         "branchsite": "^4.0.2",
         "gh-pages": "^1.1.0",
-        "ghp": "^1.1.4"
+        "ghp": "^1.1.4",
+        "git-url-parse": "^7.0.2",
+        "parse-git-config": "^1.1.1"
     },
     "devDependencies": {
-        "@esops/eslint-config-contributor": "^1.0.3"
+        "@esops/eslint-config-contributor": "^1.6.1"
     }
 }
