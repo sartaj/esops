@@ -13,7 +13,7 @@ import termImg from 'term-img'
 export const configDevMiddleware = (app, config, opts) => {
   const compiler = webpack(config)
   const middleware = webpackMiddleware(compiler, {
-    publicPath: config.output.publicPath,
+    publicPath: config.output.path,
     contentBase: 'src',
     stats: {
       colors: true,

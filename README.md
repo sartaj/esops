@@ -1,8 +1,31 @@
 # esops
 
-Learn once. Publish everywhere. 1 `devDependency`.
+Learn once. Publish everywhere.
 
-An attempt to create a single devops package that can create developer environments, build packages, and assist in publishing to any many ecosystems as possible.
+Just choose a target and whether you want to `dev` or `ship`.
+
+Where something hasn't been automated, it will try to output documentation on what to do.
+
+## Support
+
+### Targets
+
+* Static Web App
+* Desktop Web App
+
+### Publishers
+
+* GitHub Pages
+
+### Languages
+
+* ESNext JavaScript + Flow
+* TypeScript
+
+## Requirements
+
+* Local Node.js
+* Yarn
 
 User Interfaces are designed to be built on top of React Native, but don't require it for web and desktop-web.
 
@@ -11,31 +34,6 @@ Node apps (libraries, servers, serverless) are dependency free.
 Arduino Apps are designed to use `johnny-five`.
 
 Designed and tested to be used with `yarn`.
-
-## Primary Commands
-
-Every command will have two options, `dev`, and `ship`. For example `esops web static dev` and `esops web static ship`.
-
-## Current Capabilities
-
-### Language Support
-
-* ESNext JavaScript + Flow
-* TypeScript
-
-### Build
-
-* Static Web (with React Native)
-* Desktop Web (with React Native Electron)
-
-### Publish
-
-* Github Pages (automated)
-
-## Prerequisites
-
-* Local Node.js
-* Yarn
 
 ## Install
 
@@ -51,7 +49,7 @@ yarn global add esops
 yarn add esops --dev
 ```
 
-## Commands
+## Usage
 
 From your package root, run the following:
 
@@ -73,21 +71,36 @@ esops web static ship
 
 This will attempt to publish to the GitHub Pages of the repo you are on.
 
-## Roadmap Overview
+## Roadmap
 
 ### Targets
 
-* React Native iOS
-* React Native Android
-* Node Serverless
-* Node Server
-* Arduino Compatible Hardware
+* React Native Web ✅
+* React Native Desktop ⏳
+* React Native iOS 🗄
+* React Native Android 🗄
+* Node Serverless 🗄
+* Node Server 🗄
+* Arduino Compatible Hardware 🗄
 
-### Publish
+### Publishers
 
-* iOS App Store
-* Mac App Store
-* Google Play Store
-* NPM
-* AWS
-* IBM
+* GitHub Pages ✅
+* iOS App Store 🗄
+* Mac App Store 🗄
+* Google Play Store 🗄
+* NPM 🗄
+* AWS 🗄
+* IBM 🗄
+
+### Languages
+
+* ESNext JavaScript + Flow ✅
+* TypeScript 👩‍🔬
+* Elm 🗄
+
+### Dev Ops Tools
+
+* Linting Setup Assistance 🗄
+* CI Assistance 🗄
+* Pipeline/Git Assistance 🗄
