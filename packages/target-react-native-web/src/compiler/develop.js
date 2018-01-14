@@ -6,9 +6,10 @@ import webpack from 'webpack'
 import webpackMiddleware from 'webpack-dev-middleware'
 import webpackHotMiddleware from 'webpack-hot-middleware'
 
+import log from '@esops/logger'
+
 // TODO: create log utils
 import boxen from 'boxen'
-import termImg from 'term-img'
 
 export const configDevMiddleware = (app, config, opts) => {
   const compiler = webpack(config)
@@ -45,23 +46,11 @@ export const configDeployedMiddleware = (app, opts) => {
   })
 }
 
-const carlton = () =>
-  termImg(__dirname + '/carlton.gif', { height: 2, fallback: () => {} })
-
 const serverBox = port =>
-  boxen(
-    `🌎  Your static web dev environment is live! 🌎
+  log.announce(`🌎  Your static web dev environment is live! 🌎
 http://localhost:${port}
 Please open this link in your browser 
-to begin initial build.`,
-    {
-      padding: 1,
-      margin: 1,
-      borderStyle: 'round',
-      float: 'center',
-      align: 'center'
-    }
-  )
+to begin initial build.`)
 
 export default async function start(opts, webpackConfig) {
   const { port } = opts
