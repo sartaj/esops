@@ -5,6 +5,9 @@
     "bugs": {
         "url": "https://github.com/sartaj/esops/issues"
     },
+    "publishConfig": {
+        "access": "public"
+    },
     "homepage": "https://github.com/sartaj/esops#readme",
     "scripts": {
         "test": "echo \"Maybe Later\""
