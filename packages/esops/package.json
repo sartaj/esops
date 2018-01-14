@@ -15,9 +15,7 @@
   "files": [
     "LICENSE",
     "readme.md",
-    "docs",
-    "bin",
-    "src"
+    "bin"
   ],
   "license": "MIT",
   "dependencies": {
