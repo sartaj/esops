@@ -1,9 +1,12 @@
 {
   "name": "esops",
-  "version": "1.7.2",
+  "version": "1.7.3",
   "description": "esops CLI",
   "bin": {
     "esops": "bin/esops"
+  },
+  "publishConfig": {
+    "access": "public"
   },
   "scripts": {
     "format": "prettier --write **/*.{js,json} && standard --fix",
