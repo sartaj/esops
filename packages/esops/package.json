@@ -1,6 +1,6 @@
 {
   "name": "esops",
-  "version": "1.7.1",
+  "version": "1.7.2",
   "description": "esops CLI",
   "bin": {
     "esops": "bin/esops"
@@ -21,7 +21,7 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "@esops/cli": "^1.7.1"
+    "@esops/cli": "^1.7.2"
   },
   "devDependencies": {
     "@esops/eslint-config-contributor": "^1.6.1"
