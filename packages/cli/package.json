@@ -1,6 +1,6 @@
 {
   "name": "@esops/cli",
-  "version": "1.6.2",
+  "version": "1.7.0",
   "description": "CLI package for the @esops ecosystem. See esops for more info.",
   "publishConfig": {
     "access": "public"
@@ -25,8 +25,8 @@
   "license": "MIT",
   "dependencies": {
     "@esops/logger": "^1.6.4",
-    "@esops/publish-github-pages": "^1.6.2",
-    "@esops/target-react-native-web": "^1.6.2",
+    "@esops/publish-github-pages": "^1.7.0",
+    "@esops/target-react-native-web": "^1.7.0",
     "gluegun": "^2.0.0-alpha.17"
   },
   "devDependencies": {
