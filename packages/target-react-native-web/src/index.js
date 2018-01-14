@@ -99,6 +99,6 @@ export default async opts => {
   const webpackConfig = createWebpackConfig(config)
 
   // Run server
-  if (config.devMode) return await compilerDevelop(config, webpackConfig)
-  else return await compilerBuild(webpackConfig)
+  if (config.devMode) return compilerDevelop(config, webpackConfig)
+  else return compilerBuild(webpackConfig)
 }

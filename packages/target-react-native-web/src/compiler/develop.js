@@ -8,12 +8,8 @@ import webpackHotMiddleware from 'webpack-hot-middleware'
 
 import log from '@esops/logger'
 
-// TODO: create log utils
-import boxen from 'boxen'
-
 export const configDevMiddleware = (app, config, opts) => {
   const compiler = webpack(config)
-  console.log(app, config, opts)
   const middleware = webpackMiddleware(compiler, {
     publicPath: config.output.cwd,
     contentBase: 'src',
@@ -45,7 +41,6 @@ export const configDeployedMiddleware = (app, opts) => {
     res.sendFile(path.join(opts.buildPath, 'index.html'))
   })
 }
-
 const serverBox = port =>
   log.announce(`🌎  Your static web dev environment is live! 🌎
 http://localhost:${port}
