@@ -1,12 +1,12 @@
 const { build } = require('gluegun')
-const { initLogger } = require('@esops/utils-logger')
+const { intercept } = require('@esops/logger')
 const path = require('path')
 
 /**
  * Create the cli and kick it off
  */
 async function run(argv) {
-  initLogger()
+  intercept.init()
 
   const cli = build()
     .brand('esops')
