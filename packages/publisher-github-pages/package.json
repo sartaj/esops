@@ -1,12 +1,12 @@
 {
     "name": "@esops/publish-github-pages",
-    "version": "1.8.0",
+    "version": "1.8.1",
     "entry": "index.js",
     "publishConfig": {
         "access": "public"
     },
     "dependencies": {
-        "@esops/logger": "^1.8.0",
+        "@esops/logger": "^1.8.1",
         "branchsite": "^4.0.2",
         "gh-pages": "^1.1.0",
         "ghp": "^1.1.4",
@@ -14,6 +14,6 @@
         "parse-git-config": "^1.1.1"
     },
     "devDependencies": {
-        "@esops/eslint-config-contributor": "^1.8.0"
+        "@esops/eslint-config-contributor": "^1.8.1"
     }
 }

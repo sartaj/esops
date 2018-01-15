@@ -1,6 +1,6 @@
 {
   "name": "@esops/cli",
-  "version": "1.8.0",
+  "version": "1.8.1",
   "description": "CLI package for the @esops ecosystem. See esops for more info.",
   "publishConfig": {
     "access": "public"
@@ -26,13 +26,13 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "@esops/logger": "^1.8.0",
-    "@esops/publish-github-pages": "^1.8.0",
-    "@esops/target-react-native-web": "^1.8.0",
+    "@esops/logger": "^1.8.1",
+    "@esops/publish-github-pages": "^1.8.1",
+    "@esops/target-react-native-web": "^1.8.1",
     "gluegun": "^2.0.0-alpha.17"
   },
   "devDependencies": {
-    "@esops/eslint-config-contributor": "^1.8.0",
+    "@esops/eslint-config-contributor": "^1.8.1",
     "ava": "^0.22.0",
     "nyc": "^11.2.1"
   }
