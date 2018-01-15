@@ -6,7 +6,9 @@ const publishGHPages = require('@esops/publish-github-pages')
 module.exports = {
   name: 'static',
   run: async context => {
-    const { parameters, cwd, ship, preferences } = context
+    console.log('SUH')
+
+    const { parameters, cwd } = context
     const distribution = {
       devMode: false,
       buildPath: path.join(cwd, './.esops/target/web/dist')

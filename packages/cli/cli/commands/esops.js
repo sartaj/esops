@@ -1,10 +1,10 @@
-const compile = require('@esops/target-react-native-web');
-
 // eslint-disable-next-line
+const path = require('path')
+
 module.exports = {
   alias: ['help', 'h'],
-  run: async (context) => {
-    const { parameters, cwd, print } = context
-    print.info('welcome to esops')
+  run: async context => {
+    const { log } = context
+    await log.mdFile(path.join(__dirname, '../../docs/welcome.md'))
   }
 }

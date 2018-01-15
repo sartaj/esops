@@ -66,6 +66,7 @@
     "prettier": "^1.9.2"
   },
   "devDependencies": {
+    "@esops/logger": "^1.7.2",
     "babel-eslint": "^7.2.3",
     "eslint": "^3.19.0",
     "eslint-config-standard": "^10.2.1",

@@ -4,4 +4,3 @@ import * as intercept from './intercept'
 
 export { intercept }
 export default components
-// export { default as log } from 'loglevel'

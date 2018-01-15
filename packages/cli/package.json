@@ -8,7 +8,7 @@
   "bin": {
     "esops-cli": "bin/esops"
   },
-  "entry": "cli/index.js",
+  "main": "index.js",
   "scripts": {
     "format": "prettier --write **/*.{js,json} && standard --fix",
     "lint": "standard",
@@ -20,7 +20,9 @@
     "LICENSE",
     "readme.md",
     "bin",
-    "cli"
+    "cli",
+    "docs",
+    "plugins"
   ],
   "license": "MIT",
   "dependencies": {
