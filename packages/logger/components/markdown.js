@@ -1,7 +1,7 @@
 import fs from 'fs'
 import marked from 'marked'
 import TerminalRenderer from 'marked-terminal'
-import announce from './announce'
+import { announce } from './announce'
 
 marked.setOptions({
   renderer: new TerminalRenderer()

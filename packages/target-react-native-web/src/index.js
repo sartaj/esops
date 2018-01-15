@@ -75,7 +75,18 @@ export default async opts => {
     fs.existsSync(path.join(optsWithDefaults.cwd, entry))
   )
   const entryFile = entriesFound[0]
-  if (!entryFile) log.error('entry file not found.')
+  if (!entryFile) {
+    log.md(`# Entry file not found.
+
+## Acceptable entries
+
+* \`package.json\` \`main\` property
+${standardEntries
+      .map(entry => `* \`${entry}\`\n`)
+      .reduce((acc, next) => `${acc}${next}`, '')}
+`)
+    process.exit(1)
+  }
 
   const entryPath = path.join(optsWithDefaults.cwd, entryFile)
   const buildPath = path.join(optsWithDefaults.cwd, optsWithDefaults.distFolder)

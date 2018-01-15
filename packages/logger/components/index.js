@@ -16,4 +16,5 @@ export const info = message => {
   log.info(`${logo()} ${chalk.green(message)}`)
 }
 
+export { chalk } from 'chalk'
 export { trace, debug, warn } from './'
