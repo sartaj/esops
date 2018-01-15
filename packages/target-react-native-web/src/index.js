@@ -9,6 +9,7 @@ import compilerDevelop from './compiler/develop'
 import compilerBuild from './compiler/build'
 
 import createWebpackConfig from './webpack'
+import log from '@esops/logger'
 
 const standardEntries = [
   'index.js',
@@ -74,6 +75,8 @@ export default async opts => {
     fs.existsSync(path.join(optsWithDefaults.cwd, entry))
   )
   const entryFile = entriesFound[0]
+  if (!entryFile) log.error('entry file not found.')
+
   const entryPath = path.join(optsWithDefaults.cwd, entryFile)
   const buildPath = path.join(optsWithDefaults.cwd, optsWithDefaults.distFolder)
   const packageLogoPath = path.join(

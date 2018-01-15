@@ -42,10 +42,10 @@ export const configDeployedMiddleware = (app, opts) => {
   })
 }
 const serverBox = port =>
-  log.announce(`🌎  Your static web dev environment is live! 🌎
+  `🌎  Your static web dev environment is live! 🌎
 http://localhost:${port}
 Please open this link in your browser 
-to begin initial build.`)
+to begin initial build.`
 
 export default async function start(opts, webpackConfig) {
   const { port } = opts
@@ -58,10 +58,10 @@ export default async function start(opts, webpackConfig) {
   else configDeployedMiddleware(app, opts)
 
   app.listen(port, 'localhost', err => {
-    if (err) console.error(err)
+    if (err) log.error(err)
     else {
       // carlton()
-      console.log(serverBox(port))
+      log.announce(serverBox(port))
     }
   })
   return app

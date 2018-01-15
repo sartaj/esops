@@ -1,109 +1,33 @@
-![esops](/Users/sartaj/clients/sartaj/esops/packages/logger/components/carlton.gif)
+esops - learn once. publish everywhere.
 
-# esops
+__Publishing Platforms__
 
-Learn once. Publish everywhere.
+# Static Web ➡ GitHub Pages
 
-Just choose a target and whether you want to `dev` or `ship`.
+Make a simple website with free hosting.
 
-Where something hasn't been automated, it will try to output documentation on what to do.
-
-## Support
-
-### Targets
-
-* Static Web App
-
-### Publishers
-
-* GitHub Pages
-
-### Languages
-
-* ESNext JavaScript + Flow
-* TypeScript
-
-## Requirements
-
-* Local Node.js
-* Yarn
-
-User Interfaces are designed to be built on top of React Native, but don't require it for web and desktop-web.
-
-Node apps (libraries, servers, serverless) are dependency free.
-
-Arduino Apps are designed to use `johnny-five`.
-
-Designed and tested to be used with `yarn`.
-
-## Install
-
-### Globally
+## Commands
 
 ```bash
-yarn global add esops
+    esops web static dev
 ```
-
-### Locally
 
 ```bash
-yarn add esops --dev
+    esops web static ship
 ```
 
-## Usage
+## Optional
 
-From your package root, run the following:
+Use React Native if you'd like to reuse certain parts of your app with other platforms, like iOS, Android, etc. 
 
-### Static Web
+`yarn add react react-dom react-native-web`
 
-#### Develop
+ __
 
-```bash
-esops web static dev
-```
+Notes:
 
-This will create the development package. It will look for a entry file either via the `package.json` or some common entry files, such as `index.js`, `src/index.js`, etc.
+`dev` will create the development package. It will look for a entry file either via the `package.json` or some common entry files, such as `index.js`, `src/index.js`, etc.
 
-#### Publish
+`ship` will attempt to publish to the listed publisher.
 
-```bash
-esops web static ship
-```
-
-This will attempt to publish to the GitHub Pages of the repo you are on.
-
-## Roadmap
-
-*Backlog* 🗄 → *In Progress* ⏳ → *Testing* 🔬 → *Live* ✅ 
-
-### Targets
-
-* React Native Web ✅
-* React Native Desktop ⏳
-* React Native iOS 🗄
-* React Native Android 🗄
-* Node Serverless 🗄
-* Node Server 🗄
-* Arduino Compatible Hardware 🗄
-
-### Publishers
-
-* GitHub Pages ✅
-* iOS App Store 🗄
-* Mac App Store 🗄
-* Google Play Store 🗄
-* NPM 🗄
-* AWS 🗄
-* IBM 🗄
-
-### Languages
-
-* ESNext JavaScript + Flow ✅
-* TypeScript 🔬
-* Elm 🗄
-
-### Dev Ops Tools
-
-* Linting Setup Assistance 🗄
-* CI Assistance 🗄
-* Pipeline/Git Assistance 🗄
+`esops` is to designed with the hopes of finding the absolute minimum knowledge required to be able to publish to as many different platforms as possible.
