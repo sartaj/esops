@@ -25,6 +25,7 @@
     "@esops/cli": "^1.7.2"
   },
   "devDependencies": {
+    "@esops/logger": "^1.7.2",
     "@esops/eslint-config-contributor": "^1.6.1"
   }
 }

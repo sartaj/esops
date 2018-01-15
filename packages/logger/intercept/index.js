@@ -1,6 +1,6 @@
 import PrettyError from 'pretty-error'
-import intercept from 'intercept-stdout'
-import * as components from '../components'
+// import intercept from 'intercept-stdout'
+// import * as components from '../components'
 
 const setupPrettyError = () => {
   const initialStackLimit = Error.stackTraceLimit
@@ -14,10 +14,10 @@ const setupPrettyError = () => {
       }
     })
     .skipNodeFiles()
-    .skipPackage('babel-cli')
+    .skipPackage('babel-cli', 'babel-polyfill', 'gluegun')
 
   return {
-    render: prettyError.render,
+    prettyError: prettyError,
     stop: () => {
       // eslint-disable-next-line
       Error.stackTraceLimit = initialStackLimit
@@ -26,38 +26,39 @@ const setupPrettyError = () => {
   }
 }
 
-const logInterceptHandler = message => {
-  return components.info(message)
-}
+// const logInterceptHandler = message => {
+//   return components.info(message)
+// }
 
-const logErrorHandler = errorHandler => err => {
-  console.error(components.error(err))
-  console.log(errorHandler.render(err))
-  process.exit(1)
-}
+// const logErrorHandler = errorHandler => err => {
+//   console.error(components.error(err))
+//   console.log(errorHandler.render(err))
+//   process.exit(1)
+// }
 
 // TODO: Revisit singleton object mutation strategy
 // eslint-disable-next-line
-let intercepting = false
+// let intercepting = false
 
-export const isIntercepting = () => intercepting
+// export const isIntercepting = () => intercepting
 
 export const init = () => {
   // Setup prettyError, which the intercept above uses to render errors.
   const errorHandler = setupPrettyError()
+  errorHandler.prettyError.start()
 
-  // Intercept all stdout
-  const stopStdoutIntercept = intercept(
-    logInterceptHandler,
-    logErrorHandler(errorHandler)
-  )
+  // // Intercept all stdout
+  // const stopStdoutIntercept = intercept(
+  //   logInterceptHandler,
+  //   logErrorHandler(errorHandler)
+  // )
 
-  intercepting = true // TODO: Remove mutation
+  // intercepting = true // TODO: Remove mutation
 
   const end = () => {
-    errorHandler.stop()
-    stopStdoutIntercept()
-    intercepting = false // TODO: Remove mutation
+    // errorHandler.stop()
+    // stopStdoutIntercept()
+    // intercepting = false // TODO: Remove mutation
   }
 
   return end
