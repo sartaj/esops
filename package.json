@@ -10,7 +10,7 @@
   "author": "Sartaj <sartaj@sartaj.me>",
   "license": "see LICENSE in LICENSE",
   "scripts": {
-    "ship:npm": "lerna publish",
+    "ship:npm": "lerna publish --ignore=@esops/eslint-config-contributor",
     "test": "lerna run test",
     "reset":
       "yarn reset:node-modules && yarn reset:logs && yarn reset:dist && yarn reset:yarn && yarn reset:npm && yarn reset:links",
