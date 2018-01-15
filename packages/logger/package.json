@@ -1,6 +1,6 @@
 {
     "name": "@esops/logger",
-    "version": "1.9.2",
+    "version": "1.9.3",
     "description": "Logging system for devops designer. Requires node environment.",
     "bugs": {
         "url": "https://github.com/sartaj/esops/issues"

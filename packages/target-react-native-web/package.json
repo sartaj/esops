@@ -1,6 +1,6 @@
 {
   "name": "@esops/target-react-native-web",
-  "version": "1.9.2",
+  "version": "1.9.3",
   "main": "./index.js",
   "publishConfig": {
     "access": "public"
@@ -10,8 +10,8 @@
     "postinstall": "bash ./postinstall.sh"
   },
   "dependencies": {
-    "@esops/language-babel": "^1.9.2",
-    "@esops/logger": "^1.9.2",
+    "@esops/language-babel": "^1.9.3",
+    "@esops/logger": "^1.9.3",
     "autoprefixer": "^7.1.5",
     "awaiting": "^3.0.0",
     "babel-core": "^6.23.1",
