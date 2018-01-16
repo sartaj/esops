@@ -1,11 +1,14 @@
 {
   "name": "@esops/cli",
-  "version": "1.6.2",
-  "description": "esops CLI",
+  "version": "1.9.5",
+  "description": "CLI package for the @esops ecosystem. See esops for more info.",
   "publishConfig": {
     "access": "public"
   },
-  "entry": "cli/index.js",
+  "bin": {
+    "esops-cli": "bin/esops"
+  },
+  "main": "index.js",
   "scripts": {
     "format": "prettier --write **/*.{js,json} && standard --fix",
     "lint": "standard",
@@ -16,18 +19,20 @@
   "files": [
     "LICENSE",
     "readme.md",
-    "docs",
     "bin",
-    "src"
+    "cli",
+    "docs",
+    "plugins"
   ],
   "license": "MIT",
   "dependencies": {
-    "@esops/publish-github-pages": "^1.6.2",
-    "@esops/target-react-native-web": "^1.6.2",
+    "@esops/logger": "^1.9.5",
+    "@esops/publish-github-pages": "^1.9.5",
+    "@esops/target-react-native-web": "^1.9.5",
     "gluegun": "^2.0.0-alpha.17"
   },
   "devDependencies": {
-    "@esops/eslint-config-contributor": "^1.6.1",
+    "@esops/eslint-config-contributor": "^1.8.1",
     "ava": "^0.22.0",
     "nyc": "^11.2.1"
   }

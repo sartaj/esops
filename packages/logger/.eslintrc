@@ -1,0 +1,3 @@
+{
+    "extends": "@esops/eslint-config-contributor"
+}

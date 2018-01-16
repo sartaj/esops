@@ -1,24 +1,29 @@
 const { build } = require('gluegun')
-const { initLogger } = require('@esops/utils-logger')
-const path = require('path')
+const { intercept } = require('@esops/logger')
+// const path = require('path')
 
 /**
  * Create the cli and kick it off
  */
 async function run(argv) {
-  initLogger()
+  // Begin log intercept
+  intercept.init()
 
-  const cli = build()
-    .brand('esops')
-    .src(`${__dirname}`)
-    .plugins(path.join(__dirname, '../plugins'))
-    .create()
+  // process.nextTick due to bug in prettyError when manually rendering
+  // source: https://github.com/AriaMinaei/pretty-error#troubleshooting
+  process.nextTick(async function() {
+    const cli = build()
+      .brand('esops')
+      .src(`${__dirname}`)
+      // .plugins(path.join(__dirname, './plugins'))
+      .create()
 
-  // and run it
-  const context = await cli.run(argv)
+    // and run it
+    const context = await cli.run(argv)
 
-  // send it back (for testing, mostly)
-  return context
+    // send it back (for testing, mostly)
+    return context
+  })
 }
 
 // eslint-disable-next-line

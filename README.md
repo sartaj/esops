@@ -11,7 +11,6 @@ Where something hasn't been automated, it will try to output documentation on wh
 ### Targets
 
 * Static Web App
-* Desktop Web App
 
 ### Publishers
 
@@ -73,6 +72,8 @@ This will attempt to publish to the GitHub Pages of the repo you are on.
 
 ## Roadmap
 
+*Backlog* 🗄 → *In Progress* ⏳ → *Testing* 🔬 → *Live* ✅ 
+
 ### Targets
 
 * React Native Web ✅
@@ -96,7 +97,7 @@ This will attempt to publish to the GitHub Pages of the repo you are on.
 ### Languages
 
 * ESNext JavaScript + Flow ✅
-* TypeScript 👩‍🔬
+* TypeScript 🔬
 * Elm 🗄
 
 ### Dev Ops Tools

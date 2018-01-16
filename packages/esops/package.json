@@ -1,9 +1,12 @@
 {
   "name": "esops",
-  "version": "1.6.2",
+  "version": "1.9.5",
   "description": "esops CLI",
   "bin": {
     "esops": "bin/esops"
+  },
+  "publishConfig": {
+    "access": "public"
   },
   "scripts": {
     "format": "prettier --write **/*.{js,json} && standard --fix",
@@ -15,15 +18,14 @@
   "files": [
     "LICENSE",
     "readme.md",
-    "docs",
-    "bin",
-    "src"
+    "bin"
   ],
   "license": "MIT",
   "dependencies": {
-    "@esops/cli": "^1.6.2"
+    "@esops/cli": "^1.9.5"
   },
   "devDependencies": {
-    "@esops/eslint-config-contributor": "^1.6.1"
+    "@esops/eslint-config-contributor": "^1.8.1",
+    "@esops/logger": "^1.9.5"
   }
 }
