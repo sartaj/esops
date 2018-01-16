@@ -1,12 +1,12 @@
 {
     "name": "@esops/publish-github-pages",
-    "version": "1.9.4",
+    "version": "1.9.5",
     "entry": "index.js",
     "publishConfig": {
         "access": "public"
     },
     "dependencies": {
-        "@esops/logger": "^1.9.4",
+        "@esops/logger": "^1.9.5",
         "branchsite": "^4.0.2",
         "gh-pages": "^1.1.0",
         "ghp": "^1.1.4",
