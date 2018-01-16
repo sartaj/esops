@@ -30,11 +30,18 @@ module.exports = async ({ cwd, buildPath }) => {
       },
       (err, data) => {
         if (err) reject(err)
-        else
+        else {
+          const publishedUrl = isUserPage ? `http://${repo}` : url
+
+          log.announce(`Your static app has bee successfully deployed.
+          ${publishedUrl}`)
+          log.carlton()
+
           resolve({
             message: 'success',
             url: isUserPage ? `http://${repo}` : url
           })
+        }
       }
     )
   })

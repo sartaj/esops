@@ -9,11 +9,11 @@ Make a simple website with free hosting.
 ## Commands
 
 ```bash
-    esops web static dev
+    esops dev static-github
 ```
 
 ```bash
-    esops web static ship
+    esops ship static-github
 ```
 
 ## Optional
