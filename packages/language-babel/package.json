@@ -1,6 +1,6 @@
 {
     "name": "@esops/language-babel",
-    "version": "1.10.0",
+    "version": "1.10.1",
     "entry": "./preset.js",
     "publishConfig": {
         "access": "public"
@@ -18,6 +18,6 @@
     },
     "devDependencies": {
         "@esops/eslint-config-contributor": "^1.8.1",
-        "@esops/logger": "^1.10.0"
+        "@esops/logger": "^1.10.1"
     }
 }
