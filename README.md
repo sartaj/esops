@@ -8,13 +8,8 @@ Where something hasn't been automated, it will try to output documentation on wh
 
 ## Support
 
-### Targets
-
-* Static Web App
-
-### Publishers
-
-* GitHub Pages
+* Web
+* Web → GitHub Pages
 
 ### Languages
 
@@ -25,6 +20,8 @@ Where something hasn't been automated, it will try to output documentation on wh
 
 * Local Node.js
 * Yarn
+
+### Requirement Notes
 
 User Interfaces are designed to be built on top of React Native, but don't require it for web and desktop-web.
 
@@ -57,7 +54,8 @@ From your package root, run the following:
 #### Develop
 
 ```bash
-esops web static dev
+esops dev web
+esops dev github-pages
 ```
 
 This will create the development package. It will look for a entry file either via the `package.json` or some common entry files, such as `index.js`, `src/index.js`, etc.
@@ -65,7 +63,7 @@ This will create the development package. It will look for a entry file either v
 #### Publish
 
 ```bash
-esops web static ship
+esops ship github-pages
 ```
 
 This will attempt to publish to the GitHub Pages of the repo you are on.
