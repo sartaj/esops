@@ -17,4 +17,4 @@ export const info = message => {
 }
 
 export { chalk } from 'chalk'
-export { trace, debug, warn } from './'
+export { trace, debug, warn, setLevel } from './'
