@@ -29,16 +29,16 @@ export const paths = ({ buildPath, buildDir, entryPath }) => ({
   context: __dirname
 })
 
-export const plugins = ({ buildPath, chunk }) => ([
-
+export const plugins = ({ buildPath, chunk }) => [
   new CleanWebpackPlugin([buildPath], { allowExternal: true, verbose: false }),
 
-  chunk ? new webpack.optimize.CommonsChunkPlugin({
-    name: 'vendor',
-    minChunks: 2
-  }) : () => {}
-
-])
+  chunk
+    ? new webpack.optimize.CommonsChunkPlugin({
+        name: 'vendor',
+        minChunks: 2
+      })
+    : () => {}
+]
 
 export const resolve = (packages, devMode) => {
   const hotReload = devMode ? 'webpack-hot-middleware/client?reload=true' : null
