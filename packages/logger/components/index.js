@@ -4,7 +4,7 @@ import log from 'loglevel'
 log.setLevel(0)
 
 export { announce } from './announce'
-export { image } from './image'
+export { image, carlton } from './image'
 export { md, mdFile } from './markdown'
 export { error } from './error'
 

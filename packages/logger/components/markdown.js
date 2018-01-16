@@ -4,11 +4,14 @@ import TerminalRenderer from 'marked-terminal'
 import { announce } from './announce'
 
 marked.setOptions({
-  renderer: new TerminalRenderer()
+  renderer: new TerminalRenderer(),
+  gfm: true
 })
 
 export const md = string => {
-  announce(marked(string), {
+  const mdString = marked(string).slice(0, -2) // slice is to remove created new-lines created by marked.
+
+  announce(mdString, {
     align: 'left',
     float: 'center',
     margin: 2,
