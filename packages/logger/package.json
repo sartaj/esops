@@ -13,6 +13,7 @@
         "test": "echo \"Maybe Later\""
     },
     "dependencies": {
+        "axios": "^0.17.1",
         "chalk": "^2.3.0",
         "draftlog": "^1.0.12",
         "imaging": "^2.1.2",

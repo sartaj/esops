@@ -1,5 +1,5 @@
 const { build } = require('gluegun')
-const { intercept } = require('@esops/logger')
+const log = require('@esops/logger')
 // const path = require('path')
 
 /**
@@ -7,7 +7,7 @@ const { intercept } = require('@esops/logger')
  */
 async function run(argv) {
   // Begin log intercept
-  intercept.init()
+  log.main.init()
 
   // process.nextTick due to bug in prettyError when manually rendering
   // source: https://github.com/AriaMinaei/pretty-error#troubleshooting

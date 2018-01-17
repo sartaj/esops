@@ -1,6 +1,5 @@
 import termImg from 'term-img'
 import path from 'path'
-import { announce } from './announce'
 
 export const image = (src, { alt, ...opts }) =>
   termImg(src, {
@@ -22,4 +21,4 @@ export const imageString = (src, { alt, ...opts }) =>
   })
 
 export const carlton = () =>
-  image(path.join(__dirname, 'carlton.gif'), { height: 8 })
+  image(path.join(__dirname, '../assets/carlton.gif'), { height: 8 })

@@ -1,5 +1,10 @@
 #!/usr/bin/env node
 require('@esops/language-babel/node')
 
+const sourceDir = `${__dirname}../cli`
+
+// load the entry point or die trying
+require(`${sourceDir}/lib/check.js`)
+
 // run the CLI with the current process arguments
-require('../cli')(process.argv)
+require(sourceDir)(process.argv)

@@ -29,7 +29,8 @@
     "@esops/logger": "^1.10.1",
     "@esops/publish-github-pages": "^1.10.1",
     "@esops/target-react-native-web": "^1.10.1",
-    "gluegun": "^2.0.0-alpha.17"
+    "gluegun": "^2.0.0-alpha.17",
+    "ramda": "^0.25.0"
   },
   "devDependencies": {
     "@esops/eslint-config-contributor": "^1.8.1",

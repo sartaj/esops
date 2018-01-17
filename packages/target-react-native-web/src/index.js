@@ -14,12 +14,24 @@ import log from '@esops/logger'
 const standardEntries = [
   'index.js',
   'entry.js',
+  'main.js',
+  'app.js',
   'src/index.js',
-  'src/main.js',
   'src/entry.js',
+  'src/main.js',
+  'src/app.js',
   'app/index.js',
+  'app/entry.js',
   'app/main.js',
-  'app/entry.js'
+  'app/app.js',
+  'main/index.js',
+  'main/entry.js',
+  'main/main.js',
+  'main/app.js',
+  'lib/index.js',
+  'lib/entry.js',
+  'lib/main.js',
+  'lib/app.js'
 ]
 
 const DEFAULT_LOGO_PATH = path.join(__dirname, '../template/icon.png')
@@ -76,14 +88,23 @@ export default async opts => {
   )
   const entryFile = entriesFound[0]
   if (!entryFile) {
-    log.md(`# Entry file not found.
+    const standardEntriesMd = standardEntries
+      .map(entry => `* \`${entry}\`\n`)
+      .reduce((acc, next) => `${acc}${next}`, '')
 
-## Acceptable entries
+    log.md(`# We can't seem to find an entry file.
+
+## Searched entries
 
 * \`package.json\` \`main\` property
-${standardEntries
-      .map(entry => `* \`${entry}\`\n`)
-      .reduce((acc, next) => `${acc}${next}`, '')}
+${standardEntriesMd}
+
+__
+
+## In Depth
+
+* [What is a entry file?](https://stackoverflow.com/a/32800097/2026639)
+
 `)
     process.exit(1)
   }
