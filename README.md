@@ -114,4 +114,4 @@ If you feel you are good to go to contribute, feel free to fork and do a pull re
 
 ### Apprenticeship
 
-If you have even basic designer, coding, or writing skills, and want experience within a real life open source project, please submit an issue with your desire and what you prefer. We want to teach and assist you in being able to contribute to this project. Our goal is that by the end of an apprenticeship, you'll feel comfortable contributing to a multitude of open source projects.
+If you are a beginner coder, designer, or writer, we want to help you grow your career by helping you learn the ins and outs of open source. For more info, see our [Apprenticeship Program](./apprenticeship.md).
