@@ -1,6 +1,6 @@
 {
     "name": "@esops/language-babel",
-    "version": "1.10.2",
+    "version": "1.10.3",
     "main": "./react-native.js",
     "publishConfig": {
         "access": "public"
@@ -19,6 +19,6 @@
     },
     "devDependencies": {
         "@esops/eslint-config-contributor": "^1.10.2",
-        "@esops/logger": "^1.10.2"
+        "@esops/logger": "^1.10.3"
     }
 }
