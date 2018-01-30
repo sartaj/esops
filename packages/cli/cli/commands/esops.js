@@ -1,7 +1,7 @@
 // eslint-disable-next-line
 
 const path = require('path')
-const target = require('@esops/target-react-native-web')
+const target = require('@esops/target-react-native-web').default
 const publishGHPages = require('@esops/publish-github-pages')
 const log = require('@esops/logger').default
 

@@ -1,13 +1,48 @@
 /* eslint-disable immutable/no-mutation, global-require, no-new-require, new-cap */
-const autoprefixer = require('autoprefixer')
-const ExtractTextPlugin = require('extract-text-webpack-plugin')
-
+import autoprefixer from 'autoprefixer'
+import ExtractTextPlugin from 'extract-text-webpack-plugin'
 // Note: defined here because it will be used more than once.
 const cssFilename = 'static/css/[name].[contenthash:8].css'
 
 // Making sure that the publicPath goes back to to build folder.
-const extractTextPluginOptions = { publicPath: Array(cssFilename.split('/').length).join('../') }
+const extractTextPluginOptions = {
+  publicPath: Array(cssFilename.split('/').length).join('../')
+}
 
+const extractedLoader = ExtractTextPlugin.extract({
+  fallback: require.resolve('style-loader'),
+  use: [
+    {
+      loader: require.resolve('css-loader'),
+      options: {
+        importLoaders: 1,
+        minimize: true,
+        sourceMap: true
+      }
+    },
+    {
+      loader: require.resolve('postcss-loader'),
+      options: {
+        // Necessary for external CSS imports to work
+        // https://github.com/facebookincubator/create-react-app/issues/2677
+        ident: 'postcss',
+        plugins: () => [
+          require('postcss-flexbugs-fixes'),
+          autoprefixer({
+            browsers: [
+              '>1%',
+              'last 4 versions',
+              'Firefox ESR',
+              'not ie < 9' // React doesn't support IE8 anyway
+            ],
+            flexbox: 'no-2009'
+          })
+        ]
+      }
+    }
+  ],
+  ...extractTextPluginOptions
+})
 // The notation here is somewhat confusing.
 // "postcss" loader applies autoprefixer to our CSS.
 // "css" loader resolves paths in CSS and adds assets as dependencies.
@@ -22,47 +57,12 @@ const extractTextPluginOptions = { publicPath: Array(cssFilename.split('/').leng
 // in the main CSS file.
 export const rules = {
   test: /\.(css|scss|sass)/,
-  loader: ExtractTextPlugin.extract(
-    {
-      fallback: require.resolve('style-loader'),
-      use: [
-        {
-          loader: require.resolve('css-loader'),
-          options: {
-            importLoaders: 1,
-            minimize: true,
-            sourceMap: true
-          }
-        },
-        {
-          loader: require.resolve('postcss-loader'),
-          options: {
-            // Necessary for external CSS imports to work
-            // https://github.com/facebookincubator/create-react-app/issues/2677
-            ident: 'postcss',
-            plugins: () => [
-              require('postcss-flexbugs-fixes'),
-              autoprefixer({
-                browsers: [
-                  '>1%',
-                  'last 4 versions',
-                  'Firefox ESR',
-                  'not ie < 9' // React doesn't support IE8 anyway
-                ],
-                flexbox: 'no-2009'
-              })
-            ]
-          }
-        }
-      ]
-    },
-    ...extractTextPluginOptions
-  )
+  loader: extractedLoader
   // Note: this won't work without `new ExtractTextPlugin()` in `plugins`.
 }
 
-export const plugins = () => ([
+export const plugins = () => [
   new ExtractTextPlugin({
     filename: cssFilename
   })
-])
+]

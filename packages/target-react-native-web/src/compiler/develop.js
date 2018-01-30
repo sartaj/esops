@@ -15,27 +15,25 @@ export const configDevMiddleware = (app, config, opts) => {
     contentBase: 'src',
     stats: {
       colors: true,
-      hash: false,
-      timings: true,
-      chunks: false,
-      chunkModules: false,
-      modules: false
+      timings: true
     }
   })
-
   app.use(middleware)
   app.use(webpackHotMiddleware(compiler))
   app.get('*', (req, res) => {
-    res.write(
-      middleware.fileSystem.readFileSync(
-        path.join(opts.buildPath, 'index.html')
-      )
-    )
+    console.log('GET', opts.buildPath)
+    // res.write(opts.buildPath)
+    // res.write(
+    //   middleware.fileSystem.readFileSync(
+    //     path.join(opts.buildPath, 'index.html')
+    //   )
+    // )
     res.end()
   })
 }
 
 export const configDeployedMiddleware = (app, opts) => {
+  console.log('CONFIG DEPLOYED')
   app.use(express.static(opts.buildPath))
   app.get('*', (req, res) => {
     res.sendFile(path.join(opts.buildPath, 'index.html'))
@@ -55,7 +53,12 @@ export default async function start(opts, webpackConfig) {
   const app = express()
 
   if (isDeveloping) configDevMiddleware(app, config, opts)
-  else configDeployedMiddleware(app, opts)
+  // else configDeployedMiddleware(app, opts)
+
+  app.get('/heartbeat', (req, res) => {
+    res.write('boop')
+    res.end()
+  })
 
   app.listen(port, 'localhost', err => {
     if (err) log.error(err)

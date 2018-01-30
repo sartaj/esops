@@ -68,38 +68,6 @@ esops ship github-pages
 
 This will attempt to publish to the GitHub Pages of the repo you are on.
 
-## Roadmap
+## More Info
 
-*Backlog* 🗄 → *In Progress* ⏳ → *Testing* 🔬 → *Live* ✅ 
-
-### Targets
-
-* React Native Web ✅
-* React Native Desktop ⏳
-* React Native iOS 🗄
-* React Native Android 🗄
-* Node Serverless 🗄
-* Node Server 🗄
-* Arduino Compatible Hardware 🗄
-
-### Publishers
-
-* GitHub Pages ✅
-* iOS App Store 🗄
-* Mac App Store 🗄
-* Google Play Store 🗄
-* NPM 🗄
-* AWS 🗄
-* IBM 🗄
-
-### Languages
-
-* ESNext JavaScript + Flow ✅
-* TypeScript 🔬
-* Elm 🗄
-
-### Dev Ops Tools
-
-* Linting Setup Assistance 🗄
-* CI Assistance 🗄
-* Pipeline/Git Assistance 🗄
+For more information, check out the [InDepth](InDepth.md) docs.

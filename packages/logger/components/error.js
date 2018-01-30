@@ -5,6 +5,7 @@ import { announce } from './announce'
 // Bug: https://github.com/AriaMinaei/pretty-error#troubleshooting
 const prettyError = new PrettyError()
   .skipNodeFiles()
+  .skipPackage('babel-cli', 'babel-register', 'gluegun')
   .appendStyle({
     // this is a simple selector to the element that says 'Error'
     'pretty-error > header': {
@@ -15,7 +16,6 @@ const prettyError = new PrettyError()
       color: 'bright-cyan'
     }
   })
-  .skipPackage('babel-cli', 'babel-polyfill', 'gluegun')
 
 export const renderError = message => {
   const stackTrace = prettyError.render(message)

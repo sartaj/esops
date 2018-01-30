@@ -1,5 +1,3 @@
-const preset = require('./preset');
-
-require('babel-register')(preset())
-
-require('babel-polyfill')
+require("babel-register")({
+  presets: [["latest-node", { target: "current" }]]
+});

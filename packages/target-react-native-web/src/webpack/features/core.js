@@ -3,7 +3,7 @@
 import webpack from 'webpack'
 import CleanWebpackPlugin from 'clean-webpack-plugin'
 
-export const paths = ({ buildPath, buildDir, entryPath }) => ({
+export const paths = ({ buildPath, entryPath }) => ({
   entry: {
     runner: ['babel-polyfill', entryPath].map(require.resolve)
   },
@@ -16,7 +16,7 @@ export const paths = ({ buildPath, buildDir, entryPath }) => ({
   },
 
   devServer: {
-    contentBase: buildDir
+    contentBase: buildPath
   },
 
   // Paths that can resolve in the require/import statements
@@ -29,15 +29,8 @@ export const paths = ({ buildPath, buildDir, entryPath }) => ({
   context: __dirname
 })
 
-export const plugins = ({ buildPath, chunk }) => [
-  new CleanWebpackPlugin([buildPath], { allowExternal: true, verbose: false }),
-
-  chunk
-    ? new webpack.optimize.CommonsChunkPlugin({
-        name: 'vendor',
-        minChunks: 2
-      })
-    : () => {}
+export const plugins = ({ buildPath }) => [
+  new CleanWebpackPlugin([buildPath], { allowExternal: true, verbose: false })
 ]
 
 export const resolve = (packages, devMode) => {

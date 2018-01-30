@@ -1,4 +1,5 @@
 /* eslint-disable import/prefer-default-export */
+const babelConfig = require('@esops/language-babel')()
 
 export const rules = {
   test: /\.jsx?$/,
@@ -6,7 +7,6 @@ export const rules = {
   query: {
     babelrc: false,
     compact: false,
-    presets: [require.resolve('@esops/language-babel/preset')],
-    plugins: [require.resolve('babel-plugin-react-native-web')]
+    ...babelConfig
   }
 }

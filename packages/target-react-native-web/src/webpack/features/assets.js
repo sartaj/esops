@@ -26,5 +26,24 @@ export const plugins = ({ logoPath }) => [
   new ManifestPlugin({
     fileName: 'asset-manifest.json'
   }),
-  logoPath ? new FaviconsWebpackPlugin(logoPath) : null
+  logoPath
+    ? new FaviconsWebpackPlugin({
+        logo: logoPath,
+        emitStats: true,
+        inject: true,
+        persistentCache: true,
+        icons: {
+          android: true,
+          appleIcon: true,
+          appleStartup: false,
+          coast: false,
+          favicons: true,
+          firefox: false,
+          opengraph: false,
+          twitter: false,
+          yandex: false,
+          windows: false
+        }
+      })
+    : null
 ]

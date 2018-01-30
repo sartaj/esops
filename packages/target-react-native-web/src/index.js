@@ -70,8 +70,8 @@ const checkConfig = async config => {
   // Logging to user
   console.log(
     config.devMode
-      ? 'starting dev environment...'
-      : 'create production distribution...'
+      ? 'starting development environment...'
+      : 'create release distribution...'
   )
   console.log(`Using package ${config.entryFile}`)
 }

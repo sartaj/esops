@@ -12,7 +12,6 @@ import * as html from './features/html'
 export default ({
   cwd,
   buildPath,
-  buildDir,
   devMode,
   indexHtmlPath,
   entryPath,
@@ -22,10 +21,10 @@ export default ({
   process.env.BABEL_ENV = devMode
   process.env.NODE_ENV = devMode
   /*eslint-enable*/
-
+  // console.log('SUH', css.rules)
   return {
     // Entry/output/resolve points
-    ...core.paths({ buildPath, buildDir, entryPath }),
+    ...core.paths({ buildPath, entryPath }),
 
     // Rules for different file types
     // module: { rules: utils.convertObjectToArray(rules) },
@@ -46,11 +45,11 @@ export default ({
 
     // Plugins to do extra things to the package
     plugins: [
-      ...core.plugins({ cwd, buildPath, chunk: true }),
+      ...core.plugins({ cwd, buildPath }),
       ...css.plugins(),
       ...html.plugins({ indexHtmlPath }),
       ...assets.plugins({ logoPath }),
-      ...(devMode ? devtools.plugins({ cwd, buildDir }) : [])
+      ...(devMode ? devtools.plugins({ cwd }) : [])
     ]
   }
 }
