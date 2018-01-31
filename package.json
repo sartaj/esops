@@ -2,7 +2,7 @@
   "private": true,
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/sartaj/esops.git"
+    "url": "git+https://github.com/esops/esops.git"
   },
   "bugs": {
     "url": "https://github.com/sartaj/devops-designer/issues"

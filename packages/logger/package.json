@@ -3,12 +3,12 @@
     "version": "1.10.3",
     "description": "Logging system for devops designer. Requires node environment.",
     "bugs": {
-        "url": "https://github.com/sartaj/esops/issues"
+        "url": "https://github.com/esops/esops/issues"
     },
     "publishConfig": {
         "access": "public"
     },
-    "homepage": "https://github.com/sartaj/esops#readme",
+    "homepage": "https://github.com/esops/esops#readme",
     "scripts": {
         "test": "echo \"Maybe Later\""
     },
