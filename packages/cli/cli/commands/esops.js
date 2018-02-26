@@ -1,18 +1,39 @@
 // eslint-disable-next-line
 
 const path = require('path')
-const target = require('@esops/target-react-native-web').default
+
+const lazyRequire = require('@esops/lazy-require')
+// const target = require('@esops/target-react-native-web')
 const publishGHPages = require('@esops/publish-github-pages')
 const log = require('@esops/logger').default
 
+// const installAssistant = ({ cwd, dependencies }) => {
+//   dependencies.forEach(dependency => {
+//     lazyRequire(dependency, { cwd })
+//   })
+// }
+
 const devStaticGithub = async context => {
   const { parameters, cwd } = context
-
+  // const dependencies = ['react']
+  // installAssistant({ dependencies, cwd })
   switch (parameters.second) {
     case 'web':
     case 'browser':
     case 'github-pages':
-      await target({ devMode: true, cwd })
+      // const target =
+      console.log('LAZY REQUIRE')
+      lazyRequire.sync(
+        '@esops/target-react-native-web',
+        {
+          dev: true
+        },
+        (err, target) => {
+          if (err) console.error(err)
+          console.log(target)
+        }
+      )
+      // await target.default({ devMode: true, cwd })
       break
     case 'help':
     default:

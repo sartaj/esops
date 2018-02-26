@@ -1,2 +1,2 @@
 #!/bin/bash
-yarn global add babel-cli
+# yarn global add babel-cli
