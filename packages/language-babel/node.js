@@ -1,5 +1,5 @@
-const preset = require('./preset');
+const preset = require('./preset')
 
-require('babel-register')(preset())
+require('@babel/register')(preset())
 
-require('babel-polyfill')
+require('@babel/polyfill')
