@@ -1,6 +1,6 @@
-import chalk from 'chalk'
-import PrettyError from 'pretty-error'
-import { announce } from './announce'
+const chalk = require('chalk')
+const PrettyError = require('pretty-error')
+const { announce } = require('./announce')
 
 // Bug: https://github.com/AriaMinaei/pretty-error#troubleshooting
 const prettyError = new PrettyError()
@@ -17,7 +17,7 @@ const prettyError = new PrettyError()
   })
   .skipPackage('babel-cli', 'babel-polyfill', 'gluegun')
 
-export const renderError = message => {
+const renderError = message => {
   const stackTrace = prettyError.render(message)
   const errorTemplate = `
   ${chalk.red('Oops.')} ${chalk.red(message)} 
@@ -33,7 +33,9 @@ export const renderError = message => {
   })
 }
 
-export const init = () => {
+module.exports.renderError = renderError
+
+module.exports.init = () => {
   process.on('uncaughtException', function(error) {
     renderError(error, prettyError)
   })
@@ -45,7 +47,7 @@ export const init = () => {
   })
 }
 
-export const error = message => {
+module.exports.error = message => {
   // process.nextTick(function() {
   throw new Error(message)
   // announce(errorTemplate(new Error(message)), {}, 'error')

@@ -1,14 +1,14 @@
-import fs from 'fs'
-import marked from 'marked'
-import TerminalRenderer from 'marked-terminal'
-import { announce } from './announce'
+const fs = require('fs')
+const marked = require('marked')
+const TerminalRenderer = require('marked-terminal')
+const { announce } = require('./announce')
 
 marked.setOptions({
   renderer: new TerminalRenderer(),
   gfm: true
 })
 
-export const md = string => {
+const md = string => {
   const mdString = marked(string).slice(0, -2) // slice is to remove created new-lines created by marked.
 
   announce(mdString, {
@@ -19,7 +19,9 @@ export const md = string => {
   })
 }
 
-export const mdFile = async path => {
+module.exports.md = md
+
+module.exports.mdFile = async path => {
   const str = fs.readFileSync(path, { encoding: 'utf-8' })
   md(str)
 }
