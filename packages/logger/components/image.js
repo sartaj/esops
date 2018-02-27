@@ -1,8 +1,7 @@
-import termImg from 'term-img'
-import path from 'path'
-import { announce } from './announce'
+const termImg = require('term-img')
+const path = require('path')
 
-export const image = (src, { alt, ...opts }) =>
+module.exports.image = (src, { alt, ...opts }) =>
   termImg(src, {
     ...opts,
     height: opts.height || 2,
@@ -14,12 +13,12 @@ export const image = (src, { alt, ...opts }) =>
         : () => {}
   })
 
-export const imageString = (src, { alt, ...opts }) =>
+module.exports.imageString = (src, { alt, ...opts }) =>
   termImg.string(src, {
     height: opts.height || 2,
     fallback: opts.alt ? () => alt : () => {},
     ...opts
   })
 
-export const carlton = () =>
+module.exports.carlton = () =>
   image(path.join(__dirname, 'carlton.gif'), { height: 8 })
