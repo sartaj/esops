@@ -1,9 +1,11 @@
 // eslint-disable-next-line
 
 const path = require('path')
-const target = require('@esops/target-react-native-web')
-const publishGHPages = require('@esops/publish-github-pages')
-const log = require('@esops/logger').default
+const target = require('@esops/target-react-native-web').default
+// const publishGHPages = require('@esops/publish-github-pages')
+const log = require('@esops/logger')
+
+const messages = require('../messages')
 
 const devStaticGithub = async context => {
   const { parameters, cwd } = context
@@ -16,14 +18,7 @@ const devStaticGithub = async context => {
       break
     case 'help':
     default:
-      log.md(`For \`esops dev\`, available commands are:
-
-## Web
-
-* \`esops dev web\`
-* \`esops dev github-pages\`
-
-`)
+      log.md(messages.webAvailableCommands)
   }
 }
 
