@@ -1,6 +1,6 @@
 {
     "name": "@esops/language-babel",
-    "version": "1.10.1",
+    "version": "1.11.0",
     "entry": "./index.js",
     "publishConfig": {
         "access": "public"
@@ -8,8 +8,8 @@
     "dependencies": {
         "@babel/core": "^7.0.0-beta.40",
         "@babel/plugin-proposal-pipeline-operator": "^7.0.0-beta.40",
-        "@babel/preset-flow": "^7.0.0-beta.40",
         "@babel/polyfill": "^7.0.0-beta.40",
+        "@babel/preset-flow": "^7.0.0-beta.40",
         "@babel/preset-stage-0": "^7.0.0-beta.40",
         "@babel/register": "^7.0.0-beta.40",
         "@babel/runtime": "^7.0.0-beta.40",
@@ -17,6 +17,6 @@
     },
     "devDependencies": {
         "@esops/eslint-config-contributor": "^1.8.1",
-        "@esops/logger": "^1.10.1"
+        "@esops/logger": "^1.11.0"
     }
 }
