@@ -2,7 +2,7 @@ import * as core from './features/core'
 import * as devtools from './features/devtools'
 import * as javascript from './features/javascript'
 import * as typescript from './features/typescript'
-import * as css from './features/css'
+// import * as css from './features/css'
 import * as assets from './features/assets'
 import * as html from './features/html'
 
@@ -36,7 +36,7 @@ export default ({
             assets.urls,
             javascript.rules,
             typescript.rules,
-            css.rules,
+            // css.rules,
             assets.files // Defined last to be a catch all for if above files fail
             // WARNING: Don't add rules below assets.files. Add above.
           ]
@@ -47,7 +47,7 @@ export default ({
     // Plugins to do extra things to the package
     plugins: [
       ...core.plugins({ cwd, buildPath, chunk: true }),
-      ...css.plugins(),
+      // ...css.plugins(),
       ...html.plugins({ indexHtmlPath }),
       ...assets.plugins({ logoPath }),
       ...(devMode ? devtools.plugins({ cwd, buildDir }) : [])

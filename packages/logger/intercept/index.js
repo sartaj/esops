@@ -1,7 +1,7 @@
-// import intercept from 'intercept-stdout'
-import * as errorHandler from '../components/Error'
+// const intercept = require 'intercept-stdout'
+const errorHandler = require('../components/Error')
 
-export const init = () => {
+module.exports.init = () => {
   // To render exceptions thrown in non-promies code:
   errorHandler.init()
   // Setup prettyError, which the intercept above uses to render errors.

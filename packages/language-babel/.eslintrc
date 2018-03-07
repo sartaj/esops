@@ -1,0 +1,6 @@
+{
+  "extends": "@esops/eslint-config-contributor",
+  "rules": {
+    "immutable/no-mutation": 0
+  }
+}

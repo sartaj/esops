@@ -33,7 +33,6 @@
   },
   "devDependencies": {
     "@esops/eslint-config-contributor": "^1.8.1",
-    "ava": "^0.22.0",
     "nyc": "^11.2.1"
   }
 }
