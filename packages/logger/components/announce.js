@@ -1,8 +1,8 @@
-import boxen from 'boxen'
-import log from 'loglevel'
-import wrapAnsi from 'wrap-ansi'
+const boxen = require('boxen')
+const log = require('loglevel')
+const wrapAnsi = require('wrap-ansi')
 
-export const announce = (string, opts, type = 'info') => {
+module.exports.announce = (string, opts, type = 'info') => {
   log[type](
     boxen(wrapAnsi(string, 80), {
       padding: 1,
