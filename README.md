@@ -103,3 +103,15 @@ This will attempt to publish to the GitHub Pages of the repo you are on.
 * Linting Setup Assistance 🗄
 * CI Assistance 🗄
 * Pipeline/Git Assistance 🗄
+
+## Contribute / Apprenticeship
+
+We would like to make esops a fully baked experience, full of useful docs, errors, and assistance. In order to do this, we believe we will need more than just experienced coders. We will need graphic designers, entry level coders, writers, etc.
+
+### Contribute
+
+If you feel you are good to go to contribute, feel free to fork and do a pull request.
+
+### Apprenticeship
+
+If you are a beginner coder, designer, or writer, we want to help you grow your career by helping you learn the ins and outs of open source. For more info, see our [Apprenticeship Program](./apprenticeship.md).
