@@ -6,6 +6,17 @@
     "access": "public"
   },
   "scripts": {
-    "test": "echo \"Maybe Later\""
+    "test": "echo \"Maybe Later\"",
+    "start-main-dev": "npx cross-env HOT=1 NODE_ENV=development electron ./main.electron.js",
+    "start-renderer-dev": "cross-env NODE_ENV=development node --trace-warnings -r babel-register ./node_modules/webpack-dev-server/bin/webpack-dev-server --config webpack.config.renderer.dev.js",
+    "dev": "cross-env START_HOT=1 npm run start-renderer-dev"
+  },
+  "devDependencies": {
+    "@esops/eslint-config-contributor": "^1.11.1"
+  },
+  "dependencies": {
+    "@esops/target-react-native-web": "^1.11.1",
+    "cross-env": "^5.1.3",
+    "electron": "^1.8.3"
   }
 }

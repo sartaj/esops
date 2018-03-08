@@ -15,7 +15,7 @@ const prettyError = new PrettyError()
       color: 'bright-cyan'
     }
   })
-  .skipPackage('babel-cli', 'babel-polyfill', 'gluegun')
+  .skipPackage('babel-cli', 'babel-polyfill', 'gluegun', 'pirates')
 
 const renderError = message => {
   const stackTrace = prettyError.render(message)
