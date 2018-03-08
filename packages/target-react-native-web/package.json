@@ -1,6 +1,6 @@
 {
   "name": "@esops/target-react-native-web",
-  "version": "1.11.1",
+  "version": "1.11.2",
   "main": "./lib/index.js",
   "publishConfig": {
     "access": "public"
@@ -10,7 +10,7 @@
     "build": "babel src --out-dir lib"
   },
   "dependencies": {
-    "@esops/language-babel": "^1.11.1",
+    "@esops/language-babel": "^1.11.2",
     "@esops/logger": "^1.11.1",
     "autoprefixer": "^7.1.5",
     "awaiting": "^3.0.0",
