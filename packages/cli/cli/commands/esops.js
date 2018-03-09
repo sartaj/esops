@@ -2,7 +2,8 @@
 
 const path = require('path')
 const target = require('@esops/target-react-native-web').default
-// const publishGHPages = require('@esops/publish-github-pages')
+const targetDesktop = require('@esops/target-react-native-electron')
+const publishGHPages = require('@esops/publish-github-pages')
 const log = require('@esops/logger')
 
 const messages = require('../messages')
@@ -15,6 +16,9 @@ const devStaticGithub = async context => {
     case 'browser':
     case 'github-pages':
       await target({ devMode: true, cwd })
+      break
+    case 'desktop':
+      await targetDesktop({ devMode: true, cwd })
       break
     case 'help':
     default:
