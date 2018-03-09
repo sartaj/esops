@@ -29,6 +29,7 @@
     "@esops/logger": "^1.12.0",
     "@esops/publish-github-pages": "^1.12.0",
     "@esops/target-react-native-web": "^1.12.0",
+    "@esops/target-react-native-electron": "^1.12.0",
     "gluegun": "^2.0.0-alpha.17"
   },
   "devDependencies": {
