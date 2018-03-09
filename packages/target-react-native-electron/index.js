@@ -1,16 +1,17 @@
-const webpack = require('@esops/target-react-native-web').default
+const target = require('@esops/target-react-native-web').default
 const { spawn } = require('child_process')
 
-module.exports = opts => {
-  webpack(opts)
-
-  console.log('Starting Main Process...')
+module.exports = async opts => {
+  await target(opts)
   spawn('npm', ['run', 'start-main-dev'], {
     shell: true,
-    cwd: __dirname,
-    env: process.env,
-    stdio: 'inherit'
+    env: {
+      ESOPS: JSON.stringify(opts),
+      ...process.env
+    },
+    stdio: 'inherit',
+    cwd: __dirname
   })
-    .on('close', code => process.exit(code))
+    .on('close', code => process.exit(0))
     .on('error', spawnError => console.error(spawnError))
 }
