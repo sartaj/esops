@@ -2,10 +2,33 @@
 
 // Import parts of electron to use
 const electron = require('electron')
+const electronReload = require('./electron-reload')
 const { app, BrowserWindow } = electron
 const path = require('path')
 const url = require('url')
 const fs = require('fs')
+
+// This method will be called when Electron has finished
+// initialization and is ready to create browser windows.
+// Some APIs can only be used after this event occurs.
+app.on('ready', createWindow)
+
+// Quit when all windows are closed.
+app.on('window-all-closed', () => {
+  // On macOS it is common for applications and their menu bar
+  // to stay active until the user quits explicitly with Cmd + Q
+  if (process.platform !== 'darwin') {
+    app.quit()
+  }
+})
+
+app.on('activate', () => {
+  // On macOS it's common to re-create a window in the app when the
+  // dock icon is clicked and there are no other windows open.
+  if (mainWindow === null) {
+    createWindow()
+  }
+})
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -16,19 +39,28 @@ function createWindow() {
   const opts = JSON.parse(process.env.ESOPS)
   const { cwd, devMode } = opts
 
+  const electronPath = path.join(__dirname, 'node_modules', '.bin', 'electron')
+  electronReload([cwd, __dirname], {
+    // Note that the path to electron may vary according to the main file
+    electron: electronPath
+  })
+
   const desktopFilePath = path.join(cwd, 'target/main.desktop.js')
   const desktopTargetFileFound = fs.existsSync(desktopFilePath)
 
   // Create the browser window.
   mainWindow = new BrowserWindow({
-    width: 1024,
-    height: 768,
+    width: 1000,
+    minHeight: 563,
+    minWidth: 1000,
+    height: 563,
     show: false
   })
-  console.log(desktopTargetFileFound)
+
   if (desktopTargetFileFound) {
     const userMain = require(desktopFilePath)
-    userMain({ electron, mainWindow, esops: opts })
+    const userExportFunc = userMain.default || userMain
+    userExportFunc({ electron, mainWindow, esops: opts })
   }
 
   // and load the index.html of the app.
@@ -64,25 +96,3 @@ function createWindow() {
     mainWindow = null
   })
 }
-
-// This method will be called when Electron has finished
-// initialization and is ready to create browser windows.
-// Some APIs can only be used after this event occurs.
-app.on('ready', createWindow)
-
-// Quit when all windows are closed.
-app.on('window-all-closed', () => {
-  // On macOS it is common for applications and their menu bar
-  // to stay active until the user quits explicitly with Cmd + Q
-  if (process.platform !== 'darwin') {
-    app.quit()
-  }
-})
-
-app.on('activate', () => {
-  // On macOS it's common to re-create a window in the app when the
-  // dock icon is clicked and there are no other windows open.
-  if (mainWindow === null) {
-    createWindow()
-  }
-})

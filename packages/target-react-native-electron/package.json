@@ -6,9 +6,7 @@
     "access": "public"
   },
   "scripts": {
-    "dev": "electron-webpack dev",
     "start-main-dev": "electron ./main",
-    "compile": "electron-webpack",
     "dist": "yarn compile && electron-builder",
     "dist:dir": "yarn dist --dir -c.compression=store -c.mac.identity=null"
   },
@@ -16,7 +14,9 @@
     "@esops/eslint-config-contributor": "^1.12.0"
   },
   "dependencies": {
+    "@esops/language-babel": "^1.12.0",
     "@esops/target-react-native-web": "^1.12.0",
+    "chokidar": "^2.0.2",
     "cross-env": "^5.1.3",
     "electron": "^1.8.3",
     "electron-builder": "^20.4.0"

@@ -49,7 +49,7 @@ export default ({
       ...core.plugins({ cwd, buildPath, chunk: true }),
       // ...css.plugins(),
       ...html.plugins({ indexHtmlPath }),
-      ...assets.plugins({ logoPath }),
+      // ...assets.plugins({ logoPath }),
       ...(devMode ? devtools.plugins({ cwd, buildDir }) : [])
     ]
   }

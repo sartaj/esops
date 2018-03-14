@@ -62,9 +62,8 @@ var _default = ({
     }), // ...css.plugins(),
     ...html.plugins({
       indexHtmlPath
-    }), ...assets.plugins({
-      logoPath
-    }), ...(devMode ? devtools.plugins({
+    }), // ...assets.plugins({ logoPath }),
+    ...(devMode ? devtools.plugins({
       cwd,
       buildDir
     }) : [])]
