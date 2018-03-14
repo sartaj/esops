@@ -38,12 +38,14 @@ var _default = ({
   process.env.NODE_ENV = devMode;
   /*eslint-enable*/
 
+  console.log('RENDER ELECTRON');
   return { // Entry/output/resolve points
     ...core.paths({
       buildPath,
       buildDir,
       entryPath
     }),
+    target: 'electron-renderer',
     // Rules for different file types
     // module: { rules: utils.convertObjectToArray(rules) },
     module: {
