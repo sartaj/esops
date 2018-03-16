@@ -21,8 +21,8 @@ export default ({
   /*eslint-disable*/
   process.env.BABEL_ENV = devMode
   process.env.NODE_ENV = devMode
+
   /*eslint-enable*/
-  console.log('RENDER ELECTRON')
   return {
     // Entry/output/resolve points
     ...core.paths({ buildPath, buildDir, entryPath }),
