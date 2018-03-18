@@ -11,7 +11,8 @@
     "watch": "babel src --out-dir lib --watch"
   },
   "files": [
-    "lib"
+    "lib",
+    "template"
   ],
   "dependencies": {
     "@esops/language-babel": "^1.12.2",
