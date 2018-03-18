@@ -1,6 +1,6 @@
 {
   "name": "@esops/target-react-native-web",
-  "version": "1.12.4",
+  "version": "1.12.6",
   "main": "./lib/index.js",
   "publishConfig": {
     "access": "public"

@@ -1,6 +1,6 @@
 {
   "name": "@esops/cli",
-  "version": "1.12.5",
+  "version": "1.12.6",
   "description": "CLI package for the @esops ecosystem. See esops for more info.",
   "publishConfig": {
     "access": "public"
@@ -25,8 +25,8 @@
   "dependencies": {
     "@esops/logger": "^1.12.0",
     "@esops/publish-github-pages": "^1.12.0",
-    "@esops/target-react-native-electron": "^1.12.4",
-    "@esops/target-react-native-web": "^1.12.4",
+    "@esops/target-react-native-electron": "^1.12.6",
+    "@esops/target-react-native-web": "^1.12.6",
     "apisauce": "^0.14.3",
     "cross-spawn": "^6.0.5",
     "execa": "^0.10.0",
