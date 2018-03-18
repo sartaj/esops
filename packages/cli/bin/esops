@@ -1,5 +1,2 @@
 #!/usr/bin/env node
-require('@esops/language-babel/node')
-
-// run the CLI with the current process arguments
-require('../cli')(process.argv)
+require('../lib')(process.argv)
