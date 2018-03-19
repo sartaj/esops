@@ -1,8 +1,14 @@
 const target = require('@esops/target-react-native-web').default
+const createWebpackConfig = require('./webpack.dev.electron-renderer')
+
 const { spawn } = require('child_process')
 
 module.exports = async opts => {
-  await target(opts)
+  const webpackConfig = createWebpackConfig(opts)
+  const url = await target({
+    webpackConfig,
+    ...opts
+  })
   spawn('npm', ['run', 'start-main-dev'], {
     shell: true,
     env: {
@@ -14,4 +20,5 @@ module.exports = async opts => {
   })
     .on('close', code => process.exit(0))
     .on('error', spawnError => console.error(spawnError))
+  return url
 }

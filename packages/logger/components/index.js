@@ -10,6 +10,9 @@ module.exports.md = require('./markdown').md
 module.exports.mdFile = require('./markdown').mdFile
 module.exports.error = require('./error')
 
+// TODO: Abstract to @esops/paths
+module.exports.paths = require('./paths')
+
 const logo = () => chalk.blue.bold.dim(`esops`)
 
 module.exports.logo = logo

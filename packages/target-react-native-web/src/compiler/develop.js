@@ -8,10 +8,10 @@ import webpackHotMiddleware from 'webpack-hot-middleware'
 
 import log from '@esops/logger'
 
-export const configDevMiddleware = (app, config, opts) => {
+export const configDevMiddleware = ({ app, config, cwd, publicPath }) => {
   const compiler = webpack(config)
   const middleware = webpackMiddleware(compiler, {
-    publicPath: config.output.cwd,
+    publicPath: publicPath,
     contentBase: 'src',
     stats: {
       colors: true,
@@ -25,44 +25,36 @@ export const configDevMiddleware = (app, config, opts) => {
 
   app.use(middleware)
   app.use(webpackHotMiddleware(compiler))
+  app.use(express.static(config.output.path))
+  console.log(middleware.fileSystem.publicPath)
   app.get('*', (req, res) => {
     res.write(
       middleware.fileSystem.readFileSync(
-        path.join(opts.buildPath, 'index.html')
+        path.join(config.output.path, 'index.html')
       )
     )
     res.end()
   })
 }
 
-export const configDeployedMiddleware = (app, opts) => {
-  app.use(express.static(opts.buildPath))
-  app.get('*', (req, res) => {
-    res.sendFile(path.join(opts.buildPath, 'index.html'))
-  })
-}
-const serverBox = port =>
-  `🌎  Your static web dev environment is live! 🌎
-http://localhost:${port}
-Please open this link in your browser 
-to begin initial build.`
-
-export default async function start(opts, webpackConfig) {
-  const { port } = opts
+export default async function start(
+  webpackConfig,
+  { port, devMode, cwd, publicPath }
+) {
   const config = webpackConfig
-  const isDeveloping = opts.devMode
-
+  console.log('config', config.output.path)
   const app = express()
 
-  if (isDeveloping) configDevMiddleware(app, config, opts)
-  else configDeployedMiddleware(app, opts)
+  configDevMiddleware({ app, config, cwd, publicPath })
 
-  app.listen(port, 'localhost', err => {
-    if (err) log.error(err)
-    else {
-      // carlton()
-      log.announce(serverBox(port))
-    }
+  return new Promise((resolve, reject) => {
+    app.listen(port, 'localhost', err => {
+      if (err) log.error(err)
+      else {
+        resolve(publicPath)
+        // carlton()
+        // log.announce(serverBox(port))
+      }
+    })
   })
-  return app
 }

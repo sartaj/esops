@@ -9,11 +9,6 @@
     "access": "public"
   },
   "scripts": {
-    "format": "prettier --write **/*.{js,json} && standard --fix",
-    "lint": "standard",
-    "test": "ava",
-    "watch": "ava --watch",
-    "coverage": "nyc ava"
   },
   "files": [
     "LICENSE",

@@ -12,6 +12,9 @@
   "scripts": {
     "ship:npm": "lerna publish --ignore=@esops/eslint-config-contributor",
     "test": "lerna run test",
+    "build": "lerna run build",
+    "watch": "lerna run --parallel watch",
+    "prepublish": "lerna run build",
     "reset":
       "yarn reset:node-modules && yarn reset:logs && yarn reset:dist && yarn reset:yarn && yarn reset:npm && yarn reset:links",
     "reset:node-modules":

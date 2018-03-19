@@ -5,6 +5,14 @@ const targetWeb = require('@esops/target-react-native-web').default
 const targetDesktop = require('@esops/target-react-native-electron')
 const publishGHPages = require('@esops/publish-github-pages')
 
+const webDevBox = publicPath =>
+  `🌎  Your static web dev environment is live! 🌎
+${publicPath}
+Please open this link in your browser 
+to begin initial build.`
+
+const desktopDevBox = publicPath =>
+  `🌎  Your desktop dev environment is loading... 🌎`
 /**
  * Create the cli and kick it off
  */
@@ -15,18 +23,21 @@ async function run(argv) {
   // Begin log intercept
   intercept.init()
 
+  let url
   switch (statement) {
     case 'dev web':
     case 'web dev':
     case 'dev github-pages':
     case 'github-pages dev':
-      await targetWeb({ devMode: true, cwd })
+      url = await targetWeb({ devMode: true, cwd })
+      log.announce(webDevBox(url))
       break
     case 'dev desktop':
     case 'desktop dev':
     case 'dev electron':
     case 'electron dev':
-      await targetDesktop({ devMode: true, cwd })
+      url = await targetDesktop({ devMode: true, cwd })
+      log.announce(desktopDevBox(url))
       break
     case 'ship':
     case 'ship github-pages':

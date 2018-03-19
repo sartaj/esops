@@ -3,7 +3,7 @@
 import webpack from 'webpack'
 import CleanWebpackPlugin from 'clean-webpack-plugin'
 
-export const paths = ({ buildPath, buildDir, entryPath }) => ({
+export const paths = ({ buildPath, buildDir, entryPath, publicPath }) => ({
   entry: {
     runner: ['@esops/language-babel/polyfill', entryPath].map(require.resolve)
   },
