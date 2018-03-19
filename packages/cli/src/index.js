@@ -44,7 +44,7 @@ async function run(argv) {
     case 'dev electron':
     case 'electron dev':
       const targetDesktop = await requireLazy(
-        '@esops/target-react-native-desktop',
+        '@esops/target-react-native-electron',
         { cwd, dev: true }
       )
       url = await targetDesktop({ devMode: true, cwd })
