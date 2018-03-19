@@ -26,7 +26,6 @@ export const configDevMiddleware = ({ app, config, cwd, publicPath }) => {
   app.use(middleware)
   app.use(webpackHotMiddleware(compiler))
   app.use(express.static(config.output.path))
-  console.log(middleware.fileSystem.publicPath)
   app.get('*', (req, res) => {
     res.write(
       middleware.fileSystem.readFileSync(
@@ -42,7 +41,6 @@ export default async function start(
   { port, devMode, cwd, publicPath }
 ) {
   const config = webpackConfig
-  console.log('config', config.output.path)
   const app = express()
 
   configDevMiddleware({ app, config, cwd, publicPath })

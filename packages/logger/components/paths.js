@@ -3,6 +3,7 @@
 const fs = require('fs')
 const path = require('path')
 const { md } = require('./markdown')
+const { announce } = require('./announce')
 
 const findInArray = (array, test) =>
   array.reduce((acc, next) => (test(next) ? [...acc, next] : acc), [])
@@ -31,6 +32,6 @@ module.exports.findEntryFile = (cwd, standardEntries) => {
   // } catch (err) {
   //   if (err && err.code !== 'EEXIST') console.error(err)
   // }
-  console.log(`Using package ${entryFile}`)
+  announce(`Entry File: ${entryFile}`)
   return entryFile
 }

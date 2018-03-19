@@ -1,9 +1,11 @@
-const log = require('@esops/logger')
-const { intercept } = require('@esops/logger')
-const path = require('path')
-const targetWeb = require('@esops/target-react-native-web').default
-const targetDesktop = require('@esops/target-react-native-electron')
-const publishGHPages = require('@esops/publish-github-pages')
+import log, { intercept } from '@esops/logger'
+import path from 'path'
+
+import requireLazy from './require-lazy'
+
+// const targetWeb = require('@esops/target-react-native-web').default
+// const targetDesktop = require('@esops/target-react-native-electron')
+// const publishGHPages = require('@esops/publish-github-pages')
 
 const webDevBox = publicPath =>
   `🌎  Your static web dev environment is live! 🌎
@@ -24,18 +26,27 @@ async function run(argv) {
   intercept.init()
 
   let url
+  let target
   switch (statement) {
     case 'dev web':
     case 'web dev':
     case 'dev github-pages':
     case 'github-pages dev':
-      url = await targetWeb({ devMode: true, cwd })
+      target = await requireLazy('@esops/target-react-native-web', {
+        cwd,
+        dev: true
+      })
+      url = await target.default({ devMode: true, cwd })
       log.announce(webDevBox(url))
       break
     case 'dev desktop':
     case 'desktop dev':
     case 'dev electron':
     case 'electron dev':
+      const targetDesktop = await requireLazy(
+        '@esops/target-react-native-desktop',
+        { cwd, dev: true }
+      )
       url = await targetDesktop({ devMode: true, cwd })
       log.announce(desktopDevBox(url))
       break
@@ -45,8 +56,9 @@ async function run(argv) {
         devMode: false,
         buildPath: path.join(cwd, './.esops/target/web/dist')
       }
-      await targetWeb(distribution)
-      await publishGHPages({ cwd, ...distribution })
+      target = await requireLazy('@esops/target-react-native-web')
+      await target.default(distribution)
+      // await publishGHPages({ cwd, ...distribution })
       break
     case 'help':
     case undefined:
