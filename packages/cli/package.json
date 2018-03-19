@@ -1,6 +1,6 @@
 {
   "name": "@esops/cli",
-  "version": "1.12.6",
+  "version": "1.12.7",
   "description": "CLI package for the @esops ecosystem. See esops for more info.",
   "publishConfig": {
     "access": "public"
@@ -23,10 +23,10 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "@esops/logger": "^1.12.0",
-    "@esops/publish-github-pages": "^1.12.0",
-    "@esops/target-react-native-electron": "^1.12.6",
-    "@esops/target-react-native-web": "^1.12.6",
+    "@esops/logger": "^1.12.7",
+    "@esops/publish-github-pages": "^1.12.7",
+    "@esops/target-react-native-electron": "^1.12.7",
+    "@esops/target-react-native-web": "^1.12.7",
     "apisauce": "^0.14.3",
     "cross-spawn": "^6.0.5",
     "execa": "^0.10.0",
@@ -38,6 +38,6 @@
     "@babel/cli": "7.0.0-beta.40",
     "@babel/core": "7.0.0-beta.40",
     "@babel/preset-env": "7.0.0-beta.40",
-    "@esops/eslint-config-contributor": "^1.12.0"
+    "@esops/eslint-config-contributor": "^1.12.7"
   }
 }
