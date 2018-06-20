@@ -10,7 +10,7 @@
   "author": "Sartaj <sartaj@sartaj.me>",
   "license": "see LICENSE in LICENSE",
   "scripts": {
-    "ship:npm": "lerna publish --ignore=@esops/eslint-config-contributor",
+    "ship": "echo 'please globally run `lerna publish` to prevent npm auth issues'",
     "test": "lerna run test",
     "build": "lerna run build",
     "watch": "lerna run --parallel watch",
