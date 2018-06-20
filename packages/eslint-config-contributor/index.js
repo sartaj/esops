@@ -8,7 +8,7 @@ module.exports = {
     'plugin:react/recommended',
     'plugin:react-native/all',
     'plugin:jest/recommended',
-    // 'prettier',
+    'prettier',
     'prettier/flowtype',
     'prettier/react',
     'prettier/standard'
@@ -30,15 +30,7 @@ module.exports = {
   rules: {
     'immutable/no-let': 2,
     'immutable/no-this': 2,
-    'immutable/no-mutation': 2,
-    'prettier/prettier': [
-      'error',
-      {
-        singleQuote: true,
-        tabWidth: 2,
-        semi: false
-      }
-    ]
+    'immutable/no-mutation': 2
   }
 }
 
