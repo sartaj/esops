@@ -1,2 +1,2 @@
 /* eslint-disable */
-module.exports = require('@esops/eslint-config-contributor').prettier
+module.exports = require('@esops/eslint-config-contributor/prettier.config')
