@@ -32,10 +32,6 @@ module.exports = {
     'immutable/no-this': 2,
     'immutable/no-mutation': 2,
     'operator-linebreak': ['error', 'before'],
-    'prettier/prettier': {
-      singleQuote: true,
-      tabWidth: 2,
-      semi: false
-    }
+    'prettier/prettier': 'error'
   }
 }
