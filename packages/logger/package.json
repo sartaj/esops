@@ -1,6 +1,6 @@
 {
     "name": "@esops/logger",
-    "version": "1.14.8",
+    "version": "1.14.9",
     "description": "Logging system for devops designer. Requires node environment.",
     "bugs": {
         "url": "https://github.com/sartaj/esops/issues"
@@ -24,6 +24,6 @@
         "wrap-ansi": "^3.0.1"
     },
     "devDependencies": {
-        "@esops/eslint-config-contributor": "^1.14.8"
+        "@esops/eslint-config-contributor": "^1.14.9"
     }
 }
