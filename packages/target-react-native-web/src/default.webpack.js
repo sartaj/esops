@@ -34,10 +34,10 @@ const defaultWebpackOpts = {
  * Generates webpack config from preferences
  */
 export default ({ cwd, devMode }) => {
-  /*eslint-disable*/
+  /* eslint-disable */
   process.env.BABEL_ENV = devMode
   process.env.NODE_ENV = devMode
-  /*eslint-enable*/
+  /* eslint-enable */
 
   const { indexHtmlPath, buildDir } = defaultWebpackOpts
   const entryFile = paths.findEntryFile(cwd, standardEntries)
