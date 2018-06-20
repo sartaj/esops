@@ -1,6 +1,6 @@
 {
   "name": "@esops/target-react-native-web",
-  "version": "1.13.2",
+  "version": "1.14.0",
   "main": "./lib/index.js",
   "publishConfig": {
     "access": "public"
@@ -15,8 +15,8 @@
     "template"
   ],
   "dependencies": {
-    "@esops/language-babel": "^1.13.2",
-    "@esops/logger": "^1.13.2",
+    "@esops/language-babel": "^1.14.0",
+    "@esops/logger": "^1.14.0",
     "autoprefixer": "^8.6.3",
     "awaiting": "^3.0.0",
     "babel-loader": "8.0.0-beta.0",
@@ -53,6 +53,6 @@
     "@babel/cli": "7.0.0-beta.51",
     "@babel/core": "7.0.0-beta.51",
     "@babel/preset-env": "7.0.0-beta.51",
-    "@esops/eslint-config-contributor": "^1.13.2"
+    "@esops/eslint-config-contributor": "^1.14.0"
   }
 }
