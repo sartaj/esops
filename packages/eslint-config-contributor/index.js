@@ -8,17 +8,17 @@ module.exports = {
     'plugin:react/recommended',
     'plugin:react-native/all',
     'plugin:jest/recommended',
-    'plugin:prettier',
-    'plugin:prettier/flowtype',
-    'plugin:prettier/react',
-    'plugin:prettier/standard'
+    // 'plugin:prettier',
+    // 'plugin:prettier/flowtype',
+    // 'plugin:prettier/react',
+    // 'plugin:prettier/standard'
   ],
   plugins: [
     'flowtype',
     'react',
     'react-native',
     'immutable',
-    'prettier',
+    // 'prettier',
     'standard'
   ],
   parser: 'babel-eslint',
