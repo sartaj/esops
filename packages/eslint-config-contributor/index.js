@@ -8,7 +8,7 @@ module.exports = {
     'plugin:react/recommended',
     'plugin:react-native/all',
     'plugin:jest/recommended',
-    'prettier',
+    // 'prettier',
     'prettier/flowtype',
     'prettier/react',
     'prettier/standard'

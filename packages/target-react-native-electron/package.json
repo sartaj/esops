@@ -16,8 +16,8 @@
   "dependencies": {
     "@esops/language-babel": "^1.13.2",
     "@esops/target-react-native-web": "^1.13.2",
-    "chokidar": "^2.0.2",
-    "cross-env": "^5.1.3",
+    "chokidar": "^2.0.4",
+    "cross-env": "^5.2.0",
     "electron": "^1.8.3",
     "electron-builder": "^20.4.0"
   }

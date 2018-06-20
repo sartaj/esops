@@ -8,8 +8,8 @@
     "dependencies": {
         "@esops/logger": "^1.13.2",
         "branchsite": "^4.0.2",
-        "gh-pages": "^1.1.0",
-        "ghp": "^1.1.4",
+        "gh-pages": "^1.2.0",
+        "ghp": "^1.3.1",
         "git-url-parse": "^7.0.2",
         "parse-git-config": "^1.1.1"
     },

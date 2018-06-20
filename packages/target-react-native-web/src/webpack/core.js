@@ -12,7 +12,8 @@ export const paths = ({ buildPath, buildDir, entryPath, publicPath }) => ({
     filename: 'static/js/[name].[hash].js',
     library: ['[name]'],
     libraryTarget: 'umd',
-    path: buildPath
+    path: buildPath,
+    publicPath: '/'
   },
 
   devServer: {
@@ -29,15 +30,8 @@ export const paths = ({ buildPath, buildDir, entryPath, publicPath }) => ({
   context: __dirname
 })
 
-export const plugins = ({ buildPath, chunk }) => [
-  new CleanWebpackPlugin([buildPath], { allowExternal: true, verbose: false }),
-
-  chunk
-    ? new webpack.optimize.CommonsChunkPlugin({
-        name: 'vendor',
-        minChunks: 2
-      })
-    : () => {}
+export const plugins = ({ buildPath }) => [
+  new CleanWebpackPlugin([buildPath], { allowExternal: true, verbose: false })
 ]
 
 export const resolve = (packages, devMode) => {

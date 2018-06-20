@@ -45,6 +45,9 @@ export default ({ cwd, devMode }) => {
   const buildPath = path.join(cwd, buildDir)
 
   return {
+    mode: devMode,
+    cache: devMode,
+
     // Entry/output/resolve points
     ...core.paths({ buildPath, buildDir, entryPath }),
     // Rules for different file types

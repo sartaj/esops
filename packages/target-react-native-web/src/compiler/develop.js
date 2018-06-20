@@ -3,36 +3,28 @@
 import path from 'path'
 import express from 'express'
 import webpack from 'webpack'
-import webpackMiddleware from 'webpack-dev-middleware'
+import webpackDevMiddleware from 'webpack-dev-middleware'
 import webpackHotMiddleware from 'webpack-hot-middleware'
 
 import log from '@esops/logger'
 
 export const configDevMiddleware = ({ app, config, cwd, publicPath }) => {
   const compiler = webpack(config)
-  const middleware = webpackMiddleware(compiler, {
-    publicPath: publicPath,
-    contentBase: 'src',
-    stats: {
-      colors: true,
-      hash: false,
-      timings: true,
-      chunks: false,
-      chunkModules: false,
-      modules: false
-    }
-  })
+  const middleware = webpackDevMiddleware(compiler)
 
   app.use(middleware)
   app.use(webpackHotMiddleware(compiler))
   app.use(express.static(config.output.path))
-  app.get('*', (req, res) => {
-    res.write(
-      middleware.fileSystem.readFileSync(
-        path.join(config.output.path, 'index.html')
+
+  middleware.waitUntilValid(() => {
+    app.get('*', (req, res) => {
+      res.write(
+        middleware.fileSystem.readFileSync(
+          path.join(config.output.path, 'index.html')
+        )
       )
-    )
-    res.end()
+      res.end()
+    })
   })
 }
 
