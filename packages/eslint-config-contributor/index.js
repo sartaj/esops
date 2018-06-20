@@ -33,6 +33,7 @@ module.exports = {
     'immutable/no-mutation': 2,
     'operator-linebreak': ['error', 'before'],
     'prettier/prettier': 'error',
-    quotes: ['error', 'single']
+    quotes: ['error', 'single'],
+    'max-len': ['error', { code: 80, ignoreUrls: true }]
   }
 }
