@@ -59,7 +59,7 @@ export default ({ cwd, devMode }) => {
             assets.urls,
             javascript.rules,
             typescript.rules,
-            assets.files // Defined last to be a catch all for if above files fail
+            assets.files // Defined last to catch rest if above files fail
             // WARNING: Don't add rules below assets.files. Add above.
           ]
         }
