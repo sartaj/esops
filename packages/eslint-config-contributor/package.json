@@ -1,7 +1,7 @@
 {
   "name": "@esops/eslint-config-contributor",
   "description": "Linting standards designed to encourage elm patterns in js/react",
-  "version": "1.14.9",
+  "version": "1.14.10",
   "publishConfig": {
     "access": "public"
   },
@@ -69,7 +69,7 @@
     "prettier": "^1.13.5"
   },
   "devDependencies": {
-    "@esops/logger": "^1.14.9",
+    "@esops/logger": "^1.14.10",
     "eslint": "^4.19.1"
   }
 }
