@@ -3,6 +3,7 @@ const createWebpackConfig = require('./webpack.dev.electron-renderer')
 
 const { spawn } = require('child_process')
 
+// eslint-disable-next-line
 module.exports = async opts => {
   const webpackConfig = createWebpackConfig(opts)
   const url = await target({

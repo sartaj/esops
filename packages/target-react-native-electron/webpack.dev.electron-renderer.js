@@ -34,10 +34,10 @@ const standardEntries = [
  */
 // eslint-disable-next-line
 module.exports = ({ cwd, devMode }) => {
-  /*eslint-disable*/
+  /* eslint-disable */
   process.env.BABEL_ENV = devMode
   process.env.NODE_ENV = devMode
-  /*eslint-enable*/
+  /* eslint-enable */
 
   const { indexHtmlPath, buildDir } = defaultWebpackOpts
   const entryFile = paths.findEntryFile(cwd, standardEntries)
@@ -47,6 +47,9 @@ module.exports = ({ cwd, devMode }) => {
   return {
     // Entry/output/resolve points
     ...core.paths({ buildPath, buildDir, entryPath }),
+
+    mode: devMode ? 'development' : 'production',
+    cache: devMode,
 
     target: 'electron-renderer',
 

@@ -45,7 +45,7 @@ export default ({ cwd, devMode }) => {
   const buildPath = path.join(cwd, buildDir)
 
   return {
-    mode: devMode,
+    mode: devMode ? 'development' : 'production',
     cache: devMode,
 
     // Entry/output/resolve points
