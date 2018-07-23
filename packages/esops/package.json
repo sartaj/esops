@@ -1,6 +1,6 @@
 {
   "name": "esops",
-  "version": "1.14.11",
+  "version": "1.14.14",
   "description": "esops CLI",
   "bin": {
     "esops": "bin/esops"
@@ -16,10 +16,10 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "@esops/cli": "^1.14.11"
+    "@esops/cli": "^1.14.14"
   },
   "devDependencies": {
-    "@esops/eslint-config-contributor": "^1.14.11",
-    "@esops/logger": "^1.14.11"
+    "@esops/eslint-config-contributor": "^1.14.14",
+    "@esops/logger": "^1.14.14"
   }
 }
