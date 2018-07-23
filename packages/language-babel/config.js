@@ -3,7 +3,14 @@ module.exports = {
   presets: [
     require.resolve('@babel/preset-flow'),
     require.resolve('@babel/preset-react'),
-    [require.resolve('@babel/preset-stage-0'), { decoratorsLegacy: true }]
+    [
+      require.resolve('@babel/preset-stage-0'),
+      { decoratorsLegacy: true, pipelineProposal: 'minimal' }
+    ]
   ],
-  plugins: ['@babel/plugin-proposal-pipeline-operator'].map(require.resolve)
+  plugins: [
+    require.resolve('@babel/plugin-proposal-pipeline-operator', {
+      proposal: 'minimal'
+    })
+  ]
 }

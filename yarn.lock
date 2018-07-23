@@ -53,7 +53,7 @@
     semver "^5.4.1"
     source-map "^0.5.0"
 
-"@babel/core@7.0.0-beta.51", "@babel/core@^7.0.0-beta.44":
+"@babel/core@7.0.0-beta.51":
   version "7.0.0-beta.51"
   resolved "https://registry.yarnpkg.com/@babel/core/-/core-7.0.0-beta.51.tgz#0e54bd6b638736b2ae593c31a47f0969e2b2b96d"
   dependencies:
@@ -1041,25 +1041,6 @@
     esutils "^2.0.2"
     lodash "^4.17.5"
     to-fast-properties "^2.0.0"
-
-"@esops/eslint-config-contributor@^1.14.5":
-  version "1.14.5"
-  resolved "https://registry.yarnpkg.com/@esops/eslint-config-contributor/-/eslint-config-contributor-1.14.5.tgz#0f24ebfffeea5a55476979e38d028ef59bf66b99"
-  dependencies:
-    babel-eslint "^8.2.3"
-    eslint "^4.19.1"
-    eslint-config-standard "^11.0.0"
-    eslint-config-standard-jsx "^5.0.0"
-    eslint-plugin-flowtype "^2.49.3"
-    eslint-plugin-fp "^2.3.0"
-    eslint-plugin-immutable "^1.0.0"
-    eslint-plugin-import "^2.12.0"
-    eslint-plugin-jest "^21.17.0"
-    eslint-plugin-node "^6.0.1"
-    eslint-plugin-promise "^3.8.0"
-    eslint-plugin-react "^7.9.1"
-    eslint-plugin-react-native "^3.2.0"
-    eslint-plugin-standard "^3.1.0"
 
 "@types/node@^8.0.24":
   version "8.10.20"

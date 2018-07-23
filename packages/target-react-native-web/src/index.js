@@ -19,6 +19,7 @@ export default async userOpts => {
     ...defaultOpts,
     ...userOpts
   }
+
   const webpackConfig = opts.webpackConfig || createDefaultWebpackConfig(opts)
 
   // Run server

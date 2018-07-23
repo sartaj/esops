@@ -15,8 +15,8 @@
     "template"
   ],
   "dependencies": {
-    "@babel/core": "^7.0.0-beta.44",
-    "@esops/language-babel": "^1.14.11",
+    "@babel/core": "7.0.0-beta.44",
+    "@esops/language-babel": "1.14.11",
     "@esops/logger": "^1.14.11",
     "autoprefixer": "^8.6.3",
     "awaiting": "^3.0.0",

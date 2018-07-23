@@ -51,7 +51,6 @@ export default ({ cwd, devMode }) => {
     // Entry/output/resolve points
     ...core.paths({ buildPath, buildDir, entryPath }),
     // Rules for different file types
-    // module: { rules: utils.convertObjectToArray(rules) },
     module: {
       rules: [
         {
