@@ -1,6 +1,6 @@
 {
     "name": "@esops/language-babel",
-    "version": "1.14.11",
+    "version": "1.14.13",
     "entry": "./index.js",
     "publishConfig": {
         "access": "public"

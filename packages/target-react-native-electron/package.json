@@ -1,6 +1,6 @@
 {
   "name": "@esops/target-react-native-electron",
-  "version": "1.14.12",
+  "version": "1.14.13",
   "main": "./index.js",
   "publishConfig": {
     "access": "public"
@@ -14,8 +14,8 @@
     "@esops/eslint-config-contributor": "^1.14.11"
   },
   "dependencies": {
-    "@esops/language-babel": "^1.14.11",
-    "@esops/target-react-native-web": "^1.14.12",
+    "@esops/language-babel": "^1.14.13",
+    "@esops/target-react-native-web": "^1.14.13",
     "chokidar": "^2.0.4",
     "cross-env": "^5.2.0",
     "electron": "^1.8.3",
