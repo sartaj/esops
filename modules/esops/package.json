@@ -1,5 +1,5 @@
 {
-  "name": "@esops/infrastructure-management",
+  "name": "esops",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -11,8 +11,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "string-replace-or-concat": "file:./modules/string-replace-or-concat",
-    "touch": "^3.1.0"
+    "fs-plus": "^3.0.2",
+    "update-generated-text-fs": "file:../update-generated-text-fs"
   },
   "devDependencies": {
     "rimraf": "^2.6.2",
