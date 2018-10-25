@@ -1,0 +1,22 @@
+{
+  "name": "@esops/infrastructure-management",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "bin": "bin.js",
+  "scripts": {
+    "test": "node ./specifications"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "string-replace-or-concat": "file:./modules/string-replace-or-concat",
+    "touch": "^3.1.0"
+  },
+  "devDependencies": {
+    "rimraf": "^2.6.2",
+    "tape": "^4.9.1",
+    "yeoman-generator": "^3.1.1"
+  }
+}
