@@ -15,10 +15,8 @@
     "build": "lerna run build",
     "watch": "lerna run --parallel watch",
     "prepublish": "lerna run build",
-    "reset":
-      "yarn reset:node-modules && yarn reset:logs && yarn reset:dist && yarn reset:yarn && yarn reset:npm && yarn reset:links",
-    "reset:node-modules":
-      "find . -name 'node_modules' -type d -exec rm -rf '{}' +",
+    "reset": "yarn reset:node-modules && yarn reset:logs && yarn reset:dist && yarn reset:yarn && yarn reset:npm && yarn reset:links",
+    "reset:node-modules": "find . -name 'node_modules' -type d -exec rm -rf '{}' +",
     "reset:logs": "find . -name '*.log' -type f -delete",
     "reset:dist": "find . -name 'dist' -type d -exec rm -rf '{}' +",
     "reset:yarn": "find . -name 'yarn.lock' -type f -delete",
@@ -26,5 +24,11 @@
     "reset:links": "cd packages/esops && yarn unlink",
     "link-cli": "cd packages/esops && yarn link"
   },
-  "workspaces": ["packages/*"]
+  "workspaces": [
+    "packages/*"
+  ],
+  "dependencies": {
+    "dir-resolve": "^1.0.2",
+    "resolve-pkg": "^1.0.0"
+  }
 }
