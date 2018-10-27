@@ -2,6 +2,8 @@ const fs = require("fs-plus");
 const jetpack = require("fs-jetpack");
 const path = require("path");
 const isDirectory = require("is-directory");
+const { pipe } = require("ramda");
+
 const capabilities = {
   updateGeneratedTextFs: require("update-generated-text-fs")
   // copyTemplateFiles
@@ -68,6 +70,11 @@ const parseStack = stackPath => {};
 const getListFromManifest = (cwd, pkg, props) => {
   const resolvePkg = require("resolve-pkg");
   const stackDirectory = resolvePkg(pkg, { cwd });
+  const defaultProps = {
+    cwd,
+    name: pkg
+  };
+  // { ...props }
 };
 
 const createGenerationManifest = (cwd, esopsManifest) => {
@@ -85,6 +92,17 @@ const createGenerationManifest = (cwd, esopsManifest) => {
   });
   return generationManifest;
 };
+
+function resolveStackManifest(cwd) {
+  const possibleConfigPath = path.join(cwd, "esops.json");
+  try {
+    const stackManifest = fs.readFileSync(possibleConfigPath, "utf-8");
+    return JSON.parse(stackManifest);
+  } catch (e) {
+    return [];
+  }
+}
+module.exports.resolveStackManifest = resolveStackManifest;
 
 const run = (cwd, manifestOpts) => {
   const infrastructureList = createGenerationManifest(cwd, manifestOpts);

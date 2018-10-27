@@ -1,15 +1,19 @@
 {
   "name": "esops",
   "version": "1.0.0",
-  "description": "",
+  "description": "Declarative infrastructure for cleaner code bases.",
   "main": "index.js",
   "bin": "bin.js",
-  "scripts": {
-    "test": "node ./specifications"
-  },
   "keywords": [],
   "author": "",
   "license": "ISC",
+  "watch": {
+    "test": "{source,specifications}/*.js"
+  },
+  "scripts": {
+    "test": "tape ./specifications",
+    "watch": "npm-watch test"
+  },
   "dependencies": {
     "fs-jetpack": "^2.2.0",
     "fs-plus": "^3.0.2",
@@ -19,6 +23,8 @@
     "update-generated-text-fs": "file:../update-generated-text-fs"
   },
   "devDependencies": {
+    "nodemon": "^1.18.5",
+    "npm-watch": "^0.4.0",
     "rimraf": "^2.6.2",
     "tape": "^4.9.1",
     "yeoman-generator": "^3.1.1"
