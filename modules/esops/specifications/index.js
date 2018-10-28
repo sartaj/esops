@@ -32,9 +32,12 @@ test("resolve stack manifest", t => {
   t.deepEquals(actual, expected);
 });
 
-// test("create template list from stack manifest", t => {
-
-// });
+test("create template list from stack manifest", t => {
+  t.plan(1);
+  const stackConfig = esops.resolveStackManifest(MOCK_STACKS.basic);
+  esops.convertStackConfigToPatchList(stackConfig, MOCK_STACKS.basic);
+  t.true(true);
+});
 
 // test('compose infrastructures')
 

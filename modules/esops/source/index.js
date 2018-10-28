@@ -3,6 +3,7 @@ const jetpack = require("fs-jetpack");
 const path = require("path");
 const isDirectory = require("is-directory");
 const { pipe } = require("ramda");
+const resolvePkg = require("resolve-pkg");
 
 const capabilities = {
   updateGeneratedTextFs: require("update-generated-text-fs")
@@ -68,7 +69,6 @@ const parseStack = stackPath => {};
 // }
 
 const getListFromManifest = (cwd, pkg, props) => {
-  const resolvePkg = require("resolve-pkg");
   const stackDirectory = resolvePkg(pkg, { cwd });
   const defaultProps = {
     cwd,
@@ -108,6 +108,26 @@ const run = (cwd, manifestOpts) => {
   const infrastructureList = createGenerationManifest(cwd, manifestOpts);
   features.checkForDuplicatePaths(filesManifest);
 };
+
+const resolveStackPackage = (pkg, { cwd }) => {
+  return resolvePkg(pkg, { cwd });
+};
+
+const removeString = stringToRemove => string =>
+  string.replace(stringToRemove, "");
+
+function convertStackConfigToPatchList(stackConfig, cwd) {
+  let patchList = [];
+  stackConfig.forEach(stack => {
+    console.log(stack);
+    const stackDirectory = resolveStackPackage(stack, { cwd });
+    const templateList = fs.listTreeSync(stackDirectory);
+    templateList.map(removeString(cwd));
+    // .map(path => )
+  });
+  return stackConfig;
+}
+module.exports.convertStackConfigToPatchList = convertStackConfigToPatchList;
 
 const runBin = () => {
   const cwd = process.cwd();
