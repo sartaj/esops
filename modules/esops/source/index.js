@@ -38,33 +38,54 @@ const tryRelativePath = (pkg, cwd) => {
   return fs.existsSync(potentialPath) ? potentialPath : null;
 };
 
-const resolveStackPackage = (pkg, { cwd }) => {
-  let modulePath = "";
-  if (!modulePath) modulePath = tryRelativePath(pkg, cwd);
-  // if(!modulePath) modulePath = tryNodeModulePath(pkg, { cwd })
-  // if(!modulePath) modulePath = tryGitUrl(pkg)
-  // if(!modulePath) modulePath = tryArchiveUrl(pkg)
-  return modulePath + "/";
+const resolveStackPackage = async (pkg, { cwd }) => {
+  try {
+    let modulePath = "";
+    if (!modulePath) modulePath = tryRelativePath(pkg, cwd);
+    // TODO: Node Module Paths
+    // if(!modulePath) modulePath = tryNodeModulePath(pkg, { cwd })
+    // TODO: Git URLS
+    // if(!modulePath) modulePath = tryGitUrl(pkg)
+    // TODO: Tarball/Zip paths
+    // if(!modulePath) modulePath = tryArchiveUrl(pkg)
+    return modulePath + "/";
+  } catch (e) {
+    console.error(e);
+    throw new Error("path resolution failed");
+  }
 };
 
 /**
  * ## Converters
  */
-const convertStackToPatchList = (stack, outputRoot) => {
-  const inputRoot = resolveStackPackage(stack, { cwd: outputRoot });
-  const stackPathList = getTemplatePaths(inputRoot);
-  return stackPathList.map(fullPath => ({
-    outputRoot,
-    inputRoot,
-    relativePath: fullPath.replace(inputRoot, "")
-  }));
+const convertStackToPatchList = async (stack, outputRoot) => {
+  try {
+    const inputRoot = await resolveStackPackage(stack, { cwd: outputRoot });
+    const stackPathList = getTemplatePaths(inputRoot);
+    return stackPathList.map(fullPath => ({
+      outputRoot,
+      inputRoot,
+      relativePath: fullPath.replace(inputRoot, "")
+    }));
+  } catch (e) {
+    console.error(e);
+    throw new Error("fatal error at convertStackToPatchList");
+  }
 };
 
-function convertStackComposeToPatchList(stackConfig, cwd) {
-  return stackConfig.reduce((acc, stack) => {
-    const patchList = convertStackToPatchList(stack, cwd);
-    return acc.concat(patchList);
-  }, []);
+async function convertStackComposeToPatchList(stackConfig, cwd) {
+  try {
+    let patchList = [];
+    for (let i = 0; i < stackConfig.length; i++) {
+      const stack = stackConfig[i];
+      newList = await convertStackToPatchList(stack, cwd);
+      patchList = patchList.concat(newList);
+    }
+    return patchList;
+  } catch (e) {
+    console.error(e);
+    throw new Error("convertStackComposeToPatchList failed");
+  }
 }
 module.exports.convertStackComposeToPatchList = convertStackComposeToPatchList;
 

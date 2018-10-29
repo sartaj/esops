@@ -46,12 +46,7 @@ test("resolve stack manifest", t => {
   t.deepEquals(actual, expected);
 });
 
-test("create template list from stack manifest", t => {
-  const stackConfig = esops.resolveStackCompose(MOCK_STACKS.basic);
-  const actual = esops.convertStackComposeToPatchList(
-    stackConfig,
-    MOCK_STACKS.basic
-  );
+test("create template list from stack manifest", async t => {
   const relativePaths = [
     ".vscode/settings.json",
     "src/stores",
@@ -63,6 +58,14 @@ test("create template list from stack manifest", t => {
     "scripts/copy-files.js"
   ];
   t.plan(relativePaths.length);
+
+  const stackConfig = esops.resolveStackCompose(MOCK_STACKS.basic);
+
+  const actual = await esops.convertStackComposeToPatchList(
+    stackConfig,
+    MOCK_STACKS.basic
+  );
+
   relativePaths.forEach(relativePath => {
     t.true(keyValueExists("relativePath", relativePath, actual));
   });
