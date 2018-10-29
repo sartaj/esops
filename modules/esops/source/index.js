@@ -8,6 +8,7 @@ const resolvePkg = require("resolve-pkg");
 const capabilities = {
   updateGeneratedTextFs: require("update-generated-text-fs")
 };
+
 /**
  * ## Resolvers
  */
@@ -85,7 +86,7 @@ const renderPaths = (inputs, inputRoot, output, props) => {
 };
 
 const render = (input, output, props) => {
-  const inputs = fs.listTreeSync(input);
+  const inputs = getTemplatePaths(input);
   renderPaths(inputs, input, output, props);
 };
 
