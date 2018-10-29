@@ -14,7 +14,8 @@ const capabilities = {
  */
 const getTemplatePaths = templatePath => {
   const paths = fs.listTreeSync(templatePath);
-  return paths;
+  const filePaths = paths.filter(filePath => !isDirectory.sync(filePath));
+  return filePaths;
 };
 
 module.exports.getTemplatePaths = getTemplatePaths;

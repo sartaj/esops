@@ -53,17 +53,13 @@ test("create template list from stack manifest", t => {
     MOCK_STACKS.basic
   );
   const relativePaths = [
-    ".vscode",
     ".vscode/settings.json",
-    "src",
     "src/stores",
     "src/stores/stores-architecture.md",
     "tsconfig.json",
     ".eslintrc",
-    ".vscode",
     ".vscode/settings.json",
     "package.json",
-    "scripts",
     "scripts/copy-files.js"
   ];
   t.plan(relativePaths.length);
@@ -74,17 +70,14 @@ test("create template list from stack manifest", t => {
 
 // test('compose infrastructures')
 
-test("get list of paths from infrastructure directory", t => {
+test("get list of paths from template directory", t => {
   t.plan(1);
-  const infrastructureDirectory = MOCK_INFRASTRUCTURES.basic;
-  const actual = esops.getTemplatePaths(infrastructureDirectory);
+  const templateDirectory = MOCK_INFRASTRUCTURES.basic;
+  const actual = esops.getTemplatePaths(templateDirectory);
   const expected = [
-    path.join(infrastructureDirectory, ".vscode"),
-    path.join(infrastructureDirectory, ".vscode/settings.json"),
-    path.join(infrastructureDirectory, "src"),
-    path.join(infrastructureDirectory, "src/stores"),
-    path.join(infrastructureDirectory, "src/stores/stores-architecture.md"),
-    path.join(infrastructureDirectory, "tsconfig.json")
+    path.join(templateDirectory, ".vscode/settings.json"),
+    path.join(templateDirectory, "src/stores/stores-architecture.md"),
+    path.join(templateDirectory, "tsconfig.json")
   ];
   t.deepEqual(actual, expected);
 });
