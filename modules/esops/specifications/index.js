@@ -95,7 +95,7 @@ test("check for disallowed duplicate files", async t => {
       stack
     );
     const actual = esops.validatePatchList(patchList);
-    t.equals(actual, expected, tests[i]);
+    t.equals(actual, expected, path.basename(stack));
   });
 });
 

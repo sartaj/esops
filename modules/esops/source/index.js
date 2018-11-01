@@ -111,11 +111,6 @@ const validatePatchList = patchList => {
 };
 module.exports.validatePatchList = validatePatchList;
 
-// Check for unallowed duplicate files
-// Render Props
-// Merge what is allowed
-// Copy
-
 const convertStackToPatchList = async (stack, outputRoot) => {
   try {
     const inputRoot = await resolveStackPackage(stack, { cwd: outputRoot });
@@ -189,8 +184,41 @@ const updateGitIgnore = (paths, gitIgnorePath) => {
 /**
  * Interfaces
  */
+// const esops = pipe(
+//   parseOpts Parse opts
+//   parseFSToPatchList
+//    scanFixturesFS Read filesystem info of templates
+//    addFixturesFSToPatchList to Convert filesystem info to a patch list
+//    scanSourceFSAndFilterMergeable Read filesystem of src and filter by mergeable
+//    addMergableSourceFilesToPatchList Add mergeable source files to patch list
+//  generateToTmp
+//    generateESTemplateFiles
+//      renderTemplateFiles Render props in .template to /tmp/ folder
+//    generateOverrideable
+//      validateOveridealbe
+//      Duplicate overrideables to /tmp/ folder
+//    generateMergeableJSON
+//      validateMergeableJSON
+//      mergeMergeableDuplicatesIn duplicate mergeables to /tmp/ folder
+//    generateMergeableText
+//      validateMergeableText
+//    Generate gitignore list from tmp folder
+//      Add gitignore list to /tmp/.gitignore
+//  CopyTmpGeneratedToSourceFolder
+// )
 const runBin = () => {
   const cwd = process.cwd();
-  const manifestOpts = require(path.join(cwd, "esops.json"));
-  run(cwd, manifestOpts);
+
+  const options = (() => {
+    if (process.argv.slice(2)[1]) {
+      return process.argv.slice(2)[1];
+    } else if (require.resolve()) {
+      return JSON.parse(require(path.join(cwd, "package.json")));
+    }
+  })();
+
+  esops({
+    cwd,
+    options
+  });
 };
