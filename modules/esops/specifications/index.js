@@ -12,7 +12,8 @@ const MOCK_INFRASTRUCTURES = {
 };
 
 const MOCK_STACKS = {
-  basic: path.join(__dirname, "mocks/stacks", "basic")
+  basic: path.join(__dirname, "mocks/stacks", "basic"),
+  disallowed: path.join(__dirname, "mocks/stacks", "disallowed")
 };
 
 /**
@@ -46,33 +47,6 @@ test("resolve stack manifest", t => {
   t.deepEquals(actual, expected);
 });
 
-test("create template list from stack manifest", async t => {
-  const relativePaths = [
-    ".vscode/settings.json",
-    "src/stores",
-    "src/stores/stores-architecture.md",
-    "tsconfig.json",
-    ".eslintrc",
-    ".vscode/settings.json",
-    "package.json",
-    "scripts/copy-files.js"
-  ];
-  t.plan(relativePaths.length);
-
-  const stackConfig = esops.resolveStackCompose(MOCK_STACKS.basic);
-
-  const actual = await esops.convertStackComposeToPatchList(
-    stackConfig,
-    MOCK_STACKS.basic
-  );
-
-  relativePaths.forEach(relativePath => {
-    t.true(keyValueExists("relativePath", relativePath, actual));
-  });
-});
-
-// test('compose infrastructures')
-
 test("get list of paths from template directory", t => {
   t.plan(1);
   const templateDirectory = MOCK_INFRASTRUCTURES.basic;
@@ -83,6 +57,46 @@ test("get list of paths from template directory", t => {
     path.join(templateDirectory, "tsconfig.json")
   ];
   t.deepEqual(actual, expected);
+});
+
+test("create patch list from stack manifest", async t => {
+  const expectedRelativePaths = [
+    ".vscode/settings.json",
+    "src/stores",
+    "src/stores/stores-architecture.md",
+    "tsconfig.json",
+    ".eslintrc",
+    ".vscode/settings.json",
+    "package.json",
+    "scripts/copy-files.js"
+  ];
+  t.plan(expectedRelativePaths.length);
+
+  const stackConfig = esops.resolveStackCompose(MOCK_STACKS.basic);
+
+  const actual = await esops.convertStackComposeToPatchList(
+    stackConfig,
+    MOCK_STACKS.basic
+  );
+
+  expectedRelativePaths.forEach(relativePath => {
+    t.true(keyValueExists("relativePath", relativePath, actual));
+  });
+});
+
+test("check for disallowed duplicate files", async t => {
+  const tests = [[MOCK_STACKS.disallowed, false], [MOCK_STACKS.basic, true]];
+
+  t.plan(tests.length);
+  tests.forEach(async ([stack, expected], i) => {
+    const stackConfig = esops.resolveStackCompose(stack);
+    const patchList = await esops.convertStackComposeToPatchList(
+      stackConfig,
+      stack
+    );
+    const actual = esops.validatePatchList(patchList);
+    t.equals(actual, expected, tests[i]);
+  });
 });
 
 // test(
