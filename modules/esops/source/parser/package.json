@@ -1,5 +1,5 @@
 {
-  "name": "esops",
+  "name": "@esops/parser",
   "version": "1.0.0",
   "description": "Declarative infrastructure for cleaner code bases.",
   "main": "index.js",
@@ -8,20 +8,18 @@
   "author": "",
   "license": "ISC",
   "watch": {
-    "test": "**/*.js"
+    "test": "{source,specifications}/*.js"
   },
   "scripts": {
-    "test": "node ./specifications",
+    "test": "tape ./specifications",
     "watch": "npm-watch test"
   },
   "dependencies": {
-    "fs-plus": "^3.0.2",
     "is-directory": "^0.3.1",
     "multimatch": "^2.1.0",
     "promised-pipe": "^1.1.1",
     "ramda": "^0.25.0",
-    "read-pkg": "^4.0.1",
-    "update-generated-text-fs": "file:../update-generated-text-fs"
+    "read-pkg": "^4.0.1"
   },
   "devDependencies": {
     "nodemon": "^1.18.5",
