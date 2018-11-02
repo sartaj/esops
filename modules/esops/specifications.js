@@ -1,1 +1,0 @@
-require('./source/parser/specification')

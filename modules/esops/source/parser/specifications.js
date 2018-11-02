@@ -5,7 +5,7 @@ const rimraf = require('rimraf')
 const R = require('ramda')
 const parser = require('.')
 
-const examplesDir = path.join(__dirname, '../core/examples')
+const examplesDir = path.join(__dirname, '../../specifications/examples')
 
 const MOCK_INFRASTRUCTURES = {
   basic: path.join(examplesDir, 'templates', 'basic'),
