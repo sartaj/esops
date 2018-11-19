@@ -1,2 +1,2 @@
-require('../source/parsers/parsers.spec')
-require('../source/resolvers/resolvers.spec')
+require('../library/parsers/parsers.spec')
+require('../library/resolvers/resolvers.spec')

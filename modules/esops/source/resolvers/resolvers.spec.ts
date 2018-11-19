@@ -1,9 +1,9 @@
-const test = require('tape')
-const fs = require('fs')
-const path = require('path')
-const rimraf = require('rimraf')
-const R = require('ramda')
-const resolvers = require('.')
+import test from 'tape'
+// import fs from 'fs'
+import path from 'path'
+// import rimraf from 'rimraf'
+// import R from 'ramda'
+import * as resolvers from './'
 
 const examplesDir = path.join(__dirname, '../../specifications/examples')
 
@@ -21,19 +21,19 @@ const MOCK_STACKS = {
 /**
  * Utilities
  */
-const withTempFolder = callback => t => {
-  const dirname = __dirname + '/.tmp/'
-  if (!fs.existsSync(dirname)) fs.mkdirSync(dirname)
-  callback({t, dirname})
-  rimraf.sync(dirname, fs)
-}
+// const withTempFolder = callback => t => {
+//   const dirname = __dirname + '/.tmp/'
+//   if (!fs.existsSync(dirname)) fs.mkdirSync(dirname)
+//   callback({t, dirname})
+//   rimraf.sync(dirname, fs)
+// }
 
-const keyValueExists = (key, value, list) =>
-  R.pipe(
-    R.find(R.propEq(key, value)),
-    R.isEmpty,
-    R.not
-  )(list)
+// const keyValueExists = (key, value, list) =>
+//   R.pipe(
+//     R.find(R.propEq(key, value)),
+//     R.isEmpty,
+//     R.not
+//   )(list)
 
 /**
  * Specifications
@@ -52,7 +52,7 @@ test('resolve stack manifest', t => {
 test('get list of paths from template directory', t => {
   t.plan(1)
   const templateDirectory = MOCK_INFRASTRUCTURES.basic
-  const actual = resolvers.getStackFilePaths(templateDirectory)
+  const actual = resolvers.findStackDefinition(templateDirectory)
   const expected = [
     path.join(templateDirectory, '.vscode/settings.json'),
     path.join(templateDirectory, 'src/stores/stores-architecture.md'),

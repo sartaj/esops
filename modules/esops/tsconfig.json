@@ -4,13 +4,10 @@
     "allowSyntheticDefaultImports": true,
     "baseUrl": "./source",
     "declaration": true,
-    "jsx": "react",
-    "lib": [
-      "dom",
-      "es7"
-    ],
-    "module": "es2015",
+    // "lib": ["es5"],
+    "module": "CommonJS",
     "moduleResolution": "node",
+    // "isolatedModules": true,
     "noImplicitAny": false,
     "noImplicitReturns": true,
     "noImplicitThis": true,
@@ -18,17 +15,14 @@
     "noUnusedLocals": true,
     "outDir": "library",
     "preserveConstEnums": true,
-    "pretty": false,
-    "removeComments": true,
+    "pretty": true,
+    "removeComments": false,
     "skipLibCheck": true,
-    "inlineSourceMap": true,
+    "inlineSourceMap": false,
     // "sourceMap": true,
-    "strictNullChecks": false,
-    "target": "es2015",
-    "typeRoots": [
-      "node_modules/@types",
-      "node_modules/json-d-ts"
-    ]
+    "strictNullChecks": true,
+    "target": "esnext",
+    "typeRoots": ["node_modules/@types", "node_modules/json-d-ts"]
   },
   "compileOnSave": true,
   "exclude": [
@@ -41,11 +35,6 @@
     "node_modules",
     "test"
   ],
-  "include": [
-    "./source/**/*"
-  ],
-  "types": [
-    "node",
-    "./source/types"
-  ]
+  "include": ["./source/**/*"],
+  "types": ["node", "./source/types"]
 }

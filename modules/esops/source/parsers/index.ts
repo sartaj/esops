@@ -1,4 +1,4 @@
-const path = require('path')
+// import path from 'path'
 const {flatten} = require('ramda')
 const multimatch = require('multimatch')
 
