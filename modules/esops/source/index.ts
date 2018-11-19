@@ -1,19 +1,20 @@
 import R from 'ramda'
 import pipe from 'promised-pipe'
 import fs from 'fs'
-import { resolve } from './resolvers'
+import {resolve} from './resolvers'
 
 const deepMerge = R.curry(R.deepMergeLeft)
 
 const installDrivers = deepMerge({
   drivers: {
-    fs
+    fs,
+    logger: console.log
   }
 })
 
 const esops = pipe(
   installDrivers,
-  resolve,
+  resolve
   // parse,
   // validate,
   // generate,
