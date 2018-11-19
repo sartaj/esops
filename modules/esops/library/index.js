@@ -1,0 +1,13 @@
+import R from 'ramda';
+import pipe from 'promised-pipe';
+import fs from 'fs';
+import { resolve } from './resolvers';
+const deepMerge = R.curry(R.deepMergeLeft);
+const installDrivers = deepMerge({
+    drivers: {
+        fs
+    }
+});
+const esops = pipe(installDrivers, resolve);
+export default esops;
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiaW5kZXguanMiLCJzb3VyY2VSb290IjoiIiwic291cmNlcyI6WyIuLi9zb3VyY2UvaW5kZXgudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUEsT0FBTyxDQUFDLE1BQU0sT0FBTyxDQUFBO0FBQ3JCLE9BQU8sSUFBSSxNQUFNLGVBQWUsQ0FBQTtBQUNoQyxPQUFPLEVBQUUsTUFBTSxJQUFJLENBQUE7QUFDbkIsT0FBTyxFQUFFLE9BQU8sRUFBRSxNQUFNLGFBQWEsQ0FBQTtBQUVyQyxNQUFNLFNBQVMsR0FBRyxDQUFDLENBQUMsS0FBSyxDQUFDLENBQUMsQ0FBQyxhQUFhLENBQUMsQ0FBQTtBQUUxQyxNQUFNLGNBQWMsR0FBRyxTQUFTLENBQUM7SUFDL0IsT0FBTyxFQUFFO1FBQ1AsRUFBRTtLQUNIO0NBQ0YsQ0FBQyxDQUFBO0FBRUYsTUFBTSxLQUFLLEdBQUcsSUFBSSxDQUNoQixjQUFjLEVBQ2QsT0FBTyxDQXVCUixDQUFBO0FBRUQsZUFBZSxLQUFLLENBQUEifQ==

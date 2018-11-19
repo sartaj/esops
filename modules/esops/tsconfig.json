@@ -1,0 +1,51 @@
+{
+  "compilerOptions": {
+    "allowJs": false,
+    "allowSyntheticDefaultImports": true,
+    "baseUrl": "./source",
+    "declaration": true,
+    "jsx": "react",
+    "lib": [
+      "dom",
+      "es7"
+    ],
+    "module": "es2015",
+    "moduleResolution": "node",
+    "noImplicitAny": false,
+    "noImplicitReturns": true,
+    "noImplicitThis": true,
+    "noStrictGenericChecks": true,
+    "noUnusedLocals": true,
+    "outDir": "library",
+    "preserveConstEnums": true,
+    "pretty": false,
+    "removeComments": true,
+    "skipLibCheck": true,
+    "inlineSourceMap": true,
+    // "sourceMap": true,
+    "strictNullChecks": false,
+    "target": "es2015",
+    "typeRoots": [
+      "node_modules/@types",
+      "node_modules/json-d-ts"
+    ]
+  },
+  "compileOnSave": true,
+  "exclude": [
+    "*/.test.*",
+    "android",
+    "build",
+    "docs",
+    "ios",
+    "lib",
+    "node_modules",
+    "test"
+  ],
+  "include": [
+    "./source/**/*"
+  ],
+  "types": [
+    "node",
+    "./source/types"
+  ]
+}
