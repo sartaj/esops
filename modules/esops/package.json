@@ -7,10 +7,10 @@
   "author": "",
   "license": "ISC",
   "watch": {
-    "test": "**/*.js"
+    "test": "library/**/*.js"
   },
   "scripts": {
-    "test": "node ./specifications",
+    "test": "tape library/**/*.spec.js",
     "test:watch": "npm-watch test",
     "build:watch": "tsc -w",
     "build": "tsc"
