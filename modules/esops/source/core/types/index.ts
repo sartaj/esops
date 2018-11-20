@@ -13,9 +13,9 @@ export type TemplateOptions = {}
 export type EsopsManifest = TemplateUrl | [TemplateUrl, TemplateOptions]
 
 export type Drivers = {
-  fs: any
-  http: any
-  logger: any
+  fs?: any
+  http?: any
+  logger?: any
 }
 export type InstallDrivers = (any) => ResolverOptions
 
@@ -102,22 +102,27 @@ export type ForceCopyFiles = (
   DestinationPath
 ) => Promise<boolean>
 
-export interface Features {
+/**
+ * ## Exports
+ */
+
+export interface Resolver {
+  default: Resolve
+  findEsopsManifest: FindEsopsManifest
+  fetchTemplate: FetchTemplate
+  // recursiveStackResolver: (stackManifest: any) => any
+}
+export interface Parsers {
+  default: Parser
+  convertPathsToCopyManifest: ConvertPathsToCopyManifest
+}
+
+export interface Generator {
+  default: Generate
+  generateTmp: GenerateTemporaryFiles
+  forceCopy: ForceCopyFiles
+}
+
+export interface Run {
   default: EsopsRun
-  resolve: {
-    default: Resolve
-    findEsopsManifest: FindEsopsManifest
-    fetchTemplate: FetchTemplate
-    // recursiveStackResolver: (stackManifest: any) => any
-  }
-  parse: {
-    default: Parser
-    convertPathsToCopyManifest: ConvertPathsToCopyManifest
-    // validate: (templatePath: string) => boolean,
-  }
-  generate: {
-    default: Generate
-    generateTmp: GenerateTemporaryFiles
-    forceCopy: ForceCopyFiles
-  }
 }

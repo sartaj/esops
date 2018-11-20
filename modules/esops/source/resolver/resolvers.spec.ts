@@ -1,22 +1,22 @@
-import * as test from 'tape'
-import * as path from 'path'
+// import * as test from 'tape'
+// import * as path from 'path'
 // import fs from 'fs'
 // import rimraf from 'rimraf'
 // import R from 'ramda'
-import * as resolvers from './'
+// import * as resolvers from './'
 
-const examplesDir = path.join(__dirname, '../core/examples')
+// const examplesDir = path.join(__dirname, '../core/examples')
 
-const MOCK_INFRASTRUCTURES = {
-  basic: path.join(examplesDir, 'templates', 'basic'),
-  'pipe-me': path.join(examplesDir, 'templates', 'pipe-me'),
-  'target-web': path.join(examplesDir, 'templates', 'target-web')
-}
+// const MOCK_INFRASTRUCTURES = {
+//   basic: path.join(examplesDir, 'templates', 'basic'),
+//   'pipe-me': path.join(examplesDir, 'templates', 'pipe-me'),
+//   'target-web': path.join(examplesDir, 'templates', 'target-web')
+// }
 
-const MOCK_STACKS = {
-  basic: path.join(examplesDir, 'stacks', 'basic'),
-  disallowed: path.join(examplesDir, 'stacks', 'disallowed')
-}
+// const MOCK_STACKS = {
+//   basic: path.join(examplesDir, 'stacks', 'basic'),
+//   disallowed: path.join(examplesDir, 'stacks', 'disallowed')
+// }
 
 /**
  * Utilities
@@ -39,24 +39,24 @@ const MOCK_STACKS = {
  * Specifications
  */
 
-test('resolve stack manifest', t => {
-  t.plan(1)
-  const actual = resolvers.findStackDefinition(MOCK_STACKS.basic)
-  const expected = [
-    '../../templates/basic',
-    '../../templates/basic-with-package'
-  ]
-  t.deepEquals(actual, expected)
-})
+// test('resolve stack manifest', t => {
+//   t.plan(1)
+//   const actual = resolvers.findStackDefinition(MOCK_STACKS.basic)
+//   const expected = [
+//     '../../templates/basic',
+//     '../../templates/basic-with-package'
+//   ]
+//   t.deepEquals(actual, expected)
+// })
 
-test('get list of paths from template directory', t => {
-  t.plan(1)
-  const templateDirectory = MOCK_INFRASTRUCTURES.basic
-  const actual = resolvers.findStackDefinition(templateDirectory)
-  const expected = [
-    path.join(templateDirectory, '.vscode/settings.json'),
-    path.join(templateDirectory, 'src/stores/stores-architecture.md'),
-    path.join(templateDirectory, 'tsconfig.json')
-  ]
-  t.deepEqual(actual, expected)
-})
+// test('get list of paths from template directory', t => {
+//   t.plan(1)
+//   const templateDirectory = MOCK_INFRASTRUCTURES.basic
+//   const actual = resolvers.findStackDefinition(templateDirectory)
+//   const expected = [
+//     path.join(templateDirectory, '.vscode/settings.json'),
+//     path.join(templateDirectory, 'src/stores/stores-architecture.md'),
+//     path.join(templateDirectory, 'tsconfig.json')
+//   ]
+//   t.deepEqual(actual, expected)
+// })
