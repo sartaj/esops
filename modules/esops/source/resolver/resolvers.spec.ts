@@ -1,11 +1,11 @@
-import test from 'tape'
+import * as test from 'tape'
+import * as path from 'path'
 // import fs from 'fs'
-import path from 'path'
 // import rimraf from 'rimraf'
 // import R from 'ramda'
 import * as resolvers from './'
 
-const examplesDir = path.join(__dirname, '../../specifications/examples')
+const examplesDir = path.join(__dirname, '../core/examples')
 
 const MOCK_INFRASTRUCTURES = {
   basic: path.join(examplesDir, 'templates', 'basic'),

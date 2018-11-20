@@ -49,4 +49,6 @@ function findStackDefinition(cwd) {
 
 function resolve() {}
 
-export { resolve, findStackDefinition, resolveStackPackage }
+export {resolve, findStackDefinition, resolveStackPackage}
+
+export default resolve
