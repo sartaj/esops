@@ -2,7 +2,7 @@
  * ## Primitives
  */
 export type Path = string
-export type SourcePath = Path
+export type CWD = Path
 export type LocalTemplatePath = Path
 export type TemporaryTemplatePath = Path
 export type TemplatePath = LocalTemplatePath | TemporaryTemplatePath
@@ -16,6 +16,7 @@ export type Drivers = {
   fs?: any
   http?: any
   logger?: any
+  process?: any
 }
 export type InstallDrivers = (any) => ResolverOptions
 
@@ -23,7 +24,7 @@ export type InstallDrivers = (any) => ResolverOptions
  * ## Main
  */
 export type EsopsRun = (
-  cwd: SourcePath,
+  cwd: CWD,
   template?: TemplateUrl,
   options?: TemplateOptions
 ) => Promise<void>
@@ -32,22 +33,24 @@ export type EsopsRun = (
  * ## Resolve
  */
 export type ResolverOptions = {
-  cwd: SourcePath
+  cwd: CWD
   template?: TemplateUrl
   options?: TemplateOptions
   drivers: Drivers
 }
 export type Resolve = (options: ResolverOptions) => Promise<ParserOpts>
 
-export type FindEsopsManifest = (cwd: SourcePath) => Promise<EsopsManifest>
+export type FindEsopsManifest = (cwd: CWD) => Promise<EsopsManifest>
 
-export type FetchTemplate = (cwd: TemplateUrl) => Promise<TemporaryTemplatePath>
+export type FetchTemplate = (
+  opts: ResolverOptions
+) => Promise<TemporaryTemplatePath>
 
 /**
  * ## Parse
  */
 export type ParserOpts = {
-  source: SourcePath
+  cwd: CWD
   template: TemplatePath
   options: TemplateOptions
   drivers: Drivers
@@ -74,7 +77,7 @@ export type Methods =
   | 'RENDER_THEN_MERGE_FILE'
 
 export type Copies = {
-  outputDir: SourcePath
+  outputDir: CWD
   templateDir: TemplatePath
   relativePath: Path
   method: Methods

@@ -1,0 +1,5 @@
+.nyc_output
+coverage
+.DS_Store
+library
+node_modules

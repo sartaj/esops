@@ -1,9 +1,25 @@
-// import * as test from 'tape'
-// import * as path from 'path'
+import {describe} from 'riteway'
+import * as resolver from './'
+
 // import fs from 'fs'
 // import rimraf from 'rimraf'
 // import R from 'ramda'
-// import * as resolvers from './'
+
+describe('resolver.resolve()', async assert => {
+  const expected = {
+    cwd: '/foo/bar',
+    template: '/baz/pro/shop',
+    options: {},
+    drivers: {}
+  }
+
+  assert({
+    given: 'no parameters',
+    should: 'return same shape',
+    expected,
+    actual: await resolver.resolve(expected)
+  })
+})
 
 // const examplesDir = path.join(__dirname, '../core/examples')
 

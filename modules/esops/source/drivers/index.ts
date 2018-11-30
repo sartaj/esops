@@ -11,7 +11,8 @@ const installDrivers = deepMerge({
       readFile: fs.readFile
       // readTree: fs.readFile
     },
-    logger: console.log
+    logger: console.log,
+    process
     // http
   }
 })

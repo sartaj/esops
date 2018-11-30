@@ -1,11 +1,13 @@
 // import * as fs from 'fs-plus'
 // import isDirectory from 'is-directory'
-// import * as path from 'path'
+import * as path from 'path'
 
 import {
   Resolve,
   FindEsopsManifest,
   FetchTemplate,
+  TemplatePath,
+  CWD
   // ParserOpts,
   // EsopsManifest
 } from '../core/types'
@@ -44,26 +46,33 @@ import {
 
 // module.exports.tryRelativePath = tryRelativePath
 
-// function findStackDefinition(cwd) {
-//   const possibleConfigPath = path.join(cwd, 'esops.json')
-//   try {
-//     const stackManifest = fs.readFileSync(possibleConfigPath, 'utf-8')
-//     return JSON.parse(stackManifest)
-//   } catch (e) {
-//     return []
-//   }
-// }
-
 const findEsopsManifest: FindEsopsManifest = async () => ''
 
-const resolve: Resolve = async () => ({
-  source: '',
-  template: '',
-  options: {},
-  drivers: {}
-})
+const fetchTemplate: FetchTemplate = async ({cwd, drivers: {fs}}) => {
+  const possibleConfigPath = path.join(cwd, 'package.json')
+  try {
+    const stackManifest = fs.readFileSync(possibleConfigPath, 'utf-8')
+    return JSON.parse(stackManifest)
+  } catch (e) {
+    return []
+  }
+}
 
-const fetchTemplate: FetchTemplate = async () => ''
+const resolve: Resolve = async ({drivers, ...props}) => {
+  const cwd: CWD = props.cwd || drivers.process.cwd()
+
+  const template: TemplatePath =
+    props.template || (await fetchTemplate({cwd, drivers}))
+
+  const options = props.options || {}
+
+  return {
+    cwd,
+    template,
+    options,
+    drivers
+  }
+}
 
 export {resolve, findEsopsManifest, fetchTemplate}
 
