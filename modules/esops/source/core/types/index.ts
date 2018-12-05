@@ -9,53 +9,68 @@ export type TemplatePath = LocalTemplatePath | TemporaryTemplatePath
 export type TemplateUrl = string
 export type TempGenerationPath = Path
 
-export type TemplateOptions = {}
-export type EsopsManifest = TemplateUrl | [TemplateUrl, TemplateOptions]
-
-export type Drivers = {
-  fs?: any
-  http?: any
-  logger?: any
-  process?: any
-}
-export type InstallDrivers = (any) => ResolverOptions
-
 /**
- * ## Main
+ * Options
  */
-export type EsopsRun = (
-  cwd: CWD,
-  template?: TemplateUrl,
-  options?: TemplateOptions
-) => Promise<void>
 
-/**
- * ## Resolve
- */
-export type ResolverOptions = {
+export type TemplateProps = {}
+
+export type NetworkTemplateOption = TemplateUrl | [TemplateUrl, TemplateProps]
+
+export type NetworkTemplateOptions =
+  | NetworkTemplateOption
+  | NetworkTemplateOption[]
+
+export type LocalTemplateOption =
+  | LocalTemplatePath
+  | [LocalTemplatePath, TemplateProps]
+
+export type LocalTemplateOptions = LocalTemplateOption | LocalTemplateOption[]
+
+export type NetworkOptions = {
   cwd: CWD
-  template?: TemplateUrl
-  options?: TemplateOptions
-  drivers: Drivers
+  opts: NetworkTemplateOptions
 }
-export type Resolve = (options: ResolverOptions) => Promise<ParserOpts>
 
-export type FindEsopsManifest = (cwd: CWD) => Promise<EsopsManifest>
+export type LocalOptions = {
+  cwd: CWD
+  opts: LocalTemplateOptions
+}
+
+/**
+ * ## Bin (Process)
+ */
+export type EsopBin = () => Promise<void>
+
+/**
+ * ## Run (JS)
+ */
+export type EsopsRun = (cwd: CWD, options?: NetworkOptions) => Promise<void>
+
+/**
+ * ## Resolve (Network + FS)
+ */
+type ResolverOptions = {
+  cwd: CWD
+  opts: NetworkOptions
+}
+
+export type Resolve = (options: ResolverOptions) => Promise<ParserOptions>
+
+export type FindEsopsManifest = (cwd: CWD) => Promise<LocalTemplateOptions>
 
 export type FetchTemplate = (
-  opts: ResolverOptions
+  opts: LocalOptions
 ) => Promise<TemporaryTemplatePath>
 
 /**
- * ## Parse
+ * ## Parse (JS)
  */
-export type ParserOpts = {
+type ParserOptions = {
   cwd: CWD
-  template: TemplatePath
-  options: TemplateOptions
-  drivers: Drivers
+  opts: LocalOptions
 }
-export type Parser = (options: ParserOpts) => Promise<GeneratorOpts>
+export type Parser = (options: ParserOptions) => Promise<CopyManifest>
 
 export type ConvertPathsToCopyManifest = (paths: Path[]) => CopyManifest
 
@@ -83,18 +98,14 @@ export type Copies = {
   method: Methods
 }
 export type CopyManifest = {
-  options: TemplateOptions
+  options: LocalTemplateOptions
   paths: Copies[]
 }
 
 /**
- * ## Generate
+ * ## Generate (FS)
  */
-export type GeneratorOpts = {
-  drivers: Drivers
-  manifest: CopyManifest
-}
-export type Generate = (options: CopyManifest) => Promise<boolean>
+export type Generate = (manifest: CopyManifest) => Promise<boolean>
 
 export type GenerateTemporaryFiles = (
   copyManifest: CopyManifest

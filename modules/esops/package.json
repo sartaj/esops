@@ -29,6 +29,7 @@
     "nyc": "^13.1.0",
     "rimraf": "^2.6.2",
     "riteway": "^4.0.1",
+    "snapshotter": "^2.0.1",
     "tap-nirvana": "^1.1.0",
     "tape": "^4.9.1",
     "ts-node": "^7.0.1",
