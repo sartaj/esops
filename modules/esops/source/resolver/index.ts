@@ -1,13 +1,13 @@
 // import * as fs from 'fs-plus'
 // import isDirectory from 'is-directory'
-import * as path from 'path'
-import result from 'await-result'
-import process from '../drivers/process'
-import fs from '../drivers/fs'
+// import * as path from 'path'
+// import result from 'await-result'
+// import process from '../drivers/process'
+// import fs from '../drivers/fs'
 
 import {Resolve, ResolverOptions, Options, LocalOptions} from '../core/types'
 
-import {throwError} from '../drivers'
+// import {throwError} from '../drivers'
 
 // const resolveStackPackage = async (pkg, {cwd}) => {
 //   try {
@@ -53,14 +53,11 @@ import {throwError} from '../drivers'
 //   }
 // }
 
-const convertToLocalOpts = (opts: Options): LocalOptions => ''
+const convertToLocalOpts = (opts: Options): LocalOptions => opts
 
 const resolve: Resolve = async (params: ResolverOptions) => ({
   cwd: params.cwd,
-  opts: await result(
-    convertToLocalOpts(params.opts),
-    throwError('resolve failed')
-  )
+  opts: await convertToLocalOpts(params.opts)
 })
 
 export {resolve}

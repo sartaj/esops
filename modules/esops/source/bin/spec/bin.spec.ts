@@ -1,16 +1,16 @@
 import * as path from 'path'
-import fs from '../drivers/fs'
 import rimraf from 'rimraf'
 import describe from './withSnapshot.spec'
-import esops from './index'
+import esops from '../index'
+import fs from '../../drivers/fs'
 
 const examplesDir = path.join(__dirname, '../core/examples')
 
-const MOCK_TEMPLATES = {
-  basic: path.join(examplesDir, 'templates', 'basic'),
-  'pipe-me': path.join(examplesDir, 'templates', 'pipe-me'),
-  'target-web': path.join(examplesDir, 'templates', 'target-web')
-}
+// const MOCK_TEMPLATES = {
+//   basic: path.join(examplesDir, 'templates', 'basic'),
+//   'pipe-me': path.join(examplesDir, 'templates', 'pipe-me'),
+//   'target-web': path.join(examplesDir, 'templates', 'target-web')
+// }
 
 const MOCK_PACKAGES = {
   basic: path.join(examplesDir, 'packages', 'basic'),

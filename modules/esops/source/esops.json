@@ -1,7 +1,0 @@
-[
-  "npm:sartaj/typescript-target-stack",
-  "http:",
-  "https:",
-  "git:github.com:sartaj/typescript-stack.git",
-  "github:sartaj/typescript-stack"
-]
