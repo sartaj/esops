@@ -8,9 +8,7 @@ import * as resolver from './'
 describe('resolver.resolve()', async assert => {
   const expected = {
     cwd: '/foo/bar',
-    template: '/baz/pro/shop',
-    options: {},
-    drivers: {}
+    opts: '/baz/pro/shop'
   }
 
   assert({

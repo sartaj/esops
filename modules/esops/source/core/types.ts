@@ -50,25 +50,19 @@ export type EsopsRun = (cwd: CWD, options?: NetworkOptions) => Promise<void>
 /**
  * ## Resolve (Network + FS)
  */
-type ResolverOptions = {
+export type ResolverOptions = {
   cwd: CWD
-  opts: NetworkOptions
+  opts: NetworkTemplateOptions
 }
 
 export type Resolve = (options: ResolverOptions) => Promise<ParserOptions>
-
-export type FindEsopsManifest = (cwd: CWD) => Promise<LocalTemplateOptions>
-
-export type FetchTemplate = (
-  opts: LocalOptions
-) => Promise<TemporaryTemplatePath>
 
 /**
  * ## Parse (JS)
  */
 type ParserOptions = {
   cwd: CWD
-  opts: LocalOptions
+  opts: LocalTemplateOptions
 }
 export type Parser = (options: ParserOptions) => Promise<CopyManifest>
 
@@ -122,10 +116,9 @@ export type ForceCopyFiles = (
 
 export interface Resolver {
   default: Resolve
-  findEsopsManifest: FindEsopsManifest
-  fetchTemplate: FetchTemplate
   // recursiveStackResolver: (stackManifest: any) => any
 }
+
 export interface Parsers {
   default: Parser
   convertPathsToCopyManifest: ConvertPathsToCopyManifest

@@ -1,5 +1,5 @@
 import * as path from 'path'
-import fs from 'fs-plus'
+import fs from '../drivers/fs'
 import rimraf from 'rimraf'
 import describe from './withSnapshot.spec'
 import esops from './index'

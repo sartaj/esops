@@ -1,7 +1,8 @@
 const run = require('../run')
-const readPkg = require('read-pkg')
-module.exports = () => {
+const fs = require('../drivers/fs')
+
+export default () => {
   const cwd = process.cwd()
-  const {esops} = readPkg.sync(cwd)
+  const {esops} = fs.readPkg.sync(cwd)
   run(cwd, esops)
 }

@@ -1,13 +1,12 @@
 import pipe from 'promised-pipe'
 
-import installDrivers from '../drivers'
+import installDrivers from '../drivers/fs'
 import resolve from '../resolver'
 // import parse from './parser'
 // TODO: import validate from './validator'
 // import generate from './generator'
 
 const esops = pipe(
-  installDrivers,
   resolve
   // parse,
   // TODO: validate,

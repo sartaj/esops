@@ -2,14 +2,14 @@
 // import isDirectory from 'is-directory'
 import * as path from 'path'
 
+import process from '../drivers/process'
+import fs from '../drivers/fs'
+
 import {
   Resolve,
-  FindEsopsManifest,
-  FetchTemplate,
-  TemplatePath,
-  CWD
-  // ParserOpts,
-  // EsopsManifest
+  ResolverOptions,
+  NetworkTemplateOptions,
+  LocalTemplateOptions
 } from '../core/types'
 
 // const resolveStackPackage = async (pkg, {cwd}) => {
@@ -46,34 +46,25 @@ import {
 
 // module.exports.tryRelativePath = tryRelativePath
 
-const findEsopsManifest: FindEsopsManifest = async () => ''
+// const fetchTemplate: FetchTemplate = async ({cwd}) => {
+//   const possibleConfigPath = path.join(cwd, 'package.json')
+//   try {
+//     const stackManifest = fs.readFileSync(possibleConfigPath, 'utf-8')
+//     return JSON.parse(stackManifest)
+//   } catch (e) {
+//     return []
+//   }
+// }
 
-const fetchTemplate: FetchTemplate = async ({cwd, drivers: {fs}}) => {
-  const possibleConfigPath = path.join(cwd, 'package.json')
-  try {
-    const stackManifest = fs.readFileSync(possibleConfigPath, 'utf-8')
-    return JSON.parse(stackManifest)
-  } catch (e) {
-    return []
-  }
-}
+const convertToLocalOpts = (
+  opts: NetworkTemplateOptions
+): LocalTemplateOptions => ''
 
-const resolve: Resolve = async ({drivers, ...props}) => {
-  const cwd: CWD = props.cwd || drivers.process.cwd()
+const resolve: Resolve = async (params: ResolverOptions) => ({
+  cwd: params.cwd,
+  opts: await convertToLocalOpts(params.opts)
+})
 
-  const template: TemplatePath =
-    props.template || (await fetchTemplate({cwd, drivers}))
-
-  const options = props.options || {}
-
-  return {
-    cwd,
-    template,
-    options,
-    drivers
-  }
-}
-
-export {resolve, findEsopsManifest, fetchTemplate}
+export {resolve}
 
 export default resolve
