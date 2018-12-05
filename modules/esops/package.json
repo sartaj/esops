@@ -15,6 +15,7 @@
     "build:watch": "tsc -w"
   },
   "dependencies": {
+    "await-result": "^2.2.1",
     "fs-plus": "^3.0.2",
     "is-directory": "^0.3.1",
     "multimatch": "^2.1.0",
