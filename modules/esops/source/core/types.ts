@@ -3,17 +3,17 @@
  */
 
 export type Path = string
+export type URL = Path
 export type TemplateProps = {}
 export type CWD = Path
 
 export type TemporaryTemplatePath = Path
 export type TempGenerationPath = Path
 
-export type NetworkUrl = string
+export type NetworkUrl = URL
 export type NetworkWithProps = [NetworkUrl, TemplateProps]
 export type NetworkOption = NetworkUrl | NetworkWithProps
-export type NetworkOptionArray = NetworkOption[]
-export type NetworkOptions = NetworkOption | NetworkOptionArray
+export type NetworkOptions = NetworkOption[] | NetworkUrl
 export type NetworkParams = {
   cwd: CWD
   opts: NetworkOptions
@@ -22,19 +22,20 @@ export type NetworkParams = {
 export type LocalPath = Path
 export type LocalWithProps = [LocalPath, TemplateProps]
 export type LocalOption = LocalPath | LocalWithProps
-export type LocalOptionArray = LocalOption[]
-export type LocalOptions = LocalOption | LocalOptionArray
+export type LocalOptions = LocalOption[] | LocalPath
+export type LocalOptionsWithProps = LocalWithProps[]
 export type LocalParams = {
   cwd: CWD
   opts: LocalOptions
 }
 
-export type TemplatePath = LocalPath | TemporaryTemplatePath
+export type TemplatePath = LocalPath | TemporaryTemplatePath | NetworkUrl
+export type PathList = TemplatePath[]
 export type WithProps = LocalWithProps | NetworkWithProps
-export type Option = LocalOption | NetworkOption
-export type OptionArray = LocalOptionArray | NetworkOptionArray
-export type Options = NetworkOptions | LocalOptions
-export type Params = NetworkParams | LocalParams
+export type OptionsWithProps = WithProps[]
+export type Option = Path | [Path, TemplateProps]
+export type Options = Path | Option[]
+export type Params = LocalParams | NetworkParams
 
 /**
  * ## Resolve (Network + FS)
@@ -44,7 +45,13 @@ export type ResolverOptions = {
   opts: Options
 }
 
-export type Resolve = (options: ResolverOptions) => Promise<ParserOptions>
+export type Config = {
+  cwd: CWD
+}
+export type Resolve = (
+  opts: Options,
+  config: Config
+) => Promise<LocalOptionsWithProps>
 
 export type convertNetworkPathsToLocalPath = (
   options: Options
@@ -58,9 +65,9 @@ export interface Resolver {
 /**
  * ## Parse (JS)
  */
-type ParserOptions = {
+export type ParserOptions = {
   cwd: CWD
-  opts: LocalOptions
+  opts: LocalOptionsWithProps
 }
 
 export type Parser = (options: ParserOptions) => Promise<CopyManifest>

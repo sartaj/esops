@@ -12,7 +12,7 @@
     "noImplicitReturns": true,
     "noImplicitThis": true,
     "noStrictGenericChecks": true,
-    "noUnusedLocals": true,
+    "noUnusedLocals": false,
     "outDir": "library",
     "preserveConstEnums": true,
     "pretty": true,

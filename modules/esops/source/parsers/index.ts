@@ -2,6 +2,14 @@
 const {flatten} = require('ramda')
 const multimatch = require('multimatch')
 
+// const getStackFilePaths = templatePath => {
+//   const paths = fs.listTreeSync(templatePath)
+//   // For now, only files are supported
+//   // TODO: Explore need/use case for folder path support
+//   const filePaths = paths.filter(filePath => !isDirectory.sync(filePath))
+//   return filePaths
+// }
+
 /**
  * ## Converters
  */

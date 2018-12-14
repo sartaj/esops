@@ -1,36 +1,50 @@
 import {describe} from 'riteway'
 import * as resolver from './'
+import * as path from 'path'
+import {ResolverOptions} from 'core/types'
 
 // import fs from 'fs'
 // import rimraf from 'rimraf'
 // import R from 'ramda'
 
+const examplesDir = path.join(__dirname, '../core/examples')
+
+const MOCK_INFRASTRUCTURES = {
+  basic: path.join(examplesDir, 'templates', 'basic'),
+  'pipe-me': path.join(examplesDir, 'templates', 'pipe-me'),
+  'target-web': path.join(examplesDir, 'templates', 'target-web')
+}
+
+const MOCK_STACKS = {
+  basic: path.join(examplesDir, 'packages', 'basic'),
+  disallowed: path.join(examplesDir, 'packages', 'disallowed')
+}
+
 describe('resolver.resolve()', async assert => {
-  const expected = {
-    cwd: '/foo/bar',
-    opts: '/baz/pro/shop'
+  const config = {
+    cwd: MOCK_STACKS.basic
   }
+  assert({
+    given: 'single FS path',
+    should: 'return fs path as LocalOptionWithProps',
+    expected: [[config.cwd + '/', {}]],
+    actual: await resolver.resolve('./', config)
+  })
 
   assert({
-    given: 'no parameters',
-    should: 'return same shape',
-    expected,
-    actual: await resolver.resolve(expected)
+    given: 'single FS path as array',
+    should: 'return fs path as LocalOptionWithProps',
+    expected: [[config.cwd + '/', {}]],
+    actual: await resolver.resolve(['./'], config)
+  })
+
+  assert({
+    given: 'single FS path with props',
+    should: 'return fs path as LocalOptionWithProps',
+    expected: [[config.cwd + '/', {}]],
+    actual: await resolver.resolve([['./', {}]], config)
   })
 })
-
-// const examplesDir = path.join(__dirname, '../core/examples')
-
-// const MOCK_INFRASTRUCTURES = {
-//   basic: path.join(examplesDir, 'templates', 'basic'),
-//   'pipe-me': path.join(examplesDir, 'templates', 'pipe-me'),
-//   'target-web': path.join(examplesDir, 'templates', 'target-web')
-// }
-
-// const MOCK_STACKS = {
-//   basic: path.join(examplesDir, 'stacks', 'basic'),
-//   disallowed: path.join(examplesDir, 'stacks', 'disallowed')
-// }
 
 /**
  * Utilities

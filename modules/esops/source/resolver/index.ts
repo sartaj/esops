@@ -1,64 +1,59 @@
-// import * as fs from 'fs-plus'
-// import isDirectory from 'is-directory'
-// import * as path from 'path'
-// import result from 'await-result'
-// import process from '../drivers/process'
-// import fs from '../drivers/fs'
+import {
+  Resolve,
+  ResolverOptions,
+  Options,
+  ParserOptions,
+  Option,
+  LocalWithProps,
+  OptionsWithProps,
+  WithProps,
+  CWD,
+  LocalOptionsWithProps
+} from '../core/types'
+import {isString, pipe, curry, tryCatch} from '../utils'
+import {fetchPath} from './resolver'
 
-import {Resolve, ResolverOptions, Options, LocalOptions} from '../core/types'
+const createDefaultOpt = (path: string): WithProps => [path, {}]
 
-// import {throwError} from '../drivers'
+type OptionPromises = Promise<LocalWithProps>
+const createOptionPromise = (cwd: CWD, opt: WithProps): OptionPromises =>
+  new Promise((resolve, reject) => {
+    const path = opt[0]
+    const props = opt[1]
+    fetchPath(path, cwd)
+      .then(path => {
+        resolve([path, props])
+      })
+      .catch(reject)
+  })
 
-// const resolveStackPackage = async (pkg, {cwd}) => {
-//   try {
-//     let modulePath = ''
-//     if (!modulePath) modulePath = tryRelativePath(pkg, cwd)
-//     // TODO: Node Module Paths
-//     // if(!modulePath) modulePath = tryNodeModulePath(pkg, { cwd })
-//     // TODO: Git URLS
-//     // if(!modulePath) modulePath = tryGitUrl(pkg)
-//     // TODO: Tarball/Zip paths
-//     // if(!modulePath) modulePath = tryArchiveUrl(pkg)
-//     return modulePath + '/'
-//   } catch (e) {
-//     console.error(e)
-//     throw new Error('path resolution failed')
-//   }
-// }
+const defaultConfig = {
+  cwd: process.cwd()
+}
 
-// const getStackFilePaths = templatePath => {
-//   const paths = fs.listTreeSync(templatePath)
-//   // For now, only files are supported
-//   // TODO: Explore need/use case for folder path support
-//   const filePaths = paths.filter(filePath => !isDirectory.sync(filePath))
-//   return filePaths
-// }
+const convertAllOptionsToHaveProps = (opts: Options): OptionsWithProps =>
+  isString(opts)
+    ? [createDefaultOpt(opts)]
+    : opts.map((opt: Option) => (isString(opt) ? createDefaultOpt(opt) : opt))
 
-// module.exports.getStackFilePaths = getStackFilePaths
+const resolve: Resolve = (opts, {cwd} = defaultConfig) =>
+  pipe(
+    convertAllOptionsToHaveProps,
+    opts => opts.map(opt => createOptionPromise(cwd, opt)),
+    opts => Promise.all(opts)
+  )(opts)
 
-// const tryRelativePath = (pkg, cwd) => {
-//   const potentialPath = path.join(cwd, pkg)
-//   return fs.existsSync(potentialPath) ? potentialPath : null
-// }
-
-// module.exports.tryRelativePath = tryRelativePath
-
-// const fetchTemplate: FetchTemplate = async ({cwd}) => {
-//   const possibleConfigPath = path.join(cwd, 'package.json')
-//   try {
-//     const stackManifest = fs.readFileSync(possibleConfigPath, 'utf-8')
-//     return JSON.parse(stackManifest)
-//   } catch (e) {
-//     return []
-//   }
-// }
-
-const convertToLocalOpts = (opts: Options): LocalOptions => opts
-
-const resolve: Resolve = async (params: ResolverOptions) => ({
-  cwd: params.cwd,
-  opts: await convertToLocalOpts(params.opts)
-})
+// const resolve: Resolve = async ({
+//   cwd,
+//   opts
+// }: ResolverOptions): Promise<ParserOptions> => ({
+//   cwd,
+//   opts: await pipe(
+//     convertAllOptionsToHaveProps,
+//     opts => opts.map(opt => createOptionPromise(cwd, opt)),
+//     opts => Promise.all(opts)
+//   )(opts)
+// })
 
 export {resolve}
 
