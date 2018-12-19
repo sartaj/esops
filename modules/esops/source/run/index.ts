@@ -7,6 +7,7 @@ import {
 } from '../core/types'
 import resolver from '../resolver'
 import parser from '../parser'
+import generate from '../generators'
 
 const resolve = async ({
   cwd,
@@ -21,9 +22,9 @@ const parse = async ({opts, cwd}): Promise<GeneratorManifest> =>
 
 export const esops: EsopsRun = pipe(
   resolve,
-  parse
+  parse,
   // TODO: validate,
-  // generate,
+  generate
 )
 
 export default esops

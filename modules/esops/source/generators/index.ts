@@ -1,5 +1,5 @@
 // import jetpack from 'fs-jetpack'
-
+import {GeneratorManifest} from '../core/types'
 // /**
 //  * ## Render
 //  */
@@ -57,3 +57,7 @@
 //    generateGitignoreList from tmp folder
 //      Add gitignore list to /tmp/.gitignore
 //  copyTmpGeneratedToSourceFolder
+
+export default (generatorManifest: GeneratorManifest) => {
+  generatorManifest.forEach(manifest => {})
+}

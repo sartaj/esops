@@ -4,7 +4,7 @@ import * as R from 'ramda'
 import parser from './index'
 import resolver from '../resolver'
 
-import {MOCK_STACKS} from '../core/examples'
+import {MOCK_TEMPLATES} from '../core/examples'
 
 const keyValueExists = (key, value, list) =>
   R.pipe(
@@ -20,16 +20,11 @@ const keyValueExists = (key, value, list) =>
 describe('parser()', async assert => {
   const expectedRelativePaths = [
     '.vscode/settings.json',
-    'src/stores',
     'src/stores/stores-architecture.md',
-    'tsconfig.json',
-    '.eslintrc',
-    '.vscode/settings.json',
-    'package.json',
-    'scripts/copy-files.js'
+    'tsconfig.json'
   ]
 
-  const config = {cwd: MOCK_STACKS.basic}
+  const config = {cwd: MOCK_TEMPLATES.basic}
   const localOptions = await resolver('./', config)
   const actual = parser(localOptions, config)
 
@@ -39,6 +34,22 @@ describe('parser()', async assert => {
       should: 'exist',
       expected: true,
       actual: keyValueExists('relativePath', relativePath, actual)
+    })
+  })
+
+  assert({
+    given: path.basename(config.cwd),
+    should: `have expected length of ${expectedRelativePaths.length}`,
+    expected: expectedRelativePaths.length,
+    actual: actual.length
+  })
+
+  actual.forEach(manifest => {
+    assert({
+      given: `${manifest.relativePath}`,
+      should: 'have cwd',
+      expected: MOCK_TEMPLATES.basic,
+      actual: manifest.outputDir
     })
   })
 })
