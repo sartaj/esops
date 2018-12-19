@@ -15,4 +15,4 @@ const withSnapshot = tape => {
 
 const describe = withSnapshot(tape)
 
-module.exports = describe
+export default describe

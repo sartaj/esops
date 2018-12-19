@@ -130,7 +130,8 @@ export interface Generator {
  * ## Run (JS)
  */
 
-export type EsopsRun = (cwd: CWD, options?: Options) => Promise<void>
+type RunOpts = {cwd: CWD; opts?: Options}
+export type EsopsRun = (opts: RunOpts) => Promise<void>
 
 export interface Run {
   default: EsopsRun

@@ -25,26 +25,24 @@ describe('parser()', async assert => {
   ]
 
   const config = {cwd: MOCK_TEMPLATES.basic}
-  const localOptions = await resolver('./', config)
-  const actual = parser(localOptions, config)
-
-  expectedRelativePaths.forEach(relativePath => {
-    assert({
-      given: `${relativePath} in  ${path.basename(config.cwd)}`,
-      should: 'exist',
-      expected: true,
-      actual: keyValueExists('relativePath', relativePath, actual)
-    })
-  })
+  const resolved = await resolver('./', config)
+  const parsed = parser(resolved, config)
 
   assert({
     given: path.basename(config.cwd),
     should: `have expected length of ${expectedRelativePaths.length}`,
     expected: expectedRelativePaths.length,
-    actual: actual.length
+    actual: parsed.length
   })
 
-  actual.forEach(manifest => {
+  parsed.forEach(manifest => {
+    assert({
+      given: `${manifest.relativePath} in  ${path.basename(config.cwd)}`,
+      should: 'exist',
+      expected: true,
+      actual: expectedRelativePaths.indexOf(manifest.relativePath) > -1
+    })
+
     assert({
       given: `${manifest.relativePath}`,
       should: 'have cwd',

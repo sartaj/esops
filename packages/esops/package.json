@@ -3,19 +3,23 @@
   "version": "1.0.0",
   "description": "Declarative infrastructure for cleaner repositories.",
   "main": "library/run/index.js",
+  "bin": "library/bin/index.js",
   "keywords": [],
   "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "scripts": {
     "build": "tsc",
-    "watch": "npm run build:watch & npm run test:watch",
+    "tsc:watch": "tsc -w",
     "test": "ts-node ./node_modules/.bin/riteway source/**/*.spec.ts | tap-nirvana",
-    "coverage": "nyc npm test",
-    "test:watch": "npm-watch test",
-    "build:watch": "tsc -w"
+    "test:watch": "ts-node-dev ./node_modules/.bin/riteway source/**/*.spec.ts | tap-nirvana",
+    "coverage": "nyc npm test"
   },
+  "files": [
+    "library"
+  ],
   "dependencies": {
     "await-result": "^2.2.1",
+    "fs-jetpack": "^2.2.0",
     "fs-plus": "^3.0.2",
     "is-directory": "^0.3.1",
     "multimatch": "^2.1.0",
@@ -28,7 +32,6 @@
   "devDependencies": {
     "@types/node": "^10.12.9",
     "@types/ramda": "^0.25.43",
-    "npm-watch": "0.5.0",
     "nyc": "^13.1.0",
     "rimraf": "^2.6.2",
     "riteway": "^4.0.1",
@@ -36,24 +39,7 @@
     "tap-nirvana": "^1.1.0",
     "tape": "^4.9.1",
     "ts-node": "^7.0.1",
+    "ts-node-dev": "^1.0.0-pre.32",
     "typescript": "^3.1.6"
-  },
-  "watch": {
-    "test": "library/**/*.js"
-  },
-  "nyc": {
-    "require": [
-      "ts-node/register"
-    ],
-    "extension": [
-      ".ts"
-    ],
-    "exclude": [
-      "**/*.d.ts"
-    ],
-    "reporter": [
-      "html"
-    ],
-    "all": true
   }
 }

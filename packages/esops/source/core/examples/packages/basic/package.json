@@ -1,0 +1,5 @@
+{
+  "esops": [
+    "./infrastructure/basic"
+  ]
+}

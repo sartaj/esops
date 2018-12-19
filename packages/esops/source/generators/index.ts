@@ -1,4 +1,4 @@
-// import jetpack from 'fs-jetpack'
+import fs from '../drivers/fs'
 import {GeneratorManifest} from '../core/types'
 // /**
 //  * ## Render
@@ -58,6 +58,26 @@ import {GeneratorManifest} from '../core/types'
 //      Add gitignore list to /tmp/.gitignore
 //  copyTmpGeneratedToSourceFolder
 
-export default (generatorManifest: GeneratorManifest) => {
-  generatorManifest.forEach(manifest => {})
+const forceCopy = (generatorManifest: GeneratorManifest) => {
+  generatorManifest.forEach(manifest => {
+    const from = manifest.templateDir + manifest.relativePath
+    const to = manifest.outputDir
+    fs.forceCopy(from, to)
+  })
+}
+
+const updateGitIgnore = generatorManifest => {
+  const cwd = generatorManifest[0].outputDir
+  const ignoreFiles = generatorManifest
+    .map(({relativePath}) => relativePath)
+    .join('\n')
+  const startLine = '### ESOPS GITIGNORE AUTO GENERATED BEGIN ###'
+  const endLine = '### ESOPS GITIGNORE AUTO GENERATED END ###'
+  fs.updateGeneratedTextFs(startLine, endLine, ignoreFiles, cwd)
+}
+
+export default (generatorManifest: GeneratorManifest): void => {
+  console.log('generator', JSON.stringify(generatorManifest, null, 2))
+  // forceCopy(generatorManifest)
+  // updateGitIgnore(generatorManifest)
 }
