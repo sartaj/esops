@@ -70,9 +70,9 @@ export type ParserOptions = {
   opts: LocalOptionsWithProps
 }
 
-export type Parser = (options: ParserOptions) => Promise<CopyManifest>
+export type Parser = (options: ParserOptions) => Promise<GeneratorManifest>
 
-export type ConvertPathsToCopyManifest = (paths: Path[]) => CopyManifest
+export type ConvertPathsToCopyManifest = (paths: Path[]) => GeneratorManifest
 
 // export type PatchWhitelist = [
 //   ['.json.template', 'RENDER_THEN_MERGE_JSON'],
@@ -97,11 +97,9 @@ export type Copies = {
   templateDir: TemplatePath
   relativePath: Path
   method: Methods
-}
-export type CopyManifest = {
   options: LocalOptions
-  paths: Copies[]
 }
+export type GeneratorManifest = Copies[]
 
 export interface Parsers {
   default: Parser
@@ -111,10 +109,10 @@ export interface Parsers {
 /**
  * ## Generate (FS)
  */
-export type Generate = (manifest: CopyManifest) => Promise<boolean>
+export type Generate = (manifest: GeneratorManifest) => Promise<boolean>
 
 export type GenerateTemporaryFiles = (
-  copyManifest: CopyManifest
+  copyManifest: GeneratorManifest
 ) => Promise<TempGenerationPath>
 
 export type ForceCopyFiles = (

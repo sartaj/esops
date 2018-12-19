@@ -1,14 +1,17 @@
 // import path from 'path'
+import {GeneratorManifest, LocalOption} from '../core/types'
 const {flatten} = require('ramda')
 const multimatch = require('multimatch')
-
-// const getStackFilePaths = templatePath => {
-//   const paths = fs.listTreeSync(templatePath)
-//   // For now, only files are supported
-//   // TODO: Explore need/use case for folder path support
-//   const filePaths = paths.filter(filePath => !isDirectory.sync(filePath))
-//   return filePaths
-// }
+import * as isDirectory from 'is-directory'
+import fs from '../drivers/fs'
+import {Path} from '../core/types'
+const getStackFilePaths = (templatePath: Path): Path[] => {
+  const paths = fs.listTreeSync(templatePath)
+  // For now, only files are supported
+  // TODO: Explore need/use case for folder path support
+  const filePaths = paths.filter(filePath => !isDirectory.sync(filePath))
+  return filePaths
+}
 
 /**
  * ## Converters
@@ -65,23 +68,25 @@ const validatePatchList = patchList => {
 
 module.exports.validatePatchList = validatePatchList
 
-// const convertStackToPatchList = ({paths: {outputDir, stackDir, stackPaths}}) => {
-//   return stackPaths.map(filePath => ({
-//     outputDir,
-//     stackDir,
-//     relativePath: filePath.replace(stackDir, ''),
-//     method: getMethodType(filePath)
-//   }))
-// }
+const convertStackToPatchList = ({
+  paths: {outputDir, stackDir, stackPaths}
+}) => {
+  return stackPaths.map(filePath => ({
+    outputDir,
+    stackDir,
+    relativePath: filePath.replace(stackDir, ''),
+    method: getMethodType(filePath)
+  }))
+}
 
 // module.exports.convertStackToPatchList = convertStackToPatchList
 
-// async function convertStackComposeToPatchList(stackConfig, cwd) {
+// export async function convertStackComposeToPatchList(stackConfig, {cwd}) {
 //   try {
 //     let patchList = []
 //     for (let i = 0; i < stackConfig.length; i++) {
 //       const stack = stackConfig[i]
-//       newList = await convertStackToPatchList(stack, cwd)
+//       newList = convertStackToPatchList(stack, cwd)
 //       patchList = patchList.concat(newList)
 //     }
 //     return patchList
@@ -92,3 +97,25 @@ module.exports.validatePatchList = validatePatchList
 // }
 
 // module.exports.convertStackComposeToPatchList = convertStackComposeToPatchList
+export default (opts, {cwd}): GeneratorManifest => {
+  const manifest = opts
+    .map((opt: LocalOption) => ({
+      stackDir: opt[0],
+      opts: opt[1],
+      paths: getStackFilePaths(opt[0])
+    }))
+    .reduce(
+      (manifest, optWithPaths) => [
+        ...manifest,
+        ...optWithPaths.paths.map(filePath => ({
+          outputDir: cwd,
+          stackDir: optWithPaths.stackDir,
+          relativePath: filePath.replace(optWithPaths.stackDir, ''),
+          opts: optWithPaths.opts
+        }))
+      ],
+      []
+    )
+
+  return manifest
+}

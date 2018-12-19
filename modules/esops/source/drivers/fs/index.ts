@@ -1,4 +1,4 @@
-import fsPlus from 'fs-plus'
+import * as fsPlus from 'fs-plus'
 import {existsSync} from 'fs'
 
 export default {
@@ -7,5 +7,6 @@ export default {
   readPkg: require('read-pkg'),
   resolvePkg: require('resolve-pkg'),
   ...fsPlus,
-  existsSync
+  existsSync,
+  listTreeSync: fsPlus.listTreeSync
 }
