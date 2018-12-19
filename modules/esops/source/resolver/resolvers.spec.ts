@@ -7,6 +7,7 @@ describe('resolver()', async assert => {
   const config = {
     cwd: MOCK_STACKS.basic
   }
+
   assert({
     given: 'single FS path',
     should: 'return fs path as LocalOptionWithProps',
