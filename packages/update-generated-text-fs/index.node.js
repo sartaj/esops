@@ -8,7 +8,6 @@ function replaceGeneratedStringInFile(
   newContents,
   filePath
 ) {
-  console.log('filePath', filePath)
   touch.sync(filePath);
   const file = fs.readFileSync(filePath, "utf-8");
   const updated = updateGeneratedString(startLine, endLine, newContents, file);

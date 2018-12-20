@@ -19,9 +19,9 @@ runTest(MOCK_STACKS.basic)
 async function runTest(cwd) {
   const tempDir = __dirname + '/.tmp/'
   if (!fs.existsSync(tempDir)) fs.mkdirSync(tempDir)
-  fs.copySync(cwd, tempDir)
-  process.chdir(tempDir)
-  await esops()
+  fs.forceCopy(cwd, tempDir)
+  // process.chdir(tempDir)
+  await esops({cwd: tempDir})
   // const actual = fs.listTreeSync(cwd).sort()
   // rimraf.sync(tempDir, fs)
   // return actual
