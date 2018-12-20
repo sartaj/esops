@@ -47,7 +47,7 @@ describe('parser()', async assert => {
       given: `${manifest.relativePath}`,
       should: 'have cwd',
       expected: MOCK_TEMPLATES.basic,
-      actual: manifest.outputDir
+      actual: manifest.cwd
     })
   })
 })

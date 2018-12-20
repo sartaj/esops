@@ -68,12 +68,13 @@ const forceCopy = (generatorManifest: GeneratorManifest) => {
 
 const updateGitIgnore = generatorManifest => {
   const cwd = generatorManifest[0].cwd
+  const gitignore = path.join(cwd, '.gitignore')
   const ignoreFiles = generatorManifest
     .map(({relativePath}) => relativePath)
     .join('\n')
   const startLine = '### ESOPS GITIGNORE AUTO GENERATED BEGIN ###'
   const endLine = '### ESOPS GITIGNORE AUTO GENERATED END ###'
-  fs.updateGeneratedTextFs(startLine, endLine, ignoreFiles, cwd)
+  fs.updateGeneratedTextFs(startLine, endLine, ignoreFiles, gitignore)
 }
 
 export default (generatorManifest: GeneratorManifest): void => {
