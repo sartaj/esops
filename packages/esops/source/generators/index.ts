@@ -1,4 +1,5 @@
 import fs from '../drivers/fs'
+import * as path from 'path'
 import {GeneratorManifest} from '../core/types'
 // /**
 //  * ## Render
@@ -60,14 +61,13 @@ import {GeneratorManifest} from '../core/types'
 
 const forceCopy = (generatorManifest: GeneratorManifest) => {
   generatorManifest.forEach(manifest => {
-    const from = manifest.templateDir + manifest.relativePath
-    const to = manifest.outputDir
-    fs.forceCopy(from, to)
+    fs.mkdirp.sync(manifest.toDir)
+    fs.forceCopy(manifest.fromPath, manifest.toPath)
   })
 }
 
 const updateGitIgnore = generatorManifest => {
-  const cwd = generatorManifest[0].outputDir
+  const cwd = generatorManifest[0].cwd
   const ignoreFiles = generatorManifest
     .map(({relativePath}) => relativePath)
     .join('\n')
@@ -77,7 +77,6 @@ const updateGitIgnore = generatorManifest => {
 }
 
 export default (generatorManifest: GeneratorManifest): void => {
-  console.log('generator', JSON.stringify(generatorManifest, null, 2))
-  // forceCopy(generatorManifest)
-  // updateGitIgnore(generatorManifest)
+  forceCopy(generatorManifest)
+  updateGitIgnore(generatorManifest)
 }

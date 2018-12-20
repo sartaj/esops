@@ -1,10 +1,10 @@
-// import path from 'path'
-import {GeneratorManifest, LocalOption} from '../core/types'
+import * as path from 'path'
 const {flatten} = require('ramda')
 const multimatch = require('multimatch')
 import * as isDirectory from 'is-directory'
 import fs from '../drivers/fs'
-import {Path} from '../core/types'
+import {Path, GeneratorManifest, LocalOption} from '../core/types'
+
 const getStackFilePaths = (templatePath: Path): Path[] => {
   const paths = fs.listTreeSync(templatePath)
   // For now, only files are supported
@@ -105,14 +105,24 @@ export default (opts, {cwd}): GeneratorManifest => {
       paths: getStackFilePaths(opt[0])
     }))
     .reduce(
-      (manifest, optWithPaths) => [
+      (manifest, optWithPaths): GeneratorManifest => [
         ...manifest,
-        ...optWithPaths.paths.map(filePath => ({
-          outputDir: cwd,
-          stackDir: optWithPaths.stackDir,
-          relativePath: filePath.replace(optWithPaths.stackDir, ''),
-          opts: optWithPaths.opts
-        }))
+        ...optWithPaths.paths.map(fromPath => {
+          const relativePath = fromPath.replace(optWithPaths.stackDir, '')
+          const toPath = path.join(
+            cwd,
+            fromPath.replace(optWithPaths.stackDir, '')
+          )
+          return {
+            cwd,
+            stackDir: optWithPaths.stackDir,
+            relativePath,
+            fromPath,
+            toDir: path.dirname(toPath),
+            toPath,
+            opts: optWithPaths.opts
+          }
+        })
       ],
       []
     )

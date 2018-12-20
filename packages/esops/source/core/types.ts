@@ -93,11 +93,14 @@ export type Methods =
   | 'RENDER_THEN_MERGE_FILE'
 
 export type Copies = {
-  outputDir: CWD
-  templateDir: TemplatePath
+  cwd: Path
+  stackDir: TemplatePath
   relativePath: Path
+  fromPath
+  toDir: Path
+  toPath: Path
+  opts: LocalOptions
   method: Methods
-  options: LocalOptions
 }
 export type GeneratorManifest = Copies[]
 

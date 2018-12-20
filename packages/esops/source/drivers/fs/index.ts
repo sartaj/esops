@@ -12,6 +12,7 @@ export default {
   listTreeSync,
   mkdirSync,
   copySync,
+  mkdirp: require('mkdirp'),
   forceCopy: (from, to) => {
     copy(from, to, {overwrite: true})
   }
