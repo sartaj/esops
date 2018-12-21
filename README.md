@@ -1,4 +1,4 @@
-# esops - Declarative Infrastructure
+# esops - Decoupled Infrastructure
 
 Template generation with a twist: automatically add generated files to ignore files.
 
@@ -53,3 +53,7 @@ Add the local path to your template.
 ### Run `esops`
 
 If global, just run `esops`. If local, use `npx esops`. Files will be generated, and if you have a `.gitignore`, it will be updated to include the generated files.
+
+### To Clean Files
+
+To refresh your codebase, if you had a `.gitignore` and esops generated an ignore list there, you can remove files all `.gitignore`'d files [using a git command](https://stackoverflow.com/q/13541615) or a module like [remove-git-ignored](https://www.npmjs.com/package/remove-git-ignored).
