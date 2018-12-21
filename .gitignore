@@ -1,11 +1,6 @@
+.nyc_output
+coverage
+.DS_Store
 library
-
-# Logs
-*.log
-
-# Dependency directories
 node_modules
 .tmp
-
-# OS fs specifics
-.DS_Store
