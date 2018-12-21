@@ -8,6 +8,7 @@ import {
 import resolver from '../resolver'
 import parser from '../parser'
 import generate from '../generators'
+import fs from '../drivers/fs'
 
 const resolve = async ({
   cwd,
@@ -20,7 +21,17 @@ const resolve = async ({
 const parse = async ({opts, cwd}): Promise<GeneratorManifest> =>
   parser(opts, {cwd})
 
+export const findOpts = ({cwd}: ResolverOptions): ResolverOptions => {
+  const pkg = fs.readPkg.sync({cwd})
+  const opts = pkg.esops
+  return {
+    cwd,
+    opts
+  }
+}
+
 export const esops: EsopsRun = pipe(
+  findOpts,
   resolve,
   parse,
   // TODO: validate,

@@ -108,7 +108,7 @@ export default (opts, {cwd}): GeneratorManifest => {
       (manifest, optWithPaths): GeneratorManifest => [
         ...manifest,
         ...optWithPaths.paths.map(fromPath => {
-          const relativePath = fromPath.replace(optWithPaths.stackDir, '')
+          const relativePath = path.relative(optWithPaths.stackDir, fromPath)
           const toPath = path.join(
             cwd,
             fromPath.replace(optWithPaths.stackDir, '')
