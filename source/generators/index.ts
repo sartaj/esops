@@ -66,11 +66,15 @@ const forceCopy = (generatorManifest: GeneratorManifest) => {
   })
 }
 
+// [How to exclude file only from root folder in Git](https://stackoverflow.com/a/3637678)
+const addSlashForGitIgnore = relativePath => `/${relativePath}`
+
 const updateGitIgnore = generatorManifest => {
   const cwd = generatorManifest[0].cwd
   const gitignore = path.join(cwd, '.gitignore')
   const ignoreFiles = generatorManifest
     .map(({relativePath}) => relativePath)
+    .map(addSlashForGitIgnore)
     .join('\n')
   const startLine = '### ESOPS GITIGNORE AUTO GENERATED BEGIN ###'
   const endLine = '### ESOPS GITIGNORE AUTO GENERATED END ###'
