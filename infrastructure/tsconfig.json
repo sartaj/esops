@@ -26,7 +26,7 @@
   },
   "compileOnSave": true,
   "exclude": [
-    "*/.test.*",
+    "**/*.spec.ts",
     "android",
     "build",
     "docs",

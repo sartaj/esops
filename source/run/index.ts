@@ -34,7 +34,6 @@ export const esops: EsopsRun = pipe(
   findOpts,
   resolve,
   parse,
-  // TODO: validate,
   generate
 )
 
