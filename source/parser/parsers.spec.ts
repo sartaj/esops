@@ -6,17 +6,6 @@ import resolver from '../resolver'
 
 import {MOCK_TEMPLATES} from '../core/examples'
 
-const keyValueExists = (key, value, list) =>
-  R.pipe(
-    R.find(R.propEq(key, value)),
-    R.isEmpty,
-    R.not
-  )(list)
-
-// /**
-//  * Specifications
-//  */
-
 describe('parser()', async assert => {
   const expectedRelativePaths = [
     '.vscode/settings.json',
@@ -51,15 +40,3 @@ describe('parser()', async assert => {
     })
   })
 })
-
-// test(
-//   'test render',
-//   withTempFolder(({t, dirname}) => {
-//     t.plan(1)
-//     const infrastructureDirectory = MOCK_INFRASTRUCTURES.basic
-//     fs.copySync(infrastructureDirectory, dirname)
-//     const props = {}
-//     // const actual = parsers.render(dirname, infrastructureDirectory, props);
-//     t.equal(true, true)
-//   })
-// )
