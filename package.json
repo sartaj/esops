@@ -1,6 +1,6 @@
 {
   "name": "esops",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "description": "Declarative infrastructure for cleaner repositories.",
   "main": "library/run/index.js",
   "bin": "library/bin/index.js",
@@ -15,6 +15,7 @@
     "report": "NODE_ENV=test nyc --reporter=lcov --require ts-node/register tape source/**/*.spec.ts | tap-nirvana; nyc report ---reporter=text"
   },
   "files": [
+    "assets",
     "library"
   ],
   "dependencies": {
