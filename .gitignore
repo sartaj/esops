@@ -1,9 +1,15 @@
-# Logs
-*.log
-
-# Dependency directories
+.nyc_output
+coverage
+.DS_Store
+library
 node_modules
 .tmp
 
-# OS fs specifics
-.DS_Store
+### ESOPS GITIGNORE AUTO GENERATED BEGIN ###
+/.node-dev.json
+/.nycrc
+/.prettierrc
+/.vscode/extensions.json
+/.vscode/settings.json
+/tsconfig.json
+### ESOPS GITIGNORE AUTO GENERATED END ###
