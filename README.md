@@ -7,11 +7,11 @@ Template generation with a twist: automatically add generated files to ignore fi
 ## Benefits
 
 - Manage combined config files likes `.eslintrc`, `tsconfig.json`, `.prettierrc`, and code editor settings in a separate directory or module, allowing your to further decouple your devops.
-- Maintain cleaner code bases by reducing number of config files in the root
+- Maintain cleaner code bases by reducing number of config files in the root.
 
 ## Features
 
-- Generate files in a directory from a template directory
+- Generate files in a directory from a template directory.
 - Automatically manage `.gitignore` file by adding generated files.
 
 ## Why
