@@ -2,6 +2,8 @@
 
 Template generation with a twist: automatically add generated files to ignore files.
 
+![Demo Gif](./assets/esops-demo.gif)
+
 ## Benefits
 
 - Manage combined config files likes `.eslintrc`, `tsconfig.json`, `.prettierrc`, and code editor settings in a separate directory or module, allowing your to further decouple your devops.
