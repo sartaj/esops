@@ -4,3 +4,11 @@ coverage
 library
 node_modules
 .tmp
+### ESOPS GITIGNORE AUTO GENERATED BEGIN ###
+.node-dev.json
+.nycrc
+.prettierrc
+.vscode/extensions.json
+.vscode/settings.json
+tsconfig.json
+### ESOPS GITIGNORE AUTO GENERATED END ###

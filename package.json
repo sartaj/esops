@@ -28,7 +28,7 @@
     "ramda": "^0.25.0",
     "read-pkg": "^4.0.1",
     "resolve-pkg": "^1.0.0",
-    "update-generated-text-fs": "file:../update-generated-text-fs"
+    "update-generated-text-fs": "1.0.0"
   },
   "devDependencies": {
     "@types/node": "^10.12.9",
@@ -42,5 +42,6 @@
     "ts-node": "^7.0.1",
     "ts-node-dev": "^1.0.0-pre.32",
     "typescript": "^3.1.6"
-  }
+  },
+  "esops": "./infrastructure"
 }
