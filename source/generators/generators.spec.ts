@@ -7,15 +7,15 @@ import generator from './index'
 
 import {MOCK_TEMPLATES} from '../core/examples'
 
-describe('generator()', async assert => {
-  const config = {cwd: MOCK_TEMPLATES.basic}
-  const resolved = await resolver('./', config)
-  const parsed = parser(resolved, config)
-  // generator(parsed)
-  assert({
-    given: '',
-    should: ``,
-    expected: true,
-    actual: true
-  })
-})
+// describe('generator()', async assert => {
+//   const config = {cwd: MOCK_TEMPLATES.basic}
+//   const resolved = await resolver('./', config)
+//   const parsed = parser(resolved, config)
+//   // generator(parsed)
+//   assert({
+//     given: '',
+//     should: ``,
+//     expected: true,
+//     actual: true
+//   })
+// })

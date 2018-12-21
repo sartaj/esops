@@ -1,6 +1,6 @@
 {
   "name": "esops",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "description": "Declarative infrastructure for cleaner repositories.",
   "main": "library/run/index.js",
   "bin": "library/bin/index.js",
@@ -10,25 +10,32 @@
   "scripts": {
     "build": "tsc",
     "build:watch": "tsc -w",
-    "test": "ts-node ./node_modules/.bin/riteway source/**/*.spec.ts | tap-nirvana",
-    "test:watch": "ts-node-dev --respawn ./node_modules/.bin/riteway source/**/*.spec.ts | tap-nirvana",
-    "report": "nyc npm test"
+    "test": "NODE_ENV=test ts-node ./node_modules/.bin/riteway source/**/*.spec.ts | tap-nirvana",
+    "test:watch": "NODE_ENV=test ts-node-dev --respawn ./node_modules/.bin/riteway source/**/*.spec.ts | tap-nirvana",
+    "report": "NODE_ENV=test nyc --reporter=lcov --require ts-node/register tape source/**/*.spec.ts | tap-nirvana; nyc report ---reporter=text"
   },
   "files": [
     "library"
   ],
   "dependencies": {
     "await-result": "^2.2.1",
+    "boxen": "^1.3.0",
+    "chalk": "^2.4.1",
     "fs-jetpack": "^2.2.0",
     "fs-plus": "^3.0.2",
     "is-directory": "^0.3.1",
+    "loglevel": "^1.6.1",
+    "marked": "^0.4.0",
+    "marked-terminal": "^3.0.0",
     "mkdirp": "^0.5.1",
     "multimatch": "^2.1.0",
     "promised-pipe": "^1.1.1",
     "ramda": "^0.25.0",
     "read-pkg": "^4.0.1",
     "resolve-pkg": "^1.0.0",
-    "update-generated-text-fs": "1.0.0"
+    "term-img": "^2.1.0",
+    "update-generated-text-fs": "1.0.0",
+    "wrap-ansi": "^4.0.0"
   },
   "devDependencies": {
     "@types/node": "^10.12.9",
@@ -38,6 +45,7 @@
     "riteway": "^4.0.1",
     "snapshotter": "^2.0.1",
     "tap-nirvana": "^1.1.0",
+    "tap-spec": "^5.0.0",
     "tape": "^4.9.1",
     "ts-node": "^7.0.1",
     "ts-node-dev": "^1.0.0-pre.32",

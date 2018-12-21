@@ -9,6 +9,7 @@ import resolver from '../resolver'
 import parser from '../parser'
 import generate from '../generators'
 import fs from '../drivers/fs'
+import log from '../drivers/console'
 
 const resolve = async ({
   cwd,
@@ -24,6 +25,8 @@ const parse = async ({opts, cwd}): Promise<GeneratorManifest> =>
 export const findOpts = ({cwd}: ResolverOptions): ResolverOptions => {
   const pkg = fs.readPkg.sync({cwd})
   const opts = pkg.esops
+  log.md(`# Stack Configuration
+  ${typeof opts === 'string' ? opts : JSON.stringify(opts, null, 2)}`)
   return {
     cwd,
     opts
