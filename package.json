@@ -1,6 +1,6 @@
 {
   "name": "esops",
-  "version": "2.2.1",
+  "version": "2.2.2",
   "main": "library/run/index.js",
   "bin": "library/bin/index.js",
   "files": [
@@ -48,7 +48,7 @@
     "typescript-node-stack": "github:sartaj/typescript-node-stack"
   },
   "esops": "node:typescript-node-stack/stack",
-  "description": "Declarative infrastructure for cleaner repositories.",
+  "description": " Decouple your infrastructure with auto-ignored template generation.",
   "keywords": [],
   "author": "Sartaj<sartaj@sartaj.me>",
   "license": "MIT",
