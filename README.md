@@ -31,18 +31,18 @@ Install globally or locally
 #### Global
 
 `npm i -g esops`
+
 `yarn global add esops`
 
 #### Local
 
 `npm i -D esops`
-`yarn add esops --dev`
 
-Add the path of your template to your `package.json`
+`yarn add esops --dev`
 
 ### Configure `package.json`
 
-Add the local path to your template.
+Add the path of your template to your `package.json`
 
 ```json
 {
