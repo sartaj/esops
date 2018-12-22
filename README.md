@@ -46,7 +46,7 @@ Add the path of your template to your `package.json`
 
 ```json
 {
-  "esops": "./node_modules/@foo/my-stack"
+  "esops": "npm:@myorg/my-stack/stack"
 }
 ```
 
