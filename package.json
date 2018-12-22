@@ -49,7 +49,8 @@
     "tape": "^4.9.1",
     "ts-node": "^7.0.1",
     "ts-node-dev": "^1.0.0-pre.32",
-    "typescript": "^3.1.6"
+    "typescript": "^3.1.6",
+    "typescript-node-stack": "github:sartaj/typescript-node-stack"
   },
-  "esops": "./infrastructure"
+  "esops": "./node_modules/typescript-node-stack/stack"
 }
