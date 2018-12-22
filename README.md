@@ -2,7 +2,7 @@
 
 Template generation with a twist: automatically add generated files to ignore files.
 
-![ ](./assets/esops-demo.gif)
+![ ](https://raw.githubusercontent.com/sartaj/esops/master/assets/esops-demo.gif)
 
 ## Benefits
 
