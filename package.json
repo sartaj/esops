@@ -43,7 +43,6 @@
     "nyc": "^13.1.0",
     "rimraf": "^2.6.2",
     "riteway": "^4.0.1",
-    "snapshotter": "^2.0.1",
     "tap-nirvana": "^1.1.0",
     "tap-spec": "^5.0.0",
     "tape": "^4.9.1",
@@ -52,5 +51,5 @@
     "typescript": "^3.1.6",
     "typescript-node-stack": "github:sartaj/typescript-node-stack"
   },
-  "esops": "./node_modules/typescript-node-stack/stack"
+  "esops": "node:typescript-node-stack/stack"
 }
