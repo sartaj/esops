@@ -1,6 +1,6 @@
 {
   "name": "esops",
-  "version": "2.1.4",
+  "version": "2.2.0",
   "description": "Declarative infrastructure for cleaner repositories.",
   "main": "library/run/index.js",
   "bin": "library/bin/index.js",
