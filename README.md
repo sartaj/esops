@@ -56,7 +56,7 @@ Add the path of your template to your `package.json`
 
 ```json
 {
-  "esops": "node:my-stack-config/stack"
+  "esops": "node:my-typescript-stack/stack"
 }
 ```
 
