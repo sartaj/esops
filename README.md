@@ -6,7 +6,7 @@ Template generation with a twist: automatically add generated files to ignore fi
 
 ## Benefits
 
-- Decouple your infrastructure by managing codependent config files likes `.eslintrc`, `tsconfig.json`, `.prettierrc`, and code editor settings in a separate directory or module.
+- Decouple your infrastructure by managing codependent config files like `.eslintrc`, `tsconfig.json`, and `.prettierrc` in a separate directory or module.
 - Maintain cleaner code bases by reducing number of config files in the root.
 
 ## Features
