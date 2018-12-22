@@ -2,7 +2,7 @@
 
 Template generation with a twist: automatically add generated files to ignore files.
 
-![Demo Gif](./assets/esops-demo.gif)
+![ ](./assets/esops-demo.gif)
 
 ## Benefits
 
