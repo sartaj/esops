@@ -40,13 +40,23 @@ Install globally or locally
 
 `yarn add esops --dev`
 
-### Configure `package.json`
+### Configure esops in `package.json`
 
 Add the path of your template to your `package.json`
 
+#### Using filesystem resolution
+
 ```json
 {
-  "esops": "npm:@myorg/my-stack/stack"
+  "esops": "./infrastructure"
+}
+```
+
+#### Using `node` resolution
+
+```json
+{
+  "esops": "node:my-stack-config/stack"
 }
 ```
 
