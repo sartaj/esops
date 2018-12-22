@@ -6,21 +6,21 @@ Template generation with a twist: automatically add generated files to ignore fi
 
 ## Benefits
 
-- Manage combined config files likes `.eslintrc`, `tsconfig.json`, `.prettierrc`, and code editor settings in a separate directory or module, allowing your to further decouple your devops.
+- Decouple your infrastructure by managing codependent config files likes `.eslintrc`, `tsconfig.json`, `.prettierrc`, and code editor settings in a separate directory or module.
 - Maintain cleaner code bases by reducing number of config files in the root.
 
 ## Features
 
 - Generate files in a directory from a template directory.
-- Automatically manage `.gitignore` file by adding generated files.
+- If a `.gitignore` exists, automatically update it with a list of generated files.
 
 ## Why
 
-There are so many developer tools out there, like `eslint`, `prettier`, and `typescript`, that require config files to be available at the root level of project to enable features like code editor integration. However, often these configurations become dependent on each other for proper usage.
+There are so many developer tools out there, like `eslint`, `prettier`, and `typescript`, that have codependent config files that have to be available at the root level of project to enable features like code editor integration. The management of these files can be considered a separate concern from your project goal.
 
-By adding generated template files to ignore files, you can manage your infrastructure separately from your client code.
+By separating these files, and adding them as auto-ignored template files, you can update and manage your infrastructure separately from your client code.
 
-New eslint settings? Need to support prettier now? With `esops`, generated files don't pollute git or npm, thus not having to deal with rebasing or codgen issues that happen with other template generators.
+New `eslint` settings? Need to support `prettier` now? Someone on the team wants better `vscode` integration? With `esops`, generated files don't pollute git or npm, thus not having to deal with rebasing or codgen issues that happen with other template generators.
 
 ## How to Use
 
