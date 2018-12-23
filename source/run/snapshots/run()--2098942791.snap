@@ -1,0 +1,19 @@
+[
+  ".gitignore",
+  ".vscode",
+  ".vscode/settings.json",
+  "esops.json",
+  "infrastructure",
+  "infrastructure/basic",
+  "infrastructure/basic/.vscode",
+  "infrastructure/basic/.vscode/settings.json",
+  "infrastructure/basic/src",
+  "infrastructure/basic/src/stores",
+  "infrastructure/basic/src/stores/stores-architecture.md",
+  "infrastructure/basic/tsconfig.json",
+  "package.json",
+  "src",
+  "src/stores",
+  "src/stores/stores-architecture.md",
+  "tsconfig.json"
+]

@@ -1,0 +1,6 @@
+
+### ESOPS GITIGNORE AUTO GENERATED BEGIN ###
+/.vscode/settings.json
+/src/stores/stores-architecture.md
+/tsconfig.json
+### ESOPS GITIGNORE AUTO GENERATED END ###
