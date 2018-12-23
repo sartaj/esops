@@ -69,12 +69,12 @@ const validatePatchList = patchList => {
 module.exports.validatePatchList = validatePatchList
 
 const convertStackToPatchList = ({
-  paths: {outputDir, stackDir, stackPaths}
+  paths: {outputDir, stackPath, stackPaths}
 }) => {
   return stackPaths.map(filePath => ({
     outputDir,
-    stackDir,
-    relativePath: filePath.replace(stackDir, ''),
+    stackPath,
+    relativePath: filePath.replace(stackPath, ''),
     method: getMethodType(filePath)
   }))
 }
@@ -100,7 +100,7 @@ const convertStackToPatchList = ({
 export default (opts, {cwd}): GeneratorManifest => {
   const manifest = opts
     .map((opt: LocalOption) => ({
-      stackDir: opt[0],
+      stackPath: opt[0],
       opts: opt[1],
       paths: getStackFilePaths(opt[0])
     }))
@@ -108,18 +108,18 @@ export default (opts, {cwd}): GeneratorManifest => {
       (manifest, optWithPaths): GeneratorManifest => [
         ...manifest,
         ...optWithPaths.paths.map(fromPath => {
-          const relativePath = path.relative(optWithPaths.stackDir, fromPath)
-          const toPath = path.join(
-            cwd,
-            fromPath.replace(optWithPaths.stackDir, '')
-          )
+          const relativePath = path.relative(optWithPaths.stackPath, fromPath)
+          const toPath = path.join(cwd, relativePath)
+          const fileExists = fs.existsSync(toPath)
+
           return {
             cwd,
-            stackDir: optWithPaths.stackDir,
+            stackPath: optWithPaths.stackPath,
             relativePath,
             fromPath,
-            toDir: path.dirname(toPath),
+            toFolder: path.dirname(toPath),
             toPath,
+            fileExists,
             opts: optWithPaths.opts
           }
         })

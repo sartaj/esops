@@ -2,13 +2,50 @@ import * as path from 'path'
 import {GeneratorManifest} from '../core/types'
 import fs from '../drivers/fs'
 import log from '../drivers/console'
+import {mergeDeepRight} from 'ramda'
+/**
+ * merge
+ */
+
+const tryJSON = contents => {
+  try {
+    return JSON.parse(contents)
+  } catch (e) {
+    return null
+  }
+}
+
+export const merge = (generatorManifest: GeneratorManifest) => {
+  generatorManifest
+    .filter(manifest => manifest.willMerge)
+    .forEach(manifest => {
+      let finalWrite
+      const contents = fs.readFileSync(manifest.fromPath, {encoding: 'utf-8 '})
+      finalWrite = contents
+      const cwdContents = manifest.fileExists
+        ? fs.readFileSync(manifest.toPath, {
+            encoding: 'utf-8 '
+          })
+        : false
+      let json = tryJSON(contents)
+      const cwdJson = tryJSON(cwdContents)
+      if (json && cwdJson) {
+        const updatedJson = mergeDeepRight(cwdJson, json)
+        finalWrite = JSON.stringify(updatedJson)
+      } else {
+        throw new Error('to merge, both files must be json')
+      }
+
+      fs.writeFileSync(manifest.toPath, JSON.stringify(finalWrite))
+    })
+}
 
 /**
  * Force Copy
  */
 export const forceCopy = (generatorManifest: GeneratorManifest) => {
   generatorManifest.forEach(manifest => {
-    fs.mkdirp.sync(manifest.toDir)
+    fs.mkdirp.sync(manifest.toFolder)
     fs.forceCopy(manifest.fromPath, manifest.toPath)
   })
 }
@@ -56,6 +93,7 @@ const logToConsole = ({gitignoreUpdated, filesUpdated, cwd}) => {
  */
 
 export default (generatorManifest: GeneratorManifest): void => {
+  merge(generatorManifest)
   forceCopy(generatorManifest)
   const gitignoreUpdated = updateGitIgnore(generatorManifest)
 

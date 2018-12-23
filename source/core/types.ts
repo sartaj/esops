@@ -94,13 +94,17 @@ export type Methods =
 
 export type Copies = {
   cwd: Path
-  stackDir: TemplatePath
+  stackPath: TemplatePath
   relativePath: Path
   fromPath
-  toDir: Path
+  toFolder: Path
   toPath: Path
   opts: LocalOptions
-  method: Methods
+  fileExists: boolean
+  willTemplate: boolean
+  willMerge: boolean
+  willGitSave: boolean
+  willNPMSave: boolean
 }
 export type GeneratorManifest = Copies[]
 

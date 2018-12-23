@@ -1,5 +1,7 @@
 # esops - Decoupled Infrastructure
 
+[![Build Status](https://travis-ci.com/sartaj/esops.svg?branch=master)](https://travis-ci.com/sartaj/esops)
+
 Template generation with a twist: automatically add generated files to ignore files.
 
 ![ ](https://raw.githubusercontent.com/sartaj/esops/master/assets/esops-demo.gif)
