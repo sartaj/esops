@@ -1,6 +1,9 @@
-import {withSnapshots} from '../test-utils/withSnapshots'
-import {withTempDir} from '../test-utils/withTempDir'
-import {getSortedFilePaths, getGitignoreContents} from '../test-utils/fs-utils'
+import {withSnapshots} from '../../test-utils/withSnapshots'
+import {withTempDir} from '../../test-utils/withTempDir'
+import {
+  getSortedFilePaths,
+  getGitignoreContents
+} from '../../test-utils/fs-utils'
 
 import esops from './index'
 import {MOCK_STACKS} from '../core/examples'
