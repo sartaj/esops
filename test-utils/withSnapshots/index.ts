@@ -2,6 +2,7 @@ import {curry} from 'ramda'
 import * as path from 'path'
 import * as fs from 'fs'
 import * as riteway from 'riteway'
+import {unique} from 'shorthash'
 
 const updateSnapshot = (name, snapshotPath, actual) => {
   fs.writeFileSync(snapshotPath, actual)
@@ -48,16 +49,6 @@ const toMatchSnapshot = curry((snapshotDir, name, contents) => {
   }
 })
 
-function hashCode(str) {
-  return str
-    .split('')
-    .reduce(
-      (prevHash, currVal) =>
-        ((prevHash << 5) - prevHash + currVal.charCodeAt(0)) | 0,
-      0
-    )
-}
-
 export const withSnapshots = curry(
   (cwd: string | null, dirname: string | null, describeMessage, callback) => {
     const dirPath: string = cwd || process.cwd()
@@ -69,9 +60,8 @@ export const withSnapshots = curry(
     if (typeof describeFunc === 'function') {
       describeFunc(describeMessage, async assert => {
         const assertSnap = ({given, should, snap}) => {
-          const name = `${describeMessage}-${hashCode(
-            describeMessage + given + should
-          )}`
+          const hashKey = unique(describeMessage + given + should)
+          const name = `${describeMessage}-${hashKey}`
 
           assert({
             given,

@@ -1,6 +1,6 @@
 import * as path from 'path'
 
-import fs from '../../drivers/fs'
+import * as fs from 'fs-plus'
 
 export const getSortedFilePaths = dir =>
   fs
@@ -8,5 +8,6 @@ export const getSortedFilePaths = dir =>
     .sort()
     .map(abs => path.relative(dir, abs))
 
-export const getGitignoreContents = dir =>
-  fs.readFileSync(path.join(dir, '.gitignore'), {encoding: 'utf-8'})
+export const getFileContents = dir => fs.readFileSync(dir, {encoding: 'utf-8'})
+
+export const getJsonContents = dir => JSON.parse(getFileContents(dir))

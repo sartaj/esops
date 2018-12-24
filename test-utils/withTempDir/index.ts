@@ -1,6 +1,7 @@
-import * as path from 'path'
 import * as rimraf from 'rimraf'
-import fs from '../../drivers/fs'
+import {copy} from 'fs-jetpack'
+import * as fs from 'fs'
+import * as path from 'path'
 import {curry} from 'ramda'
 
 export const withTempDir = curry(async (dir, initialFiles, callback) => {
@@ -9,7 +10,7 @@ export const withTempDir = curry(async (dir, initialFiles, callback) => {
   async function before() {
     rimraf.sync(tempPath, fs)
     if (!fs.existsSync(tempPath)) fs.mkdirSync(tempPath)
-    if (initialFiles) fs.forceCopy(initialFiles, tempPath)
+    if (initialFiles) copy(initialFiles, tempPath, {overwrite: true})
   }
 
   async function after() {
