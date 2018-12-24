@@ -1,6 +1,6 @@
 {
   "name": "esops",
-  "version": "2.3.1",
+  "version": "2.3.2",
   "main": "library/run/index.js",
   "bin": "library/bin/index.js",
   "files": [
@@ -29,6 +29,7 @@
     "mkdirp": "^0.5.1",
     "multimatch": "^2.1.0",
     "promised-pipe": "^1.1.1",
+    "pretty-error": "^2.1.1",
     "ramda": "^0.25.0",
     "read-pkg": "^4.0.1",
     "resolve-pkg": "^1.0.0",
@@ -41,7 +42,6 @@
     "@types/ramda": "^0.25.43",
     "await-spawn": "^2.1.2",
     "nyc": "^13.1.0",
-    "pretty-error": "^2.1.1",
     "rimraf": "^2.6.2",
     "riteway": "^4.0.1",
     "shorthash": "0.0.2",
