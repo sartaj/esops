@@ -11,6 +11,7 @@
     "build": "tsc",
     "build:watch": "tsc -w",
     "test": "NODE_ENV=test ts-node ./node_modules/.bin/riteway source/**/*.spec.ts | tap-nirvana",
+    "test:console": "ts-node ./node_modules/.bin/riteway source/**/*.spec.ts",
     "test:update": "UPDATE_SNAPSHOTS=1 npm run test",
     "test:watch": "NODE_ENV=test ts-node-dev --respawn ./node_modules/.bin/riteway source/**/*.spec.ts | tap-nirvana",
     "report": "NODE_ENV=test nyc --require ts-node/register tape source/**/*.spec.ts | tap-nirvana"

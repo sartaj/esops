@@ -1,3 +1,5 @@
+import {mdString} from './markdown'
+
 const chalk = require('chalk')
 const PrettyError = require('pretty-error')
 const {announce} = require('./announce')
@@ -20,9 +22,9 @@ const prettyError = new PrettyError()
 export const renderError = e => {
   const stackTrace = prettyError.render(e)
   const errorTemplate = `
-  # ${chalk.red('Oops.')} ${chalk.red(e.name)} 
+  ${chalk.bold(`# ${chalk.red('Oops.')} ${chalk.red(e.name)}`)}
 
-  ${e.message}
+  ${mdString(e.message)}
   ___
 
   ${chalk.red.bold.dim('Stack Trace')}

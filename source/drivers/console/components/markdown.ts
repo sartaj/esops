@@ -8,6 +8,8 @@ marked.setOptions({
   gfm: true
 })
 
+export const mdString = marked
+
 export const md = string => {
   const mdString = marked(string).slice(0, -2) // slice is to remove created new-lines created by marked.
 

@@ -5,11 +5,11 @@ const wrapAnsi = require('wrap-ansi')
 export const announce = (string, opts, type = 'info') => {
   log[type](
     boxen(wrapAnsi(string, 80), {
-      padding: 1,
-      margin: 1,
       borderStyle: 'round',
-      float: 'center',
-      align: 'center',
+      align: 'left',
+      float: 'left',
+      margin: 1,
+      padding: 1,
       ...opts
     })
   )

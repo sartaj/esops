@@ -1,10 +1,11 @@
 ___SNAPSHOT___ Describe an invalid config | Given a bad config: should throw friendly error
 
-TypeError: Path ./infrastructure not found.
+TypeError: Path `./infrastructure` not found.
 
-Current Working Directory: /current/working/directory/.
+## Current Working Directory
+`/current/working/directory/`.
 
 Allowed paths include:
 
-- fs paths: './infrastructure'
-- node paths: 'node:@myorg/my-stack/stack
+- fs paths: `'./infrastructure'`
+- node paths: `'node:@myorg/my-stack/stack'`

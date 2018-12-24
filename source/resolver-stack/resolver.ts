@@ -34,14 +34,15 @@ export const fetchPath = async (pathString, cwd) => {
      **/
     if (!modulePath)
       throw new TypeError(
-        `Path ${pathString} not found.
+        `Path \`${pathString}\` not found.
 
-Current Working Directory: ${cwd}.
+## Current Working Directory
+\`${cwd}\`.
 
 Allowed paths include:
 
-- fs paths: './infrastructure'
-- node paths: 'node:@myorg/my-stack/stack
+- fs paths: \`'./infrastructure'\`
+- node paths: \`'node:@myorg/my-stack/stack'\`
 `
       )
     return modulePath
