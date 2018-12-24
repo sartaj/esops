@@ -93,6 +93,15 @@ describe('esops() minimal features', async (assert, assertSnap) => {
     })
   })
 
+  await withTempDir(__dirname, MOCK_STACKS['basic-no-config'], async cwd => {
+    const snap = cleanErrorString(cwd)(await Try(esops, {cwd}))
+    await assertSnap({
+      given: 'no config found',
+      should: 'provide a friendly message on how to use esops',
+      snap
+    })
+  })
+
   await withTempDir(__dirname, MOCK_STACKS['basic-bad-path'], async cwd => {
     const cleanError = cleanErrorString(cwd)
     const snap = cleanError(await Try(esops, {cwd}))
@@ -112,20 +121,11 @@ describe('esops() minimal features', async (assert, assertSnap) => {
     })
   })
 
-  await withTempDir(__dirname, MOCK_STACKS['basic-bad-config'], async cwd => {
+  await withTempDir(__dirname, MOCK_STACKS['basic-bad-json'], async cwd => {
     const snap = cleanErrorString(cwd)(await Try(esops, {cwd}))
     await assertSnap({
       given: 'non parseable',
       should: 'throw a friendly error',
-      snap
-    })
-  })
-
-  await withTempDir(__dirname, MOCK_STACKS['basic-no-config'], async cwd => {
-    const snap = cleanErrorString(cwd)(await Try(esops, {cwd}))
-    await assertSnap({
-      given: 'no config found',
-      should: 'provide a friendly message on how to use esops',
       snap
     })
   })
