@@ -1,3 +1,5 @@
+___SNAPSHOT___ Describe A minimal package | Given a minimal package: should generate basic template in cwd ___
+
 [
   ".gitignore",
   ".vscode",

@@ -1,0 +1,8 @@
+___SNAPSHOT___ Describe A minimal package | Given a minimal package: should have merged package.json ___
+
+{
+  "name": "esops-test",
+  "esops": [
+    "./infrastructure/basic"
+  ]
+}

@@ -1,3 +1,5 @@
+___SNAPSHOT___ Describe A minimal package | Given a minimal package: should have updated gitignore with generated file paths ___
+
 
 ### ESOPS GITIGNORE AUTO GENERATED BEGIN ###
 /.vscode/settings.json

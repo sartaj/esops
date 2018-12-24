@@ -4,18 +4,20 @@ import * as fs from 'fs'
 import * as riteway from 'riteway'
 import {unique} from 'shorthash'
 
-const updateSnapshot = (name, snapshotPath, actual) => {
-  fs.writeFileSync(snapshotPath, actual)
-  console.log(`snapshot ${name} has been updated`)
-  return {
-    expected: actual,
-    actual
-  }
-}
-
 const toMatchSnapshot = curry((snapshotDir, name, contents) => {
+  const uniqueName = unique(name)
+  const fileHeader = `___SNAPSHOT___ ${name} ___\n\n`
   const shouldUpdateSnapshots = process.env.UPDATE_SNAPSHOTS
-  const snapshotPath = path.join(snapshotDir, `${name}.snap`)
+  const snapshotPath = path.join(snapshotDir, `${uniqueName}.snap`)
+
+  const updateSnapshot = actual => {
+    fs.writeFileSync(snapshotPath, fileHeader + actual)
+    console.log(`snapshot ${name} has been updated`)
+    return {
+      expected: actual,
+      actual
+    }
+  }
 
   if (!fs.existsSync(snapshotDir)) fs.mkdirSync(snapshotDir)
 
@@ -23,18 +25,20 @@ const toMatchSnapshot = curry((snapshotDir, name, contents) => {
     typeof contents !== 'string' ? JSON.stringify(contents, null, 2) : contents
 
   if (!fs.existsSync(snapshotPath)) {
-    if (shouldUpdateSnapshots) return updateSnapshot(name, snapshotPath, actual)
+    if (shouldUpdateSnapshots) return updateSnapshot(actual)
     else
       throw new Error(
         'Snapshot does not exist yet. Run with UPDATE_SNAPSHOTS=1 to update snapshots.'
       )
   }
 
-  const expected = fs.readFileSync(snapshotPath, {encoding: 'utf-8'})
+  const expected = fs
+    .readFileSync(snapshotPath, {encoding: 'utf-8'})
+    .replace(fileHeader, '')
 
   if (actual !== expected) {
     if (shouldUpdateSnapshots) {
-      return updateSnapshot(name, snapshotPath, actual)
+      return updateSnapshot(actual)
     } else {
       return {
         actual,
@@ -60,8 +64,7 @@ export const withSnapshots = curry(
     if (typeof describeFunc === 'function') {
       describeFunc(describeMessage, async assert => {
         const assertSnap = ({given, should, snap}) => {
-          const hashKey = unique(describeMessage + given + should)
-          const name = `${describeMessage}-${hashKey}`
+          const name = `Describe ${describeMessage} | Given ${given}: should ${should}`
 
           assert({
             given,
