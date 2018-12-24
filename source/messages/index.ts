@@ -10,23 +10,25 @@ export const NoPathError = ({
 }) => `Path \`${pathString}\` not found.
 
 ## Current Working Directory
-\`${cwd}\`.
+\`${cwd}\`
 
 Allowed paths include:
 
-- fs paths: \`'./infrastructure'\`
-- node paths: \`'node:@myorg/my-stack/stack'\`
+- filesystem paths: \`'./infrastructure'\`
+- node modules: \`'node:@myorg/my-stack/stack'\`
 `
 
 export const FinalReport = ({
   gitignoreUpdated,
-  filesUpdated,
+  generatorManifest,
   cwd
 }) => `# Your Directory has Been Updated.
 
 ## Files Added
 
-${filesUpdated}
+${generatorManifest
+  .map(({relativePath}) => '* `' + relativePath + '`')
+  .join('\n')}
 
 ## Current Working Directory
 \`${cwd}\`

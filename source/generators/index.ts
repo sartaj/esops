@@ -73,10 +73,6 @@ export const updateGitIgnore = generatorManifest => {
   } else return false
 }
 
-const logToConsole = ({gitignoreUpdated, filesUpdated, cwd}) => {
-  log.md(FinalReport({gitignoreUpdated, filesUpdated, cwd}))
-}
-
 /**
  * Add To NPM ignore
  */
@@ -86,11 +82,11 @@ export default (generatorManifest: GeneratorManifest): void => {
   forceCopy(generatorManifest)
   const gitignoreUpdated = updateGitIgnore(generatorManifest)
 
-  logToConsole({
-    filesUpdated: generatorManifest
-      .map(({relativePath}) => '`' + relativePath + '`')
-      .join('\n'),
-    cwd: generatorManifest[0].cwd,
-    gitignoreUpdated
-  })
+  log.md(
+    FinalReport({
+      generatorManifest,
+      gitignoreUpdated,
+      cwd: generatorManifest[0].cwd
+    })
+  )
 }
