@@ -10,5 +10,6 @@ module.exports.MOCK_TEMPLATES = {
 
 module.exports.MOCK_STACKS = {
   basic: path.join(examplesDir, 'packages', 'basic'),
-  disallowed: path.join(examplesDir, 'packages', 'disallowed')
+  'basic-package-json': path.join(examplesDir, 'packages', 'basic-package-json'),
+  'basic-no-gitignore': path.join(examplesDir, 'packages', 'basic-no-gitignore'),
 }

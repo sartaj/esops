@@ -4,9 +4,12 @@ import * as fs from 'fs'
 import * as riteway from 'riteway'
 import {unique} from 'shorthash'
 
+const UPDATE_SNAPSHOT_MESSAGE =
+  'Snapshot failed. Run with UPDATE_SNAPSHOTS=1 to update snapshots.'
+
 const toMatchSnapshot = curry((snapshotDir, name, contents) => {
   const uniqueName = unique(name)
-  const fileHeader = `___SNAPSHOT___ ${name} ___\n\n`
+  const fileHeader = `___SNAPSHOT___ ${name}\n\n`
   const shouldUpdateSnapshots = process.env.UPDATE_SNAPSHOTS
   const snapshotPath = path.join(snapshotDir, `${uniqueName}.snap`)
 
@@ -27,9 +30,7 @@ const toMatchSnapshot = curry((snapshotDir, name, contents) => {
   if (!fs.existsSync(snapshotPath)) {
     if (shouldUpdateSnapshots) return updateSnapshot(actual)
     else
-      throw new Error(
-        'Snapshot does not exist yet. Run with UPDATE_SNAPSHOTS=1 to update snapshots.'
-      )
+      throw new Error(`Snapshot does not exist yet. ${UPDATE_SNAPSHOT_MESSAGE}`)
   }
 
   const expected = fs
@@ -40,6 +41,7 @@ const toMatchSnapshot = curry((snapshotDir, name, contents) => {
     if (shouldUpdateSnapshots) {
       return updateSnapshot(actual)
     } else {
+      console.error(UPDATE_SNAPSHOT_MESSAGE)
       return {
         actual,
         expected
@@ -72,7 +74,7 @@ export const withSnapshots = curry(
             ...matchByName(name, snap)
           })
         }
-        callback(assert, assertSnap)
+        await callback(assert, assertSnap)
       })
     }
   }

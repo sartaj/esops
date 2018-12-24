@@ -1,4 +1,4 @@
-___SNAPSHOT___ Describe A minimal package | Given a minimal package: should have updated gitignore with generated file paths ___
+___SNAPSHOT___ Describe minimal stack | Given an included gitignore: should have updated gitignore with generated file paths
 
 
 ### ESOPS GITIGNORE AUTO GENERATED BEGIN ###

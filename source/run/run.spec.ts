@@ -13,7 +13,7 @@ import {MOCK_STACKS} from '../core/examples'
 
 const describe = withSnapshots(__dirname, null)
 
-describe('A minimal package', async (assert, assertSnap) => {
+describe('minimal stack', async (assert, assertSnap) => {
   withTempDir(__dirname, MOCK_STACKS.basic, async cwd => {
     await esops({cwd})
 
@@ -24,15 +24,52 @@ describe('A minimal package', async (assert, assertSnap) => {
     })
 
     assertSnap({
-      given: 'a minimal package',
+      given: 'an included gitignore',
+      should: 'have updated gitignore with generated file paths',
+      snap: getFileContents(path.join(cwd, '.gitignore'))
+    })
+  })
+})
+
+describe('minimal stack with package.json', async (assert, assertSnap) => {
+  withTempDir(__dirname, MOCK_STACKS['basic-package-json'], async cwd => {
+    await esops({cwd})
+
+    assertSnap({
+      given: 'a minimal package with package.json',
+      should: 'generate basic template in cwd',
+      snap: getSortedFilePaths(cwd)
+    })
+
+    assertSnap({
+      given: 'an included gitignore',
       should: 'have updated gitignore with generated file paths',
       snap: getFileContents(path.join(cwd, '.gitignore'))
     })
 
     assertSnap({
-      given: 'a minimal package',
-      should: 'have merged package.json',
+      given: 'a package.json',
+      should: 'have a package.json',
       snap: getJsonContents(path.join(cwd, 'package.json'))
+    })
+  })
+})
+
+describe('minimal stack with no .gitignore', async (assert, assertSnap) => {
+  withTempDir(__dirname, MOCK_STACKS['basic-no-gitignore'], async cwd => {
+    await esops({cwd})
+
+    assertSnap({
+      given: 'a minimal package with no .gitignore',
+      should: 'generate basic template in cwd',
+      snap: getSortedFilePaths(cwd)
+    })
+
+    assert({
+      given: 'no gitignore',
+      should: 'not create a gitignore',
+      expected: null,
+      actual: getFileContents(path.join(cwd, '.gitignore'))
     })
   })
 })

@@ -1,0 +1,20 @@
+___SNAPSHOT___ Describe minimal stack with package.json | Given a minimal package with package.json: should generate basic template in cwd
+
+[
+  ".gitignore",
+  ".vscode",
+  ".vscode/settings.json",
+  "infrastructure",
+  "infrastructure/basic",
+  "infrastructure/basic/.vscode",
+  "infrastructure/basic/.vscode/settings.json",
+  "infrastructure/basic/src",
+  "infrastructure/basic/src/stores",
+  "infrastructure/basic/src/stores/stores-architecture.md",
+  "infrastructure/basic/tsconfig.json",
+  "package.json",
+  "src",
+  "src/stores",
+  "src/stores/stores-architecture.md",
+  "tsconfig.json"
+]

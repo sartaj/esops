@@ -1,0 +1,8 @@
+___SNAPSHOT___ Describe minimal stack with package.json | Given an included gitignore: should have updated gitignore with generated file paths
+
+
+### ESOPS GITIGNORE AUTO GENERATED BEGIN ###
+/.vscode/settings.json
+/src/stores/stores-architecture.md
+/tsconfig.json
+### ESOPS GITIGNORE AUTO GENERATED END ###

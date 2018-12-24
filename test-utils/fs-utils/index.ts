@@ -8,6 +8,7 @@ export const getSortedFilePaths = dir =>
     .sort()
     .map(abs => path.relative(dir, abs))
 
-export const getFileContents = dir => fs.readFileSync(dir, {encoding: 'utf-8'})
+export const getFileContents = dir =>
+  fs.existsSync(dir) ? fs.readFileSync(dir, {encoding: 'utf-8'}) : null
 
 export const getJsonContents = dir => JSON.parse(getFileContents(dir))
