@@ -1,6 +1,6 @@
 {
   "name": "esops",
-  "version": "2.2.5",
+  "version": "2.3.0",
   "main": "library/run/index.js",
   "bin": "library/bin/index.js",
   "files": [
