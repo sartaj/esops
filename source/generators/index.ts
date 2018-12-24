@@ -3,6 +3,7 @@ import {GeneratorManifest} from '../core/types'
 import fs from '../drivers/fs'
 import log from '../drivers/console'
 import {mergeDeepRight} from 'ramda'
+import {FinalReport} from '../messages'
 /**
  * merge
  */
@@ -73,19 +74,7 @@ export const updateGitIgnore = generatorManifest => {
 }
 
 const logToConsole = ({gitignoreUpdated, filesUpdated, cwd}) => {
-  log.md(`# Your Directory has Been Updated.
-
-  ## Files Added
-  
-  ${filesUpdated}
-  
-  ## Current Working Directory
-  \`${cwd}\`
-  
-  ## Notes
-  
-  ${gitignoreUpdated ? '.gitignore has been updated.' : ''}
-  `)
+  log.md(FinalReport({gitignoreUpdated, filesUpdated, cwd}))
 }
 
 /**

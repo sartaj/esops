@@ -1,7 +1,12 @@
 import * as path from 'path'
+import {is} from 'ramda'
+
 import fs from '../drivers/fs'
 import log from '../drivers/console'
 import {ResolverOptions} from '../core/types'
+import {StackConfig, InvalidOptsError} from '../messages'
+
+const isValidOpts = opts => is(String, opts) || is(Array, opts)
 
 export const findOpts = ({cwd, opts}: ResolverOptions): ResolverOptions => {
   if (!opts) {
@@ -14,9 +19,9 @@ export const findOpts = ({cwd, opts}: ResolverOptions): ResolverOptions => {
     const pkg = fs.readPkg.sync({cwd})
     opts = pkg.esops
   }
+  if (!opts || !isValidOpts(opts)) throw new TypeError(InvalidOptsError())
 
-  log.md(`# Stack Configuration
-  ${typeof opts === 'string' ? opts : JSON.stringify(opts, null, 2)}`)
+  log.md(StackConfig(opts))
 
   return {
     cwd,

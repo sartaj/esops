@@ -5,6 +5,7 @@ export const tryFSPath = (pkg, {cwd}) => {
   const potentialPath = path.join(cwd, pkg)
   return fs.existsSync(potentialPath) ? potentialPath : null
 }
+import {NoPathError} from '../messages'
 
 const tryNodePath = async (pathString, opts) => {
   try {
@@ -32,19 +33,7 @@ export const fetchPath = async (pathString, cwd) => {
      *  - tryNPMInstall
      *  - tryTorrent
      **/
-    if (!modulePath)
-      throw new TypeError(
-        `Path \`${pathString}\` not found.
-
-## Current Working Directory
-\`${cwd}\`.
-
-Allowed paths include:
-
-- fs paths: \`'./infrastructure'\`
-- node paths: \`'node:@myorg/my-stack/stack'\`
-`
-      )
+    if (!modulePath) throw new TypeError(NoPathError({pathString, cwd}))
     return modulePath
   } catch (e) {
     throw e

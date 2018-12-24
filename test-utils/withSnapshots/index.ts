@@ -65,16 +65,20 @@ export const withSnapshots = curry(
     const describeFunc = riteway.describe
     if (typeof describeFunc === 'function') {
       describeFunc(describeMessage, async assert => {
-        const assertSnap = ({given, should, snap}) => {
-          const name = `Describe ${describeMessage} | Given ${given}: should ${should}`
+        try {
+          const assertSnap = ({given, should, snap}) => {
+            const name = `Describe ${describeMessage} | Given ${given}: should ${should}`
 
-          assert({
-            given,
-            should,
-            ...matchByName(name, snap)
-          })
+            assert({
+              given,
+              should,
+              ...matchByName(name, snap)
+            })
+          }
+          await callback(assert, assertSnap)
+        } catch (e) {
+          throw e
         }
-        await callback(assert, assertSnap)
       })
     }
   }

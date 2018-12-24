@@ -26,8 +26,9 @@ const parse = async ({opts, cwd}): Promise<GeneratorManifest> =>
   parser(opts, {cwd})
 
 const crashEsops = e => {
+  if (process.env.NODE_ENV === 'test') throw e
   log.renderError(e)
-  throw e
+  if (!process.env.RUN_CONSOLE_TEST) process.exit(1)
 }
 
 export const esops: EsopsRun = params =>

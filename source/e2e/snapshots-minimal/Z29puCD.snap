@@ -1,0 +1,4 @@
+___SNAPSHOT___ Describe esops() minimal features | Given an invalid json object as config: should throw a friendly error
+
+TypeError: Your stack has not been defined.
+Please add a stack config to `esops.json` or `package.json`

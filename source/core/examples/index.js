@@ -13,7 +13,8 @@ const MOCK_STACKS = [
   'basic-gitignore',
   'basic-package-json',
   'basic-node-module',
-  'basic-bad-path'
+  'basic-bad-path',
+  'basic-bad-config'
 ].reduce((mockStacks, next) => ({ ...mockStacks, [next]: path.join(examplesDir, 'packages', next)}), {})
 
 module.exports.MOCK_STACKS = MOCK_STACKS
