@@ -15,10 +15,19 @@ const isValidOpts = opts => is(String, opts) || is(Array, opts)
 export const findOpts = ({cwd, opts}: ResolverOptions): ResolverOptions => {
   if (!opts) {
     const esopsConfigPath = path.join(cwd, 'esops.json')
-    opts =
+    const esopsConfig =
       fs.existsSync(esopsConfigPath) &&
-      JSON.parse(fs.readFileSync(esopsConfigPath, {encoding: 'utf-8'}))
+      fs.readFileSync(esopsConfigPath, {encoding: 'utf-8'})
+
+    if (esopsConfig) {
+      try {
+        opts = JSON.parse(esopsConfig)
+      } catch (e) {
+        throw new TypeError(InvalidOptsError())
+      }
+    }
   }
+
   if (!opts) {
     const packageJsonPath = path.join(cwd, 'package.json')
     const pkg = fs.existsSync(packageJsonPath) && fs.readPkg.sync({cwd})
@@ -27,7 +36,7 @@ export const findOpts = ({cwd, opts}: ResolverOptions): ResolverOptions => {
 
   if (isNil(opts)) renderConfigNotFound()
 
-  if (!opts || !isValidOpts(opts)) throw new TypeError(InvalidOptsError())
+  if (!isValidOpts(opts)) throw new TypeError(InvalidOptsError())
 
   log.md(StackConfig(opts))
 
