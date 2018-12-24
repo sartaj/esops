@@ -5,8 +5,8 @@ const logger =
     ? {
         announce: () => {},
         info: () => {},
-        error: () => {},
-        md: () => {}
+        md: () => {},
+        renderError: () => {}
       }
     : l
 

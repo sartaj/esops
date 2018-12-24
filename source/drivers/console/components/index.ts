@@ -4,12 +4,13 @@ const log = require('loglevel')
 log.setLevel(0)
 export {trace, debug, warn, setLevel} from 'loglevel'
 
+export {renderError} from './error'
+
 export const announce = require('./announce').announce
 export const image = require('./image').image
 export const carlton = require('./image').carlton
 export const md = require('./markdown').md
 export const mdFile = require('./markdown').mdFile
-export const error = require('./error')
 
 export const logo = () => chalk.blue.bold.dim(`esops`)
 

@@ -12,7 +12,7 @@ import resolverStack from '../resolver-stack'
 import parser from '../parser'
 import generate from '../generators'
 
-import {renderError} from '../drivers/console/components/error'
+import log from '../drivers/console'
 
 const resolveStack = async ({
   cwd,
@@ -26,7 +26,7 @@ const parse = async ({opts, cwd}): Promise<GeneratorManifest> =>
   parser(opts, {cwd})
 
 const crashEsops = e => {
-  if (process.env.NODE_ENV !== 'test') renderError(e)
+  log.renderError(e)
   throw e
 }
 
