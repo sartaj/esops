@@ -10,10 +10,11 @@ import {
 
 import esops from './index'
 import {MOCK_STACKS} from '../core/examples'
+import * as spawn from 'await-spawn'
 
 const describe = withSnapshots(__dirname, null)
 
-describe('minimal stack', async (assert, assertSnap) => {
+describe('minimal stack with esops.json and fs path', async (assert, assertSnap) => {
   withTempDir(__dirname, MOCK_STACKS.basic, async cwd => {
     await esops({cwd})
 
@@ -42,8 +43,8 @@ describe('minimal stack with package.json', async (assert, assertSnap) => {
     })
 
     assertSnap({
-      given: 'an included gitignore',
-      should: 'have updated gitignore with generated file paths',
+      given: 'an included .gitignore',
+      should: 'have updated .gitignore with generated file paths',
       snap: getFileContents(path.join(cwd, '.gitignore'))
     })
 
@@ -66,10 +67,22 @@ describe('minimal stack with no .gitignore', async (assert, assertSnap) => {
     })
 
     assert({
-      given: 'no gitignore',
+      given: 'no .gitignore',
       should: 'not create a gitignore',
       expected: null,
       actual: getFileContents(path.join(cwd, '.gitignore'))
+    })
+  })
+})
+
+describe('minimal stack from node module', async (assert, assertSnap) => {
+  withTempDir(__dirname, MOCK_STACKS['basic-node-module'], async cwd => {
+    await spawn(`npm`, ['install'], {cwd})
+    await esops({cwd})
+    assertSnap({
+      given: 'a minimal package',
+      should: 'generate basic template in cwd from node_module',
+      snap: getSortedFilePaths(cwd)
     })
   })
 })

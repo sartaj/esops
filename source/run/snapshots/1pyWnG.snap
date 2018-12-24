@@ -1,0 +1,33 @@
+___SNAPSHOT___ Describe minimal stack from node module | Given a minimal package: should generate basic template in cwd from node_module
+
+[
+  ".gitignore",
+  ".vscode",
+  ".vscode/settings.json",
+  "infrastructure",
+  "infrastructure/basic",
+  "infrastructure/basic/.vscode",
+  "infrastructure/basic/.vscode/settings.json",
+  "infrastructure/basic/src",
+  "infrastructure/basic/src/stores",
+  "infrastructure/basic/src/stores/stores-architecture.md",
+  "infrastructure/basic/tsconfig.json",
+  "infrastructure/package.json",
+  "node_modules",
+  "node_modules/@test",
+  "node_modules/@test/infrastructure",
+  "node_modules/@test/infrastructure/basic",
+  "node_modules/@test/infrastructure/basic/.vscode",
+  "node_modules/@test/infrastructure/basic/.vscode/settings.json",
+  "node_modules/@test/infrastructure/basic/src",
+  "node_modules/@test/infrastructure/basic/src/stores",
+  "node_modules/@test/infrastructure/basic/src/stores/stores-architecture.md",
+  "node_modules/@test/infrastructure/basic/tsconfig.json",
+  "node_modules/@test/infrastructure/package.json",
+  "package-lock.json",
+  "package.json",
+  "src",
+  "src/stores",
+  "src/stores/stores-architecture.md",
+  "tsconfig.json"
+]

@@ -12,4 +12,5 @@ module.exports.MOCK_STACKS = {
   basic: path.join(examplesDir, 'packages', 'basic'),
   'basic-package-json': path.join(examplesDir, 'packages', 'basic-package-json'),
   'basic-no-gitignore': path.join(examplesDir, 'packages', 'basic-no-gitignore'),
+  'basic-node-module': path.join(examplesDir, 'packages', 'basic-node-module'),
 }

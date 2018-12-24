@@ -38,6 +38,7 @@
   "devDependencies": {
     "@types/node": "^10.12.9",
     "@types/ramda": "^0.25.43",
+    "await-spawn": "^2.1.2",
     "nyc": "^13.1.0",
     "rimraf": "^2.6.2",
     "riteway": "^4.0.1",

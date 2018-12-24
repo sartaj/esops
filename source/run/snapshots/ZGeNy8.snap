@@ -1,4 +1,4 @@
-___SNAPSHOT___ Describe minimal stack | Given a minimal package: should generate basic template in cwd
+___SNAPSHOT___ Describe minimal stack with esops.json and fs path | Given a minimal package: should generate basic template in cwd
 
 [
   ".gitignore",
