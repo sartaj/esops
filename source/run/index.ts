@@ -7,27 +7,35 @@ import {
   GeneratorManifest
 } from '../core/types'
 
-import findOpts from '../opt-finder'
-import resolver from '../resolver'
+import resolveCwd from '../resolver-cwd'
+import resolverStack from '../resolver-stack'
 import parser from '../parser'
 import generate from '../generators'
 
-const resolve = async ({
+import {renderError} from '../drivers/console/components/error'
+
+const resolveStack = async ({
   cwd,
   opts
 }: ResolverOptions): Promise<ParserOptions> => ({
   cwd,
-  opts: await resolver(opts, {cwd})
+  opts: await resolverStack(opts, {cwd})
 })
 
 const parse = async ({opts, cwd}): Promise<GeneratorManifest> =>
   parser(opts, {cwd})
 
-export const esops: EsopsRun = pipe(
-  findOpts,
-  resolve,
-  parse,
-  generate
-)
+const crashEsops = e => {
+  if (process.env.NODE_ENV !== 'test') renderError(e)
+  throw e
+}
+
+export const esops: EsopsRun = params =>
+  pipe(
+    resolveCwd,
+    resolveStack,
+    parse,
+    generate
+  )(params).catch(crashEsops)
 
 export default esops

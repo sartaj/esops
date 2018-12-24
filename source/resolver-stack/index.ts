@@ -1,21 +1,19 @@
 import {
   Resolve,
-  ResolverOptions,
   Options,
-  ParserOptions,
   Option,
   LocalWithProps,
   OptionsWithProps,
   WithProps,
-  CWD,
-  LocalOptionsWithProps
+  CWD
 } from '../core/types'
-import {isString, pipe, curry, tryCatch} from '../utils'
+import {isString, pipe, throwIf} from '../utils'
 import {fetchPath} from './resolver'
 
 const createDefaultOpt = (path: string): WithProps => [path, {}]
 
 type OptionPromises = Promise<LocalWithProps>
+
 const createOptionPromise = (cwd: CWD, opt: WithProps): OptionPromises =>
   new Promise((resolve, reject) => {
     const path = opt[0]
@@ -36,24 +34,16 @@ const convertAllOptionsToHaveProps = (opts: Options): OptionsWithProps =>
     ? [createDefaultOpt(opts)]
     : opts.map((opt: Option) => (isString(opt) ? createDefaultOpt(opt) : opt))
 
+const throwError = e => {
+  throw e
+}
+
 const resolve: Resolve = (opts, {cwd} = defaultConfig) =>
   pipe(
     convertAllOptionsToHaveProps,
-    opts => opts.map(opt => createOptionPromise(cwd, opt)),
-    opts => Promise.all(opts)
-  )(opts)
-
-// const resolve: Resolve = async ({
-//   cwd,
-//   opts
-// }: ResolverOptions): Promise<ParserOptions> => ({
-//   cwd,
-//   opts: await pipe(
-//     convertAllOptionsToHaveProps,
-//     opts => opts.map(opt => createOptionPromise(cwd, opt)),
-//     opts => Promise.all(opts)
-//   )(opts)
-// })
+    opts => opts.map(opt => createOptionPromise(cwd, opt).catch(throwError)),
+    opts => Promise.all(opts).catch(throwError)
+  )(opts).catch(throwError)
 
 export {resolve}
 

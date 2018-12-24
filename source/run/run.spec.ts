@@ -1,12 +1,14 @@
 import * as path from 'path'
 import * as spawn from 'await-spawn'
 
+import {Try} from 'riteway'
 import {withSnapshots} from '../../test-utils/withSnapshots'
 import {withTempDir} from '../../test-utils/withTempDir'
 import {
   getSortedFilePaths,
   getFileContents,
-  getJsonContents
+  getJsonContents,
+  cleanErrorString
 } from '../../test-utils/fs-utils'
 
 import esops from './index'
@@ -15,7 +17,7 @@ import {MOCK_STACKS} from '../core/examples'
 const describe = withSnapshots(__dirname, null)
 
 describe('minimal stack with esops.json and fs path', async (assert, assertSnap) => {
-  withTempDir(__dirname, MOCK_STACKS.basic, async cwd => {
+  withTempDir(__dirname, MOCK_STACKS['basic-gitignore'], async cwd => {
     await esops({cwd})
 
     assertSnap({
@@ -57,7 +59,7 @@ describe('minimal stack with package.json', async (assert, assertSnap) => {
 })
 
 describe('minimal stack with no .gitignore', async (assert, assertSnap) => {
-  withTempDir(__dirname, MOCK_STACKS['basic-no-gitignore'], async cwd => {
+  withTempDir(__dirname, MOCK_STACKS['basic'], async cwd => {
     await esops({cwd})
 
     assertSnap({
@@ -76,13 +78,24 @@ describe('minimal stack with no .gitignore', async (assert, assertSnap) => {
 })
 
 describe('minimal stack from node module', async (assert, assertSnap) => {
-  withTempDir(__dirname, MOCK_STACKS['basic-node-module'], async cwd => {
+  await withTempDir(__dirname, MOCK_STACKS['basic-node-module'], async cwd => {
     await spawn(`npm`, ['install'], {cwd})
     await esops({cwd})
-    assertSnap({
+    await assertSnap({
       given: 'a minimal package',
       should: 'generate basic template in cwd from node_module',
       snap: getSortedFilePaths(cwd)
+    })
+  })
+})
+
+describe('an invalid config', async (assert, assertSnap) => {
+  withTempDir(__dirname, MOCK_STACKS['basic-bad-path'], async cwd => {
+    const cleanError = cleanErrorString(cwd)
+    await assertSnap({
+      given: 'a bad config',
+      should: 'throw friendly error',
+      snap: cleanError(await Try(esops, {cwd}))
     })
   })
 })

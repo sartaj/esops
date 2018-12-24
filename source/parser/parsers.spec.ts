@@ -2,7 +2,7 @@ import {describe} from 'riteway'
 import * as path from 'path'
 import * as R from 'ramda'
 import parser from './index'
-import resolver from '../resolver'
+import resolver from '../resolver-stack'
 
 import {MOCK_TEMPLATES} from '../core/examples'
 

@@ -40,6 +40,7 @@
     "@types/ramda": "^0.25.43",
     "await-spawn": "^2.1.2",
     "nyc": "^13.1.0",
+    "pretty-error": "^2.1.1",
     "rimraf": "^2.6.2",
     "riteway": "^4.0.1",
     "shorthash": "0.0.2",

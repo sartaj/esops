@@ -33,12 +33,19 @@ export const fetchPath = async (pathString, cwd) => {
      *  - tryTorrent
      **/
     if (!modulePath)
-      throw new Error(
-        `path ${pathString} not found from ${cwd}. Allowed paths include node paths via the 'node:' prefix, and fs paths `
+      throw new TypeError(
+        `Path ${pathString} not found.
+
+Current Working Directory: ${cwd}.
+
+Allowed paths include:
+
+- fs paths: './infrastructure'
+- node paths: 'node:@myorg/my-stack/stack
+`
       )
     return modulePath
   } catch (e) {
-    console.error(e)
     throw e
   }
 }

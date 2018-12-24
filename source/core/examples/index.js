@@ -8,9 +8,12 @@ module.exports.MOCK_TEMPLATES = {
   'target-web': path.join(examplesDir, 'templates', 'target-web')
 }
 
-module.exports.MOCK_STACKS = {
-  basic: path.join(examplesDir, 'packages', 'basic'),
-  'basic-package-json': path.join(examplesDir, 'packages', 'basic-package-json'),
-  'basic-no-gitignore': path.join(examplesDir, 'packages', 'basic-no-gitignore'),
-  'basic-node-module': path.join(examplesDir, 'packages', 'basic-node-module'),
-}
+const MOCK_STACKS = [
+  'basic',  
+  'basic-gitignore',
+  'basic-package-json',
+  'basic-node-module',
+  'basic-bad-path'
+].reduce((mockStacks, next) => ({ ...mockStacks, [next]: path.join(examplesDir, 'packages', next)}), {})
+
+module.exports.MOCK_STACKS = MOCK_STACKS

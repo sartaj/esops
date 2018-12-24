@@ -13,22 +13,6 @@ const getStackFilePaths = (templatePath: Path): Path[] => {
   return filePaths
 }
 
-/**
- * ## Converters
- */
-const getMethodType = filePath => {
-  // const patch = [
-  //   ['.json.template', 'RENDER_THEN_MERGE_JSON'],
-  //   ['.json', 'MERGE_JSON'],
-  //   ['.gitignore', 'MERGE_FILE'],
-  //   ['.gitignore.template', 'RENDER_THEN_MERGE_FILE'],
-  //   ['.npmignore', 'MERGE_FILE'],
-  //   ['.npmignore.template', 'RENDER_THEN_MERGE_FILE'],
-  //   ['.template', 'RENDER_TEMPLATE'],
-  //   ['', 'COPY_AND_OVERRIDE']
-  // ]
-}
-
 const overridesAreValid = patchList => {
   const MERGEABLES = [
     '.gitignore',
@@ -67,19 +51,6 @@ const validatePatchList = patchList => {
 }
 
 module.exports.validatePatchList = validatePatchList
-
-const convertStackToPatchList = ({
-  paths: {outputDir, stackPath, stackPaths}
-}) => {
-  return stackPaths.map(filePath => ({
-    outputDir,
-    stackPath,
-    relativePath: filePath.replace(stackPath, ''),
-    method: getMethodType(filePath)
-  }))
-}
-
-// module.exports.convertStackToPatchList = convertStackToPatchList
 
 // export async function convertStackComposeToPatchList(stackConfig, {cwd}) {
 //   try {

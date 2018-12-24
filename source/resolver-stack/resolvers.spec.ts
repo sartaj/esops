@@ -5,7 +5,7 @@ import {MOCK_STACKS} from '../core/examples'
 
 describe('resolver()', async assert => {
   const config = {
-    cwd: MOCK_STACKS.basic
+    cwd: MOCK_STACKS['basic-gitignore']
   }
 
   assert({
