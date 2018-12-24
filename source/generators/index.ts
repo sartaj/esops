@@ -84,7 +84,7 @@ const logToConsole = ({gitignoreUpdated, filesUpdated, cwd}) => {
   
   ## Notes
   
-  ${gitignoreUpdated && '.gitignore has been updated.'}
+  ${gitignoreUpdated ? '.gitignore has been updated.' : ''}
   `)
 }
 
