@@ -1,4 +1,4 @@
-___SNAPSHOT___ Describe esops() minimal features | Given an included .gitignore: should have updated .gitignore with generated paths
+___SNAPSHOT___ Describe esops() minimal features | Given an included .gitignore: should have updated .gitignore with generated file paths
 
 
 ### ESOPS AUTO GENERATED BEGIN ###

@@ -17,19 +17,47 @@ import {MOCK_STACKS} from '../core/examples'
 const describe = withSnapshots(__dirname, 'snapshots-minimal')
 
 describe('esops() minimal features', async (assert, assertSnap) => {
-  await withTempDir(__dirname, MOCK_STACKS['basic-gitignore'], async cwd => {
+  await withTempDir(__dirname, MOCK_STACKS['basic'], async cwd => {
     await esops({cwd})
 
     await assertSnap({
-      given: 'stack with esops.json and fs path',
+      given: 'a minimal package with no extra files',
       should: 'generate basic template in cwd',
       snap: getSortedFilePaths(cwd)
     })
 
+    await assert({
+      given: 'no .gitignore',
+      should: 'not create a .gitignore',
+      expected: null,
+      actual: getFileContents(path.join(cwd, '.gitignore'))
+    })
+
+    await assert({
+      given: 'no .npmignore',
+      should: 'not create a .npmignore',
+      expected: null,
+      actual: getFileContents(path.join(cwd, '.npmignore'))
+    })
+  })
+
+  await withTempDir(__dirname, MOCK_STACKS['basic-gitignore'], async cwd => {
+    await esops({cwd})
+
     await assertSnap({
-      given: 'an included gitignore',
-      should: 'have updated gitignore with generated file paths',
+      given: 'an included .gitignore',
+      should: 'have updated .gitignore with generated file paths',
       snap: getFileContents(path.join(cwd, '.gitignore'))
+    })
+  })
+
+  await withTempDir(__dirname, MOCK_STACKS['basic-npmignore'], async cwd => {
+    await esops({cwd})
+
+    await assertSnap({
+      given: 'an included .npmignore',
+      should: 'have updated .npmignore with generated file paths',
+      snap: getFileContents(path.join(cwd, '.npmignore'))
     })
   })
 
@@ -52,23 +80,6 @@ describe('esops() minimal features', async (assert, assertSnap) => {
       given: 'a minimal package.json',
       should: 'have contents in package.json',
       snap: getJsonContents(path.join(cwd, 'package.json'))
-    })
-  })
-
-  await withTempDir(__dirname, MOCK_STACKS['basic'], async cwd => {
-    await esops({cwd})
-
-    await assertSnap({
-      given: 'a minimal package with no .gitignore',
-      should: 'generate basic template in cwd',
-      snap: getSortedFilePaths(cwd)
-    })
-
-    await assert({
-      given: 'no .gitignore',
-      should: 'not create a gitignore',
-      expected: null,
-      actual: getFileContents(path.join(cwd, '.gitignore'))
     })
   })
 

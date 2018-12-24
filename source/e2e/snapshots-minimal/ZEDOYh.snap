@@ -1,4 +1,4 @@
-___SNAPSHOT___ Describe esops() minimal features | Given a minimal package with no .gitignore: should generate basic template in cwd
+___SNAPSHOT___ Describe esops() minimal features | Given a minimal package with no extra files: should generate basic template in cwd
 
 [
   ".vscode",

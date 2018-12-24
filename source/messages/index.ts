@@ -51,6 +51,7 @@ ${EsopsHowTo()}
 
 export const FinalReport = ({
   gitignoreUpdated,
+  npmignoreUpdated,
   generatorManifest,
   cwd
 }) => `# Your Directory has Been Updated.
@@ -67,6 +68,7 @@ ${generatorManifest
 ## Notes
 
 ${gitignoreUpdated ? '.gitignore has been updated.' : ''}
+${npmignoreUpdated ? '.npmignore has been updated.' : ''}
 `
 
 export const ConfigNotFound = () => `

@@ -66,9 +66,24 @@ export const updateGitIgnore = generatorManifest => {
       .map(({relativePath}) => relativePath)
       .map(addSlashForGitIgnore)
       .join('\n')
-    const startLine = '### ESOPS GITIGNORE AUTO GENERATED BEGIN ###'
-    const endLine = '### ESOPS GITIGNORE AUTO GENERATED END ###'
+    const startLine = '### ESOPS AUTO GENERATED BEGIN ###'
+    const endLine = '### ESOPS AUTO GENERATED END ###'
     fs.updateGeneratedTextFs(startLine, endLine, ignoreFiles, gitignore)
+    return true
+  } else return false
+}
+
+export const updateNpmIgnore = generatorManifest => {
+  const cwd = generatorManifest[0].cwd
+  const npmignore = path.join(cwd, '.npmignore')
+  if (fs.existsSync(npmignore)) {
+    const ignoreFiles = generatorManifest
+      .map(({relativePath}) => relativePath)
+      .map(addSlashForGitIgnore)
+      .join('\n')
+    const startLine = '### ESOPS AUTO GENERATED BEGIN ###'
+    const endLine = '### ESOPS AUTO GENERATED END ###'
+    fs.updateGeneratedTextFs(startLine, endLine, ignoreFiles, npmignore)
     return true
   } else return false
 }
@@ -81,11 +96,12 @@ export default (generatorManifest: GeneratorManifest): void => {
   merge(generatorManifest)
   forceCopy(generatorManifest)
   const gitignoreUpdated = updateGitIgnore(generatorManifest)
-
+  const npmignoreUpdated = updateNpmIgnore(generatorManifest)
   log.md(
     FinalReport({
       generatorManifest,
       gitignoreUpdated,
+      npmignoreUpdated,
       cwd: generatorManifest[0].cwd
     })
   )
