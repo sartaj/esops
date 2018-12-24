@@ -1,7 +1,6 @@
-___SNAPSHOT___ Describe minimal stack with esops.json and fs path | Given a minimal package: should generate basic template in cwd
+___SNAPSHOT___ Describe esops() minimal features | Given a minimal package with no .gitignore: should generate basic template in cwd
 
 [
-  ".gitignore",
   ".vscode",
   ".vscode/settings.json",
   "esops.json",

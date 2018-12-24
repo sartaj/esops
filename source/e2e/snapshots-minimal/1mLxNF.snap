@@ -1,4 +1,4 @@
-___SNAPSHOT___ Describe an invalid config | Given a bad config: should throw friendly error
+___SNAPSHOT___ Describe esops() minimal features | Given a bad path in the config: should throw a friendly error
 
 TypeError: Path `./infrastructure` not found.
 

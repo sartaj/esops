@@ -1,8 +1,0 @@
-___SNAPSHOT___ Describe minimal stack with package.json | Given a package.json: should have a package.json
-
-{
-  "name": "esops-test",
-  "esops": [
-    "./infrastructure"
-  ]
-}

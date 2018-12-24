@@ -1,4 +1,4 @@
-___SNAPSHOT___ Describe minimal stack with package.json | Given a minimal package with package.json: should generate basic template in cwd
+___SNAPSHOT___ Describe esops() minimal features | Given a minimal package with package.json: should generate basic template in cwd
 
 [
   ".gitignore",

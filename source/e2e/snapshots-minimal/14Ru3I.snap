@@ -1,4 +1,4 @@
-___SNAPSHOT___ Describe minimal stack with package.json | Given an included .gitignore: should have updated .gitignore with generated file paths
+___SNAPSHOT___ Describe esops() minimal features | Given an included gitignore: should have updated gitignore with generated file paths
 
 
 ### ESOPS GITIGNORE AUTO GENERATED BEGIN ###

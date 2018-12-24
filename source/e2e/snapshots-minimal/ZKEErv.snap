@@ -1,4 +1,4 @@
-___SNAPSHOT___ Describe minimal stack from node module | Given a minimal package: should generate basic template in cwd from node_module
+___SNAPSHOT___ Describe esops() minimal features | Given minimal stack from node module: should generate basic template in cwd from node_module
 
 [
   ".gitignore",
