@@ -1,9 +1,7 @@
-___SNAPSHOT___ Describe esops() minimal features | Given non parseable: should throw a friendly error
+___SNAPSHOT___ Describe esops() minimal features | Given no config found: should provide a friendly message on how to use esops
 
-TypeError: Your stack definition is invalid.
-Please add a a valid stack config to `esops.json` or `package.json`.
-
-A valid stack config will be a path to a directory you want to copy from.
+Error: 
+No config found.
 
 ## How To
 Esops works by adding a valid stack config to `esops.json` or `package.json`.
@@ -30,6 +28,5 @@ A valid stack config will be a path to a directory you want to copy from.
 ### Run `esops`
 
 If global, just run `esops`. If local, use `npx esops`. Files will be generated, and if you have a `.gitignore`, it will be updated to include the generated files.
-
 
 

@@ -43,7 +43,7 @@ describe('esops() minimal features', async (assert, assertSnap) => {
     })
 
     await assertSnap({
-      given: 'a minimal package.json and included .gitignore',
+      given: 'an included .gitignore',
       should: 'have updated .gitignore with generated paths',
       snap: getFileContents(path.join(cwd, '.gitignore'))
     })
@@ -106,6 +106,15 @@ describe('esops() minimal features', async (assert, assertSnap) => {
     await assertSnap({
       given: 'non parseable',
       should: 'throw a friendly error',
+      snap
+    })
+  })
+
+  await withTempDir(__dirname, MOCK_STACKS['basic-no-config'], async cwd => {
+    const snap = cleanErrorString(cwd)(await Try(esops, {cwd}))
+    await assertSnap({
+      given: 'no config found',
+      should: 'provide a friendly message on how to use esops',
       snap
     })
   })

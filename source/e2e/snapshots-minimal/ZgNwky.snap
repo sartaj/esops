@@ -1,4 +1,4 @@
-___SNAPSHOT___ Describe esops() minimal features | Given a minimal package.json and included .gitignore: should have updated .gitignore with generated paths
+___SNAPSHOT___ Describe esops() minimal features | Given an included .gitignore: should have updated .gitignore with generated paths
 
 
 ### ESOPS GITIGNORE AUTO GENERATED BEGIN ###

@@ -30,7 +30,15 @@ const toMatchSnapshot = curry((snapshotDir, name, contents) => {
   if (!fs.existsSync(snapshotPath)) {
     if (shouldUpdateSnapshots) return updateSnapshot(actual)
     else
-      throw new Error(`Snapshot does not exist yet. ${UPDATE_SNAPSHOT_MESSAGE}`)
+      console.error(`
+      
+      Snapshot does not exist yet. ${UPDATE_SNAPSHOT_MESSAGE}
+      
+      `)
+    return {
+      actual,
+      expected: ''
+    }
   }
 
   const expected = fs
