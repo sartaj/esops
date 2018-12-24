@@ -1,0 +1,12 @@
+___SNAPSHOT___ Describe esops() minimal features | Given an invalid config object: should throw a friendly error
+
+TypeError: Your stack definition is invalid.
+Please add a a valid stack config to `esops.json` or `package.json`.
+
+A valid stack config will be a path to a directory you want to copy from.
+
+## Valid stack config
+
+- *Filesystem:* `['./infrastructure']`
+- *Node Module:* `['node:@myorg/my-stack/stack']`
+

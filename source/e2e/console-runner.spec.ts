@@ -30,6 +30,10 @@ async function run() {
   await withTempDir(__dirname, MOCK_STACKS['basic-bad-config'], async cwd => {
     await esops({cwd})
   })
+
+  await withTempDir(__dirname, MOCK_STACKS['basic-no-config'], async cwd => {
+    await esops({cwd})
+  })
 }
 
 /* 

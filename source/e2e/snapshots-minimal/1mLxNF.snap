@@ -5,7 +5,7 @@ TypeError: Path `./infrastructure` not found.
 ## Current Working Directory
 `/current/working/directory/`
 
-Allowed paths include:
+## Valid stack config
 
-- filesystem paths: `'./infrastructure'`
-- node modules: `'node:@myorg/my-stack/stack'`
+- *Filesystem:* `['./infrastructure']`
+- *Node Module:* `['node:@myorg/my-stack/stack']`

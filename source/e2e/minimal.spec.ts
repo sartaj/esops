@@ -95,7 +95,16 @@ describe('esops() minimal features', async (assert, assertSnap) => {
   await withTempDir(__dirname, MOCK_STACKS['basic-bad-config'], async cwd => {
     const snap = cleanErrorString(cwd)(await Try(esops, {cwd}))
     await assertSnap({
-      given: 'an invalid json object as config',
+      given: 'an invalid config object',
+      should: 'throw a friendly error',
+      snap
+    })
+  })
+
+  await withTempDir(__dirname, MOCK_STACKS['basic-bad-config'], async cwd => {
+    const snap = cleanErrorString(cwd)(await Try(esops, {cwd}))
+    await assertSnap({
+      given: 'non parseable',
       should: 'throw a friendly error',
       snap
     })

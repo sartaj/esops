@@ -1,5 +1,14 @@
-export const InvalidOptsError = () => `Your stack has not been defined.
-Please add a stack config to \`esops.json\` or \`package.json\``
+export const InvalidOptsError = () => `Your stack definition is invalid.
+Please add a a valid stack config to \`esops.json\` or \`package.json\`.
+
+A valid stack config will be a path to a directory you want to copy from.
+
+## Valid stack config
+
+- *Filesystem:* \`['./infrastructure']\`
+- *Node Module:* \`['node:@myorg/my-stack/stack']\`
+
+`
 
 export const StackConfig = opts => `# Stack Configuration
 ${typeof opts === 'string' ? opts : JSON.stringify(opts, null, 2)}`
@@ -12,10 +21,10 @@ export const NoPathError = ({
 ## Current Working Directory
 \`${cwd}\`
 
-Allowed paths include:
+## Valid stack config
 
-- filesystem paths: \`'./infrastructure'\`
-- node modules: \`'node:@myorg/my-stack/stack'\`
+- *Filesystem:* \`['./infrastructure']\`
+- *Node Module:* \`['node:@myorg/my-stack/stack']\`
 `
 
 export const FinalReport = ({
