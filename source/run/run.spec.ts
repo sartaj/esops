@@ -1,4 +1,5 @@
 import * as path from 'path'
+import * as spawn from 'await-spawn'
 
 import {withSnapshots} from '../../test-utils/withSnapshots'
 import {withTempDir} from '../../test-utils/withTempDir'
@@ -10,7 +11,6 @@ import {
 
 import esops from './index'
 import {MOCK_STACKS} from '../core/examples'
-import * as spawn from 'await-spawn'
 
 const describe = withSnapshots(__dirname, null)
 

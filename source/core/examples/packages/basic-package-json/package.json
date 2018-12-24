@@ -1,6 +1,6 @@
 {
   "name": "esops-test",
   "esops": [
-    "./infrastructure/basic"
+    "./infrastructure"
   ]
 }
