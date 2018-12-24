@@ -33,7 +33,7 @@
     "ramda": "^0.25.0",
     "read-pkg": "^4.0.1",
     "resolve-pkg": "^1.0.0",
-    "term-img": "^2.1.0",
+    "term-img": "^3.0.0",
     "update-generated-text-fs": "1.0.0",
     "wrap-ansi": "^4.0.0"
   },
