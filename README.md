@@ -1,6 +1,9 @@
-<h1 align="center"><code>esops</code> Decoupled Infrastructure</h1>
+<h1 align="center">esops</h1>
 
-<h3 align="center"><strong>Template Generation with a Twist: Automatically Add Generated Files to Ignore Files.</strong></h3>
+<div align="center">
+  <h3 align="center">Decoupled Architecture</h3>
+  <h6 align="center">Template Generation with a Twist: Automatically Add Generated Files to Ignore Files.</h6>
+</div>
 
 <p align="center">
   <a href="https://npmjs.org/package/esops">
