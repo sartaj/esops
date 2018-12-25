@@ -3,6 +3,10 @@ ___SNAPSHOT___ Describe esops() minimal features | Given no config found: should
 Error: 
 No config found.
 
+## Current Working Directory
+
+`/current/working/directory/`
+
 ## How To
 Esops works by adding a valid stack config to `esops.json` or `package.json`.
 
