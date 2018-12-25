@@ -1,0 +1,5 @@
+___SNAPSHOT___ Describe esops() minimal features | Given canceling prompt to override: should not override files
+
+{
+  "has-been-overwritten": false
+}

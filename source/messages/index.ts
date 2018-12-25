@@ -34,6 +34,10 @@ A valid stack config will be a path to a directory you want to copy from.
 ${EsopsHowTo()}
 
 `
+export const BadArgumentsMessage = ({args}) => `# Arguments Not Understood
+The command \`esops ${args.join(' ')}\` was not valid.
+  ${EsopsHowTo()}
+`
 
 export const StackConfig = opts => `# Stack Configuration
 ${typeof opts === 'string' ? opts : JSON.stringify(opts, null, 2)}`
@@ -77,7 +81,7 @@ No config found.
 ${EsopsHowTo()}
 `
 
-export const ShowFilesToOverride = ({
+export const ShowFilesToOverwrite = ({
   generatorManifest
 }) => `# Files To Be Overwritten
 ${generatorManifest
@@ -88,3 +92,10 @@ ${generatorManifest
 
 export const FilesNotOverwritten = () =>
   `Files not overwritten. Esops has exited.`
+
+export const UserConfirmOverwriteMessage = () =>
+  'These files will be overwritten. Is that OK?'
+
+export const UserConfirmOverwriteMessageTrue = () => 'Yes'
+
+export const UserConfirmOverwriteMessageFalse = () => 'No'

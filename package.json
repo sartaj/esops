@@ -7,7 +7,7 @@
     "library"
   ],
   "scripts": {
-    "postinstall": "esops",
+    "postinstall": "esops --overwrite",
     "build": "tsc",
     "build:watch": "tsc -w",
     "test": "NODE_ENV=test ts-node ./node_modules/.bin/riteway source/**/*.spec.ts | tap-nirvana",
@@ -26,6 +26,7 @@
     "loglevel": "^1.6.1",
     "marked": "^0.4.0",
     "marked-terminal": "^3.0.0",
+    "minimist": "^1.2.0",
     "mkdirp": "^0.5.1",
     "multimatch": "^2.1.0",
     "pretty-error": "^2.1.1",

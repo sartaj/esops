@@ -129,4 +129,49 @@ describe('esops() minimal features', async (assert, assertSnap) => {
       snap
     })
   })
+
+  const prompts = require('prompts')
+
+  await withTempDir(
+    __dirname,
+    MOCK_STACKS['basic-overwrite-cwd-file'],
+    async cwd => {
+      prompts.inject([false])
+      await esops({cwd})
+      await assertSnap({
+        given: 'no to override',
+        should: 'not override files',
+        snap: getFileContents(path.join(cwd, 'tsconfig.json'))
+      })
+    }
+  )
+
+  await withTempDir(
+    __dirname,
+    MOCK_STACKS['basic-overwrite-cwd-file'],
+    async cwd => {
+      prompts.inject([true])
+      await esops({cwd})
+      await assertSnap({
+        given: 'yes to override',
+        should: 'override files',
+        snap: getFileContents(path.join(cwd, 'tsconfig.json'))
+      })
+    }
+  )
+
+  await withTempDir(
+    __dirname,
+    MOCK_STACKS['basic-overwrite-cwd-file'],
+    async cwd => {
+      const prompts = require('prompts')
+      prompts.inject([new Error()])
+      await esops({cwd})
+      await assertSnap({
+        given: 'canceling prompt to override',
+        should: 'not override files',
+        snap: getFileContents(path.join(cwd, 'tsconfig.json'))
+      })
+    }
+  )
 })

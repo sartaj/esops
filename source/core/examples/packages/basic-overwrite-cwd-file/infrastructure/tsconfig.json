@@ -1,5 +1,3 @@
 {
-  "compilerOptions": {
-    "allowJs": true
-  }
+  "has-been-overwritten": true
 }

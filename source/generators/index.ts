@@ -5,8 +5,11 @@ import log from '../drivers/console'
 import {mergeDeepRight} from 'ramda'
 import {
   FinalReport,
-  ShowFilesToOverride,
-  FilesNotOverwritten
+  ShowFilesToOverwrite,
+  FilesNotOverwritten,
+  UserConfirmOverwriteMessage,
+  UserConfirmOverwriteMessageTrue,
+  UserConfirmOverwriteMessageFalse
 } from '../messages'
 
 import * as prompts from 'prompts'
@@ -117,18 +120,20 @@ export default async (generatorManifest: GeneratorManifest): Promise<void> => {
   const filesExist =
     generatorManifest.filter(({fileExists}) => fileExists).length > 0
   if (filesExist) {
-    log.md(ShowFilesToOverride({generatorManifest}))
-    const {userConfirmsOverride} = await prompts([
+    log.md(ShowFilesToOverwrite({generatorManifest}))
+
+    const {userConfirmsOverwrite} = await prompts([
       {
         type: 'toggle',
-        name: 'userConfirmsOverride',
-        message: 'These files will be overwritten. Is that ok?',
+        name: 'userConfirmsOverwrite',
+        message: UserConfirmOverwriteMessage(),
         initial: true,
-        active: 'Yes',
-        inactive: 'No'
+        active: UserConfirmOverwriteMessageTrue(),
+        inactive: UserConfirmOverwriteMessageFalse()
       }
     ])
-    if (userConfirmsOverride) render(generatorManifest)
+
+    if (userConfirmsOverwrite) render(generatorManifest)
     else log.md(FilesNotOverwritten())
   } else render(generatorManifest)
 }
