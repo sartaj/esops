@@ -3,7 +3,14 @@ import {GeneratorManifest} from '../core/types'
 import fs from '../drivers/fs'
 import log from '../drivers/console'
 import {mergeDeepRight} from 'ramda'
-import {FinalReport} from '../messages'
+import {
+  FinalReport,
+  ShowFilesToOverride,
+  FilesNotOverwritten
+} from '../messages'
+
+import * as prompts from 'prompts'
+
 /**
  * merge
  */
@@ -73,6 +80,9 @@ export const updateGitIgnore = generatorManifest => {
   } else return false
 }
 
+/**
+ * Add To NPM ignore
+ */
 export const updateNpmIgnore = generatorManifest => {
   const cwd = generatorManifest[0].cwd
   const npmignore = path.join(cwd, '.npmignore')
@@ -88,11 +98,7 @@ export const updateNpmIgnore = generatorManifest => {
   } else return false
 }
 
-/**
- * Add To NPM ignore
- */
-
-export default (generatorManifest: GeneratorManifest): void => {
+const render = generatorManifest => {
   merge(generatorManifest)
   forceCopy(generatorManifest)
   const gitignoreUpdated = updateGitIgnore(generatorManifest)
@@ -105,4 +111,24 @@ export default (generatorManifest: GeneratorManifest): void => {
       cwd: generatorManifest[0].cwd
     })
   )
+}
+
+export default async (generatorManifest: GeneratorManifest): Promise<void> => {
+  const filesExist =
+    generatorManifest.filter(({fileExists}) => fileExists).length > 0
+  if (filesExist) {
+    log.md(ShowFilesToOverride({generatorManifest}))
+    const {userConfirmsOverride} = await prompts([
+      {
+        type: 'toggle',
+        name: 'userConfirmsOverride',
+        message: 'These files will be overwritten. Is that ok?',
+        initial: true,
+        active: 'Yes',
+        inactive: 'No'
+      }
+    ])
+    if (userConfirmsOverride) render(generatorManifest)
+    else log.md(FilesNotOverwritten())
+  } else render(generatorManifest)
 }

@@ -76,3 +76,15 @@ No config found.
 
 ${EsopsHowTo()}
 `
+
+export const ShowFilesToOverride = ({
+  generatorManifest
+}) => `# Files To Be Overwritten
+${generatorManifest
+  .filter(({fileExists}) => fileExists)
+  .map(({relativePath}) => `* \`${relativePath}\``)
+  .join('\n')}
+`
+
+export const FilesNotOverwritten = () =>
+  `Files not overwritten. Esops has exited.`

@@ -10,7 +10,7 @@ export const throwIf = type => arg => {
   else return arg
 }
 
-export {curry, tryCatch} from 'ramda'
+export {curry, tryCatch, is} from 'ramda'
 
 /**
  * Async

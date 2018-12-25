@@ -1,4 +1,4 @@
-import {pipe} from '../utils'
+import {pipe, is} from '../utils'
 
 import {
   EsopsRun,
@@ -26,9 +26,11 @@ const parse = async ({opts, cwd}): Promise<GeneratorManifest> =>
   parser(opts, {cwd})
 
 const crashEsops = e => {
-  if (process.env.NODE_ENV === 'test') throw e
-  log.renderError(e)
-  if (process.env.RUN_CONSOLE_TEST !== '1') process.exit(1)
+  if (is(Object, e) || is(String, e)) {
+    if (process.env.NODE_ENV === 'test') throw e
+    log.renderError(e)
+    if (process.env.RUN_CONSOLE_TEST !== '1') process.exit(1)
+  }
 }
 
 export const esops: EsopsRun = params =>

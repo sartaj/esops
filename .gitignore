@@ -14,3 +14,13 @@ node_modules
 /source/readme.md
 /tsconfig.json
 ### ESOPS GITIGNORE AUTO GENERATED END ###
+
+### ESOPS AUTO GENERATED BEGIN ###
+/.node-dev.json
+/.nycrc
+/.prettierrc
+/.vscode/extensions.json
+/.vscode/settings.json
+/source/readme.md
+/tsconfig.json
+### ESOPS AUTO GENERATED END ###
