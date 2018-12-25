@@ -14,7 +14,7 @@
     "test:watch": "NODE_ENV=test ts-node-dev --respawn ./node_modules/.bin/riteway source/**/*.spec.ts | tap-nirvana",
     "test:console": "RUN_CONSOLE_TEST=1 ts-node ./source/e2e/console-runner.spec.ts",
     "report": "NODE_ENV=test nyc --require ts-node/register tape source/**/*.spec.ts -x **/library/** | tap-nirvana",
-    "prepare": "esops --overwrite"
+    "prepare": "esops --overwrite && npm run build"
   },
   "dependencies": {
     "await-result": "^2.2.1",
