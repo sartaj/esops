@@ -7,8 +7,8 @@ export {trace, debug, warn, setLevel} from 'loglevel'
 export {renderError} from './error'
 
 export const announce = require('./announce').announce
-export const image = require('./image').image
-export const carlton = require('./image').carlton
+// export const image = require('./image').image
+// export const carlton = require('./image').carlton
 export const md = require('./markdown').md
 export const mdFile = require('./markdown').mdFile
 
