@@ -1,8 +1,8 @@
 <h1 align="center">esops</h1>
 
 <div align="center">
-  <p align="center"><strong>Decoupled Infrastructure</strong></p>
-  <p align="center">Template Generation with a Twist: Automatically Add Generated Files to Ignore Files.</p>
+  <h3 align="center"><strong>Decoupled Infrastructure</strong></h3>
+  <h6 align="center">Template Generation with a Twist: Automatically Add Generated Files to Ignore Files.</h6>
 </div>
 
 <p align="center">
