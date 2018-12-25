@@ -75,8 +75,12 @@ ${gitignoreUpdated ? '.gitignore has been updated.' : ''}
 ${npmignoreUpdated ? '.npmignore has been updated.' : ''}
 `
 
-export const ConfigNotFound = () => `
+export const ConfigNotFound = ({cwd}) => `
 No config found.
+
+## Current Working Directory
+
+\`${cwd}\`
 
 ${EsopsHowTo()}
 `

@@ -6,8 +6,8 @@ import log from '../drivers/console'
 import {ResolverOptions} from '../core/types'
 import {StackConfig, InvalidOptsError, ConfigNotFound} from '../messages'
 
-const renderConfigNotFound = () => {
-  throw new Error(ConfigNotFound())
+const renderConfigNotFound = ({cwd}) => {
+  throw new Error(ConfigNotFound({cwd}))
 }
 
 const isValidOpts = opts => is(String, opts) || is(Array, opts)
@@ -34,7 +34,7 @@ export const findOpts = ({cwd, opts}: ResolverOptions): ResolverOptions => {
     opts = pkg.esops
   }
 
-  if (isNil(opts)) renderConfigNotFound()
+  if (isNil(opts)) renderConfigNotFound({cwd})
 
   if (!isValidOpts(opts)) throw new TypeError(InvalidOptsError())
 

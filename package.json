@@ -1,20 +1,20 @@
 {
   "name": "esops",
-  "version": "2.5.0",
+  "version": "2.5.2",
   "main": "library/run/index.js",
   "bin": "library/bin/index.js",
   "files": [
     "library"
   ],
   "scripts": {
-    "postinstall": "esops --overwrite",
     "build": "tsc",
     "build:watch": "tsc -w",
     "test": "NODE_ENV=test ts-node ./node_modules/.bin/riteway source/**/*.spec.ts | tap-nirvana",
     "test:update": "UPDATE_SNAPSHOTS=1 npm run test",
     "test:watch": "NODE_ENV=test ts-node-dev --respawn ./node_modules/.bin/riteway source/**/*.spec.ts | tap-nirvana",
     "test:console": "RUN_CONSOLE_TEST=1 ts-node ./source/e2e/console-runner.spec.ts",
-    "report": "NODE_ENV=test nyc --require ts-node/register tape source/**/*.spec.ts -x **/library/** | tap-nirvana"
+    "report": "NODE_ENV=test nyc --require ts-node/register tape source/**/*.spec.ts -x **/library/** | tap-nirvana",
+    "prepare": "esops --overwrite"
   },
   "dependencies": {
     "await-result": "^2.2.1",
