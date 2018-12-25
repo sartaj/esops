@@ -1,4 +1,6 @@
-<h1 align="center">esops</h1>
+<h1 align="center" style="margin:0; padding: 0; border: none">esops</h1>
+<h2 align="center" style="margin:0; padding:0">Decoupled Infrastructure</h2>
+<h5 align="center" style="margin:0; padding:0">Template Generation with a Twist: Automatically Add Generated Files to Ignore Files.</h5>
 
 <p align="center">
   <a href="https://npmjs.org/package/esops">
@@ -9,37 +11,36 @@
   </a>
 </p>
 
-<p align="center">
-  <b>Decoupled Infrastructure</b></br>
-  <sub>Template generation with a twist: Automatically add generated files to ignore files.<sub>
-</p>
-
 - **Decouple Your Infrastructure**: manage codependent config files like `.eslintrc`, `tsconfig.json`, and `.prettierrc` in a separate directory or module.
 - **Generate Files**: Copy files in a directory from a stack directory.
 - **Managed Ignore Files**: If a `.gitignore` and/or `.npmignore` exists, automatically update it with a list of generated files.
 - **Clean Codebases**: Maintain cleaner code bases by reducing number of config files in the root.
 
+<div align="center">
+
 ![ ](https://raw.githubusercontent.com/sartaj/esops/master/assets/esops-demo.gif)
 
-### Install
+</div>
+
+## Install
 
 Install globally or locally
 
-#### Global
+### Global
 
 ```bash
 npm install -g esops
 yarn global add esops
 ```
 
-#### Local
+### Local
 
 ```bash
 npm install -save-dev esops
 yarn add esops --dev`
 ```
 
-### Setup
+## Setup
 
 Config esops in `package.json` or `esops.json`
 
@@ -67,12 +68,12 @@ Config esops in `package.json` or `esops.json`
 }
 ```
 
-### Resolution Types
+## Resolution Types
 
 - _Filesystem:_ `['./infrastructure']`
 - _Node Module:_ `['node:@myorg/my-stack/stack']`
 
-### Running
+## Running
 
 If global, just run `esops`. If local, use `npx esops`. Files will be generated, and if you have a `.gitignore`, it will be updated to include the generated files.
 
@@ -86,7 +87,7 @@ A good place to run esops would be as a [prepare](https://docs.npmjs.com/misc/sc
 }
 ```
 
-### To Clean Files
+## To Clean Files
 
 To refresh your codebase, if you had a `.gitignore` and esops generated an ignore list there, you can remove files all `.gitignore`'d files [using a git command](https://stackoverflow.com/q/13541615) or a module like [remove-git-ignored](https://www.npmjs.com/package/remove-git-ignored).
 
