@@ -1,3 +1,9 @@
+<div align="center">
+
+![](assets/logo.png)
+
+</div>
+
 <h1 align="center">esops</h1>
 
 <div align="center">
