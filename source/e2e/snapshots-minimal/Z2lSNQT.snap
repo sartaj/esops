@@ -1,8 +1,0 @@
-___SNAPSHOT___ Describe esops() minimal features | Given a minimal package.json: should have contents in package.json
-
-{
-  "name": "esops-test",
-  "esops": [
-    "./infrastructure"
-  ]
-}

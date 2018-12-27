@@ -50,24 +50,14 @@ Config esops in `package.json` or `esops.json`
 **`esops.json`**
 
 ```json
-["./infrastructure"]
-```
-
-```json
-["node:@myorg/my-stack/stack"]
+"node:@myorg/my-stack/stack"
 ```
 
 **`package.json`**
 
 ```json
 {
-  "esops": "./infrastructure"
-}
-```
-
-```json
-{
-  "esops": ["./infrastructure"]
+  "esops": "node:@myorg/my-stack/stack"
 }
 ```
 
