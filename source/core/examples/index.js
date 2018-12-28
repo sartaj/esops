@@ -10,8 +10,7 @@ module.exports.MOCK_TEMPLATES = {
 
 const MOCK_STACKS = [
   'basic',  
-  'basic-gitignore',
-  'basic-npmignore',
+  'basic-ignore-files',
   'basic-package-json',
   'basic-node-module',
   'basic-bad-path',

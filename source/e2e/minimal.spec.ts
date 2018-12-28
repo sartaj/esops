@@ -41,7 +41,7 @@ describe('esops() minimal features', async assert => {
     })
   })
 
-  await withTempDir(__dirname, MOCK_STACKS['basic-gitignore'], async cwd => {
+  await withTempDir(__dirname, MOCK_STACKS['basic-ignore-files'], async cwd => {
     await esops({cwd})
 
     await assert({
@@ -51,7 +51,7 @@ describe('esops() minimal features', async assert => {
     })
   })
 
-  await withTempDir(__dirname, MOCK_STACKS['basic-npmignore'], async cwd => {
+  await withTempDir(__dirname, MOCK_STACKS['basic-ignore-files'], async cwd => {
     await esops({cwd})
 
     await assert({

@@ -1,11 +1,11 @@
-import {describe} from 'riteway'
+import {describe, Try} from 'riteway'
 
 import * as resolver from './'
 import {MOCK_STACKS} from '../core/examples'
 
 describe('resolver()', async assert => {
   const config = {
-    cwd: MOCK_STACKS['basic-gitignore']
+    cwd: MOCK_STACKS['basic-ignore-files']
   }
 
   assert({

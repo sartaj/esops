@@ -2,10 +2,14 @@ import * as path from 'path'
 import fs from '../drivers/fs'
 
 export const tryFSPath = (pkg, {cwd}) => {
-  const potentialPath = path.join(cwd, pkg)
-  return fs.existsSync(potentialPath) ? potentialPath : null
+  try {
+    const potentialPath = path.join(cwd, pkg)
+    return fs.existsSync(potentialPath) ? potentialPath : null
+  } catch (e) {
+    throw e
+  }
 }
-import {NoPathError} from '../messages'
+import {NoPathError, CWDNotDefined} from '../messages'
 
 const tryNodePath = async (pathString, opts) => {
   try {
@@ -17,6 +21,7 @@ const tryNodePath = async (pathString, opts) => {
 
 export const fetchPath = async (pathString, cwd) => {
   try {
+    if (!cwd) throw new TypeError(CWDNotDefined())
     let modulePath
     if (!modulePath) modulePath = await tryFSPath(pathString, {cwd})
 

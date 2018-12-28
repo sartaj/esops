@@ -102,3 +102,5 @@ export const UserConfirmOverwriteMessage = () =>
 export const UserConfirmOverwriteMessageTrue = () => 'Yes'
 
 export const UserConfirmOverwriteMessageFalse = () => 'No'
+
+export const CWDNotDefined = withHowTo(() => chalk.red(`No cwd found.`))

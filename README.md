@@ -97,3 +97,7 @@ There are so many developer tools out there, like `eslint`, `prettier`, and `typ
 By separating these files, and adding them as auto-ignored template files, you can update and manage your infrastructure separately from your client code.
 
 New `eslint` settings? Need to support `prettier` now? Someone on the team wants better `vscode` integration? With `esops`, generated files don't pollute git or npm, thus not having to deal with rebasing or codgen issues that happen with other template generators.
+
+## Credits
+
+- Logo: [Gilbert Baker Font](https://www.typewithpride.com/)
