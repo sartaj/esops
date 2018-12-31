@@ -1,3 +1,5 @@
+import chalk from 'chalk'
+
 export const EsopsHowTo = () => `## How To
 Esops works by adding a valid stack config to \`esops.json\` or \`package.json\`.
 
@@ -8,17 +10,17 @@ A valid stack config will be a path to a directory you want to copy from.
 #### in \`esops.json\`
 
 \`\`\`json
-["./infrastructure"]
+"node:@myorg/my-stack/stack"
 \`\`\`
 
 #### in \`package.json\`
 
-\`{ "esops": "./infrastructure" }\` or \`{ "esops": ["./infrastructure"] }\`
+\`{ "esops": "node:@myorg/my-stack/stack" }\`
 
 ### Resolution Types
 
-- _Filesystem:_ \`['./infrastructure']\`
-- _Node Module:_ \`['node:@myorg/my-stack/stack']\`
+- _Filesystem:_ \`'./infrastructure'\`
+- _Node Module:_ \`'node:@myorg/my-stack/stack'\`
 
 ### Run \`esops\`
 
@@ -26,32 +28,31 @@ If global, just run \`esops\`. If local, use \`npx esops\`. Files will be genera
 
 `
 
-export const InvalidOptsError = () => `Your stack definition is invalid.
+const withHowTo = messageFunc => (args?: any) =>
+  messageFunc(args) + '\n\n ••• \n' + EsopsHowTo()
+
+export const InvalidOptsError = withHowTo(() =>
+  chalk.red(`Your stack definition is invalid.
 Please add a a valid stack config to \`esops.json\` or \`package.json\`.
 
-A valid stack config will be a path to a directory you want to copy from.
+A valid stack config will be a path to a directory you want to copy from.`)
+)
 
-${EsopsHowTo()}
-
-`
-export const BadArgumentsMessage = ({args}) => `# Arguments Not Understood
-The command \`esops ${args.join(' ')}\` was not valid.
-  ${EsopsHowTo()}
-`
+export const BadArgumentsMessage = withHowTo(({args}) =>
+  chalk.red(`# Arguments Not Understood
+The command \`esops ${args.join(' ')}\` was not valid.`)
+)
 
 export const StackConfig = opts => `# Stack Configuration
 ${typeof opts === 'string' ? opts : JSON.stringify(opts, null, 2)}`
 
-export const NoPathError = ({
-  pathString,
-  cwd
-}) => `Path \`${pathString}\` not found.
+export const NoPathError = withHowTo(({pathString, cwd}) =>
+  chalk.red(`Path \`${pathString}\` ${chalk.red('not found')}.
 
-## Current Working Directory
-\`${cwd}\`
+${chalk.red.bold('## Current Working Directory')}
 
-${EsopsHowTo()}
-`
+${cwd}`)
+)
 
 export const FinalReport = ({
   gitignoreUpdated,
@@ -75,15 +76,13 @@ ${gitignoreUpdated ? '.gitignore has been updated.' : ''}
 ${npmignoreUpdated ? '.npmignore has been updated.' : ''}
 `
 
-export const ConfigNotFound = ({cwd}) => `
-No config found.
+export const ConfigNotFound = withHowTo(({cwd}) =>
+  chalk.red(`No stack config found.
 
-## Current Working Directory
+${chalk.red.bold('## Current Working Directory')}
 
-\`${cwd}\`
-
-${EsopsHowTo()}
-`
+${cwd}`)
+)
 
 export const ShowFilesToOverwrite = ({
   generatorManifest
@@ -103,3 +102,5 @@ export const UserConfirmOverwriteMessage = () =>
 export const UserConfirmOverwriteMessageTrue = () => 'Yes'
 
 export const UserConfirmOverwriteMessageFalse = () => 'No'
+
+export const CWDNotDefined = withHowTo(() => chalk.red(`No cwd found.`))

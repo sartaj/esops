@@ -12,9 +12,9 @@
     "test": "NODE_ENV=test ts-node ./node_modules/.bin/riteway source/**/*.spec.ts | tap-nirvana",
     "test:update": "UPDATE_SNAPSHOTS=1 npm run test",
     "test:watch": "NODE_ENV=test ts-node-dev --respawn ./node_modules/.bin/riteway source/**/*.spec.ts | tap-nirvana",
-    "test:console": "RUN_CONSOLE_TEST=1 ts-node ./source/e2e/console-runner.spec.ts",
+    "test:console": "npm run build && RUN_CONSOLE_TEST=1 ts-node ./source/e2e/console-runner.spec.ts",
     "report": "NODE_ENV=test nyc --require ts-node/register tape source/**/*.spec.ts -x **/library/** | tap-nirvana",
-    "prepare": "esops --overwrite && npm run build"
+    "prepare": "ts-node -O '{\"lib\": [ \"es2015\" ]}' ./source/bin/index.ts --overwrite && npm run build"
   },
   "dependencies": {
     "await-result": "^2.2.1",
@@ -42,6 +42,8 @@
     "@types/node": "^10.12.9",
     "@types/ramda": "^0.25.43",
     "await-spawn": "^2.1.2",
+    "colors": "^1.3.3",
+    "diff": "^3.5.0",
     "nyc": "^13.1.0",
     "rimraf": "^2.6.2",
     "riteway": "^4.0.1",

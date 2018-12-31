@@ -4,7 +4,13 @@ import {is, isNil} from 'ramda'
 import fs from '../drivers/fs'
 import log from '../drivers/console'
 import {ResolverOptions} from '../core/types'
-import {StackConfig, InvalidOptsError, ConfigNotFound} from '../messages'
+
+import {
+  StackConfig,
+  InvalidOptsError,
+  ConfigNotFound,
+  CWDNotDefined
+} from '../messages'
 
 const renderConfigNotFound = ({cwd}) => {
   throw new Error(ConfigNotFound({cwd}))
@@ -13,6 +19,8 @@ const renderConfigNotFound = ({cwd}) => {
 const isValidOpts = opts => is(String, opts) || is(Array, opts)
 
 export const findOpts = ({cwd, opts}: ResolverOptions): ResolverOptions => {
+  if (!cwd) throw new TypeError(CWDNotDefined())
+
   if (!opts) {
     const esopsConfigPath = path.join(cwd, 'esops.json')
     const esopsConfig =

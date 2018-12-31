@@ -86,6 +86,15 @@ export type ConvertPathsToCopyManifest = (paths: Path[]) => GeneratorManifest
 //   ['', 'COPY_AND_OVERRIDE']
 // ]
 
+export type EsopsConfigFile =
+  | 'package.json'
+  | 'esops.json'
+  | '.esops-git-save'
+  | '.esops-npm-save'
+  | '.esops-merge'
+  | '.esops-stack-config'
+  | '.esops-overwrite'
+
 export type Methods =
   | 'RENDER_THEN_MERGE_JSON'
   | 'MERGE_JSON'

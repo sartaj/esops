@@ -2,17 +2,25 @@ import * as rimraf from 'rimraf'
 import {copy} from 'fs-jetpack'
 import * as fs from 'fs'
 import * as path from 'path'
-import {curry} from 'ramda'
+import {curry, isNil, not} from 'ramda'
 
 export const withTempDir = curry(async (dir, initialFiles, callback) => {
   try {
+    const initialFilesReceived = not(isNil(initialFiles))
+
     const tempPath = path.join(dir, '/.tmp/')
 
     async function before() {
       try {
         rimraf.sync(tempPath, fs)
         if (!fs.existsSync(tempPath)) fs.mkdirSync(tempPath)
-        if (initialFiles) copy(initialFiles, tempPath, {overwrite: true})
+        if (initialFilesReceived) {
+          const copyPaths =
+            typeof initialFiles === 'string' ? [initialFiles] : initialFiles
+          copyPaths.forEach(from => {
+            copy(from, tempPath, {overwrite: true})
+          })
+        }
       } catch (e) {
         throw e
       }
