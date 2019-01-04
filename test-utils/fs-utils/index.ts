@@ -14,4 +14,9 @@ export const getFileContents = dir =>
 export const getJsonContents = dir => JSON.parse(getFileContents(dir))
 
 export const cleanErrorString = cwd => e =>
-  e.toString().replace(new RegExp(cwd, 'g'), '/current/working/directory/')
+  scrubAbsolutePathFromString(e.toString(), cwd)
+
+export const scrubAbsolutePathFromString = (str, cwd) =>
+  str.replace(new RegExp(cwd, 'g'), '/current/working/directory/')
+
+export const prettyJSON = json => JSON.stringify(json, null, 2)

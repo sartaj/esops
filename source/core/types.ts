@@ -2,6 +2,19 @@
  * ## Primitives
  */
 
+type ParsedPath = {
+  path: string
+  configs: {
+    'git-include': string[]
+    'npm-include': string[]
+    template: string[]
+    merge: string[]
+  }
+  files: string[]
+  props: object[]
+  stack: ParsedPath[]
+}
+
 export type Path = string
 export type URL = Path
 export type TemplateProps = {}
@@ -37,12 +50,17 @@ export type Option = Path | [Path, TemplateProps]
 export type Options = Path | Option[]
 export type Params = LocalParams | NetworkParams
 
+type Toggles = any
+
 /**
  * ## Resolve (Network + FS)
  */
 export type ResolverOptions = {
   cwd: CWD
-  opts: Options
+  opts?: Options
+  toggles?: Toggles
+  props?: TemplateProps
+  files?: PathList
 }
 
 export type Config = {

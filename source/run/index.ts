@@ -7,23 +7,25 @@ import {
   GeneratorManifest
 } from '../core/types'
 
-import resolveCwd from '../resolver-cwd'
-import resolverStack from '../resolver-stack'
-import parser from '../parser'
+import {
+  parseDirectory,
+  parsedToGeneratorManifest,
+  resolve as resolverStack
+} from '../parser'
 import generate from '../generators'
 
 import log from '../drivers/console'
 
 const resolveStack = async ({
   cwd,
-  opts
+  opts = []
 }: ResolverOptions): Promise<ParserOptions> => ({
   cwd,
   opts: await resolverStack(opts, {cwd})
 })
 
 const parse = async ({opts, cwd}): Promise<GeneratorManifest> =>
-  parser(opts, {cwd})
+  parsedToGeneratorManifest(opts, {cwd})
 
 const crashEsops = e => {
   if (is(Object, e) || is(String, e)) {
@@ -33,9 +35,15 @@ const crashEsops = e => {
   }
 }
 
+const parseAndResolve = async (cwd, props) => {
+  // const cwdParsed = await parseDirectory({cwd, props})
+  // const resolved = await resolveStack(cwdParsed)
+  // const parsed = resolved.map(([cwd, props]) => parseDirectory({cwd, props}))
+}
+
 export const esops: EsopsRun = params =>
   pipe(
-    resolveCwd,
+    parseDirectory,
     resolveStack,
     parse,
     generate

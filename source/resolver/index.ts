@@ -44,3 +44,5 @@ export const fetchPath = async (pathString, cwd) => {
     throw e
   }
 }
+
+export default fetchPath

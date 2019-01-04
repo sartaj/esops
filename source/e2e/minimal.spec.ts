@@ -2,6 +2,7 @@ import * as path from 'path'
 import * as spawn from 'await-spawn'
 
 import {Try} from 'riteway'
+import * as prompts from 'prompts'
 import {withSnapshots} from '../../test-utils/withSnapshots'
 import {withTempDir} from '../../test-utils/withTempDir'
 import {
@@ -129,8 +130,6 @@ describe('esops() minimal features', async assert => {
       snap
     })
   })
-
-  const prompts = require('prompts')
 
   await withTempDir(
     __dirname,
