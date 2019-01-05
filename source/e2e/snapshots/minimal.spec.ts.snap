@@ -116,7 +116,7 @@ Error: No stack config found.
 
 ## Current Working Directory
 
-/current/working/directory/
+/current/working/directory
 
  ••• 
 ## How To
@@ -153,7 +153,7 @@ TypeError: Path \`./infrastructure\` not found.
 
 ## Current Working Directory
 
-/current/working/directory/
+/current/working/directory
 
  ••• 
 ## How To

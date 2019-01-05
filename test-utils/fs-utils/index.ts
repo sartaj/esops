@@ -17,6 +17,6 @@ export const cleanErrorString = cwd => e =>
   scrubAbsolutePathFromString(e.toString(), cwd)
 
 export const scrubAbsolutePathFromString = (str, cwd) =>
-  str.replace(new RegExp(cwd, 'g'), '/current/working/directory/')
+  str.replace(new RegExp(cwd, 'g'), '/current/working/directory')
 
 export const prettyJSON = json => JSON.stringify(json, null, 2)
