@@ -1,5 +1,7 @@
 import * as path from 'path'
+
 import fs from '../drivers/fs'
+import {CWDNotDefined, NoPathError} from '../messages'
 
 export const tryFSPath = (pkg, {cwd}) => {
   try {
@@ -9,8 +11,6 @@ export const tryFSPath = (pkg, {cwd}) => {
     throw e
   }
 }
-import {NoPathError, CWDNotDefined} from '../messages'
-
 const tryNodePath = async (pathString, opts) => {
   try {
     return fs.resolvePkg(pathString, opts)
@@ -19,7 +19,7 @@ const tryNodePath = async (pathString, opts) => {
   }
 }
 
-export const fetchPath = async (pathString, cwd) => {
+export const fetchPath = async (pathString, {cwd}) => {
   try {
     if (!cwd) throw new TypeError(CWDNotDefined())
     let modulePath

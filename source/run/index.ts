@@ -2,13 +2,13 @@ import {pipe, is} from '../utils'
 
 import {
   EsopsRun,
-  ResolverOptions,
+  ParsedStack,
   ParserOptions,
   GeneratorManifest
 } from '../core/types'
 
 import {
-  parseDirectory,
+  parseStack,
   parsedToGeneratorManifest,
   resolve as resolverStack
 } from '../parser'
@@ -19,7 +19,7 @@ import log from '../drivers/console'
 const resolveStack = async ({
   cwd,
   opts = []
-}: ResolverOptions): Promise<ParserOptions> => ({
+}: ParsedStack): Promise<ParserOptions> => ({
   cwd,
   opts: await resolverStack(opts, {cwd})
 })
@@ -40,10 +40,11 @@ const parseAndResolve = async (cwd, props) => {
   // const resolved = await resolveStack(cwdParsed)
   // const parsed = resolved.map(([cwd, props]) => parseDirectory({cwd, props}))
 }
+const parseCwd = ({cwd}) => parseStack({cwd})
 
 export const esops: EsopsRun = params =>
   pipe(
-    parseDirectory,
+    parseCwd,
     resolveStack,
     parse,
     generate

@@ -1,6 +1,6 @@
-import {parsedToGeneratorManifest, parseDirectory, resolve} from '.'
+import {parsedToGeneratorManifest, parseStack, resolve} from '.'
 import {MOCK_STACKS, MOCK_TEMPLATES} from '../core/examples'
-import {ResolverOptions} from '../core/types'
+import {ParsedStack, LocalWithProps} from '../core/types'
 import * as path from 'path'
 
 import {withSnapshots} from '../../test-utils/withSnapshots'
@@ -11,17 +11,14 @@ import {
 
 const describe = withSnapshots(__filename)
 
-describe('parseDirectory()', async assert => {
-  const config: ResolverOptions = {
-    cwd: MOCK_STACKS['mergeable-file-cwd-override']
-  }
-
-  const actual = await parseDirectory(config)
-
+describe('parseStack()', async assert => {
+  const stack = {cwd: MOCK_STACKS['mergeable-file-cwd-override']}
+  const actual = await parseStack(stack)
+  const snap = scrubAbsolutePathFromString(prettyJSON(actual), stack.cwd)
   assert({
     given: 'single FS path',
     should: 'return fs path as LocalOptionWithProps',
-    snap: scrubAbsolutePathFromString(prettyJSON(actual), config.cwd)
+    snap
   })
 })
 

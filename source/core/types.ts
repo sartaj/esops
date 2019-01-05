@@ -55,12 +55,14 @@ type Toggles = any
 /**
  * ## Resolve (Network + FS)
  */
-export type ResolverOptions = {
+export type ParsedStack = {
   cwd: CWD
   opts?: Options
+
+  context?: Option
   toggles?: Toggles
-  props?: TemplateProps
   files?: PathList
+  stack?: Options
 }
 
 export type Config = {

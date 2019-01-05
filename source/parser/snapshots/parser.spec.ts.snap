@@ -1,4 +1,4 @@
-module.exports[`Describe parseDirectory() | Given single FS path: should return fs path as LocalOptionWithProps`] = `
+module.exports[`Describe parseStack() | Given single FS path: should return fs path as LocalOptionWithProps`] = `
 
 {
   "cwd": "/current/working/directory/",

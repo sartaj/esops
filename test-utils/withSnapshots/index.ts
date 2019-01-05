@@ -81,7 +81,6 @@ const toMatchSnapshot = curry((snapshotDir, filename, name, contents) => {
       console.error(UPDATE_SNAPSHOT_MESSAGE)
 
       console.error(colors.bold.red('•••• DIFF ••••\n\n'))
-
       const diff = require('diff').diffChars(expected, actual)
 
       diff.forEach(function(part) {
