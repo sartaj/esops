@@ -112,321 +112,6 @@ module.exports[`Describe esops() minimal features | Given minimal stack from nod
 
 module.exports[`Describe esops() minimal features | Given no config found: should provide a friendly message on how to use esops`] = `
 
-Error: 
-No config found.
-
-## Current Working Directory
-
-\`/current/working/directory/\`
-
-## How To
-Esops works by adding a valid stack config to \`esops.json\` or \`package.json\`.
-
-A valid stack config will be a path to a directory you want to copy from.
-
-### Configure esops in \`package.json\` or \`esops.json\`
-
-#### in \`esops.json\`
-
-\`\`\`json
-["./infrastructure"]
-\`\`\`
-
-#### in \`package.json\`
-
-\`{ "esops": "./infrastructure" }\` or \`{ "esops": ["./infrastructure"] }\`
-
-### Resolution Types
-
-- _Filesystem:_ \`['./infrastructure']\`
-- _Node Module:_ \`['node:@myorg/my-stack/stack']\`
-
-### Run \`esops\`
-
-If global, just run \`esops\`. If local, use \`npx esops\`. Files will be generated, and if you have a \`.gitignore\`, it will be updated to include the generated files.
-
-
-`
-
-module.exports[`Describe esops() minimal features | Given a bad path in the config: should throw a friendly error`] = `
-
-TypeError: Path \`./infrastructure\` not found.
-
-## Current Working Directory
-\`/current/working/directory/\`
-
-## How To
-Esops works by adding a valid stack config to \`esops.json\` or \`package.json\`.
-
-A valid stack config will be a path to a directory you want to copy from.
-
-### Configure esops in \`package.json\` or \`esops.json\`
-
-#### in \`esops.json\`
-
-\`\`\`json
-["./infrastructure"]
-\`\`\`
-
-#### in \`package.json\`
-
-\`{ "esops": "./infrastructure" }\` or \`{ "esops": ["./infrastructure"] }\`
-
-### Resolution Types
-
-- _Filesystem:_ \`['./infrastructure']\`
-- _Node Module:_ \`['node:@myorg/my-stack/stack']\`
-
-### Run \`esops\`
-
-If global, just run \`esops\`. If local, use \`npx esops\`. Files will be generated, and if you have a \`.gitignore\`, it will be updated to include the generated files.
-
-
-`
-
-module.exports[`Describe esops() minimal features | Given an invalid config object: should throw a friendly error`] = `
-
-TypeError: Your stack definition is invalid.
-Please add a a valid stack config to \`esops.json\` or \`package.json\`.
-
-A valid stack config will be a path to a directory you want to copy from.
-
-## How To
-Esops works by adding a valid stack config to \`esops.json\` or \`package.json\`.
-
-A valid stack config will be a path to a directory you want to copy from.
-
-### Configure esops in \`package.json\` or \`esops.json\`
-
-#### in \`esops.json\`
-
-\`\`\`json
-["./infrastructure"]
-\`\`\`
-
-#### in \`package.json\`
-
-\`{ "esops": "./infrastructure" }\` or \`{ "esops": ["./infrastructure"] }\`
-
-### Resolution Types
-
-- _Filesystem:_ \`['./infrastructure']\`
-- _Node Module:_ \`['node:@myorg/my-stack/stack']\`
-
-### Run \`esops\`
-
-If global, just run \`esops\`. If local, use \`npx esops\`. Files will be generated, and if you have a \`.gitignore\`, it will be updated to include the generated files.
-
-
-
-`
-
-module.exports[`Describe esops() minimal features | Given non parseable: should throw a friendly error`] = `
-
-TypeError: Your stack definition is invalid.
-Please add a a valid stack config to \`esops.json\` or \`package.json\`.
-
-A valid stack config will be a path to a directory you want to copy from.
-
-## How To
-Esops works by adding a valid stack config to \`esops.json\` or \`package.json\`.
-
-A valid stack config will be a path to a directory you want to copy from.
-
-### Configure esops in \`package.json\` or \`esops.json\`
-
-#### in \`esops.json\`
-
-\`\`\`json
-["./infrastructure"]
-\`\`\`
-
-#### in \`package.json\`
-
-\`{ "esops": "./infrastructure" }\` or \`{ "esops": ["./infrastructure"] }\`
-
-### Resolution Types
-
-- _Filesystem:_ \`['./infrastructure']\`
-- _Node Module:_ \`['node:@myorg/my-stack/stack']\`
-
-### Run \`esops\`
-
-If global, just run \`esops\`. If local, use \`npx esops\`. Files will be generated, and if you have a \`.gitignore\`, it will be updated to include the generated files.
-
-
-
-`
-
-module.exports[`Describe esops() minimal features | Given no to override: should not override files`] = `
-
-{
-  "has-been-overwritten": false
-}
-`
-
-module.exports[`Describe esops() minimal features | Given yes to override: should override files`] = `
-
-{
-  "has-been-overwritten": true
-}
-`
-
-module.exports[`Describe esops() minimal features | Given canceling prompt to override: should not override files`] = `
-
-{
-  "has-been-overwritten": false
-}
-`
-
-module.exports[`Describe esops() minimal features | Given no config found: should provide a friendly message on how to use esops`] = `
-
-Error: No config found.
-
-## Current Working Directory
-
-/current/working/directory/
-
- ••• 
-## How To
-Esops works by adding a valid stack config to \`esops.json\` or \`package.json\`.
-
-A valid stack config will be a path to a directory you want to copy from.
-
-### Configure esops in \`package.json\` or \`esops.json\`
-
-#### in \`esops.json\`
-
-\`\`\`json
-"node:@myorg/my-stack/stack"
-\`\`\`
-
-#### in \`package.json\`
-
-\`{ "esops": "node:@myorg/my-stack/stack" }\`
-
-### Resolution Types
-
-- _Filesystem:_ \`'./infrastructure'\`
-- _Node Module:_ \`'node:@myorg/my-stack/stack'\`
-
-### Run \`esops\`
-
-If global, just run \`esops\`. If local, use \`npx esops\`. Files will be generated, and if you have a \`.gitignore\`, it will be updated to include the generated files.
-
-`
-
-module.exports[`Describe esops() minimal features | Given a bad path in the config: should throw a friendly error`] = `
-
-TypeError: Path \`./infrastructure\` not found.
-
-## Current Working Directory
-
-/current/working/directory/
-
- ••• 
-## How To
-Esops works by adding a valid stack config to \`esops.json\` or \`package.json\`.
-
-A valid stack config will be a path to a directory you want to copy from.
-
-### Configure esops in \`package.json\` or \`esops.json\`
-
-#### in \`esops.json\`
-
-\`\`\`json
-"node:@myorg/my-stack/stack"
-\`\`\`
-
-#### in \`package.json\`
-
-\`{ "esops": "node:@myorg/my-stack/stack" }\`
-
-### Resolution Types
-
-- _Filesystem:_ \`'./infrastructure'\`
-- _Node Module:_ \`'node:@myorg/my-stack/stack'\`
-
-### Run \`esops\`
-
-If global, just run \`esops\`. If local, use \`npx esops\`. Files will be generated, and if you have a \`.gitignore\`, it will be updated to include the generated files.
-
-`
-
-module.exports[`Describe esops() minimal features | Given an invalid config object: should throw a friendly error`] = `
-
-TypeError: Your stack definition is invalid.
-Please add a a valid stack config to \`esops.json\` or \`package.json\`.
-
-A valid stack config will be a path to a directory you want to copy from.
-
- ••• 
-## How To
-Esops works by adding a valid stack config to \`esops.json\` or \`package.json\`.
-
-A valid stack config will be a path to a directory you want to copy from.
-
-### Configure esops in \`package.json\` or \`esops.json\`
-
-#### in \`esops.json\`
-
-\`\`\`json
-"node:@myorg/my-stack/stack"
-\`\`\`
-
-#### in \`package.json\`
-
-\`{ "esops": "node:@myorg/my-stack/stack" }\`
-
-### Resolution Types
-
-- _Filesystem:_ \`'./infrastructure'\`
-- _Node Module:_ \`'node:@myorg/my-stack/stack'\`
-
-### Run \`esops\`
-
-If global, just run \`esops\`. If local, use \`npx esops\`. Files will be generated, and if you have a \`.gitignore\`, it will be updated to include the generated files.
-
-`
-
-module.exports[`Describe esops() minimal features | Given non parseable: should throw a friendly error`] = `
-
-TypeError: Your stack definition is invalid.
-Please add a a valid stack config to \`esops.json\` or \`package.json\`.
-
-A valid stack config will be a path to a directory you want to copy from.
-
- ••• 
-## How To
-Esops works by adding a valid stack config to \`esops.json\` or \`package.json\`.
-
-A valid stack config will be a path to a directory you want to copy from.
-
-### Configure esops in \`package.json\` or \`esops.json\`
-
-#### in \`esops.json\`
-
-\`\`\`json
-"node:@myorg/my-stack/stack"
-\`\`\`
-
-#### in \`package.json\`
-
-\`{ "esops": "node:@myorg/my-stack/stack" }\`
-
-### Resolution Types
-
-- _Filesystem:_ \`'./infrastructure'\`
-- _Node Module:_ \`'node:@myorg/my-stack/stack'\`
-
-### Run \`esops\`
-
-If global, just run \`esops\`. If local, use \`npx esops\`. Files will be generated, and if you have a \`.gitignore\`, it will be updated to include the generated files.
-
-`
-
-module.exports[`Describe esops() minimal features | Given no config found: should provide a friendly message on how to use esops`] = `
-
 Error: No stack config found.
 
 ## Current Working Directory
@@ -460,5 +145,135 @@ A valid stack config will be a path to a directory you want to copy from.
 
 If global, just run \`esops\`. If local, use \`npx esops\`. Files will be generated, and if you have a \`.gitignore\`, it will be updated to include the generated files.
 
+`
+
+module.exports[`Describe esops() minimal features | Given a bad path in the config: should throw a friendly error`] = `
+
+TypeError: Path \`./infrastructure\` not found.
+
+## Current Working Directory
+
+/current/working/directory/
+
+ ••• 
+## How To
+Esops works by adding a valid stack config to \`esops.json\` or \`package.json\`.
+
+A valid stack config will be a path to a directory you want to copy from.
+
+### Configure esops in \`package.json\` or \`esops.json\`
+
+#### in \`esops.json\`
+
+\`\`\`json
+"node:@myorg/my-stack/stack"
+\`\`\`
+
+#### in \`package.json\`
+
+\`{ "esops": "node:@myorg/my-stack/stack" }\`
+
+### Resolution Types
+
+- _Filesystem:_ \`'./infrastructure'\`
+- _Node Module:_ \`'node:@myorg/my-stack/stack'\`
+
+### Run \`esops\`
+
+If global, just run \`esops\`. If local, use \`npx esops\`. Files will be generated, and if you have a \`.gitignore\`, it will be updated to include the generated files.
+
+`
+
+module.exports[`Describe esops() minimal features | Given an invalid config object: should throw a friendly error`] = `
+
+TypeError: Your stack definition is invalid.
+Please add a a valid stack config to \`esops.json\` or \`package.json\`.
+
+A valid stack config will be a path to a directory you want to copy from.
+
+ ••• 
+## How To
+Esops works by adding a valid stack config to \`esops.json\` or \`package.json\`.
+
+A valid stack config will be a path to a directory you want to copy from.
+
+### Configure esops in \`package.json\` or \`esops.json\`
+
+#### in \`esops.json\`
+
+\`\`\`json
+"node:@myorg/my-stack/stack"
+\`\`\`
+
+#### in \`package.json\`
+
+\`{ "esops": "node:@myorg/my-stack/stack" }\`
+
+### Resolution Types
+
+- _Filesystem:_ \`'./infrastructure'\`
+- _Node Module:_ \`'node:@myorg/my-stack/stack'\`
+
+### Run \`esops\`
+
+If global, just run \`esops\`. If local, use \`npx esops\`. Files will be generated, and if you have a \`.gitignore\`, it will be updated to include the generated files.
+
+`
+
+module.exports[`Describe esops() minimal features | Given non parseable: should throw a friendly error`] = `
+
+TypeError: Your stack definition is invalid.
+Please add a a valid stack config to \`esops.json\` or \`package.json\`.
+
+A valid stack config will be a path to a directory you want to copy from.
+
+ ••• 
+## How To
+Esops works by adding a valid stack config to \`esops.json\` or \`package.json\`.
+
+A valid stack config will be a path to a directory you want to copy from.
+
+### Configure esops in \`package.json\` or \`esops.json\`
+
+#### in \`esops.json\`
+
+\`\`\`json
+"node:@myorg/my-stack/stack"
+\`\`\`
+
+#### in \`package.json\`
+
+\`{ "esops": "node:@myorg/my-stack/stack" }\`
+
+### Resolution Types
+
+- _Filesystem:_ \`'./infrastructure'\`
+- _Node Module:_ \`'node:@myorg/my-stack/stack'\`
+
+### Run \`esops\`
+
+If global, just run \`esops\`. If local, use \`npx esops\`. Files will be generated, and if you have a \`.gitignore\`, it will be updated to include the generated files.
+
+`
+
+module.exports[`Describe esops() minimal features | Given no to override: should not override files`] = `
+
+{
+  "has-been-overwritten": false
+}
+`
+
+module.exports[`Describe esops() minimal features | Given yes to override: should override files`] = `
+
+{
+  "has-been-overwritten": true
+}
+`
+
+module.exports[`Describe esops() minimal features | Given canceling prompt to override: should not override files`] = `
+
+{
+  "has-been-overwritten": false
+}
 `
 
