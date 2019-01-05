@@ -12,12 +12,13 @@ import {
 const describe = withSnapshots(__filename)
 
 describe('parseStack()', async assert => {
-  const stack = {cwd: MOCK_STACKS['mergeable-file-cwd-override']}
+  const stack: LocalWithProps = [MOCK_STACKS['mergeable-file-cwd-override'], {}]
+  const cwd = stack[0]
   const actual = await parseStack(stack)
-  const snap = scrubAbsolutePathFromString(prettyJSON(actual), stack.cwd)
+  const snap = scrubAbsolutePathFromString(prettyJSON(actual), cwd)
   assert({
     given: 'single FS path',
-    should: 'return fs path as LocalOptionWithProps',
+    should: 'return fs path as LocalStackWithProps',
     snap
   })
 })
@@ -64,21 +65,21 @@ describe('resolver()', async assert => {
 
   assert({
     given: 'single FS path',
-    should: 'return fs path as LocalOptionWithProps',
+    should: 'return fs path as LocalStackWithProps',
     expected: [[config.cwd + '/', {}]],
     actual: await resolve('./', config)
   })
 
   assert({
     given: 'single FS path as array',
-    should: 'return fs path as LocalOptionWithProps',
+    should: 'return fs path as LocalStackWithProps',
     expected: [[config.cwd + '/', {}]],
     actual: await resolve(['./'], config)
   })
 
   assert({
     given: 'single FS path with props',
-    should: 'return fs path as LocalOptionWithProps',
+    should: 'return fs path as LocalStackWithProps',
     expected: [[config.cwd + '/', {}]],
     actual: await resolve([['./', {}]], config)
   })

@@ -1,4 +1,4 @@
-module.exports[`Describe parseStack() | Given single FS path: should return fs path as LocalOptionWithProps`] = `
+module.exports[`Describe parseStack() | Given single FS path: should return fs path as LocalStackWithProps`] = `
 
 {
   "cwd": "/current/working/directory",
@@ -17,6 +17,9 @@ module.exports[`Describe parseStack() | Given single FS path: should return fs p
     "/current/working/directory/readme.md"
   ],
   "opts": [
+    "./infrastructure"
+  ],
+  "stack": [
     "./infrastructure"
   ]
 }`

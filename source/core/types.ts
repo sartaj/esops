@@ -2,9 +2,9 @@
  * ## Primitives
  */
 
-type ParsedPath = {
+export type ParsedPath = {
   path: string
-  configs: {
+  toggles: {
     'git-include': string[]
     'npm-include': string[]
     template: string[]
@@ -34,12 +34,12 @@ export type NetworkParams = {
 
 export type LocalPath = Path
 export type LocalWithProps = [LocalPath, TemplateProps]
-export type LocalOption = LocalPath | LocalWithProps
-export type LocalOptions = LocalOption[] | LocalPath
-export type LocalOptionsWithProps = LocalWithProps[]
+export type LocalStack = LocalPath | LocalWithProps
+export type LocalStacks = LocalStack[] | LocalPath
+export type LocalStacksWithProps = LocalWithProps[]
 export type LocalParams = {
   cwd: CWD
-  opts: LocalOptions
+  opts: LocalStacks
 }
 
 export type TemplatePath = LocalPath | TemporaryTemplatePath | NetworkUrl
@@ -71,11 +71,11 @@ export type Config = {
 export type Resolve = (
   opts: Options,
   config: Config
-) => Promise<LocalOptionsWithProps>
+) => Promise<LocalStacksWithProps>
 
 export type convertNetworkPathsToLocalPath = (
   options: Options
-) => Promise<LocalOptions>
+) => Promise<LocalStacks>
 
 export interface Resolver {
   default: Resolve
@@ -83,11 +83,11 @@ export interface Resolver {
 }
 
 /**
- * ## Parse (JS)
+ * ## Parse
  */
 export type ParserOptions = {
   cwd: CWD
-  opts: LocalOptionsWithProps
+  opts: LocalStacksWithProps
 }
 
 export type Parser = (options: ParserOptions) => Promise<GeneratorManifest>
@@ -128,7 +128,7 @@ export type Copies = {
   fromPath
   toFolder: Path
   toPath: Path
-  opts: LocalOptions
+  opts: LocalStacks
   fileExists: boolean
   willTemplate: boolean
   willMerge: boolean
@@ -143,7 +143,7 @@ export interface Parsers {
 }
 
 /**
- * ## Generate (FS)
+ * ## Generate
  */
 export type Generate = (manifest: GeneratorManifest) => Promise<boolean>
 
@@ -163,17 +163,8 @@ export interface Generator {
 }
 
 /**
- * ## Run (JS)
+ * ## Run
  */
 
 type RunOpts = {cwd: CWD; opts?: Options}
-export type EsopsRun = (opts: RunOpts) => Promise<void>
-
-export interface Run {
-  default: EsopsRun
-}
-
-/**
- * ## Bin (Process)
- */
-export type EsopBin = () => Promise<void>
+export type Run = (opts: RunOpts) => Promise<void>

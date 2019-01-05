@@ -6,11 +6,12 @@ import {PREFIX, TOGGLE_FILES} from '../core/constants'
 import {
   CWD,
   GeneratorManifest,
-  LocalOption,
+  LocalStack,
   LocalWithProps,
   Option,
   Options,
   OptionsWithProps,
+  ParserOptions,
   Resolve,
   ParsedStack,
   WithProps
@@ -60,48 +61,66 @@ const parseToggles = async (parsePath): Promise<Toggles> =>
     .filter(fs.existsSync)
     .reduce(toggleReducer, {})
 
-export const parseStack = async ({
-  cwd,
-  opts
-}: ParsedStack): Promise<ParsedStack> => {
-  if (!cwd) throw new TypeError(CWDNotDefined())
+const findStackConfig = directory => {
+  let stack = undefined
 
-  if (!opts) {
-    const esopsConfigPath = path.join(cwd, 'esops.json')
+  if (!stack) {
+    const esopsConfigPath = path.join(directory, 'esops.json')
     const esopsConfig =
       fs.existsSync(esopsConfigPath) &&
       fs.readFileSync(esopsConfigPath, {encoding: 'utf-8'})
 
     if (esopsConfig) {
       try {
-        opts = JSON.parse(esopsConfig)
+        stack = JSON.parse(esopsConfig)
       } catch (e) {
         throw new TypeError(InvalidOptsError())
       }
     }
   }
 
-  if (!opts) {
-    const packageJsonPath = path.join(cwd, 'package.json')
-    const pkg = fs.existsSync(packageJsonPath) && fs.readPkg.sync({cwd})
-    opts = pkg.esops
+  if (!stack) {
+    const packageJsonPath = path.join(directory, 'package.json')
+    const pkg =
+      fs.existsSync(packageJsonPath) && fs.readPkg.sync({cwd: directory})
+    stack = pkg.esops
   }
 
-  if (isNil(opts)) renderConfigNotFound({cwd})
+  return stack
+}
 
-  if (!isValidOpts(opts)) throw new TypeError(InvalidOptsError())
+export const parseCwd = async ({cwd}) => {
+  const parsed = await parseStack([cwd, {}])
+  const {stack} = parsed
+  if (isNil(stack)) renderConfigNotFound({cwd})
+  if (!isValidOpts(stack)) throw new TypeError(InvalidOptsError())
+  log.md(StackConfig(stack))
+  return parsed
+}
 
-  const toggles = await parseToggles(cwd)
+export const parseStack = async ([directory, props]: LocalWithProps): Promise<
+  ParsedStack
+> => {
+  if (!directory) throw new TypeError(CWDNotDefined())
 
-  const files = await getFiles(cwd)
+  const stack = findStackConfig(directory)
 
-  log.md(StackConfig(opts))
+  const toggles = await parseToggles(directory)
+
+  const files = await getFiles(directory)
+
+  if (isNil(stack)) renderConfigNotFound({cwd: directory})
+
+  if (!isValidOpts(stack)) throw new TypeError(InvalidOptsError())
+
+  log.md(StackConfig(stack))
 
   return {
-    cwd,
+    cwd: directory,
     toggles,
     files,
-    opts
+    opts: stack,
+    stack
   }
 }
 
@@ -136,30 +155,30 @@ export const resolve: Resolve = (opts, {cwd} = defaultConfig) =>
     opts => Promise.all(opts).catch(throwError)
   )(opts).catch(throwError)
 
-export const parsedToGeneratorManifest = (opts, {cwd}): GeneratorManifest => {
-  const manifest = opts
-    .map((opt: LocalOption) => ({
-      stackPath: opt[0],
-      opts: opt[1],
-      paths: getFiles(opt[0])
+export const parsedToGeneratorManifest = (stacks, {cwd}): GeneratorManifest => {
+  const manifest = stacks
+    .map((stack: LocalStack) => ({
+      directory: stack[0],
+      props: stack[1],
+      paths: getFiles(stack[0])
     }))
     .reduce(
       (manifest, optWithPaths): GeneratorManifest => [
         ...manifest,
         ...optWithPaths.paths.map(fromPath => {
-          const relativePath = path.relative(optWithPaths.stackPath, fromPath)
+          const relativePath = path.relative(optWithPaths.directory, fromPath)
           const toPath = path.join(cwd, relativePath)
           const fileExists = fs.existsSync(toPath)
 
           return {
             cwd,
-            stackPath: optWithPaths.stackPath,
+            stackPath: optWithPaths.directory,
             relativePath,
             fromPath,
             toFolder: path.dirname(toPath),
             toPath,
             fileExists,
-            opts: optWithPaths.opts
+            props: optWithPaths.props
           }
         })
       ],
@@ -181,6 +200,21 @@ export const parsedToGeneratorManifest = (opts, {cwd}): GeneratorManifest => {
 //     : result
 // }
 
+export const parsedToManifest = async ({
+  opts,
+  cwd
+}): Promise<GeneratorManifest> => parsedToGeneratorManifest(opts, {cwd})
+
+const resolveStack = async ({
+  cwd,
+  opts = []
+}: ParsedStack): Promise<ParserOptions> => ({
+  cwd,
+  opts: await resolve(opts, {cwd})
+})
+
+export const parse = asyncPipe(parseCwd, resolveStack, parsedToManifest)
+
 const run = async ({cwd, stack}) => {
   // const context = [cwd, props]
   // const parsedStack = await walk({cwd, context: stack})
@@ -188,3 +222,5 @@ const run = async ({cwd, stack}) => {
   // const walk = ({ cwd, stack })
   // if(stack) parsed.stack = stack
 }
+
+export default parse
