@@ -40,9 +40,8 @@ const updateSnapshot = (snapshotPath, name, snap) => {
   }
 }
 
-const toMatchSnapshot = curry((snapshotDir, filename, name, contents) => {
+const toMatchSnapshot = curry((snapshotDir, snapshotPath, name, contents) => {
   const shouldUpdateSnapshots = process.env.UPDATE_SNAPSHOTS
-  const snapshotPath = path.join(snapshotDir, `${filename}.snap`)
   if (!fs.existsSync(snapshotDir)) fs.mkdirSync(snapshotDir)
 
   String.prototype.trim = function() {
@@ -111,7 +110,14 @@ export const withSnapshots = (
   const fileDirectory: string = path.dirname(filename)
   const fileBasename = path.basename(filename)
   const snapshotDir = path.join(fileDirectory, snapshotDirectory)
-  const matchByName = toMatchSnapshot(snapshotDir, fileBasename)
+  const snapshotPath = path.join(snapshotDir, `${fileBasename}.snap`)
+
+  // TODO: Make snapshot update function update a specific section of a snapshot, so we don't have to delete the entire file on update.
+  process.env.UPDATE_SNAPSHOTS &&
+    fs.existsSync(snapshotPath) &&
+    fs.unlinkSync(snapshotPath)
+
+  const matchByName = toMatchSnapshot(snapshotDir, snapshotPath)
 
   const describeFunc = riteway.describe
   if (typeof describeFunc === 'function') {
