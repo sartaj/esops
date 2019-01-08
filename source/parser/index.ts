@@ -215,12 +215,4 @@ const resolveStack = async ({
 
 export const parse = asyncPipe(parseCwd, resolveStack, parsedToManifest)
 
-const run = async ({cwd, stack}) => {
-  // const context = [cwd, props]
-  // const parsedStack = await walk({cwd, context: stack})
-  // const
-  // const walk = ({ cwd, stack })
-  // if(stack) parsed.stack = stack
-}
-
 export default parse
