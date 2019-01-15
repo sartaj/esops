@@ -2,8 +2,8 @@ import * as pipe from 'promised-pipe'
 
 import {Run} from '../core/types'
 import {crash} from '../drivers/console'
-import generate from '../generators'
-import parse from '../parser'
+import generate from '../modules/generators'
+import parse from '../modules/parser'
 
 export const esops: Run = params =>
   pipe(

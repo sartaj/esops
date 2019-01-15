@@ -35,24 +35,3 @@ export const renderError = e => {
     borderColor: 'red'
   })
 }
-
-// module.exports.renderError = renderError
-
-// module.exports.init = () => {
-//   process.on('uncaughtException', function(error) {
-//     renderError(error, prettyError)
-//   })
-
-//   // To render unhandled rejections created in BlueBird:
-//   process.on('unhandledRejection', function(reason) {
-//     console.log('Unhandled rejection')
-//     console.log('stack traces\n' + prettyError.render(reason))
-//   })
-// }
-
-// module.exports.error = message => {
-//   // process.nextTick(function() {
-//   throw new Error(message)
-//   // announce(errorTemplate(new Error(message)), {}, 'error')
-//   // })
-// }

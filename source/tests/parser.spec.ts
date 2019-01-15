@@ -1,13 +1,10 @@
-import {parsedToGeneratorManifest, parseStack, resolve} from '.'
+import {parsedToGeneratorManifest, parseStack, resolve} from '../modules/parser'
 import {MOCK_STACKS, MOCK_TEMPLATES} from '../core/examples'
 import {ParsedStack, LocalWithProps} from '../core/types'
 import * as path from 'path'
 
-import {withSnapshots} from '../../test-utils/withSnapshots'
-import {
-  scrubAbsolutePathFromString,
-  prettyJSON
-} from '../../test-utils/fs-utils'
+import {withSnapshots} from './test-utils/withSnapshots'
+import {scrubAbsolutePathFromString, prettyJSON} from './test-utils/fs-utils'
 
 const describe = withSnapshots(__filename)
 

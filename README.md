@@ -1,13 +1,13 @@
 <div align="center">
 
-![](assets/logo.png)
+![](source/brand/logo.png)
 
 </div>
 
 <h1 align="center">esops</h1>
 
 <div align="center">
-  <h3 align="center">Decoupled Architecture</h3>
+  <h3 align="center">Decoupled Infrastructure</h3>
   <h6 align="center">Template Generation with a Twist: Automatically Add Generated Files to Ignore Files.</h6>
 </div>
 
@@ -20,14 +20,13 @@
   </a>
 </p>
 
-- **Decouple Your Infrastructure**: manage codependent config files like `.eslintrc`, `tsconfig.json`, and `.prettierrc` in a separate directory or module.
-- **Generate Files**: Copy files in a directory from a stack directory.
+- **Decoupled Config Files**: manage codependent config files like `.eslintrc`, `tsconfig.json`, `.nycrc`, and `.prettierrc` in a separate directory or module.
+- **Cleaner Codebases**: Maintain cleaner code bases by reducing number of config files in the root.
 - **Managed Ignore Files**: If a `.gitignore` and/or `.npmignore` exists, automatically update it with a list of generated files.
-- **Clean Codebases**: Maintain cleaner code bases by reducing number of config files in the root.
 
 <div align="center">
 
-![ ](https://raw.githubusercontent.com/sartaj/esops/master/assets/esops-demo.gif)
+![ ](https://raw.githubusercontent.com/sartaj/esops/master/source/brand/esops-demo.gif)
 
 </div>
 

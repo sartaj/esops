@@ -1,5 +1,5 @@
 import * as spawn from 'await-spawn'
-import {withTempDir} from '../../test-utils/withTempDir'
+import {withTempDir} from './test-utils/withTempDir'
 
 import {MOCK_STACKS} from '../core/examples'
 import chalk from 'chalk'
@@ -7,7 +7,7 @@ const LogTitle = title => {
   console.log(chalk.bold.blue(title))
 }
 async function run() {
-  const esops = require('../../library/run/index').default
+  const esops = require('../../library/interfaces/main').default
 
   LogTitle('basic')
   await withTempDir(__dirname, MOCK_STACKS['basic'], async cwd => {
@@ -15,7 +15,7 @@ async function run() {
   })
 
   LogTitle('basic-gitignore')
-  await withTempDir(__dirname, MOCK_STACKS['basic-gitignore'], async cwd => {
+  await withTempDir(__dirname, MOCK_STACKS['basic-ignore-files'], async cwd => {
     await esops({cwd})
   })
 

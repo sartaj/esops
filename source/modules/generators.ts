@@ -10,7 +10,7 @@ import {
   UserConfirmOverwriteMessage,
   UserConfirmOverwriteMessageTrue,
   UserConfirmOverwriteMessageFalse
-} from '../messages'
+} from '../core/messages'
 
 import * as prompts from 'prompts'
 

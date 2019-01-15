@@ -3,16 +3,16 @@ import * as spawn from 'await-spawn'
 import * as prompts from 'prompts'
 
 import {Try} from 'riteway'
-import {withSnapshots} from '../../test-utils/withSnapshots'
-import {withTempDir} from '../../test-utils/withTempDir'
+import {withSnapshots} from './test-utils/withSnapshots'
+import {withTempDir} from './test-utils/withTempDir'
 import {
   getSortedFilePaths,
   getFileContents,
   getJsonContents,
   cleanErrorString
-} from '../../test-utils/fs-utils'
+} from './test-utils/fs-utils'
 
-import esops from '../run/index'
+import esops from '../interfaces/main'
 import {MOCK_STACKS} from '../core/examples'
 
 const describe = withSnapshots(__filename)

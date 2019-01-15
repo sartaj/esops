@@ -1,7 +1,7 @@
 import * as path from 'path'
 
 import fs from '../drivers/fs'
-import {CWDNotDefined, NoPathError} from '../messages'
+import {CWDNotDefined, NoPathError} from '../core/messages'
 
 export const tryFSPath = (pkg, {cwd}) => {
   try {

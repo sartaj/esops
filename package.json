@@ -1,18 +1,18 @@
 {
   "name": "esops",
   "version": "2.5.7",
-  "main": "library/run/index.js",
-  "bin": "library/bin/index.js",
+  "main": "library/interfaces/main.js",
+  "bin": "library/interfaces/bin.js",
   "files": [
     "library"
   ],
   "scripts": {
     "build": "tsc",
     "build:watch": "tsc -w",
-    "test": "NODE_ENV=test ts-node ./node_modules/.bin/riteway source/**/*.spec.ts | tap-nirvana",
+    "test": "NODE_ENV=test ts-node ./node_modules/.bin/riteway source/tests/**/*.spec.ts | tap-nirvana",
     "test:update": "UPDATE_SNAPSHOTS=1 npm run test",
-    "test:watch": "NODE_ENV=test ts-node-dev --respawn ./node_modules/.bin/riteway source/**/*.spec.ts | tap-nirvana",
-    "test:console": "npm run build && RUN_CONSOLE_TEST=1 ts-node ./source/e2e/console-runner.spec.ts",
+    "test:watch": "NODE_ENV=test ts-node-dev --respawn ./node_modules/.bin/riteway source/tests/**/*.spec.ts | tap-nirvana",
+    "test:console": "npm run build && RUN_CONSOLE_TEST=1 ts-node ./source/tests/console-runner.spec.ts",
     "report": "NODE_ENV=test nyc --require ts-node/register tape source/**/*.spec.ts -x **/library/** | tap-nirvana",
     "prepare": "ts-node -O '{\"lib\": [ \"es2015\" ]}' ./source/bin/index.ts --overwrite && npm run build"
   },

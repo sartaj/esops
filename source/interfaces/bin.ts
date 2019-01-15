@@ -1,8 +1,8 @@
 #!/usr/bin/env node
 
-import run from '../run/index'
+import run from './main'
 import log from '../drivers/console'
-import {BadArgumentsMessage, EsopsHowTo} from '../messages'
+import {BadArgumentsMessage, EsopsHowTo} from '../core/messages'
 const argv = require('minimist')(process.argv.slice(2))
 
 // Force Overwrite

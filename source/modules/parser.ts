@@ -23,9 +23,10 @@ import {
   CWDNotDefined,
   InvalidOptsError,
   StackConfig
-} from '../messages'
-import resolver from '../resolver'
-import {isString, pipe as asyncPipe, throwError, filter} from '../utils'
+} from '../core/messages'
+import resolver from '../utils/resolver'
+import {isString, throwError, filter} from '../utils/sync'
+import {pipe as asyncPipe} from '../utils/async'
 
 const renderConfigNotFound = ({cwd}) => {
   throw new Error(ConfigNotFound({cwd}))
@@ -43,7 +44,7 @@ const toggleReducer = (toggles, togglePath) => {
 }
 
 type GetFiles = (cwd: string) => string[]
-const getFiles: GetFiles = pipe(
+const listFileTreeSync: GetFiles = pipe(
   // Get an array of all paths in a folders
   fs.listTreeSync,
   // For now, only files are supported
@@ -107,7 +108,7 @@ export const parseStack = async ([directory, props]: LocalWithProps): Promise<
 
   const toggles = await parseToggles(directory)
 
-  const files = await getFiles(directory)
+  const files = await listFileTreeSync(directory)
 
   if (isNil(stack)) renderConfigNotFound({cwd: directory})
 
@@ -160,7 +161,7 @@ export const parsedToGeneratorManifest = (stacks, {cwd}): GeneratorManifest => {
     .map((stack: LocalStack) => ({
       directory: stack[0],
       props: stack[1],
-      paths: getFiles(stack[0])
+      paths: listFileTreeSync(stack[0])
     }))
     .reduce(
       (manifest, optWithPaths): GeneratorManifest => [
@@ -187,18 +188,6 @@ export const parsedToGeneratorManifest = (stacks, {cwd}): GeneratorManifest => {
 
   return manifest
 }
-
-// const parsedStack = [{
-//   stack: []
-// }]
-
-// const walk = async ({cwd, context}) => {
-//   const parsed = await resolver({cwd, context})
-//   const result = [...context, parsed]
-//   return parsed.stack
-//     ? walk({cwd: parsed.cwd, context: result})
-//     : result
-// }
 
 export const parsedToManifest = async ({
   opts,
