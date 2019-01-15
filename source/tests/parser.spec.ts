@@ -1,4 +1,8 @@
-import {parsedToGeneratorManifest, parseStack, resolve} from '../modules/parser'
+import {
+  parsedToGeneratorManifest,
+  parseWorkingDirectory,
+  resolve
+} from '../modules/parser'
 import {MOCK_STACKS, MOCK_TEMPLATES} from '../core/examples'
 import {ParsedStack, LocalWithProps} from '../core/types'
 import * as path from 'path'
@@ -8,10 +12,10 @@ import {scrubAbsolutePathFromString, prettyJSON} from './test-utils/fs-utils'
 
 const describe = withSnapshots(__filename)
 
-describe('parseStack()', async assert => {
+describe('parseWorkingDirectory()', async assert => {
   const stack: LocalWithProps = [MOCK_STACKS['mergeable-file-cwd-override'], {}]
   const cwd = stack[0]
-  const actual = await parseStack(stack)
+  const actual = await parseWorkingDirectory(stack)
   const snap = scrubAbsolutePathFromString(prettyJSON(actual), cwd)
   assert({
     given: 'single FS path',
