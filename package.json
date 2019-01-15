@@ -14,7 +14,7 @@
     "test:watch": "NODE_ENV=test ts-node-dev --respawn ./node_modules/.bin/riteway source/tests/**/*.spec.ts | tap-nirvana",
     "test:console": "npm run build && RUN_CONSOLE_TEST=1 ts-node ./source/tests/console-runner.spec.ts",
     "report": "NODE_ENV=test nyc --require ts-node/register tape source/**/*.spec.ts -x **/library/** | tap-nirvana",
-    "prepare": "ts-node -O '{\"lib\": [ \"es2015\" ]}' ./source/bin/index.ts --overwrite && npm run build"
+    "prepare": "ts-node -O '{\"lib\": [ \"es7\" ]}' ./source/interfaces/bin.ts --overwrite && npm run build"
   },
   "dependencies": {
     "await-result": "^2.2.1",
