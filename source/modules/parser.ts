@@ -12,10 +12,9 @@
  * - Parse configs and list files inside each stack.
  * - Create `GeneratorManifest` by merging configs in `cwd` and each stack.
  */
-
 import * as isDirectory from 'is-directory'
 import * as path from 'path'
-import {is, isNil, pipe} from 'ramda'
+import {isNil, pipe} from 'ramda'
 
 import {PREFIX, TOGGLE_FILES} from '../core/constants'
 import {
@@ -29,54 +28,92 @@ import {
   GeneratorManifest,
   LocalStack,
   LocalWithProps,
-  Option,
-  Options,
-  OptionsWithProps,
   ParsedStack,
   ParserOptions,
   Resolve,
+  Toggles,
   WithProps
 } from '../core/types'
+import {convertAllOptionsToHaveProps, isValidOpts} from '../core/utils'
 import log from '../drivers/console'
 import fs from '../drivers/fs'
-import {pipe as asyncPipe} from '../utils/async'
+import * as async from '../utils/async'
 import resolver from '../utils/resolver'
-import {filter, isString, throwError} from '../utils/sync'
+import {filter, throwError} from '../utils/sync'
 
+/**
+ * ## Utils
+ */
 const renderConfigNotFound = ({cwd}) => {
   throw new Error(ConfigNotFound({cwd}))
 }
 
-const isValidOpts = opts => is(String, opts) || is(Array, opts)
+/**
+ * ## Resolver
+ */
+type OptionPromises = Promise<LocalWithProps>
+const createOptionPromise = (cwd: CWD, opt: WithProps): OptionPromises =>
+  new Promise((resolve, reject) => {
+    const path = opt[0]
+    const props = opt[1]
+    resolver(path, {cwd})
+      .then(path => {
+        resolve([path, props])
+      })
+      .catch(reject)
+  })
 
-const toggleReducer = (toggles, togglePath) => {
-  const file = fs.readFileSync(togglePath, 'utf-8').split('\n')
-  const name = path.basename(togglePath).replace(PREFIX, '')
-  return {
-    ...toggles,
-    [name]: file
-  }
+const defaultResolveConfig = {
+  cwd: process.cwd()
 }
 
-type GetFiles = (cwd: string) => string[]
-const listFileTreeSync: GetFiles = pipe(
-  // Get an array of all paths in a folders
+export const resolve: Resolve = (opts, {cwd} = defaultResolveConfig) =>
+  async
+    .pipe(
+      convertAllOptionsToHaveProps,
+      opts => opts.map(opt => createOptionPromise(cwd, opt).catch(throwError)),
+      opts => Promise.all(opts).catch(throwError)
+    )(opts)
+    .catch(throwError)
+
+/**
+ * ## FS & Config Parsers
+ */
+
+/**
+ * ### listFileTreeSync
+ * Get a list of files that ignore directories and toggle files
+ *
+ * TODO: Explore need/use case for folder path support.
+ * TODO: Explore need/use case for allowing esops toggle files to be copies.
+ */
+type ListFiles = (cwd: string) => string[]
+const listFileTreeSync: ListFiles = pipe(
   fs.listTreeSync,
-  // For now, only files are supported
-  // TODO: Explore need/use case for folder path support
   filter(filePath => !isDirectory.sync(filePath)),
-  // TODO: Explore need/use case for allowing esops toggle files to be copies
   filter((filePath: string) => !TOGGLE_FILES.includes(path.basename(filePath)))
 )
 
-type Toggles = {
-  merge: string[]
-}
+/**
+ * ### parseToggles
+ * Read and parse esops toggle files as an Toggles Object.
+ */
 const parseToggles = async (parsePath): Promise<Toggles> =>
   TOGGLE_FILES.map(file => path.join(parsePath, file))
     .filter(fs.existsSync)
-    .reduce(toggleReducer, {})
+    .reduce((toggles, togglePath) => {
+      const file = fs.readFileSync(togglePath, 'utf-8').split('\n')
+      const name = path.basename(togglePath).replace(PREFIX, '')
+      return {
+        ...toggles,
+        [name]: file
+      }
+    }, {})
 
+/**
+ * ### findStackConfig
+ * Read and parse esops config file from `esops.json` or `package.json`.
+ */
 const findStackConfig = directory => {
   let stack = undefined
 
@@ -105,18 +142,14 @@ const findStackConfig = directory => {
   return stack
 }
 
-export const parseCwd = async ({cwd}) => {
-  const parsed = await parseStack([cwd, {}])
-  const {stack} = parsed
-  if (isNil(stack)) renderConfigNotFound({cwd})
-  if (!isValidOpts(stack)) throw new TypeError(InvalidOptsError())
-  log.md(StackConfig(stack))
-  return parsed
-}
-
-export const parseStack = async ([directory, props]: LocalWithProps): Promise<
-  ParsedStack
-> => {
+/**
+ * ### parseWorkingDirectory
+ * Read and parse esops config file from `esops.json` or `package.json`.
+ */
+export const parseWorkingDirectory = async ([
+  directory,
+  props
+]: LocalWithProps): Promise<ParsedStack> => {
   if (!directory) throw new TypeError(CWDNotDefined())
 
   const stack = findStackConfig(directory)
@@ -140,37 +173,9 @@ export const parseStack = async ([directory, props]: LocalWithProps): Promise<
   }
 }
 
-const createDefaultOpt = (path: string): WithProps => [path, {}]
-
-type OptionPromises = Promise<LocalWithProps>
-
-const createOptionPromise = (cwd: CWD, opt: WithProps): OptionPromises =>
-  new Promise((resolve, reject) => {
-    const path = opt[0]
-    const props = opt[1]
-    resolver(path, {cwd})
-      .then(path => {
-        resolve([path, props])
-      })
-      .catch(reject)
-  })
-
-const convertAllOptionsToHaveProps = (opts: Options): OptionsWithProps =>
-  isString(opts)
-    ? [createDefaultOpt(opts)]
-    : opts.map((opt: Option) => (isString(opt) ? createDefaultOpt(opt) : opt))
-
-const defaultConfig = {
-  cwd: process.cwd()
-}
-
-export const resolve: Resolve = (opts, {cwd} = defaultConfig) =>
-  asyncPipe(
-    convertAllOptionsToHaveProps,
-    opts => opts.map(opt => createOptionPromise(cwd, opt).catch(throwError)),
-    opts => Promise.all(opts).catch(throwError)
-  )(opts).catch(throwError)
-
+/**
+ * ## Create Generator Manifest
+ */
 export const parsedToGeneratorManifest = (stacks, {cwd}): GeneratorManifest => {
   const manifest = stacks
     .map((stack: LocalStack) => ({
@@ -204,10 +209,17 @@ export const parsedToGeneratorManifest = (stacks, {cwd}): GeneratorManifest => {
   return manifest
 }
 
-export const parsedToManifest = async ({
-  opts,
-  cwd
-}): Promise<GeneratorManifest> => parsedToGeneratorManifest(opts, {cwd})
+/**
+ * ## Parse Runners
+ */
+export const parseCwd = async ({cwd}) => {
+  const parsed = await parseWorkingDirectory([cwd, {}])
+  const {stack} = parsed
+  if (isNil(stack)) renderConfigNotFound({cwd})
+  if (!isValidOpts(stack)) throw new TypeError(InvalidOptsError())
+  log.md(StackConfig(stack))
+  return parsed
+}
 
 const resolveStack = async ({
   cwd,
@@ -217,6 +229,18 @@ const resolveStack = async ({
   opts: await resolve(opts, {cwd})
 })
 
-export const parse = asyncPipe(parseCwd, resolveStack, parsedToManifest)
+export const parsedToManifest = async ({
+  opts,
+  cwd
+}): Promise<GeneratorManifest> => parsedToGeneratorManifest(opts, {cwd})
+
+/**
+ * ## Compose It All Together 🙌🏽
+ */
+export const parse = async.pipe(
+  parseCwd,
+  resolveStack,
+  parsedToManifest
+)
 
 export default parse

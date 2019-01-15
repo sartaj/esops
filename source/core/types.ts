@@ -50,8 +50,6 @@ export type Option = Path | [Path, TemplateProps]
 export type Options = Path | Option[]
 export type Params = LocalParams | NetworkParams
 
-type Toggles = any
-
 /**
  * ## Resolve (Network + FS)
  */
@@ -93,6 +91,10 @@ export type ParserOptions = {
 export type Parser = (options: ParserOptions) => Promise<GeneratorManifest>
 
 export type ConvertPathsToCopyManifest = (paths: Path[]) => GeneratorManifest
+
+export type Toggles = {
+  // merge: string[]
+}
 
 // export type PatchWhitelist = [
 //   ['.json.template', 'RENDER_THEN_MERGE_JSON'],
