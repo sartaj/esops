@@ -1,14 +1,15 @@
-import * as pipe from 'promised-pipe'
-
 import {Run} from '../core/types'
-import {crash} from '../drivers/console'
+import logger from '../drivers/console'
 import generate from '../modules/generators'
 import parse from '../modules/parser'
+import {pipe} from '../utils/async'
+
+logger.setLevel(0)
 
 export const esops: Run = params =>
   pipe(
     parse,
     generate
-  )(params).catch(crash)
+  )(params).catch(logger.crash)
 
 export default esops

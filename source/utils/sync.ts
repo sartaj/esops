@@ -13,5 +13,3 @@ export const throwError = e => {
 
 // [ramda types filter fix](https://github.com/DefinitelyTyped/DefinitelyTyped/issues/25581#issuecomment-442354314)
 export const filter = fn => arr => arr.filter(fn)
-
-export {curry, tryCatch, is} from 'ramda'

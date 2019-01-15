@@ -1,4 +1,5 @@
 import {mdString} from './markdown'
+import {is} from 'ramda'
 
 const chalk = require('chalk')
 const PrettyError = require('pretty-error')
@@ -34,4 +35,12 @@ export const renderError = e => {
     align: 'left',
     borderColor: 'red'
   })
+}
+
+export const crash = e => {
+  if (is(Object, e) || is(String, e)) {
+    if (process.env.NODE_ENV === 'test') throw e
+    renderError(e)
+    if (process.env.RUN_CONSOLE_TEST !== '1') process.exit(1)
+  }
 }

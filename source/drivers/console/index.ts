@@ -1,23 +1,40 @@
-import {is} from 'ramda'
+const chalk = require('chalk')
+const log = require('loglevel')
 
-import * as l from './components'
+import {trace, debug, warn, setLevel} from 'loglevel'
+
+import {renderError, crash} from './components/error'
+import {announce} from './components/announce'
+import {md, mdFile} from './components/markdown'
+
+const logo = () => chalk.blue.bold.dim(`esops`)
+
+const info = message => {
+  log.info(`${logo()} ${chalk.green(message)}`)
+}
 
 const logger =
-  process.env.NODE_ENV === 'test'
+  process.env.NODE_ENV !== 'test'
     ? {
+        announce,
+        md,
+        mdFile,
+        logo,
+        info,
+        trace,
+        debug,
+        warn,
+        renderError,
+        crash,
+        setLevel
+      }
+    : {
         announce: () => {},
         info: () => {},
         md: () => {},
-        renderError: () => {}
+        renderError: () => {},
+        logo: () => {},
+        setLevel: () => {}
       }
-    : l
-
-export const crash = e => {
-  if (is(Object, e) || is(String, e)) {
-    if (process.env.NODE_ENV === 'test') throw e
-    logger.renderError(e)
-    if (process.env.RUN_CONSOLE_TEST !== '1') process.exit(1)
-  }
-}
 
 export default logger

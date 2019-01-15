@@ -1,8 +1,29 @@
+/**
+ * # Parser
+ *
+ * The parser takes data from either an argument or Node `process` methods,
+ * and creates a `GeneratorManifest` that can be consumed by the esops `generator`.
+ *
+ * ## Concerns
+ *
+ * - Parse `cwd`.
+ * - Find esops related configs within `cwd`.
+ * - Resolve stacks found within configs.
+ * - Parse configs and list files inside each stack.
+ * - Create `GeneratorManifest` by merging configs in `cwd` and each stack.
+ */
+
 import * as isDirectory from 'is-directory'
 import * as path from 'path'
 import {is, isNil, pipe} from 'ramda'
 
 import {PREFIX, TOGGLE_FILES} from '../core/constants'
+import {
+  ConfigNotFound,
+  CWDNotDefined,
+  InvalidOptsError,
+  StackConfig
+} from '../core/messages'
 import {
   CWD,
   GeneratorManifest,
@@ -11,22 +32,16 @@ import {
   Option,
   Options,
   OptionsWithProps,
+  ParsedStack,
   ParserOptions,
   Resolve,
-  ParsedStack,
   WithProps
 } from '../core/types'
 import log from '../drivers/console'
 import fs from '../drivers/fs'
-import {
-  ConfigNotFound,
-  CWDNotDefined,
-  InvalidOptsError,
-  StackConfig
-} from '../core/messages'
-import resolver from '../utils/resolver'
-import {isString, throwError, filter} from '../utils/sync'
 import {pipe as asyncPipe} from '../utils/async'
+import resolver from '../utils/resolver'
+import {filter, isString, throwError} from '../utils/sync'
 
 const renderConfigNotFound = ({cwd}) => {
   throw new Error(ConfigNotFound({cwd}))
