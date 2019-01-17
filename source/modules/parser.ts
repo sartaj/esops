@@ -165,6 +165,7 @@ export const parseWorkingDirectory = async ([
   log.md(StackConfig(stack))
 
   return {
+    directory,
     cwd: directory,
     toggles,
     files,

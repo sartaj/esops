@@ -1,6 +1,7 @@
 module.exports[`Describe parseWorkingDirectory() | Given single FS path: should return fs path as LocalStackWithProps`] = `
 
 {
+  "directory": "/current/working/directory",
   "cwd": "/current/working/directory",
   "toggles": {
     "merge": [

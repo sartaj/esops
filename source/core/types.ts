@@ -23,15 +23,6 @@ export type CWD = Path
 export type TemporaryTemplatePath = Path
 export type TempGenerationPath = Path
 
-export type NetworkUrl = URL
-export type NetworkWithProps = [NetworkUrl, TemplateProps]
-export type NetworkOption = NetworkUrl | NetworkWithProps
-export type NetworkOptions = NetworkOption[] | NetworkUrl
-export type NetworkParams = {
-  cwd: CWD
-  opts: NetworkOptions
-}
-
 export type LocalPath = Path
 export type LocalWithProps = [LocalPath, TemplateProps]
 export type LocalStack = LocalPath | LocalWithProps
@@ -42,37 +33,38 @@ export type LocalParams = {
   opts: LocalStacks
 }
 
-export type TemplatePath = LocalPath | TemporaryTemplatePath | NetworkUrl
+export type TemplatePath = LocalPath | TemporaryTemplatePath
 export type PathList = TemplatePath[]
-export type WithProps = LocalWithProps | NetworkWithProps
+export type WithProps = LocalWithProps
 export type OptionsWithProps = WithProps[]
 export type Option = Path | [Path, TemplateProps]
-export type Options = Path | Option[]
-export type Params = LocalParams | NetworkParams
+export type Stacks = Path | Option[]
+export type Params = LocalParams
 
 /**
  * ## Resolve (Network + FS)
  */
 export type ParsedStack = {
   cwd: CWD
-  opts?: Options
+  directory: CWD
+  opts?: Stacks
 
   context?: Option
   toggles?: Toggles
   files?: PathList
-  stack?: Options
+  stack?: Stacks
 }
 
 export type Config = {
   cwd: CWD
 }
 export type Resolve = (
-  opts: Options,
+  opts: Stacks,
   config: Config
 ) => Promise<LocalStacksWithProps>
 
 export type convertNetworkPathsToLocalPath = (
-  options: Options
+  options: Stacks
 ) => Promise<LocalStacks>
 
 export interface Resolver {
@@ -85,6 +77,7 @@ export interface Resolver {
  */
 export type ParserOptions = {
   cwd: CWD
+  directory?: CWD
   opts: LocalStacksWithProps
 }
 
@@ -168,5 +161,5 @@ export interface Generator {
  * ## Run
  */
 
-type RunOpts = {cwd: CWD; opts?: Options}
+type RunOpts = {cwd: CWD; opts?: Stacks; stacks?: Stacks}
 export type Run = (opts: RunOpts) => Promise<void>

@@ -1,5 +1,5 @@
 import {is} from 'ramda'
-import {Option, WithProps, Options, OptionsWithProps} from './types'
+import {Option, WithProps, Stacks, OptionsWithProps} from './types'
 import {isString} from '../utils/sync'
 
 export const isWithProps = opt =>
@@ -17,7 +17,7 @@ export const getPath = (opt: Option) =>
 
 export const createDefaultOpt = (path: string): WithProps => [path, {}]
 
-export const convertAllOptionsToHaveProps = (opts: Options): OptionsWithProps =>
+export const convertAllOptionsToHaveProps = (opts: Stacks): OptionsWithProps =>
   isString(opts)
     ? [createDefaultOpt(opts)]
     : opts.map((opt: Option) => (isString(opt) ? createDefaultOpt(opt) : opt))
