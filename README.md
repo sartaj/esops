@@ -7,7 +7,7 @@
 <h1 align="center">esops</h1>
 
 <div align="center">
-  <h3 align="center">Decoupled Architecture</h3>
+  <h3 align="center">Decoupled Infrastructure</h3>
   <h6 align="center">Template Generation with a Twist: Automatically Add Generated Files to Ignore Files.</h6>
 </div>
 
@@ -48,6 +48,27 @@ yarn global add esops
 npm install -save-dev esops
 yarn add esops --dev`
 ```
+
+### Try It
+
+Create a package.json with the following:
+
+```
+{
+  "scripts": {
+    "prepare": "esops"
+  },
+  "devDependencies": {
+    "esops": "latest",
+    "typescript-node-stack": "github:sartaj/typescript-node-stack",
+    "typescript": "latest",
+    "nyc": "latest",
+  },
+  "esops": "node:typescript-node-stack"
+}
+```
+
+Then run `npm install` or `yarn`, watch how all the config files are generated. The `prepare` hook in `npm` will run esops on every publish and dev install.
 
 ## Setup
 
