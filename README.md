@@ -52,8 +52,8 @@ yarn add esops --dev`
 ### Try It
 
 1. Create a folder: `mkdir test`
-2. Initialize Git: `git init`, 
-3. Create `.gitignore`: `touch .gitignore`
+2. Initialize Git: `git init`
+3. Create a `.gitignore` and add `node_modules`
 4. Create a `package.json` with the following.
 
 ```json
@@ -71,7 +71,9 @@ yarn add esops --dev`
 }
 ```
 
-5. Run `npm install` or `yarn`, watch how all the config files are generated. The `prepare` hook in `npm` will run esops on every publish and dev install.
+5. Run `npm install` or `yarn`, watch how all the config files are generated. Notice how all of the config files are ignored by git. 🙌🏾
+
+_note:_ The `prepare` hook in `npm` will run esops on every publish and dev install. 
 
 ## Setup
 
