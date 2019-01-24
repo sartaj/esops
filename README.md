@@ -31,25 +31,7 @@
 
 </div>
 
-## Install
-
-Install globally or locally
-
-### Global
-
-```bash
-npm install -g esops
-yarn global add esops
-```
-
-### Local
-
-```bash
-npm install -save-dev esops
-yarn add esops --dev`
-```
-
-### Try It
+## Try It
 
 1. Create a folder: `mkdir test`
 2. Initialize Git: `git init`
@@ -74,6 +56,25 @@ _note:_ The [prepare hook in npm](https://docs.npmjs.com/misc/scripts) will run 
 ```
 
 5. Run `npm install` or `yarn`, watch how all the config files are generated. Notice how all of the config files are ignored by git. 🙌🏾
+
+
+## Install
+
+Install globally or locally
+
+### Global
+
+```bash
+npm install -g esops
+yarn global add esops
+```
+
+### Local
+
+```bash
+npm install -save-dev esops
+yarn add esops --dev`
+```
 
 ## Setup
 
