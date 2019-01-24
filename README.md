@@ -51,9 +51,12 @@ yarn add esops --dev`
 
 ### Try It
 
-Create a package.json with the following:
+1. Create a folder: `mkdir test`
+2. Initialize Git: `git init`, 
+3. Create `.gitignore`: `touch .gitignore`
+4. Create a `package.json` with the following.
 
-```
+```json
 {
   "scripts": {
     "prepare": "esops"
@@ -68,7 +71,7 @@ Create a package.json with the following:
 }
 ```
 
-Then run `npm install` or `yarn`, watch how all the config files are generated. The `prepare` hook in `npm` will run esops on every publish and dev install.
+5. Run `npm install` or `yarn`, watch how all the config files are generated. The `prepare` hook in `npm` will run esops on every publish and dev install.
 
 ## Setup
 
