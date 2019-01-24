@@ -62,9 +62,9 @@ Create a package.json with the following:
     "esops": "latest",
     "typescript-node-stack": "github:sartaj/typescript-node-stack",
     "typescript": "latest",
-    "nyc": "latest",
+    "nyc": "latest"
   },
-  "esops": "node:typescript-node-stack"
+  "esops": "node:typescript-node-stack/stack"
 }
 ```
 
