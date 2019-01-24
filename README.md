@@ -56,6 +56,8 @@ yarn add esops --dev`
 3. Create a `.gitignore` and add `node_modules`
 4. Create a `package.json` with the following.
 
+_note:_ The [prepare hook in npm](https://docs.npmjs.com/misc/scripts) will run on every publish and dev install. 
+
 ```json
 {
   "scripts": {
@@ -72,8 +74,6 @@ yarn add esops --dev`
 ```
 
 5. Run `npm install` or `yarn`, watch how all the config files are generated. Notice how all of the config files are ignored by git. 🙌🏾
-
-_note:_ The `prepare` hook in `npm` will run esops on every publish and dev install. 
 
 ## Setup
 
