@@ -1,0 +1,27 @@
+module.exports[`Describe parseWorkingDirectory() | Given single FS path: should return fs path as LocalStackWithProps`] = `
+
+{
+  "directory": "/current/working/directory",
+  "cwd": "/current/working/directory",
+  "toggles": {
+    "merge": [
+      "./readme.md",
+      "./package.json"
+    ]
+  },
+  "files": [
+    "/current/working/directory/.gitignore",
+    "/current/working/directory/infrastructure/package.json",
+    "/current/working/directory/infrastructure/readme.md",
+    "/current/working/directory/infrastructure/tsconfig.json",
+    "/current/working/directory/package.json",
+    "/current/working/directory/readme.md"
+  ],
+  "opts": [
+    "./infrastructure"
+  ],
+  "stack": [
+    "./infrastructure"
+  ]
+}`
+

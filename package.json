@@ -1,20 +1,33 @@
 {
   "name": "esops",
   "version": "2.5.7",
-  "main": "library/run/index.js",
-  "bin": "library/bin/index.js",
+  "description": " Decouple your infrastructure with auto-ignored template generation.",
+  "keywords": [],
+  "author": "Sartaj<sartaj@sartaj.me>",
+  "license": "MIT",
+  "homepage": "https://github.com/sartaj/esops#readme",
+  "bugs": {
+    "url": "https://github.com/sartaj/esops/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sartaj/esops.git"
+  },
+  "main": "library/usage/main.js",
+  "bin": "library/usage/cli.js",
   "files": [
     "library"
   ],
   "scripts": {
     "build": "tsc",
     "build:watch": "tsc -w",
-    "test": "NODE_ENV=test ts-node ./node_modules/.bin/riteway source/**/*.spec.ts | tap-nirvana",
+    "test": "NODE_ENV=test ts-node ./node_modules/.bin/riteway tests/**/*.spec.ts | tap-nirvana",
+    "test:watch": "NODE_ENV=test ts-node-dev --respawn ./node_modules/.bin/riteway tests/**/*.spec.ts | tap-nirvana",
+    "test:console": "npm run build && RUN_CONSOLE_TEST=1 ts-node ./tests/console-runner.spec.ts",
     "test:update": "UPDATE_SNAPSHOTS=1 npm run test",
-    "test:watch": "NODE_ENV=test ts-node-dev --respawn ./node_modules/.bin/riteway source/**/*.spec.ts | tap-nirvana",
-    "test:console": "npm run build && RUN_CONSOLE_TEST=1 ts-node ./source/e2e/console-runner.spec.ts",
-    "report": "NODE_ENV=test nyc --require ts-node/register tape source/**/*.spec.ts -x **/library/** | tap-nirvana",
-    "prepare": "ts-node -O '{\"lib\": [ \"es2015\" ]}' ./source/bin/index.ts --overwrite && npm run build"
+    "report": "NODE_ENV=test nyc --require ts-node/register tape **/*.spec.ts -x **/library/** | tap-nirvana",
+    "local-esops": "ts-node -O '{\"lib\": [ \"es7\" ]}' ./usage/cli.ts --overwrite",
+    "prepare": "npm run local-esops && npm run build"
   },
   "dependencies": {
     "await-result": "^2.2.1",
@@ -22,6 +35,7 @@
     "chalk": "^2.4.1",
     "fs-jetpack": "^2.2.0",
     "fs-plus": "^3.0.2",
+    "ignore-file": "^1.1.2",
     "is-directory": "^0.3.1",
     "loglevel": "^1.6.1",
     "marked": "^0.4.0",
@@ -56,16 +70,5 @@
     "typescript": "^3.1.6",
     "typescript-node-stack": "github:sartaj/typescript-node-stack"
   },
-  "description": " Decouple your infrastructure with auto-ignored template generation.",
-  "keywords": [],
-  "author": "Sartaj<sartaj@sartaj.me>",
-  "license": "MIT",
-  "homepage": "https://github.com/sartaj/esops#readme",
-  "bugs": {
-    "url": "https://github.com/sartaj/esops/issues"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/sartaj/esops.git"
-  }
+  "esops": "node:typescript-node-stack/stack"
 }
