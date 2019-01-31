@@ -1,5 +1,9 @@
 import chalk from 'chalk'
 
+export const CleanGuide = () => `## To Clean Files
+To refresh your codebase, if you had a \`.gitignore\` and esops generated an ignore list there, you can remove files all \`.gitignore\`'d files [using a git command](https://stackoverflow.com/q/13541615) or a module like [remove-git-ignored](https://www.npmjs.com/package/remove-git-ignored).
+`
+
 export const EsopsHowTo = () => `## How To
 Esops works by adding a valid stack config to \`esops.json\` or \`package.json\`.
 

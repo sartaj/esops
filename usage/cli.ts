@@ -2,18 +2,23 @@
 
 import run from './main'
 import log from '../side-effects/console'
-import {BadArgumentsMessage, EsopsHowTo} from '../core/messages'
+import {BadArgumentsMessage, EsopsHowTo, CleanGuide} from '../core/messages'
 const argv = require('minimist')(process.argv.slice(2))
 
-// Force Overwrite
+// --overwrite flag
 if (argv.overwrite || argv.o) require('prompts').inject([true])
 
-// Help
+// `esops help`
 if (argv._ && argv._[0] === 'help') {
   log.md(EsopsHowTo())
 }
 
-// Unknown Args (currently no arguments are supported)
+// `esops clean`
+else if (argv._ && argv._[0] === 'clean') {
+  log.md(CleanGuide())
+}
+
+// `esops unknown_command`
 else if (argv._.length > 0) {
   log.md(BadArgumentsMessage({args: process.argv.slice(2)}))
 }
