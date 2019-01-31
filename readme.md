@@ -30,6 +30,33 @@
 
 </div>
 
+## Try It
+
+1. Create a folder: `mkdir test`
+2. Initialize Git: `git init`
+3. Create a `.gitignore` and add `node_modules`
+4. Create a `package.json` with the following.
+
+_note:_ The [prepare hook in npm](https://docs.npmjs.com/misc/scripts) will run on every publish and dev install. 
+
+```json
+{
+  "scripts": {
+    "prepare": "esops"
+  },
+  "devDependencies": {
+    "esops": "latest",
+    "typescript-node-stack": "github:sartaj/typescript-node-stack",
+    "typescript": "latest",
+    "nyc": "latest"
+  },
+  "esops": "node:typescript-node-stack/stack"
+}
+```
+
+5. Run `npm install` or `yarn`, watch how all the config files are generated. Notice how all of the config files are ignored by git. 🙌🏾
+
+
 ## Install
 
 Install globally or locally
