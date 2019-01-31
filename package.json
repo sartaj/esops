@@ -26,7 +26,7 @@
     "test:console": "npm run build && RUN_CONSOLE_TEST=1 ts-node ./tests/console-runner.spec.ts",
     "test:update": "UPDATE_SNAPSHOTS=1 npm run test",
     "report": "NODE_ENV=test nyc --require ts-node/register tape **/*.spec.ts -x **/library/** | tap-nirvana",
-    "local-esops": "ts-node -O '{\"lib\": [ \"es7\" ]}' ./interfaces/bin.ts --overwrite",
+    "local-esops": "ts-node -O '{\"lib\": [ \"es7\" ]}' ./usage/cli.ts --overwrite",
     "prepare": "npm run local-esops && npm run build"
   },
   "dependencies": {
