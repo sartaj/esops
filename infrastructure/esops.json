@@ -1,4 +1,0 @@
-{
-  "stack": ["github:sartaj/typescript-node-stack/stack#0.1.0", "./"],
-  "destination": "../"
-}

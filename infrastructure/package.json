@@ -33,5 +33,6 @@
     "resolve-pkg": "^1.0.0",
     "update-generated-text-fs": "1.0.0",
     "wrap-ansi": "^4.0.0"
-  }
+  },
+  "esops": "node:sartaj/typescript-node-stack/stack#"
 }
