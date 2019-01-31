@@ -1,18 +1,18 @@
 import * as path from 'path'
-import {GeneratorManifest} from '../core/types'
-import fs from '../drivers/fs'
-import log from '../drivers/console'
+import * as prompts from 'prompts'
 import {mergeDeepRight} from 'ramda'
+
 import {
+  FilesNotOverwritten,
   FinalReport,
   ShowFilesToOverwrite,
-  FilesNotOverwritten,
   UserConfirmOverwriteMessage,
-  UserConfirmOverwriteMessageTrue,
-  UserConfirmOverwriteMessageFalse
+  UserConfirmOverwriteMessageFalse,
+  UserConfirmOverwriteMessageTrue
 } from '../core/messages'
-
-import * as prompts from 'prompts'
+import {GeneratorManifest} from '../core/types'
+import log from '../side-effects/console'
+import fs from '../side-effects/fs'
 
 /**
  * merge

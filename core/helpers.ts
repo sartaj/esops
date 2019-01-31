@@ -1,6 +1,6 @@
 import {is} from 'ramda'
 import {Option, WithProps, Stacks, OptionsWithProps} from './types'
-import {isString} from '../utils/sync'
+import {isString} from '../helpers/sync'
 
 export const isWithProps = opt =>
   Array.isArray(opt) &&

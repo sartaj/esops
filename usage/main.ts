@@ -1,8 +1,8 @@
 import {Run} from '../core/types'
-import logger from '../drivers/console'
-import generate from '../modules/generators'
-import parse from '../modules/parser'
-import {pipe} from '../utils/async'
+import logger from '../side-effects/console'
+import {pipe} from '../helpers/async'
+import generate from '../steps/generate'
+import parse from '../steps/parse'
 
 logger.setLevel(0)
 

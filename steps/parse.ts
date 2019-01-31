@@ -34,12 +34,12 @@ import {
   Toggles,
   WithProps
 } from '../core/types'
-import {convertAllOptionsToHaveProps, isValidOpts} from '../core/utils'
-import log from '../drivers/console'
-import fs from '../drivers/fs'
-import * as async from '../utils/async'
-import resolver from '../utils/resolver'
-import {filter, throwError} from '../utils/sync'
+import {convertAllOptionsToHaveProps, isValidOpts} from '../core/helpers'
+import * as async from '../helpers/async'
+import {filter, throwError} from '../helpers/sync'
+import log from '../side-effects/console'
+import fs from '../side-effects/fs'
+import resolver from '../side-effects/fs/resolver'
 
 /**
  * ## Utils

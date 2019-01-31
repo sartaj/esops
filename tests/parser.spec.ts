@@ -2,7 +2,7 @@ import {
   parsedToGeneratorManifest,
   parseWorkingDirectory,
   resolve
-} from '../modules/parser'
+} from '../steps/parse'
 import {MOCK_STACKS, MOCK_TEMPLATES} from '../core/examples'
 import {ParsedStack, LocalWithProps} from '../core/types'
 import * as path from 'path'
