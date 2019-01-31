@@ -1,6 +1,6 @@
 <div align="center">
 
-![](source/brand/logo.png)
+![](core/brand/logo.png)
 
 </div>
 
