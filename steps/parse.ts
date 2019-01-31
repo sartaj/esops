@@ -218,7 +218,6 @@ export const parseCwd = async ({cwd}) => {
   const {stack} = parsed
   if (isNil(stack)) renderConfigNotFound({cwd})
   if (!isValidOpts(stack)) throw new TypeError(InvalidOptsError())
-  log.md(StackConfig(stack))
   return parsed
 }
 
