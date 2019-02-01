@@ -44,7 +44,7 @@ A valid stack config will be a path to a directory you want to copy from.`)
 
 export const BadArgumentsMessage = withHowTo(({args}) =>
   chalk.red(`# Arguments Not Understood
-The command \`esops ${args.join(' ')}\` was not valid.`)
+The command \`esops ${args}\` was not valid.`)
 )
 
 export const StackConfig = opts => `# Stack Configuration

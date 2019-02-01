@@ -1,30 +1,43 @@
 #!/usr/bin/env node
+import {pipe, when, cond} from 'ramda'
 
+import {BadArgumentsMessage, CleanGuide, EsopsHowTo} from '../core/messages'
+import {
+  willAnnounce,
+  command,
+  minimist,
+  defaultTo,
+  Conditional
+} from '../side-effects/console/components/cli'
 import run from './main'
-import log from '../side-effects/console'
-import {BadArgumentsMessage, EsopsHowTo, CleanGuide} from '../core/messages'
-const argv = require('minimist')(process.argv.slice(2))
 
-// --overwrite flag
-if (argv.overwrite || argv.o) require('prompts').inject([true])
+const onOverwriteFlag = when(command.hasFlag('overwrite', 'o'), argv => {
+  require('prompts').inject([true])
+  return argv
+})
 
-// `esops help`
-if (argv._ && argv._[0] === 'help') {
-  log.md(EsopsHowTo())
-}
+const onHelp: Conditional = [command.first('help'), willAnnounce(EsopsHowTo)]
 
-// `esops clean`
-else if (argv._ && argv._[0] === 'clean') {
-  log.md(CleanGuide())
-}
+const onClean: Conditional = [command.first('clean'), willAnnounce(CleanGuide)]
 
-// `esops unknown_command`
-else if (argv._.length > 0) {
-  log.md(BadArgumentsMessage({args: process.argv.slice(2)}))
-}
+const onNotFound: Conditional = [
+  command.notFound,
+  args => willAnnounce(BadArgumentsMessage, {args: args._})()
+]
 
-// Run Esops
-else {
+const runApp: Conditional = defaultTo(() => {
   const cwd = process.cwd()
   run({cwd})
-}
+})
+
+type CLI = (argv: string[]) => void
+const cli: CLI = pipe(
+  minimist,
+  onOverwriteFlag,
+  cond([onHelp, onClean, onNotFound, runApp])
+)
+
+export default cli
+
+const isRunningAsScript = require.main === module
+isRunningAsScript && cli(process.argv.slice(2))
