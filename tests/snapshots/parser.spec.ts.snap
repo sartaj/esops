@@ -3,25 +3,16 @@ module.exports[`Describe parseWorkingDirectory() | Given single FS path: should 
 {
   "directory": "/current/working/directory",
   "cwd": "/current/working/directory",
-  "toggles": {
-    "merge": [
-      "./readme.md",
-      "./package.json"
-    ]
-  },
+  "toggles": {},
   "files": [
-    "/current/working/directory/.gitignore",
-    "/current/working/directory/infrastructure/package.json",
-    "/current/working/directory/infrastructure/readme.md",
-    "/current/working/directory/infrastructure/tsconfig.json",
-    "/current/working/directory/package.json",
-    "/current/working/directory/readme.md"
+    "/current/working/directory/esops.json",
+    "/current/working/directory/package.json"
   ],
   "opts": [
-    "./infrastructure"
+    "../infrastructure-external"
   ],
   "stack": [
-    "./infrastructure"
+    "../infrastructure-external"
   ]
 }`
 

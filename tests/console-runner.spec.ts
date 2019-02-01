@@ -14,6 +14,7 @@ function logTitle(title) {
 
 async function run() {
   const esops = require('../library/usage/main').default
+  const esopsCli = require('../library/usage/cli').default
 
   logTitle('basic')
   await withTempDir(__dirname, MOCK_STACKS['basic'], async cwd => {
@@ -83,6 +84,21 @@ async function run() {
       await esops({cwd})
     }
   )
+
+  logTitle('cli clean')
+  await withTempDir(__dirname, MOCK_STACKS['basic'], async cwd => {
+    await esopsCli(['clean'])
+  })
+
+  logTitle('cli help')
+  await withTempDir(__dirname, MOCK_STACKS['basic'], async cwd => {
+    await esopsCli(['help'])
+  })
+
+  logTitle('cli bad argument')
+  await withTempDir(__dirname, MOCK_STACKS['basic'], async cwd => {
+    await esopsCli(['foo'])
+  })
 }
 
 process.env.RUN_CONSOLE_TEST && run()

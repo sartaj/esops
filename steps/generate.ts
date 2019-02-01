@@ -62,44 +62,30 @@ export const forceCopy = (generatorManifest: GeneratorManifest) => {
 }
 
 /**
- * Add To Gitignore
+ * Add To Ignore Files
  */
 
 // [How to exclude file only from root folder in Git](https://stackoverflow.com/a/3637678)
 const addSlashForGitIgnore = relativePath => `/${relativePath}`
 
-export const updateGitIgnore = generatorManifest => {
+export const updateIgnoreFile = file => generatorManifest => {
   const cwd = generatorManifest[0].cwd
-  const gitignore = path.join(cwd, '.gitignore')
-  if (fs.existsSync(gitignore)) {
-    const ignoreFiles = generatorManifest
+  const ignoreFile = path.join(cwd, file)
+  if (fs.existsSync(ignoreFile)) {
+    const ignorePaths = generatorManifest
       .map(({relativePath}) => relativePath)
       .map(addSlashForGitIgnore)
       .join('\n')
     const startLine = '### ESOPS AUTO GENERATED BEGIN ###'
     const endLine = '### ESOPS AUTO GENERATED END ###'
-    fs.updateGeneratedTextFs(startLine, endLine, ignoreFiles, gitignore)
+    fs.updateGeneratedTextFs(startLine, endLine, ignorePaths, ignoreFile)
     return true
   } else return false
 }
 
-/**
- * Add To NPM ignore
- */
-export const updateNpmIgnore = generatorManifest => {
-  const cwd = generatorManifest[0].cwd
-  const npmignore = path.join(cwd, '.npmignore')
-  if (fs.existsSync(npmignore)) {
-    const ignoreFiles = generatorManifest
-      .map(({relativePath}) => relativePath)
-      .map(addSlashForGitIgnore)
-      .join('\n')
-    const startLine = '### ESOPS AUTO GENERATED BEGIN ###'
-    const endLine = '### ESOPS AUTO GENERATED END ###'
-    fs.updateGeneratedTextFs(startLine, endLine, ignoreFiles, npmignore)
-    return true
-  } else return false
-}
+export const updateGitIgnore = updateIgnoreFile('.gitignore')
+
+export const updateNpmIgnore = updateIgnoreFile('.npmignore')
 
 const render = generatorManifest => {
   merge(generatorManifest)

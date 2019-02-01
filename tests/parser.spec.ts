@@ -13,7 +13,10 @@ import {scrubAbsolutePathFromString, prettyJSON} from './test-utils/fs-utils'
 const describe = withSnapshots(__filename)
 
 describe('parseWorkingDirectory()', async assert => {
-  const stack: LocalWithProps = [MOCK_STACKS['mergeable-file-cwd-override'], {}]
+  const stack: LocalWithProps = [
+    path.join(MOCK_STACKS['extendable-file'], 'infrastructure-local'),
+    {}
+  ]
   const cwd = stack[0]
   const actual = await parseWorkingDirectory(stack)
   const snap = scrubAbsolutePathFromString(prettyJSON(actual), cwd)
