@@ -23,8 +23,4 @@ export const willAnnounce = (Message, props = {}) => () => {
   md(Message(props))
 }
 
-export type Conditional = [R.Pred, (args: any) => void]
-
-export const defaultTo = (cb): Conditional => [R.T, cb]
-
 export {minimist}

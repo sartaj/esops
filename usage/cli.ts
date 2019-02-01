@@ -1,13 +1,12 @@
 #!/usr/bin/env node
-import {pipe, when, cond} from 'ramda'
+import {cond, pipe, when} from 'ramda'
 
 import {BadArgumentsMessage, CleanGuide, EsopsHowTo} from '../core/messages'
+import {Conditional, defaultTo} from '../helpers/sync'
 import {
-  willAnnounce,
   command,
   minimist,
-  defaultTo,
-  Conditional
+  willAnnounce
 } from '../side-effects/console/components/cli'
 import run from './main'
 
