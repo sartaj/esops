@@ -27,7 +27,8 @@
     "test:update": "UPDATE_SNAPSHOTS=1 npm run test",
     "report": "NODE_ENV=test nyc --require ts-node/register tape **/*.spec.ts -x **/library/** | tap-nirvana",
     "local-esops": "ts-node -O '{\"lib\": [ \"es7\" ]}' ./usage/cli.ts --overwrite",
-    "prepare": "npm run local-esops && npm run build"
+    "prepare": "npm run snyk-protect; npm run local-esops && npm run build",
+    "snyk-protect": "snyk protect"
   },
   "dependencies": {
     "await-result": "^2.2.1",
@@ -50,7 +51,8 @@
     "read-pkg": "^4.0.1",
     "resolve-pkg": "^1.0.0",
     "update-generated-text-fs": "1.0.0",
-    "wrap-ansi": "^4.0.0"
+    "wrap-ansi": "^4.0.0",
+    "snyk": "^1.124.0"
   },
   "devDependencies": {
     "@types/node": "^10.12.9",
@@ -70,5 +72,6 @@
     "typescript": "^3.1.6",
     "typescript-node-stack": "github:sartaj/typescript-node-stack"
   },
-  "esops": "node:typescript-node-stack/stack"
+  "esops": "node:typescript-node-stack/stack",
+  "snyk": true
 }
