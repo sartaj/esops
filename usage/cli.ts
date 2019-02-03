@@ -29,11 +29,15 @@ const runApp: Conditional = defaultTo(() => {
   run({cwd})
 })
 
+const onFlags = pipe(onOverwriteFlag)
+
+const onCommand = cond([onHelp, onClean, onNotFound, runApp])
+
 type CLI = (argv: string[]) => void
 const cli: CLI = pipe(
   minimist,
-  onOverwriteFlag,
-  cond([onHelp, onClean, onNotFound, runApp])
+  onFlags,
+  onCommand
 )
 
 export default cli
