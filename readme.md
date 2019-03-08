@@ -26,7 +26,7 @@
 
 <div align="center">
 
-![ ](https://raw.githubusercontent.com/sartaj/esops/master/source/brand/esops-demo.gif)
+![ ](https://raw.githubusercontent.com/sartaj/esops/master/core/brand/esops-demo.gif)
 
 </div>
 
