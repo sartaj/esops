@@ -26,7 +26,7 @@
 
 <div align="center">
 
-![ ](https://raw.githubusercontent.com/sartaj/esops/master/source/brand/esops-demo.gif)
+![ ](https://raw.githubusercontent.com/sartaj/esops/master/core/brand/esops-demo.gif)
 
 </div>
 
@@ -34,8 +34,8 @@
 
 1. Create a folder: `mkdir test`
 2. Initialize Git: `git init`
-3. Create a `.gitignore` and add `node_modules`
-4. Create a `package.json` with the following.
+3. Create a `.gitignore` and add `node_modules` to it.
+4. Create a `package.json` with the following:
 
 _note:_ The [prepare hook in npm](https://docs.npmjs.com/misc/scripts) will run on every publish and dev install. 
 
