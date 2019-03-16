@@ -20,9 +20,8 @@
   </a>
 </p>
 
-- **Decoupled Config Files**: manage codependent config files like `.eslintrc`, `tsconfig.json`, `.nycrc`, and `.prettierrc` in a separate directory or module.
-- **Cleaner Codebases**: Maintain cleaner code bases by reducing number of config files in the root.
-- **Managed Ignore Files**: If a `.gitignore` and/or `.npmignore` exists, automatically update it with a list of generated files.
+- **Decouple Codependent Config Files**: manage codependent config files like `.eslintrc`, `tsconfig.json`, `.prettierrc`, `.editorconfig`, and `.vscode` files in a separate directory or module.
+- **Provide Reference Implementations and Design Docs**: Create reference implementations that can be installed without polluting your `git` or `npm` publishes.
 
 <div align="center">
 
@@ -37,7 +36,7 @@
 3. Create a `.gitignore` and add `node_modules` to it.
 4. Create a `package.json` with the following:
 
-_note:_ The [prepare hook in npm](https://docs.npmjs.com/misc/scripts) will run on every publish and dev install. 
+_note:_ The [prepare hook in npm](https://docs.npmjs.com/misc/scripts) will run on every publish and dev install.
 
 ```json
 {
@@ -56,6 +55,11 @@ _note:_ The [prepare hook in npm](https://docs.npmjs.com/misc/scripts) will run 
 
 5. Run `npm install` or `yarn`, watch how all the config files are generated. Notice how all of the config files are ignored by git. 🙌🏾
 
+### Packs To Try
+
+| **package**                                                                                                            | **description**                              |
+| ---------------------------------------------------------------------------------------------------------------------- | -------------------------------------------- |
+| [`{ "typescript-node-stack": "github:sartaj/typescript-node-stack" }`](http://github.com/sartaj/typescript-node-stack) | Have typescript with node tests ready to go. |
 
 ## Install
 

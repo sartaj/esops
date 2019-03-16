@@ -112,11 +112,10 @@ module.exports[`Describe esops() minimal features | Given minimal stack from nod
 
 module.exports[`Describe esops() minimal features | Given no config found: should provide a friendly message on how to use esops`] = `
 
-Error: No stack config found.
+TypeError: Your stack definition is invalid.
+Please add a a valid stack config to \`esops.json\` or \`package.json\`.
 
-## Current Working Directory
-
-/current/working/directory
+A valid stack config will be a path to a directory you want to copy from.
 
  ••• 
 ## How To

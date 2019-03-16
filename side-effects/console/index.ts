@@ -3,8 +3,9 @@ import {announce} from './components/announce'
 import {md, mdFile} from './components/markdown'
 import {logo, info, trace, debug, warn, setLevel} from './components/log'
 import {map} from 'ramda'
+import {composeSideEffect} from 'helpers/sync'
 
-let logger = {
+let log = {
   announce,
   md,
   mdFile,
@@ -19,8 +20,13 @@ let logger = {
 }
 
 if (process.env.NODE_ENV === 'test') {
-  logger = map(() => () => {}, logger)
-  logger.crash = crash
+  // Make functions mockable
+  log = map(() => () => {}, log)
+  log.crash = crash
 }
+// const composableLog = message =>
+//   composeSideEffect(args => {
+//     log.info(message)
+//   })
 
-export default logger
+export default log

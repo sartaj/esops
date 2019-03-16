@@ -35,7 +35,7 @@ import {
   WithProps
 } from '../core/types'
 import {convertAllOptionsToHaveProps, isValidOpts} from '../core/helpers'
-import * as async from '../helpers/async'
+import async from '../helpers/async'
 import {filter, throwError} from '../helpers/sync'
 import log from '../side-effects/console'
 import fs from '../side-effects/fs'
@@ -213,8 +213,18 @@ export const parsedToGeneratorManifest = (stacks, {cwd}): GeneratorManifest => {
 /**
  * ## Parse Runners
  */
+export const parseStackDir = ({destinationDir, rootStackDir}) => ({
+  destinationDir,
+  rootStackDir: rootStackDir || destinationDir
+})
+
+const p = async.pipe(parseStackDir)
+
+// Verify stack directory and destination directory
+
 export const parseCwd = async ({cwd}) => {
-  const parsed = await parseWorkingDirectory([cwd, {}])
+  const [err, parsed] = await async.result(parseWorkingDirectory([cwd, {}]))
+  if (err) throw new TypeError(InvalidOptsError())
   const {stack} = parsed
   if (isNil(stack)) renderConfigNotFound({cwd})
   if (!isValidOpts(stack)) throw new TypeError(InvalidOptsError())

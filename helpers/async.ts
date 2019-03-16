@@ -1,8 +1,12 @@
 /**
  * Async
  */
-const pipe = require('promised-pipe')
+import * as pipe from 'promised-pipe'
+import * as result from 'await-result'
 
-export {pipe}
+export {pipe, result}
 
-export {default as result} from 'await-result'
+export default {
+  pipe,
+  result
+}

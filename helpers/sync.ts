@@ -1,4 +1,4 @@
-import {is, Pred, T} from 'ramda'
+import {is, Pred, T, curry} from 'ramda'
 
 export const isString = (arg: any): arg is string => is(String)(arg)
 
@@ -14,6 +14,12 @@ export const throwError = e => {
 // [ramda types filter fix](https://github.com/DefinitelyTyped/DefinitelyTyped/issues/25581#issuecomment-442354314)
 export const filter = fn => arr => arr.filter(fn)
 
-// For `cond`
+// For `cond` arrays
 export type Conditional = [Pred, (args: any) => void]
+
 export const defaultTo = (cb): Conditional => [T, cb]
+
+export const composeSideEffect = curry((cb: Function, arg: any) => {
+  cb()
+  return arg
+})
