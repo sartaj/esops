@@ -14,6 +14,9 @@ export default {
   listTreeSync,
   mkdirSync,
   copySync,
+  injectTempFolder: () => {},
+  copyFromTempToDestination: () => {},
+  cleanUpTempFolder: () => {},
   mkdirp: require('mkdirp'),
   forceCopy: (from, to) => {
     copy(from, to, {overwrite: true})

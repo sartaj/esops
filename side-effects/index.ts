@@ -1,12 +1,30 @@
 import log from './console'
-import {composeSideEffect} from '../helpers/sync'
+import {sideEffect, extend} from '../helpers/sync'
+import {pipe} from 'ramda'
+import temporaryDirectory from './fs/temporary-directory'
+import fs from './fs/index'
 
-export const configureSideEffects = composeSideEffect(
-  ({logLevel} = {logLevel: 0}) => {
-    log.setLevel(logLevel)
+const setLoggingLevel = sideEffect(({logLevel} = {logLevel: 0}) => {
+  log.setLevel(logLevel)
+})
+
+const addCommands = extend({
+  commands: {
+    tempDir: temporaryDirectory(),
+    filesystem: fs,
+    ui: log,
+    processes: process,
+    error: {
+      crash: log.crash
+    }
   }
+})
+
+export const configureSideEffects = pipe(
+  setLoggingLevel,
+  addCommands
 )
 
-export {default as fs} from './fs/index'
-
+export {fs}
 export {log}
+export {default as process} from './process'

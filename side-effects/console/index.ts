@@ -3,7 +3,7 @@ import {announce} from './components/announce'
 import {md, mdFile} from './components/markdown'
 import {logo, info, trace, debug, warn, setLevel} from './components/log'
 import {map} from 'ramda'
-import {composeSideEffect} from 'helpers/sync'
+import {sideEffect} from 'helpers/sync'
 
 let log = {
   announce,
@@ -25,7 +25,7 @@ if (process.env.NODE_ENV === 'test') {
   log.crash = crash
 }
 // const composableLog = message =>
-//   composeSideEffect(args => {
+//   sideEffect(args => {
 //     log.info(message)
 //   })
 

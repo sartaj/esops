@@ -3,7 +3,7 @@
  */
 
 import {Run} from '../core/types'
-import {configureSideEffects, log} from '../side-effects'
+import {configureSideEffects, log, fs} from '../side-effects'
 import {pipe} from '../helpers/async'
 import generate from '../steps/generate'
 import parse from '../steps/parse'

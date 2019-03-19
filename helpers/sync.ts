@@ -19,7 +19,12 @@ export type Conditional = [Pred, (args: any) => void]
 
 export const defaultTo = (cb): Conditional => [T, cb]
 
-export const composeSideEffect = curry((cb: Function, arg: any) => {
+export const sideEffect = curry((cb: Function, arg: any) => {
   cb()
   return arg
+})
+
+export const extend = next => prev => ({
+  ...prev,
+  ...(is(Function, next) ? next(prev) : next)
 })
