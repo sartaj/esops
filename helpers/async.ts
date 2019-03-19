@@ -18,8 +18,16 @@ export const fromNodeCallback = cb => (...args) => {
   })
 }
 
+export const extend = fn => async prev =>
+  fn(prev)
+    .then(next => ({...prev, ...next}))
+    .catch(e => {
+      throw e
+    })
+
 export default {
   pipe,
   result,
-  fromNodeCallback
+  fromNodeCallback,
+  extend
 }

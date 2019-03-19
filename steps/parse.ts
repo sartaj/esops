@@ -218,26 +218,21 @@ export const parseStackDir = ({destinationDir, rootStackDir}) => ({
   rootStackDir: rootStackDir || destinationDir
 })
 
-const p = async.pipe(parseStackDir)
-
 // Verify stack directory and destination directory
 
-export const parseCwd = async ({cwd}) => {
+export const parseCwd = async.extend(async ({cwd}) => {
   const [err, parsed] = await async.result(parseWorkingDirectory([cwd, {}]))
   if (err) throw new TypeError(InvalidOptsError())
   const {stack} = parsed
   if (isNil(stack)) renderConfigNotFound({cwd})
   if (!isValidOpts(stack)) throw new TypeError(InvalidOptsError())
-  return parsed
-}
+  return {parsed}
+})
 
-const resolveStack = async ({
-  cwd,
-  opts = []
-}: ParsedStack): Promise<ParserOptions> => ({
+const resolveStack = async.extend(async ({parsed: {cwd, opts = []}}) => ({
   cwd,
   opts: await resolve(opts, {cwd})
-})
+}))
 
 export const parsedToManifest = async ({
   opts,
