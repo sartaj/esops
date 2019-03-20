@@ -3,8 +3,10 @@
  */
 import * as pipe from 'promised-pipe'
 import * as result from 'await-result'
+import parallel from 'async/parallel'
+import waterfall from 'async/waterfall'
 
-export {pipe, result}
+export {pipe, result, parallel, waterfall}
 
 export const fromNodeCallback = cb => (...args) => {
   return new Promise((resolve, reject) => {
@@ -29,5 +31,7 @@ export default {
   pipe,
   result,
   fromNodeCallback,
-  extend
+  extend,
+  waterfall,
+  parallel
 }

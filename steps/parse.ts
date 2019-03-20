@@ -170,7 +170,9 @@ export const parseWorkingDirectory = async ([
     toggles,
     files,
     opts: stack,
-    stack
+    stack,
+    destination: directory,
+    infrastructure: stack
   }
 }
 
@@ -220,7 +222,7 @@ export const parseStackDir = ({destinationDir, rootStackDir}) => ({
 
 // Verify stack directory and destination directory
 
-export const parseCwd = async.extend(async ({cwd}) => {
+export const resolveEsopsConfig = async.extend(async ({cwd}) => {
   const [err, parsed] = await async.result(parseWorkingDirectory([cwd, {}]))
   if (err) throw new TypeError(InvalidOptsError())
   const {stack} = parsed
@@ -239,11 +241,54 @@ export const parsedToManifest = async ({
   cwd
 }): Promise<GeneratorManifest> => parsedToGeneratorManifest(opts, {cwd})
 
+export const normalizeUserInputedInfrastructureDefinition = infrastructure => [
+  infrastructure
+] // TODO: Allow alternative inputs for infrastructure
+
+export const resolveRecursiveEsops2 = async.extend(
+  async ({cwd, destination, commands}) => {
+    const [err, result] = await async.result(resolveEsopsConfig({cwd}))
+    if (err) throw err
+
+    const series = normalizeUserInputedInfrastructureDefinition(
+      result.parsed.infrastructure
+    )
+
+    // Short Circuit if previous version of esops
+    if (!result.parsed.infrastructure[0].startsWith('github:'))
+      return {destination: undefined, infrastructure: undefined}
+
+    const parallelSeries = series.map(parallel => {
+      const resolveParallelComponents = parallel.map(component => {
+        return async function resolveComponent() {
+          const url = component[0]
+          const variables = component[1]
+          const options = component[2]
+          const resolvedPath = await resolver(url, {cwd})
+          return [resolvedPath, variables, options]
+        }
+      })
+      return async function resolveSeries() {
+        return Promise.all(resolveParallelComponents)
+      }
+    })
+
+    const runSeries = new Promise((resolve, reject) => {
+      async.waterfall(parallelSeries, (err, result) => {
+        if (err) reject(err)
+        else resolve(result)
+      })
+    })
+    return runSeries
+  }
+)
+
 /**
  * ## Compose It All Together 🙌🏽
  */
 export const parse = async.pipe(
-  parseCwd,
+  resolveRecursiveEsops2,
+  resolveEsopsConfig,
   resolveStack,
   parsedToManifest
 )

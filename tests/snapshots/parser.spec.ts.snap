@@ -13,6 +13,10 @@ module.exports[`Describe parseWorkingDirectory() | Given single FS path: should 
   ],
   "stack": [
     "../infrastructure-external"
+  ],
+  "destination": "/current/working/directory",
+  "infrastructure": [
+    "../infrastructure-external"
   ]
 }`
 

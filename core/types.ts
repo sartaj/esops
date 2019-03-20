@@ -46,13 +46,15 @@ export type Params = LocalParams
  */
 export type ParsedStack = {
   cwd: CWD
-  directory: CWD
+  directory?: CWD
+  destination: CWD
   opts?: Stacks
 
   context?: Option
   toggles?: Toggles
   files?: PathList
   stack?: Stacks
+  infrastructure?: Stacks
 }
 
 export type Config = {
