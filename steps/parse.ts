@@ -36,7 +36,7 @@ import {
 } from '../core/types'
 import {convertAllOptionsToHaveProps, isValidOpts} from '../core/helpers'
 import async from '../helpers/async'
-import {filter, throwError} from '../helpers/sync'
+import {filter, throwError, isString} from '../helpers/sync'
 import log from '../side-effects/console'
 import fs from '../side-effects/fs'
 import resolver from '../side-effects/fs/resolver'
@@ -172,7 +172,7 @@ export const parseWorkingDirectory = async ([
     opts: stack,
     stack,
     destination: directory,
-    infrastructure: stack
+    compose: stack
   }
 }
 
@@ -255,8 +255,16 @@ export const resolveRecursiveEsops2 = async.extend(
     )
 
     // Short Circuit if previous version of esops
-    if (!result.parsed.infrastructure[0].startsWith('github:'))
-      return {destination: undefined, infrastructure: undefined}
+    const firstUrl = isString(result.parsed.compose)
+      ? result.parsed.compose
+      : result.parsed.compose[0]
+
+    if (
+      firstUrl.startsWith('node:') ||
+      firstUrl.startsWith('.') ||
+      firstUrl.startsWith('/')
+    )
+      return {destination: undefined, compose: undefined}
 
     const parallelSeries = series.map(parallel => {
       const resolveParallelComponents = parallel.map(component => {

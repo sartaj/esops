@@ -54,7 +54,7 @@ export type ParsedStack = {
   toggles?: Toggles
   files?: PathList
   stack?: Stacks
-  infrastructure?: Stacks
+  compose?: Stacks
 }
 
 export type Config = {

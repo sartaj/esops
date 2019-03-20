@@ -15,7 +15,7 @@ module.exports[`Describe parseWorkingDirectory() | Given single FS path: should 
     "../infrastructure-external"
   ],
   "destination": "/current/working/directory",
-  "infrastructure": [
+  "compose": [
     "../infrastructure-external"
   ]
 }`
