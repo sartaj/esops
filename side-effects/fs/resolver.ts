@@ -10,7 +10,7 @@ import {spawn} from '../process'
 const NODE_PREFIX = 'node:'
 const GITHUB_PREFIX = 'github:'
 
-export const tryGitPath = async ({gitUrl, destination, branch}) => {
+export const tryGitPath = async ({gitUrl, cwd, branch}) => {
   const args = [
     'clone',
     '--branch',
@@ -18,12 +18,12 @@ export const tryGitPath = async ({gitUrl, destination, branch}) => {
     '--depth',
     '1',
     gitUrl,
-    destination + 'tmp'
+    cwd
   ]
 
   const [err] = await spawn('git', args)
   if (err) throw err
-  return destination
+  return cwd
 }
 
 export const tryFSPath = (pkg, {cwd}) => {
@@ -66,10 +66,7 @@ export const fetchPath = async (pathString, {cwd}) => {
     if (!modulePath && pathString.startsWith(GITHUB_PREFIX)) {
       const {gitUrl, branch} = extractGitInfoFromGithubPath(pathString)
       const tempDir = tmp.dirSync()
-      modulePath = await tryGitPath({gitUrl, destination: tempDir.name, branch})
-      // modulePath += '/stack'
-      // console.log(modulePath)
-      modulePath = ''
+      modulePath = await tryGitPath({gitUrl, cwd: tempDir.name, branch})
     }
 
     /**

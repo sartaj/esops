@@ -3,12 +3,11 @@
  */
 import * as pipe from 'promised-pipe'
 import * as result from 'await-result'
-import parallel from 'async/parallel'
-import waterfall from 'async/waterfall'
+import * as async from 'async'
 
-export {pipe, result, parallel, waterfall}
+export {pipe, result}
 
-export const fromNodeCallback = cb => (...args) => {
+const promiseFromNodeCallback = cb => (...args) => {
   return new Promise((resolve, reject) => {
     cb.apply(null, [
       ...args,
@@ -20,6 +19,12 @@ export const fromNodeCallback = cb => (...args) => {
   })
 }
 
+export const fromNodeCallback = cb => async (...args) =>
+  result(promiseFromNodeCallback(cb)(...args))
+
+export const series = fromNodeCallback(async.series)
+export const parallel = fromNodeCallback(async.parallel)
+
 export const extend = fn => async prev =>
   fn(prev)
     .then(next => ({...prev, ...next}))
@@ -30,8 +35,8 @@ export const extend = fn => async prev =>
 export default {
   pipe,
   result,
-  fromNodeCallback,
   extend,
-  waterfall,
+  fromNodeCallback,
+  series,
   parallel
 }

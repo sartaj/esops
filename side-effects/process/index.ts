@@ -3,7 +3,7 @@ import {spawnWithDebug} from './spawn'
 
 const asyncSpawn = async.fromNodeCallback(spawnWithDebug)
 
-export const spawn = (...args) => async.result(asyncSpawn(...args))
+export const spawn = (...args) => asyncSpawn(...args)
 // export const spawn = spawnWithDebug
 
 export default {

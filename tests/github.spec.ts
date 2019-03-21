@@ -17,15 +17,18 @@ import {MOCK_STACKS} from '../core/examples'
 
 const describe = withSnapshots(__filename)
 
-// describe('esops() github features', async assert => {
-// await withTempDir(__dirname, MOCK_STACKS['github-url'], async cwd => {
-//   prompts.inject([false])
-//   await esops({cwd})
+describe('esops() github features', async assert => {
+  await withTempDir(__dirname, MOCK_STACKS['github-url'], async cwd => {
+    // prompts.inject([false])
+    await esops({cwd})
 
-// await assert({
-//   given: 'a minimal package with no extra files',
-//   should: 'generate basic template in cwd',
-//   snap: getSortedFilePaths(cwd)
-// })
-// })
-// })
+    // await new Promise((resolve, reject) => {
+    //   setTimeout(resolve, 5000)
+    // })
+    // await assert({
+    //   given: 'a minimal package with no extra files',
+    //   should: 'generate basic template in cwd',
+    //   snap: getSortedFilePaths(cwd)
+    // })
+  })
+})

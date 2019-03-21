@@ -21,8 +21,7 @@ export const esops: Run = params =>
   pipe(
     configureSideEffects,
     convertEsops1ToEsops2,
-    parse,
-    generate
+    parse
   )(params).catch(log.crash)
 
 export default esops

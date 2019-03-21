@@ -15,7 +15,7 @@
 import * as isDirectory from 'is-directory'
 import * as path from 'path'
 import {isNil, pipe} from 'ramda'
-
+import generate from '../steps/generate'
 import {PREFIX, TOGGLE_FILES} from '../core/constants'
 import {
   ConfigNotFound,
@@ -111,10 +111,10 @@ const parseToggles = async (parsePath): Promise<Toggles> =>
     }, {})
 
 /**
- * ### findStackConfig
+ * ### findEsopsConfig
  * Read and parse esops config file from `esops.json` or `package.json`.
  */
-const findStackConfig = directory => {
+const findEsopsConfig = directory => {
   let stack = undefined
 
   if (!stack) {
@@ -152,7 +152,7 @@ export const parseWorkingDirectory = async ([
 ]: LocalWithProps): Promise<ParsedStack> => {
   if (!directory) throw new TypeError(CWDNotDefined())
 
-  const stack = findStackConfig(directory)
+  const stack = findEsopsConfig(directory)
 
   const toggles = await parseToggles(directory)
 
@@ -245,60 +245,71 @@ export const normalizeUserInputedInfrastructureDefinition = infrastructure => [
   infrastructure
 ] // TODO: Allow alternative inputs for infrastructure
 
-export const resolveRecursiveEsops2 = async.extend(
-  async ({cwd, destination, commands}) => {
-    const [err, result] = await async.result(resolveEsopsConfig({cwd}))
-    if (err) throw err
+export const esops2 = async.extend(async params => {
+  const {cwd, destination, commands} = params
+  const result = await async.result(resolveEsopsConfig({cwd}), true)
 
-    const series = normalizeUserInputedInfrastructureDefinition(
-      result.parsed.infrastructure
-    )
+  const series = normalizeUserInputedInfrastructureDefinition(
+    result.parsed.compose
+  )
 
-    // Short Circuit if previous version of esops
-    const firstUrl = isString(result.parsed.compose)
-      ? result.parsed.compose
-      : result.parsed.compose[0]
-
-    if (
-      firstUrl.startsWith('node:') ||
-      firstUrl.startsWith('.') ||
-      firstUrl.startsWith('/')
-    )
-      return {destination: undefined, compose: undefined}
-
-    const parallelSeries = series.map(parallel => {
-      const resolveParallelComponents = parallel.map(component => {
-        return async function resolveComponent() {
-          const url = component[0]
-          const variables = component[1]
-          const options = component[2]
-          const resolvedPath = await resolver(url, {cwd})
-          return [resolvedPath, variables, options]
+  const parallelSeries = series.map(parallel => {
+    const resolveParallelComponents = parallel.map(component => {
+      return async function resolveComponent() {
+        const sanitizedComponent = isString(component) ? [component] : component
+        const url = sanitizedComponent[0]
+        const variables = sanitizedComponent[1]
+        const options = sanitizedComponent[2]
+        const [errorResolving, resolvedPath] = await async.result(
+          await resolver(url, {cwd})
+        )
+        const esopsConfig = await async.result(
+          findEsopsConfig(resolvedPath),
+          true
+        )
+        if (esopsConfig && esopsConfig.compose) {
+          await async.result(esops2({...params, cwd: resolvedPath}), true)
         }
-      })
-      return async function resolveSeries() {
-        return Promise.all(resolveParallelComponents)
+        // const result = async.result(await render())
       }
     })
+    return async function resolveSeries() {
+      const [] = await async.parallel(resolveParallelComponents)
+    }
+  })
 
-    const runSeries = new Promise((resolve, reject) => {
-      async.waterfall(parallelSeries, (err, result) => {
-        if (err) reject(err)
-        else resolve(result)
-      })
+  await new Promise((resolve, reject) => {
+    async.series(parallelSeries, (err, result) => {
+      if (err) reject(err)
+      else resolve(result)
     })
-    return runSeries
-  }
-)
+  }).catch(throwError)
+})
 
-/**
- * ## Compose It All Together 🙌🏽
- */
-export const parse = async.pipe(
-  resolveRecursiveEsops2,
+export const esops1 = async.pipe(
   resolveEsopsConfig,
   resolveStack,
-  parsedToManifest
+  parsedToManifest,
+  generate
 )
 
+export const parse = async params => {
+  const {cwd} = params
+  const result = await async.result(resolveEsopsConfig({cwd}), true)
+
+  // Short Circuit if previous version of esops
+  const firstUrl = isString(result.parsed.compose)
+    ? result.parsed.compose
+    : result.parsed.compose[0]
+
+  if (
+    firstUrl.startsWith('node:') ||
+    firstUrl.startsWith('.') ||
+    firstUrl.startsWith('/')
+  ) {
+    return esops1(params)
+  } else {
+    await esops2(params)
+  }
+}
 export default parse
