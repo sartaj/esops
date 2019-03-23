@@ -15,8 +15,9 @@
 import * as isDirectory from 'is-directory'
 import * as path from 'path'
 import {isNil, pipe} from 'ramda'
-import generate from '../steps/generate'
+
 import {PREFIX, TOGGLE_FILES} from '../core/constants'
+import {convertAllOptionsToHaveProps, isValidOpts} from '../core/helpers'
 import {
   ConfigNotFound,
   CWDNotDefined,
@@ -29,14 +30,12 @@ import {
   LocalStack,
   LocalWithProps,
   ParsedStack,
-  ParserOptions,
   Resolve,
   Toggles,
   WithProps
 } from '../core/types'
-import {convertAllOptionsToHaveProps, isValidOpts} from '../core/helpers'
 import async from '../helpers/async'
-import {filter, throwError, isString} from '../helpers/sync'
+import {filter, throwError} from '../helpers/sync'
 import log from '../side-effects/console'
 import fs from '../side-effects/fs'
 import resolver from '../side-effects/fs/resolver'
@@ -114,7 +113,7 @@ const parseToggles = async (parsePath): Promise<Toggles> =>
  * ### findEsopsConfig
  * Read and parse esops config file from `esops.json` or `package.json`.
  */
-const findEsopsConfig = directory => {
+export const findEsopsConfig = directory => {
   let stack = undefined
 
   if (!stack) {
@@ -231,10 +230,12 @@ export const resolveEsopsConfig = async.extend(async ({cwd}) => {
   return {parsed}
 })
 
-const resolveStack = async.extend(async ({parsed: {cwd, opts = []}}) => ({
-  cwd,
-  opts: await resolve(opts, {cwd})
-}))
+export const resolveStack = async.extend(
+  async ({parsed: {cwd, opts = []}}) => ({
+    cwd,
+    opts: await resolve(opts, {cwd})
+  })
+)
 
 export const parsedToManifest = async ({
   opts,
@@ -244,72 +245,3 @@ export const parsedToManifest = async ({
 export const normalizeUserInputedInfrastructureDefinition = infrastructure => [
   infrastructure
 ] // TODO: Allow alternative inputs for infrastructure
-
-export const esops2 = async.extend(async params => {
-  const {cwd, destination, commands} = params
-  const result = await async.result(resolveEsopsConfig({cwd}), true)
-
-  const series = normalizeUserInputedInfrastructureDefinition(
-    result.parsed.compose
-  )
-
-  const parallelSeries = series.map(parallel => {
-    const resolveParallelComponents = parallel.map(component => {
-      return async function resolveComponent() {
-        const sanitizedComponent = isString(component) ? [component] : component
-        const url = sanitizedComponent[0]
-        const variables = sanitizedComponent[1]
-        const options = sanitizedComponent[2]
-        const [errorResolving, resolvedPath] = await async.result(
-          await resolver(url, {cwd})
-        )
-        const esopsConfig = await async.result(
-          findEsopsConfig(resolvedPath),
-          true
-        )
-        if (esopsConfig && esopsConfig.compose) {
-          await async.result(esops2({...params, cwd: resolvedPath}), true)
-        }
-        // const result = async.result(await render())
-      }
-    })
-    return async function resolveSeries() {
-      const [] = await async.parallel(resolveParallelComponents)
-    }
-  })
-
-  await new Promise((resolve, reject) => {
-    async.series(parallelSeries, (err, result) => {
-      if (err) reject(err)
-      else resolve(result)
-    })
-  }).catch(throwError)
-})
-
-export const esops1 = async.pipe(
-  resolveEsopsConfig,
-  resolveStack,
-  parsedToManifest,
-  generate
-)
-
-export const parse = async params => {
-  const {cwd} = params
-  const result = await async.result(resolveEsopsConfig({cwd}), true)
-
-  // Short Circuit if previous version of esops
-  const firstUrl = isString(result.parsed.compose)
-    ? result.parsed.compose
-    : result.parsed.compose[0]
-
-  if (
-    firstUrl.startsWith('node:') ||
-    firstUrl.startsWith('.') ||
-    firstUrl.startsWith('/')
-  ) {
-    return esops1(params)
-  } else {
-    await esops2(params)
-  }
-}
-export default parse
