@@ -21,8 +21,9 @@
   "scripts": {
     "build": "tsc",
     "build:watch": "tsc -w",
-    "test": "NODE_ENV=test ts-node ./node_modules/.bin/riteway tests/**/*.spec.ts | tap-nirvana",
-    "test:watch": "NODE_ENV=test ts-node-dev --respawn ./node_modules/.bin/riteway tests/**/*.spec.ts | tap-nirvana",
+    "debug": "NODE_ENV=test ts-node-dev --inspect --respawn ./node_modules/.bin/tape tests/**/*.spec.ts | tap-nirvana",
+    "test": "NODE_ENV=test ts-node ./node_modules/.bin/tape tests/**/*.spec.ts | tap-nirvana",
+    "test:watch": "NODE_ENV=test ts-node-dev --respawn ./node_modules/.bin/tape tests/**/*.spec.ts | tap-nirvana",
     "test:console": "npm run build && RUN_CONSOLE_TEST=1 ts-node ./tests/console-runner.spec.ts",
     "test:update": "UPDATE_SNAPSHOTS=1 npm run test",
     "report": "NODE_ENV=test nyc --require ts-node/register tape **/*.spec.ts -x **/library/** | tap-nirvana",
