@@ -1,21 +1,34 @@
 import async from '../helpers/async'
 import {isString, throwError} from '../helpers/sync'
 import resolver from '../side-effects/fs/resolver'
+
 import {
   findEsopsConfig,
-  normalizeUserInputedInfrastructureDefinition,
-  resolveEsopsConfig
+  convertSeriesItemsToParallel,
+  getComposeDefinitionFromEsopsConfig
 } from '../steps/parse'
 
-export const esops2 = async.extend(async params => {
-  const {cwd, destination, commands} = params
-  const result = await async.result(resolveEsopsConfig({cwd}), true)
+export const esops2RunRecursive = async.extend(async params => {
+  const {
+    cwd,
+    destination,
+    commands: {ui}
+  } = params
 
-  const series = normalizeUserInputedInfrastructureDefinition(
-    result.parsed.compose
-  )
+  let {esopsResolvedDepth} = params
+  esopsResolvedDepth = esopsResolvedDepth || 0
+  esopsResolvedDepth++
+
+  const result = await async.result(findEsopsConfig(cwd), true)
+  const composeDefinition = getComposeDefinitionFromEsopsConfig(result)
+  const series = convertSeriesItemsToParallel(composeDefinition)
+
+  ui.debug('compose-depth', esopsResolvedDepth, '\n')
+  ui.debug('compose-definition', composeDefinition)
+  ui.debug('compose-series', JSON.stringify(series, null, 2))
 
   const parallelSeries = series.map(parallel => {
+    ui.debug('compose-parallel', JSON.stringify(parallel, null, 2))
     const resolveParallelComponents = parallel.map(component => {
       return async function resolveComponent() {
         const sanitizedComponent = isString(component) ? [component] : component
@@ -25,14 +38,26 @@ export const esops2 = async.extend(async params => {
         const [errorResolving, resolvedPath] = await async.result(
           await resolver(url, {cwd})
         )
-        const esopsConfig = await async.result(
+
+        const nextEsopsConfig = await async.result(
           findEsopsConfig(resolvedPath),
           true
         )
-        if (esopsConfig && esopsConfig.compose) {
-          await async.result(esops2({...params, cwd: resolvedPath}), true)
+        const nextEsopsComposeDefinition = getComposeDefinitionFromEsopsConfig(
+          result
+        )
+
+        if (nextEsopsConfig && nextEsopsComposeDefinition) {
+          await async.result(
+            esops2RunRecursive({
+              ...params,
+              esopsResolvedDepth,
+              cwd: resolvedPath
+            }),
+            true
+          )
         }
-        // const result = async.result(await render())
+        ui.debug('compose-resolved', resolvedPath)
       }
     })
     return async function resolveSeries() {
@@ -47,5 +72,19 @@ export const esops2 = async.extend(async params => {
     })
   }).catch(throwError)
 })
+
+const convertEsops1ToEsops2 = params => {
+  if (!params.destination && params.cwd)
+    return {
+      ...params,
+      destination: params.cwd
+    }
+  else return params
+}
+
+export const esops2 = async.pipe(
+  convertEsops1ToEsops2,
+  esops2RunRecursive
+)
 
 export default esops2

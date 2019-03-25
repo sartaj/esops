@@ -35,7 +35,7 @@ import {
   WithProps
 } from '../core/types'
 import async from '../helpers/async'
-import {filter, throwError} from '../helpers/sync'
+import {filter, isArray, isString, throwError} from '../helpers/sync'
 import log from '../side-effects/console'
 import fs from '../side-effects/fs'
 import resolver from '../side-effects/fs/resolver'
@@ -242,6 +242,8 @@ export const parsedToManifest = async ({
   cwd
 }): Promise<GeneratorManifest> => parsedToGeneratorManifest(opts, {cwd})
 
-export const normalizeUserInputedInfrastructureDefinition = infrastructure => [
-  infrastructure
-] // TODO: Allow alternative inputs for infrastructure
+export const convertSeriesItemsToParallel = infrastructure =>
+  infrastructure.map(item => [item]) // TODO: Allow alternative inputs for infrastructure
+
+export const getComposeDefinitionFromEsopsConfig = result =>
+  isString(result) ? [result] : isArray(result) ? result : result.compose

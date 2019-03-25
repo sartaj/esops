@@ -2,6 +2,8 @@ import {is, Pred, T, curry} from 'ramda'
 
 export const isString = (arg: any): arg is string => is(String)(arg)
 
+export const isArray = (arg: any): arg is [] => is(Array)(arg)
+
 export const throwIfTypeIs = type => arg => {
   if (is(type, arg)) throw arg
   else return arg
@@ -20,11 +22,11 @@ export type Conditional = [Pred, (args: any) => void]
 export const defaultTo = (cb): Conditional => [T, cb]
 
 export const sideEffect = curry((cb: Function, arg: any) => {
-  cb()
+  cb(arg)
   return arg
 })
 
-export const extend = next => prev => ({
-  ...prev,
-  ...(is(Function, next) ? next(prev) : next)
+export const extend = next => previous => ({
+  ...previous,
+  ...(is(Function, next) ? next(previous) : next)
 })

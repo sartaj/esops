@@ -1,15 +1,13 @@
-import {renderError, crash} from './components/error'
-import {announce} from './components/announce'
-import {md, mdFile} from './components/markdown'
-import {logo, info, trace, debug, warn, setLevel} from './components/log'
-import {map} from 'ramda'
-import {sideEffect} from 'helpers/sync'
+import {debug, info, setLevel, trace, warn} from 'loglevel'
 
-let log = {
+import {announce} from './components/announce'
+import {crash, renderError} from './components/error'
+import {md, mdFile} from './components/markdown'
+
+export const log = {
   announce,
   md,
   mdFile,
-  logo,
   info,
   trace,
   debug,
@@ -18,15 +16,5 @@ let log = {
   crash,
   setLevel
 }
-
-if (process.env.NODE_ENV === 'test') {
-  // Make functions mockable
-  log = map(() => () => {}, log)
-  log.crash = crash
-}
-// const composableLog = message =>
-//   sideEffect(args => {
-//     log.info(message)
-//   })
 
 export default log

@@ -9,9 +9,13 @@ require.extensions['.snap'] = require.extensions['.js']
 
 const UPDATE_SNAPSHOT_MESSAGE = colors.bold.red(
   `
-  Snapshot failed. Run with UPDATE_SNAPSHOTS=1 to update snapshots.
-  
-  `
+######################################################################
+#                                                                    #
+#  Snapshot failed. Run with UPDATE_SNAPSHOTS=1 to update snapshots. #
+#                                                                    #
+######################################################################
+
+`
 )
 
 const SNAPSHOT_NEWLINE = '\n\n'
@@ -77,9 +81,17 @@ const toMatchSnapshot = curry((snapshotDir, snapshotPath, name, contents) => {
     if (shouldUpdateSnapshots) {
       return updateSnapshot(snapshotPath, name, actual)
     } else {
+      console.error(
+        colors.bold.black(
+          '\n\n-----------------------------------------------------------------\n\n'
+        )
+      )
       console.error(UPDATE_SNAPSHOT_MESSAGE)
-
-      console.error(colors.bold.red('•••• DIFF ••••\n\n'))
+      console.error(colors.bold.red('\n\n•••• EXPECTED ••••\n\n'))
+      console.error(colors.bold.red(expected))
+      console.error(colors.bold.green('\n\n•••• ACTUAL ••••\n\n'))
+      console.error(colors.bold.green(actual))
+      console.error(colors.bold.red('\n\n•••• DIFF ••••\n\n'))
       const diff = require('diff').diffChars(expected, actual)
 
       diff.forEach(function(part) {
@@ -88,6 +100,12 @@ const toMatchSnapshot = curry((snapshotDir, snapshotPath, name, contents) => {
         const color = part.added ? 'green' : part.removed ? 'red' : 'grey'
         process.stderr.write(part.value[color])
       })
+
+      console.error(
+        colors.bold.black(
+          '\n\n-----------------------------------------------------------------\n\n'
+        )
+      )
 
       console.log()
       return {
