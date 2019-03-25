@@ -163,5 +163,5 @@ export interface Generator {
  * ## Run
  */
 
-type RunOpts = {cwd: CWD; opts?: Stacks; stacks?: Stacks; logLevel: string}
+type RunOpts = {cwd: CWD; opts?: Stacks; stacks?: Stacks; logLevel?: string}
 export type Run = (opts: RunOpts) => Promise<void>

@@ -1,20 +1,6 @@
-import {debug, info, setLevel, trace, warn} from 'loglevel'
+import * as createLogDriver from 'log-driver'
 
-import {announce} from './components/announce'
-import {crash, renderError} from './components/error'
-import {md, mdFile} from './components/markdown'
-
-export const log = {
-  announce,
-  md,
-  mdFile,
-  info,
-  trace,
-  debug,
-  warn,
-  renderError,
-  crash,
-  setLevel
-}
-
-export default log
+export {createLogDriver}
+export {announce} from './components/announce'
+export {crash, renderError} from './components/error'
+export {md, mdFile} from './components/markdown'

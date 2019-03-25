@@ -1,12 +1,11 @@
 /**
  * Main Usage
  */
-import {pipe} from 'ramda'
 
 import {Run} from '../core/types'
 import async from '../helpers/async'
 import {isString} from '../helpers/sync'
-import {extend, sideEffect} from '../helpers/sync'
+import {extend} from '../helpers/sync'
 import {fs, log, temporaryDirectory} from '../side-effects'
 import {
   findEsopsConfig,
@@ -18,27 +17,25 @@ import esops2 from './esops2'
 /**
  * Side Effects
  */
-const installSideEffects = extend({
+const getLogLevel = logLevel =>
+  logLevel ? logLevel : process.env.NODE_ENV === 'test' ? 'error' : 'info'
+
+const withCommands = extend(({logLevel}) => ({
   commands: {
     tempDir: temporaryDirectory(),
     filesystem: fs,
-    ui: log,
+    ui: {
+      ...log,
+      ...log.createLogDriver({
+        level: getLogLevel(logLevel),
+        format: (level, ...args) => args.join(' ')
+      })
+    },
     error: {
       crash: log.crash
     }
   }
-})
-
-const setLoggingLevel = sideEffect(({logLevel, commands}) => {
-  commands.ui.setLevel(
-    logLevel ? logLevel : process.env.NODE_ENV === 'test' ? 'error' : 'trace'
-  )
-})
-
-export const withCommands = pipe(
-  installSideEffects,
-  setLoggingLevel
-)
+}))
 
 /**
  * Choose Esops Version

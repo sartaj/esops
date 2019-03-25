@@ -36,7 +36,7 @@ import {
 } from '../core/types'
 import async from '../helpers/async'
 import {filter, isArray, isString, throwError} from '../helpers/sync'
-import log from '../side-effects/console'
+import * as log from '../side-effects/console'
 import fs from '../side-effects/fs'
 import resolver from '../side-effects/fs/resolver'
 

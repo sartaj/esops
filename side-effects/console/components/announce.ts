@@ -3,6 +3,9 @@ const log = require('loglevel')
 const wrapAnsi = require('wrap-ansi')
 
 export const announce = (string, opts, type = 'info') => {
+  // TODO: Replace loglevel with injected logger
+  log.setLevel(process.env.NODE_ENV === 'test' ? 'error' : 'info')
+
   log[type](
     boxen(wrapAnsi(string, 80), {
       borderStyle: 'round',

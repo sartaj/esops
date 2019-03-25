@@ -11,7 +11,7 @@ import {
   UserConfirmOverwriteMessageTrue
 } from '../core/messages'
 import {GeneratorManifest} from '../core/types'
-import log from '../side-effects/console'
+import * as log from '../side-effects/console'
 import fs from '../side-effects/fs'
 
 /**
