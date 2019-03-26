@@ -3,8 +3,8 @@ import {
   resolveEsopsConfig,
   resolveStack,
   parsedToManifest
-} from '../steps/parse'
-import generate from '../steps/generate'
+} from '../parser/parse'
+import generate from '../renderer/generate'
 
 export const esops1 = async.pipe(
   resolveEsopsConfig,

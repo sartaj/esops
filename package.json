@@ -13,8 +13,8 @@
     "type": "git",
     "url": "git+https://github.com/sartaj/esops.git"
   },
-  "main": "library/usage/main.js",
-  "bin": "library/usage/cli.js",
+  "main": "library/interfaces/main.js",
+  "bin": "library/interfaces/cli.js",
   "files": [
     "library"
   ],

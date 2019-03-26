@@ -10,27 +10,30 @@ import {fs, log, temporaryDirectory} from '../side-effects'
 import {
   findEsopsConfig,
   getComposeDefinitionFromEsopsConfig
-} from '../steps/parse'
-import esops1 from './esops1'
-import esops2 from './esops2'
+} from '../parser/parse'
+import esops1 from '../run/esops1'
+import esops2 from '../run/esops2'
 
 /**
- * Side Effects
+ * ## Side Effect Commands
+ * Side Effects are injected into the program as the `effects` key.
  */
 const getLogLevel = logLevel =>
   logLevel ? logLevel : process.env.NODE_ENV === 'test' ? 'error' : 'info'
 
-const withCommands = extend(({logLevel}) => ({
-  commands: {
+const interactiveUi = ui => ({
+  ...log,
+  ...log.createLogDriver({
+    level: getLogLevel(ui),
+    format: (level, ...args) => args.join(' ')
+  })
+})
+
+const withSideEffects = extend(({logLevel}) => ({
+  effects: {
     tempDir: temporaryDirectory(),
     filesystem: fs,
-    ui: {
-      ...log,
-      ...log.createLogDriver({
-        level: getLogLevel(logLevel),
-        format: (level, ...args) => args.join(' ')
-      })
-    },
+    ui: interactiveUi(logLevel),
     error: {
       crash: log.crash
     }
@@ -67,7 +70,7 @@ const isProbablyEsops2 = async params => {
 export const esops: Run = params =>
   async
     .pipe(
-      withCommands,
+      withSideEffects,
       async params =>
         (await isProbablyEsops2(params))
           ? await esops2(params)

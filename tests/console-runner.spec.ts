@@ -13,8 +13,8 @@ function logTitle(title) {
 }
 
 async function run() {
-  const esops = require('../library/usage/main').default
-  const esopsCli = require('../library/usage/cli').default
+  const esops = require('../library/interfaces/main').default
+  const esopsCli = require('../library/interfaces/cli').default
 
   logTitle('basic')
   await withTempDir(__dirname, MOCK_STACKS['basic'], async cwd => {

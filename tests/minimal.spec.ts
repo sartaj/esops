@@ -12,7 +12,7 @@ import {
   cleanErrorString
 } from './test-utils/fs-utils'
 
-import esops from '../usage/main'
+import esops from '../interfaces/main'
 import {MOCK_STACKS} from '../core/examples'
 
 const describe = withSnapshots(__filename)
