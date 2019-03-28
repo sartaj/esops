@@ -246,4 +246,10 @@ export const convertSeriesItemsToParallel = infrastructure =>
   infrastructure.map(item => [item]) // TODO: Allow alternative inputs for infrastructure
 
 export const getComposeDefinitionFromEsopsConfig = result =>
-  isString(result) ? [result] : isArray(result) ? result : result.compose
+  isNil(result)
+    ? null
+    : isString(result)
+    ? [result]
+    : isArray(result)
+    ? result
+    : result.compose

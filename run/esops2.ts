@@ -1,46 +1,47 @@
 import async from '../helpers/async'
 import {isString, throwError} from '../helpers/sync'
-import resolver from '../side-effects/fs/resolver'
-
 import {
   findEsopsConfig,
   convertSeriesItemsToParallel,
   getComposeDefinitionFromEsopsConfig
 } from '../parser/parse'
-import {resolve} from 'dns'
 
 const URL_COMPONENT_TYPE = 'URL'
+const PATH_COMPONENT_TYPE = 'PATH'
 
 const getComponentType = (componentString: string) => {
-  return URL_COMPONENT_TYPE
+  return (
+    (componentString.startsWith('github:') && URL_COMPONENT_TYPE) ||
+    PATH_COMPONENT_TYPE
+  )
 }
 
+const pathHasEsopsCompose = async localPath => {
+  const nextEsopsConfig = await async.result(findEsopsConfig(localPath), true)
+  const nextEsopsComposeDefinition = getComposeDefinitionFromEsopsConfig(
+    nextEsopsConfig
+  )
+
+  const isDirectoryWithComposeDefinition =
+    nextEsopsConfig && nextEsopsComposeDefinition ? true : false
+
+  return isDirectoryWithComposeDefinition
+}
 const renderUrl = async (params, sanitizedComponent) => {
   try {
     const {
       cwd,
-      effects: {ui}
+      effects: {ui, filesystem}
     } = params
     const componentString = sanitizedComponent[0]
     const variables = sanitizedComponent[1]
     const options = sanitizedComponent[2]
 
-    const [errorResolving, resolvedPath] = await async.result(
-      await resolver(componentString, {cwd})
-    )
-    const nextEsopsConfig = await async.result(
-      findEsopsConfig(resolvedPath),
+    const resolvedPath = await async.result(
+      await filesystem.resolver(componentString, {cwd}),
       true
     )
-    const nextEsopsComposeDefinition = getComposeDefinitionFromEsopsConfig(
-      nextEsopsConfig
-    )
-    console.log(nextEsopsComposeDefinition)
-
-    const isDirectoryWithComposeDefinition =
-      nextEsopsConfig && nextEsopsComposeDefinition
-
-    return {isDirectoryWithComposeDefinition, cwd: resolvedPath}
+    return resolvedPath
   } catch (e) {
     throw e
   }
@@ -52,17 +53,25 @@ const renderComponent = async (params, sanitizedComponent) => {
     effects: {ui}
   } = params
 
+  const tab = getSpacing(params.treeDepth)
+
   const componentString = sanitizedComponent[0]
   const variables = sanitizedComponent[1]
   const options = sanitizedComponent[2]
 
   const componentType = getComponentType(componentString)
 
-  ui.info(`Rendering:${componentString}`)
+  ui.info(`${tab}  rendering`)
+  const resolvedComponentString =
+    componentType === URL_COMPONENT_TYPE
+      ? await async.result(renderUrl(params, sanitizedComponent))
+      : componentString
+
+  const resolvedComponentType = getComponentType(resolvedComponentString)
 
   let response
-  switch (componentType) {
-    case URL_COMPONENT_TYPE:
+  switch (resolvedComponentType) {
+    case PATH_COMPONENT_TYPE:
     default:
       response = await async.result(renderUrl(params, sanitizedComponent))
   }
@@ -75,12 +84,67 @@ const renderComponent = async (params, sanitizedComponent) => {
     result.isDirectoryWithComposeDefinition &&
     result.cwd
 
-  ui.info(`Rendered:${componentString}`)
+  ui.info(`${tab}  rendered`)
 
-  return nextDirectory
+  return resolvedComponentString
 }
 
+const getSpacing = (tab: number): string => new Array(tab).fill('    ').join('')
+
+const resolveComponent = params => async sanitizedComponent => {
+  const {cwd, effects} = params
+  const componentString = sanitizedComponent[0]
+  const tab = getSpacing(params.treeDepth)
+  effects.ui.info(`${tab}${componentString}`)
+  effects.ui.info(`${tab}  resolving`)
+
+  const componentType = getComponentType(componentString)
+
+  const resolvedComponentString =
+    componentType === URL_COMPONENT_TYPE
+      ? await async.result(renderUrl(params, sanitizedComponent), true)
+      : componentString
+
+  effects.ui.info(`${tab}  resolved`)
+
+  return [resolvedComponentString, sanitizedComponent[1], sanitizedComponent[2]]
+}
+
+const sanitizeComponent = async component => {
+  return isString(component) ? [component] : component
+}
 export const esops2RunRecursive = async.extend(async params => {
+  const recurseOrRender = async resolvedComponent => {
+    const resolvedComponentString = resolvedComponent[0]
+    const [err, hasEsopsCompose] = await async.result(
+      pathHasEsopsCompose(resolvedComponentString)
+    )
+    if (hasEsopsCompose) {
+      params.effects.ui.info(
+        `${getSpacing(params.treeDepth)}  compose definition found`
+      )
+      params.effects.ui.info(` `)
+      await async.result(
+        esops2RunRecursive({
+          ...params,
+          esopsResolvedDepth,
+          cwd: resolvedComponentString,
+          treeDepth: params.treeDepth + 1
+        }),
+        true
+      )
+    } else {
+      await renderComponent(params, resolvedComponent)
+      params.effects.ui.info(` `)
+    }
+  }
+
+  const runComponent = async.pipe(
+    sanitizeComponent,
+    resolveComponent(params),
+    recurseOrRender
+  )
+
   const {
     cwd,
     destination,
@@ -95,45 +159,22 @@ export const esops2RunRecursive = async.extend(async params => {
   const composeDefinition = getComposeDefinitionFromEsopsConfig(result)
   const series = convertSeriesItemsToParallel(composeDefinition)
 
-  ui.debug('Compose Definition:')
-  ui.debug(JSON.stringify(series, null, 2))
-
-  const parallelSeries = series.map(parallel => {
-    const resolveParallelComponents = parallel.map(component => {
-      return async function resolveComponent() {
-        const sanitizedComponent = isString(component) ? [component] : component
-
-        const nextDirectory = await renderComponent(params, sanitizedComponent)
-
-        if (nextDirectory) {
-          await async.result(
-            esops2RunRecursive({
-              ...params,
-              esopsResolvedDepth,
-              cwd: nextDirectory
-            }),
-            true
-          )
-        }
-      }
-    })
-    return async function resolveSeries() {
-      const [] = await async.parallel(resolveParallelComponents)
-    }
-  })
-
-  await new Promise((resolve, reject) => {
-    async.series(parallelSeries, (err, result) => {
-      if (err) reject(err)
-      else resolve(result)
-    })
-  }).catch(throwError)
+  return async
+    .series(
+      series.map(parallel => async () =>
+        async.parallel(
+          parallel.map(component => async () => runComponent(component))
+        )
+      )
+    )
+    .catch(throwError)
 })
 
 const convertEsops1ToEsops2 = params => {
   if (!params.destination && params.cwd)
     return {
       ...params,
+      treeDepth: 0,
       destination: params.cwd
     }
   else return params

@@ -6,7 +6,7 @@ const fs = require('fs')
 function spawnWithDebug(command, args, cb) {
   // const title = command + ' ' + args.join(' ')
   const child = crossSpawn(command, args, {
-    stdio: ['pipe', process.stdout, process.stderr],
+    // stdio: ['pipe', process.stdout, process.stderr],
     shell: true
   })
   child.on('error', cb)

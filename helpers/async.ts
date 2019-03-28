@@ -22,7 +22,14 @@ const promiseFromNodeCallback = cb => (...args) => {
 export const fromNodeCallback = cb => async (...args) =>
   result(promiseFromNodeCallback(cb)(...args))
 
-export const series = fromNodeCallback(async.series)
+export const series = seriesArr =>
+  new Promise((resolve, reject) => {
+    async.series(seriesArr, (err, result) => {
+      if (err) reject(err)
+      else resolve(result)
+    })
+  })
+
 export const parallel = fromNodeCallback(async.parallel)
 
 export const extend = fn => async prev =>
