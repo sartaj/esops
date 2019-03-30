@@ -27,7 +27,7 @@ const pathHasEsopsCompose = async localPath => {
 
   return isDirectoryWithComposeDefinition
 }
-const renderUrl = async (params, sanitizedComponent) => {
+const resolveUrl = async (params, sanitizedComponent) => {
   try {
     const {
       cwd,
@@ -38,7 +38,7 @@ const renderUrl = async (params, sanitizedComponent) => {
     const options = sanitizedComponent[2]
 
     const resolvedPath = await async.result(
-      await filesystem.resolver(componentString, {cwd}),
+      await filesystem.resolver(componentString, params),
       true
     )
     return resolvedPath
@@ -54,7 +54,7 @@ const renderComponent = async (params, sanitizedComponent) => {
   } = params
 
   const tab = getSpacing(params.treeDepth)
-
+  // console.log(params.effects.tempDir)
   const componentString = sanitizedComponent[0]
   const variables = sanitizedComponent[1]
   const options = sanitizedComponent[2]
@@ -64,7 +64,7 @@ const renderComponent = async (params, sanitizedComponent) => {
   ui.info(`${tab}  rendering`)
   const resolvedComponentString =
     componentType === URL_COMPONENT_TYPE
-      ? await async.result(renderUrl(params, sanitizedComponent))
+      ? await async.result(resolveUrl(params, sanitizedComponent))
       : componentString
 
   const resolvedComponentType = getComponentType(resolvedComponentString)
@@ -73,20 +73,15 @@ const renderComponent = async (params, sanitizedComponent) => {
   switch (resolvedComponentType) {
     case PATH_COMPONENT_TYPE:
     default:
-      response = await async.result(renderUrl(params, sanitizedComponent))
+      response = await async.result(resolveUrl(params, sanitizedComponent))
   }
 
   const [err, result] = response
   if (err) throw err
 
-  const nextDirectory =
-    componentType === URL_COMPONENT_TYPE &&
-    result.isDirectoryWithComposeDefinition &&
-    result.cwd
-
   ui.info(`${tab}  rendered`)
 
-  return resolvedComponentString
+  return result
 }
 
 const getSpacing = (tab: number): string => new Array(tab).fill('    ').join('')
@@ -102,7 +97,7 @@ const resolveComponent = params => async sanitizedComponent => {
 
   const resolvedComponentString =
     componentType === URL_COMPONENT_TYPE
-      ? await async.result(renderUrl(params, sanitizedComponent), true)
+      ? await async.result(resolveUrl(params, sanitizedComponent), true)
       : componentString
 
   effects.ui.info(`${tab}  resolved`)

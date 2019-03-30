@@ -1,16 +1,16 @@
-import * as path from 'path'
-import * as resolvePkg from 'resolve-pkg'
 import * as fs from 'fs'
-import * as tmp from 'tmp'
+import * as path from 'path'
+import {pipe} from 'ramda'
+import * as resolvePkg from 'resolve-pkg'
 
 import {CWDNotDefined, NoPathError} from '../../core/messages'
-import {pipe} from 'ramda'
+import {Params} from '../../core/types2'
 import {spawn} from '../process'
 
 const NODE_PREFIX = 'node:'
 const GITHUB_PREFIX = 'github:'
 
-export const tryGitPath = async ({gitUrl, cwd, branch}) => {
+export const tryGitPath = async ({gitUrl, destination, branch}) => {
   const args = [
     'clone',
     '--branch',
@@ -18,12 +18,12 @@ export const tryGitPath = async ({gitUrl, cwd, branch}) => {
     '--depth',
     '1',
     gitUrl,
-    cwd
+    destination
   ]
 
   const [err] = await spawn('git', args)
   if (err) throw err
-  return cwd
+  return destination
 }
 
 export const tryFSPath = (pkg, {cwd}) => {
@@ -52,7 +52,15 @@ const extractGitInfoFromGithubPath = pipe(
   })
 )
 
-export const fetchPath = async (pathString, {cwd}) => {
+export const resolvePath = async (
+  pathString,
+  {
+    cwd,
+    effects: {
+      filesystem: {appCache}
+    }
+  }: Params
+) => {
   try {
     if (!cwd) throw new TypeError(CWDNotDefined())
     let modulePath
@@ -64,9 +72,9 @@ export const fetchPath = async (pathString, {cwd}) => {
     }
 
     if (!modulePath && pathString.startsWith(GITHUB_PREFIX)) {
+      const destination = await appCache.createNewCacheFolder()
       const {gitUrl, branch} = extractGitInfoFromGithubPath(pathString)
-      const tempDir = tmp.dirSync()
-      modulePath = await tryGitPath({gitUrl, cwd: tempDir.name, branch})
+      modulePath = await tryGitPath({gitUrl, destination, branch})
     }
 
     /**
@@ -84,4 +92,5 @@ export const fetchPath = async (pathString, {cwd}) => {
   }
 }
 
-export default fetchPath
+export const createResolver = () => resolvePath
+export default resolvePath

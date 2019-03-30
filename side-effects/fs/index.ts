@@ -2,24 +2,27 @@ import {existsSync, mkdirSync, readFileSync, writeFileSync} from 'fs'
 import {listTreeSync, copySync} from 'fs-plus'
 import {copy} from 'fs-jetpack'
 import * as readPkg from 'read-pkg'
-import resolver from './resolver'
-export default {
-  readFileSync,
-  writeFileSync,
-  createTempFolder: () => null,
-  readPkg,
-  resolvePkg: require('resolve-pkg'),
+import {createResolver} from './resolver'
+import {createAppCache} from './app-cache'
+
+export default () => ({
+  // main esops fs effects
+  appCache: createAppCache(),
+  resolver: createResolver(),
   updateGeneratedTextFs: require('update-generated-text-fs'),
-  existsSync,
-  listTreeSync,
-  mkdirSync,
-  copySync,
-  injectTempFolder: () => {},
-  copyFromTempToDestination: () => {},
-  cleanUpTempFolder: () => {},
-  mkdirp: require('mkdirp'),
   forceCopy: (from, to) => {
     copy(from, to, {overwrite: true})
   },
-  resolver
-}
+  // npm
+  resolvePkg: require('resolve-pkg'),
+
+  // root fs
+  mkdirp: require('mkdirp'),
+  listTreeSync,
+  copySync,
+  readFileSync,
+  writeFileSync,
+  readPkg,
+  existsSync,
+  mkdirSync
+})

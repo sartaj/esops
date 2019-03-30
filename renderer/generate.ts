@@ -12,7 +12,9 @@ import {
 } from '../core/messages'
 import {GeneratorManifest} from '../core/types'
 import * as log from '../side-effects/console'
-import fs from '../side-effects/fs'
+import createFsDriver from '../side-effects/fs'
+
+const fs = createFsDriver()
 
 /**
  * merge

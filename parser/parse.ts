@@ -37,8 +37,10 @@ import {
 import async from '../helpers/async'
 import {filter, isArray, isString, throwError} from '../helpers/sync'
 import * as log from '../side-effects/console'
-import fs from '../side-effects/fs'
-import resolver from '../side-effects/fs/resolver'
+import createFsDriver from '../side-effects/fs'
+import {resolvePath} from '../side-effects/fs/resolver'
+
+const fs = createFsDriver()
 
 /**
  * ## Utils
@@ -55,7 +57,7 @@ const createOptionPromise = (cwd: CWD, opt: WithProps): OptionPromises =>
   new Promise((resolve, reject) => {
     const path = opt[0]
     const props = opt[1]
-    resolver(path, {cwd})
+    resolvePath(path, {cwd, effects: {filesystem: {}}})
       .then(path => {
         resolve([path, props])
       })

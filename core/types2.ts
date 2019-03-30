@@ -6,3 +6,7 @@ export type Esops = {
 }
 
 // export type
+export type Params = {
+  cwd: string
+  effects?: any
+}

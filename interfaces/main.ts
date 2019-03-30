@@ -6,7 +6,7 @@ import {Run} from '../core/types'
 import async from '../helpers/async'
 import {isString} from '../helpers/sync'
 import {extend} from '../helpers/sync'
-import {fs, log, temporaryDirectory} from '../side-effects'
+import {createFsDriver, log} from '../side-effects'
 import {
   findEsopsConfig,
   getComposeDefinitionFromEsopsConfig
@@ -31,8 +31,7 @@ const interactiveUi = ui => ({
 
 const withSideEffects = extend(({logLevel}) => ({
   effects: {
-    tempDir: temporaryDirectory(),
-    filesystem: fs,
+    filesystem: createFsDriver(),
     ui: interactiveUi(logLevel),
     error: {
       crash: log.crash

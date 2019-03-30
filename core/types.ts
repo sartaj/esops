@@ -31,6 +31,7 @@ export type LocalStacksWithProps = LocalWithProps[]
 export type LocalParams = {
   cwd: CWD
   opts: LocalStacks
+  effects: any
 }
 
 export type TemplatePath = LocalPath | TemporaryTemplatePath
