@@ -18,11 +18,12 @@ export const createAppCache = () => {
   const cachePath = mkdirSync(tempDir.name, 'cache')
 
   const renderPrepContainer = mkdirSync(tempDir.name, 'render-prep')
+  const renderPrepNow = path.join(renderPrepContainer, id())
 
   return {
     getCacheFolder: async () => cachePath,
     createNewCacheFolder: async name => mkdirSync(cachePath, name || id()),
-    getRenderPrepFolder: async () => mkdirSync(renderPrepContainer, id()),
+    getRenderPrepFolder: async () => mkdirSync(renderPrepNow),
     deleteRenderPrep: async () => rimraf(renderPrepContainer)
   }
 }

@@ -1,156 +1,60 @@
 import async from '../helpers/async'
-import {isString, throwError} from '../helpers/sync'
+import {throwError} from '../helpers/sync'
 import {
-  findEsopsConfig,
   convertSeriesItemsToParallel,
+  findEsopsConfig,
   getComposeDefinitionFromEsopsConfig
 } from '../parser/parse'
+import {
+  getSpacing,
+  hasEsopsCompose,
+  resolveComponent,
+  sanitizeComponent
+} from '../parser/parser2'
+import {copyToDestination, renderComponent} from '../renderer/render'
 
-const URL_COMPONENT_TYPE = 'URL'
-const PATH_COMPONENT_TYPE = 'PATH'
-
-const getComponentType = (componentString: string) => {
-  return (
-    (componentString.startsWith('github:') && URL_COMPONENT_TYPE) ||
-    PATH_COMPONENT_TYPE
+const withEsopsRecursion = (
+  params,
+  runRecursion
+) => async resolvedComponent => {
+  const componentIsALocalPathWithEsopsCompose = await async.result(
+    hasEsopsCompose(resolvedComponent),
+    true
   )
-}
 
-const pathHasEsopsCompose = async localPath => {
-  const nextEsopsConfig = await async.result(findEsopsConfig(localPath), true)
-  const nextEsopsComposeDefinition = getComposeDefinitionFromEsopsConfig(
-    nextEsopsConfig
-  )
-
-  const isDirectoryWithComposeDefinition =
-    nextEsopsConfig && nextEsopsComposeDefinition ? true : false
-
-  return isDirectoryWithComposeDefinition
-}
-const resolveUrl = async (params, sanitizedComponent) => {
-  try {
-    const {
-      cwd,
-      effects: {ui, filesystem}
-    } = params
-    const componentString = sanitizedComponent[0]
-    const variables = sanitizedComponent[1]
-    const options = sanitizedComponent[2]
-
-    const resolvedPath = await async.result(
-      await filesystem.resolver(componentString, params),
+  if (componentIsALocalPathWithEsopsCompose) {
+    params.effects.ui.info(
+      `${getSpacing(params.treeDepth)}  compose definition found`
+    )
+    params.effects.ui.info(` `)
+    await async.result(
+      runRecursion({
+        ...params,
+        parent: resolvedComponent[0],
+        treeDepth: params.treeDepth + 1
+      }),
       true
     )
-    return resolvedPath
-  } catch (e) {
-    throw e
+  } else {
+    await renderComponent(params, resolvedComponent)
+    params.effects.ui.info(` `)
   }
 }
 
-const renderComponent = async (params, sanitizedComponent) => {
-  const {
-    cwd,
-    effects: {ui}
-  } = params
-
-  const tab = getSpacing(params.treeDepth)
-  // console.log(params.effects.tempDir)
-  const componentString = sanitizedComponent[0]
-  const variables = sanitizedComponent[1]
-  const options = sanitizedComponent[2]
-
-  const componentType = getComponentType(componentString)
-
-  ui.info(`${tab}  rendering`)
-  const resolvedComponentString =
-    componentType === URL_COMPONENT_TYPE
-      ? await async.result(resolveUrl(params, sanitizedComponent))
-      : componentString
-
-  const resolvedComponentType = getComponentType(resolvedComponentString)
-
-  let response
-  switch (resolvedComponentType) {
-    case PATH_COMPONENT_TYPE:
-    default:
-      response = await async.result(resolveUrl(params, sanitizedComponent))
-  }
-
-  const [err, result] = response
-  if (err) throw err
-
-  ui.info(`${tab}  rendered`)
-
-  return result
-}
-
-const getSpacing = (tab: number): string => new Array(tab).fill('    ').join('')
-
-const resolveComponent = params => async sanitizedComponent => {
-  const {cwd, effects} = params
-  const componentString = sanitizedComponent[0]
-  const tab = getSpacing(params.treeDepth)
-  effects.ui.info(`${tab}${componentString}`)
-  effects.ui.info(`${tab}  resolving`)
-
-  const componentType = getComponentType(componentString)
-
-  const resolvedComponentString =
-    componentType === URL_COMPONENT_TYPE
-      ? await async.result(resolveUrl(params, sanitizedComponent), true)
-      : componentString
-
-  effects.ui.info(`${tab}  resolved`)
-
-  return [resolvedComponentString, sanitizedComponent[1], sanitizedComponent[2]]
-}
-
-const sanitizeComponent = async component => {
-  return isString(component) ? [component] : component
-}
-export const esops2RunRecursive = async.extend(async params => {
-  const recurseOrRender = async resolvedComponent => {
-    const resolvedComponentString = resolvedComponent[0]
-    const [err, hasEsopsCompose] = await async.result(
-      pathHasEsopsCompose(resolvedComponentString)
-    )
-    if (hasEsopsCompose) {
-      params.effects.ui.info(
-        `${getSpacing(params.treeDepth)}  compose definition found`
-      )
-      params.effects.ui.info(` `)
-      await async.result(
-        esops2RunRecursive({
-          ...params,
-          esopsResolvedDepth,
-          cwd: resolvedComponentString,
-          treeDepth: params.treeDepth + 1
-        }),
-        true
-      )
-    } else {
-      await renderComponent(params, resolvedComponent)
-      params.effects.ui.info(` `)
-    }
-  }
-
+export const run = async.extend(async params => {
   const runComponent = async.pipe(
     sanitizeComponent,
     resolveComponent(params),
-    recurseOrRender
+    withEsopsRecursion(params, run)
   )
 
   const {
-    cwd,
+    parent,
     destination,
     effects: {ui}
   } = params
 
-  let {esopsResolvedDepth} = params
-  esopsResolvedDepth = esopsResolvedDepth || 0
-  esopsResolvedDepth++
-
-  const result = await async.result(findEsopsConfig(cwd), true)
+  const result = await async.result(findEsopsConfig(parent), true)
   const composeDefinition = getComposeDefinitionFromEsopsConfig(result)
   const series = convertSeriesItemsToParallel(composeDefinition)
 
@@ -162,6 +66,9 @@ export const esops2RunRecursive = async.extend(async params => {
         )
       )
     )
+    .then(() => {
+      return params
+    })
     .catch(throwError)
 })
 
@@ -170,14 +77,23 @@ const convertEsops1ToEsops2 = params => {
     return {
       ...params,
       treeDepth: 0,
+      root: params.cwd,
+      parent: params.cwd,
       destination: params.cwd
     }
   else return params
 }
 
+const createReport = async p => {
+  const {filesystem} = p.effects
+  console.log(await filesystem.listTreeSync(p.destination))
+}
+
 export const esops2 = async.pipe(
   convertEsops1ToEsops2,
-  esops2RunRecursive
+  run,
+  copyToDestination,
+  createReport
 )
 
 export default esops2

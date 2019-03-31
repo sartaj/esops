@@ -92,5 +92,9 @@ export const resolvePath = async (
   }
 }
 
-export const createResolver = () => resolvePath
+export const createResolver = () => ({
+  tryGitPath,
+  tryFSPath,
+  tryNodePath
+})
 export default resolvePath

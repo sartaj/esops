@@ -38,7 +38,7 @@ import async from '../helpers/async'
 import {filter, isArray, isString, throwError} from '../helpers/sync'
 import * as log from '../side-effects/console'
 import createFsDriver from '../side-effects/fs'
-import {resolvePath} from '../side-effects/fs/resolver'
+import resolvePath from '../side-effects/resolver'
 
 const fs = createFsDriver()
 

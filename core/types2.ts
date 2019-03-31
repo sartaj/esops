@@ -9,4 +9,5 @@ export type Esops = {
 export type Params = {
   cwd: string
   effects?: any
+  parent?: string
 }

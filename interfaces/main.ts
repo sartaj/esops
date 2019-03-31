@@ -6,7 +6,7 @@ import {Run} from '../core/types'
 import async from '../helpers/async'
 import {isString} from '../helpers/sync'
 import {extend} from '../helpers/sync'
-import {createFsDriver, log} from '../side-effects'
+import {createFsDriver, log, createResolver} from '../side-effects'
 import {
   findEsopsConfig,
   getComposeDefinitionFromEsopsConfig
@@ -33,6 +33,7 @@ const withSideEffects = extend(({logLevel}) => ({
   effects: {
     filesystem: createFsDriver(),
     ui: interactiveUi(logLevel),
+    resolver: createResolver(),
     error: {
       crash: log.crash
     }
