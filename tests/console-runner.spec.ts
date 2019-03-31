@@ -18,12 +18,12 @@ async function run() {
 
   logTitle('basic')
   await withTempDir(__dirname, MOCK_STACKS['basic'], async cwd => {
-    await esops({cwd})
+    await esops({destination: cwd})
   })
 
   logTitle('basic-gitignore')
   await withTempDir(__dirname, MOCK_STACKS['basic-ignore-files'], async cwd => {
-    await esops({cwd})
+    await esops({destination: cwd})
   })
 
   logTitle('basic-package-json')

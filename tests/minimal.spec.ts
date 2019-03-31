@@ -19,7 +19,7 @@ const describe = withSnapshots(__filename)
 
 describe('esops() minimal features', async assert => {
   await withTempDir(__dirname, MOCK_STACKS['basic'], async cwd => {
-    await esops({cwd})
+    await esops({destination: cwd})
 
     await assert({
       given: 'a minimal package with no extra files',
@@ -43,7 +43,7 @@ describe('esops() minimal features', async assert => {
   })
 
   await withTempDir(__dirname, MOCK_STACKS['basic-ignore-files'], async cwd => {
-    await esops({cwd})
+    await esops({destination: cwd})
 
     await assert({
       given: 'an included .gitignore',
@@ -53,7 +53,7 @@ describe('esops() minimal features', async assert => {
   })
 
   await withTempDir(__dirname, MOCK_STACKS['basic-ignore-files'], async cwd => {
-    await esops({cwd})
+    await esops({destination: cwd})
 
     await assert({
       given: 'an included .npmignore',

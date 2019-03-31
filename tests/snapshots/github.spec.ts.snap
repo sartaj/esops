@@ -367,15 +367,12 @@ $RECYCLE.BIN/
 # End of https://www.gitignore.io/api/node,linux,macos,windows,reactnative
 
 ### ESOPS AUTO GENERATED BEGIN ###
-/.gitignore
 /.node-dev.json
 /.nycrc
 /.prettierrc
-/.vscode
 /.vscode/extensions.json
 /.vscode/settings.json
 /package.json
-/source
 /source/readme.md
 /tsconfig.json
 ### ESOPS AUTO GENERATED END ###

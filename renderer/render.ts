@@ -92,7 +92,9 @@ export const copyToDestination = async.extend(async params => {
   const {effects, destination} = params
   const {filesystem} = effects
   const renderPrepFolder = await filesystem.appCache.getRenderPrepFolder()
-  const filesToCopy = await filesystem.listTreeSync(renderPrepFolder)
+  const filesToCopy = await filesystem
+    .listTreeSync(renderPrepFolder)
+    .filter(filePath => !filesystem.isDirectory.sync(filePath))
 
   const copyManifest = filesToCopy.map(filePath => {
     const relativePath = filesystem.path.relative(renderPrepFolder, filePath)
@@ -103,7 +105,13 @@ export const copyToDestination = async.extend(async params => {
     }
   })
 
-  updateGitIgnore(filesystem)(renderPrepFolder)(copyManifest)
+  const copyManifestForIgnore = copyManifest.filter(({relativePath}) => {
+    const pathName = filesystem.path.basename(relativePath)
+    return pathName !== '.gitignore' && pathName !== '.npmignore'
+  })
+
+  updateGitIgnore(filesystem)(renderPrepFolder)(copyManifestForIgnore)
+  updateNpmIgnore(filesystem)(renderPrepFolder)(copyManifestForIgnore)
 
   copyManifest.forEach(({fromPath, toPath}) => {
     filesystem.forceCopy(fromPath, toPath)
