@@ -72,21 +72,22 @@ export const run = async.extend(async params => {
     .catch(throwError)
 })
 
-const convertEsops1ToEsops2 = params => {
-  if (!params.destination && params.cwd)
-    return {
-      ...params,
-      treeDepth: 0,
-      root: params.cwd,
-      parent: params.cwd,
-      destination: params.cwd
-    }
-  else return params
+const convertEsops1ToEsops2 = async params => {
+  const destination = params.destination || params.cwd
+  const root = params.root || destination
+
+  return {
+    ...params,
+    treeDepth: 0,
+    root,
+    parent: root,
+    destination
+  }
 }
 
 const createReport = async p => {
-  const {filesystem} = p.effects
-  console.log(await filesystem.listTreeSync(p.destination))
+  const {filesystem, ui} = p.effects
+  ui.info(await filesystem.listTreeSync(p.destination))
 }
 
 export const esops2 = async.pipe(

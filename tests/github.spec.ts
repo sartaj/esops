@@ -20,15 +20,20 @@ const describe = withSnapshots(__filename)
 describe('esops() github features', async assert => {
   await withTempDir(__dirname, MOCK_STACKS['github-url'], async cwd => {
     // prompts.inject([false])
-    await esops({cwd, logLevel: 'trace'})
+    await esops({
+      destination: cwd,
+      logLevel: 'error'
+    })
 
-    // await new Promise((resolve, reject) => {
-    //   setTimeout(resolve, 5000)
-    // })
-    // await assert({
-    //   given: 'a minimal package with no extra files',
-    //   should: 'generate basic template in cwd',
-    //   snap: getSortedFilePaths(cwd)
-    // })
+    await assert({
+      given: 'a github path that composes another github path',
+      should: 'generate appropriate files',
+      snap: getSortedFilePaths(cwd)
+    })
+    await assert({
+      given: 'a .gitignore',
+      should: 'create merged .gitignore with manifest',
+      snap: getFileContents(path.join(cwd, '.gitignore'))
+    })
   })
 })

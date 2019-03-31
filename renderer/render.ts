@@ -3,26 +3,32 @@
  */
 
 // [How to exclude file only from root folder in Git](https://stackoverflow.com/a/3637678)
-// const addSlashForGitIgnore = relativePath => `/${relativePath}`
+const addSlashForGitIgnore = relativePath => `/${relativePath}`
 
-// export const updateIgnoreFile = file => generatorManifest => {
-//   const cwd = generatorManifest[0].cwd
-//   const ignoreFile = path.join(cwd, file)
-//   if (fs.existsSync(ignoreFile)) {
-//     const ignorePaths = generatorManifest
-//       .map(({relativePath}) => relativePath)
-//       .map(addSlashForGitIgnore)
-//       .join('\n')
-//     const startLine = '### ESOPS AUTO GENERATED BEGIN ###'
-//     const endLine = '### ESOPS AUTO GENERATED END ###'
-//     fs.updateGeneratedTextFs(startLine, endLine, ignorePaths, ignoreFile)
-//     return true
-//   } else return false
-// }
+export const updateIgnoreFile = ignoreFilename => filesystem => destination => copyManifest => {
+  const ignoreFile = filesystem.path.join(destination, ignoreFilename)
+  if (filesystem.existsSync(ignoreFile)) {
+    const ignorePaths = copyManifest
+      .map(({relativePath}) => relativePath)
+      .map(addSlashForGitIgnore)
+      .join('\n')
 
-// export const updateGitIgnore = updateIgnoreFile('.gitignore')
+    const startLine = '### ESOPS AUTO GENERATED BEGIN ###'
+    const endLine = '### ESOPS AUTO GENERATED END ###'
+    filesystem.updateGeneratedTextFs(
+      startLine,
+      endLine,
+      ignorePaths,
+      ignoreFile
+    )
+    return true
+  } else return false
+}
 
-// export const updateNpmIgnore = updateIgnoreFile('.npmignore')
+export const updateGitIgnore = updateIgnoreFile('.gitignore')
+
+export const updateNpmIgnore = updateIgnoreFile('.npmignore')
+
 import async from '../helpers/async'
 import {getComponentType} from '../parser/parser2'
 
@@ -48,9 +54,7 @@ const renderPath = async (params, component) => {
   filesInComponent.forEach(from => {
     const fromRelativePath = filesystem.path.relative(localComponentPath, from)
     const to = filesystem.path.join(renderPrepPath, fromRelativePath)
-    // console.log(fromRelativePath)
     filesystem.forceCopy(from, to)
-    // copy file to renderPrep directory
   })
   // ListTreeSync
   // Loop Through Each
@@ -87,11 +91,23 @@ export const renderComponent = async (params, sanitizedComponent) => {
 export const copyToDestination = async.extend(async params => {
   const {effects, destination} = params
   const {filesystem} = effects
-  const fromFolder = await filesystem.appCache.getRenderPrepFolder()
-  const filesToCopy = await filesystem.listTreeSync(fromFolder)
-  filesToCopy.forEach(from => {
-    const fromRelativePath = filesystem.path.relative(fromFolder, from)
-    const to = filesystem.path.join(destination, fromRelativePath)
-    filesystem.forceCopy(from, to)
+  const renderPrepFolder = await filesystem.appCache.getRenderPrepFolder()
+  const filesToCopy = await filesystem.listTreeSync(renderPrepFolder)
+
+  const copyManifest = filesToCopy.map(filePath => {
+    const relativePath = filesystem.path.relative(renderPrepFolder, filePath)
+    return {
+      relativePath,
+      fromPath: filePath,
+      toPath: filesystem.path.join(destination, relativePath)
+    }
   })
+
+  updateGitIgnore(filesystem)(renderPrepFolder)(copyManifest)
+
+  copyManifest.forEach(({fromPath, toPath}) => {
+    filesystem.forceCopy(fromPath, toPath)
+  })
+
+  return {copyManifest}
 })

@@ -45,6 +45,7 @@ const withSideEffects = extend(({logLevel}) => ({
  */
 
 const isProbablyEsops2 = async params => {
+  if (params.destination) return true
   let probablyEsops2 = false
   try {
     const {cwd} = params
