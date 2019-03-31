@@ -1,0 +1,83 @@
+module.exports[`Describe esops() node+npm features | Given an included .npmignore: should have updated .npmignore with generated file paths`] = `
+
+/src/**
+### ESOPS AUTO GENERATED BEGIN ###
+/.vscode/settings.json
+/src/stores/stores-architecture.md
+/tsconfig.json
+### ESOPS AUTO GENERATED END ###
+`
+
+module.exports[`Describe esops() node+npm features | Given a minimal package with package.json: should generate basic template in cwd`] = `
+
+[
+  ".gitignore",
+  ".vscode",
+  ".vscode/settings.json",
+  "infrastructure",
+  "infrastructure/.vscode",
+  "infrastructure/.vscode/settings.json",
+  "infrastructure/src",
+  "infrastructure/src/stores",
+  "infrastructure/src/stores/stores-architecture.md",
+  "infrastructure/tsconfig.json",
+  "package.json",
+  "src",
+  "src/stores",
+  "src/stores/stores-architecture.md",
+  "tsconfig.json"
+]`
+
+module.exports[`Describe esops() node+npm features | Given an included .gitignore: should have updated .gitignore with generated paths`] = `
+
+
+### ESOPS AUTO GENERATED BEGIN ###
+/.vscode/settings.json
+/src/stores/stores-architecture.md
+/tsconfig.json
+### ESOPS AUTO GENERATED END ###
+`
+
+module.exports[`Describe esops() node+npm features | Given a minimal package.json: should have contents in package.json`] = `
+
+{
+  "name": "esops-test",
+  "esops": [
+    "./infrastructure"
+  ]
+}`
+
+module.exports[`Describe esops() node+npm features | Given minimal stack from node module: should generate basic template in cwd from node_module`] = `
+
+[
+  ".gitignore",
+  ".vscode",
+  ".vscode/settings.json",
+  "infrastructure",
+  "infrastructure/basic",
+  "infrastructure/basic/.vscode",
+  "infrastructure/basic/.vscode/settings.json",
+  "infrastructure/basic/src",
+  "infrastructure/basic/src/stores",
+  "infrastructure/basic/src/stores/stores-architecture.md",
+  "infrastructure/basic/tsconfig.json",
+  "infrastructure/package.json",
+  "node_modules",
+  "node_modules/@test",
+  "node_modules/@test/infrastructure",
+  "node_modules/@test/infrastructure/basic",
+  "node_modules/@test/infrastructure/basic/.vscode",
+  "node_modules/@test/infrastructure/basic/.vscode/settings.json",
+  "node_modules/@test/infrastructure/basic/src",
+  "node_modules/@test/infrastructure/basic/src/stores",
+  "node_modules/@test/infrastructure/basic/src/stores/stores-architecture.md",
+  "node_modules/@test/infrastructure/basic/tsconfig.json",
+  "node_modules/@test/infrastructure/package.json",
+  "package-lock.json",
+  "package.json",
+  "src",
+  "src/stores",
+  "src/stores/stores-architecture.md",
+  "tsconfig.json"
+]`
+

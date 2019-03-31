@@ -1,0 +1,21 @@
+module.exports[`Describe esops1() override features | Given no to override: should not override files`] = `
+
+{
+  "has-been-overwritten": false
+}
+`
+
+module.exports[`Describe esops1() override features | Given yes to override: should override files`] = `
+
+{
+  "has-been-overwritten": true
+}
+`
+
+module.exports[`Describe esops1() override features | Given canceling prompt to override: should not override files`] = `
+
+{
+  "has-been-overwritten": false
+}
+`
+
