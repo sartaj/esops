@@ -10,15 +10,20 @@ marked.setOptions({
 
 export const mdString = marked
 
-export const md = string => {
+export const md = (string, logLevel?) => {
   const mdString = marked(string).slice(0, -2) // slice is to remove created new-lines created by marked.
 
-  announce(mdString, {
-    align: 'left',
-    float: 'left',
-    margin: 1,
-    padding: 1
-  })
+  announce(
+    mdString,
+    {
+      align: 'left',
+      float: 'left',
+      margin: 1,
+      padding: 1
+    },
+    'info',
+    logLevel
+  )
 }
 
 export const mdFile = async path => {

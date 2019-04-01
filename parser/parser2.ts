@@ -1,13 +1,10 @@
-import {Params} from '../core/types2'
-import {CWDNotDefined, NoPathError} from '../core/messages'
-import {pipe} from 'ramda'
-import async from '../helpers/async'
-import {isString, throwError} from '../helpers/sync'
+import {isNil, pipe} from 'ramda'
 
-import {
-  findEsopsConfig,
-  getComposeDefinitionFromEsopsConfig
-} from '../parser/parse'
+import {CWDNotDefined, NoPathError} from '../core/messages'
+import {Params} from '../core/types2'
+import async from '../helpers/async'
+import {isArray, isString} from '../helpers/sync'
+import {findEsopsConfig} from '../parser/parse'
 
 const URL_COMPONENT_TYPE = 'URL'
 const PATH_COMPONENT_TYPE = 'PATH'
@@ -115,3 +112,15 @@ export const resolveComponent = params => async sanitizedComponent => {
     throw params.effects.error.crash()
   }
 }
+
+export const convertSeriesItemsToParallel = infrastructure =>
+  infrastructure.map(item => [item]) // TODO: Allow alternative inputs for infrastructure
+
+export const getComposeDefinitionFromEsopsConfig = result =>
+  isNil(result)
+    ? null
+    : isString(result)
+    ? [result]
+    : isArray(result)
+    ? result
+    : result.compose

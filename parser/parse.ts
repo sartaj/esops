@@ -243,15 +243,3 @@ export const parsedToManifest = async ({
   opts,
   cwd
 }): Promise<GeneratorManifest> => parsedToGeneratorManifest(opts, {cwd})
-
-export const convertSeriesItemsToParallel = infrastructure =>
-  infrastructure.map(item => [item]) // TODO: Allow alternative inputs for infrastructure
-
-export const getComposeDefinitionFromEsopsConfig = result =>
-  isNil(result)
-    ? null
-    : isString(result)
-    ? [result]
-    : isArray(result)
-    ? result
-    : result.compose
