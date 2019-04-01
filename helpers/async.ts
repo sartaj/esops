@@ -4,7 +4,7 @@
 import * as pipe from 'promised-pipe'
 import * as result from 'await-result'
 import * as async from 'async'
-
+import {reduce} from 'ramda'
 export {pipe, result}
 
 const promiseFromNodeCallback = cb => (...args) => {
@@ -19,12 +19,25 @@ const promiseFromNodeCallback = cb => (...args) => {
   })
 }
 
+export const seriesPromise = reduce(
+  (promiseChain: Promise<any[]>, currentTask: () => Promise<any>) => {
+    return promiseChain.then(chainResults =>
+      currentTask().then(currentResult => [...chainResults, currentResult])
+    )
+  },
+  Promise.resolve([])
+)
+
+type AsyncFn = () => Promise<any>
+export const parallelPromise = (parallel: AsyncFn[]) =>
+  Promise.all(parallel.map((fn: AsyncFn) => fn()))
+
 export const fromNodeCallback = cb => async (...args) =>
   result(promiseFromNodeCallback(cb)(...args))
 
-export const series = seriesArr =>
+export const series = <T>(seriesArr: Promise<T>): Promise<T> =>
   new Promise((resolve, reject) => {
-    async.series(seriesArr, (err, result) => {
+    async.series(seriesArr, (err, result: T) => {
       if (err) reject(err)
       else resolve(result)
     })
@@ -45,5 +58,7 @@ export default {
   extend,
   fromNodeCallback,
   series,
-  parallel
+  parallel,
+  parallelPromise,
+  seriesPromise
 }

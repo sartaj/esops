@@ -51,16 +51,40 @@ const renderPath = async (params, component) => {
   const filesInComponent = filesystem.listTreeSync(localComponentPath)
   const renderPrepPath = await filesystem.appCache.getRenderPrepFolder()
 
-  filesInComponent.forEach(from => {
-    const fromRelativePath = filesystem.path.relative(localComponentPath, from)
-    const to = filesystem.path.join(renderPrepPath, fromRelativePath)
-    filesystem.forceCopy(from, to)
-  })
+  type Actions = {from: string; to: string; fromRelativePath: string}
+
+  const actions: Actions[] = await async.seriesPromise(
+    filesInComponent.map(from => async () => {
+      const fromRelativePath = filesystem.path.relative(
+        localComponentPath,
+        from
+      )
+      const to = filesystem.path.join(renderPrepPath, fromRelativePath)
+      return {from, to, fromRelativePath}
+    })
+  )
+
+  const renderReport = await async.seriesPromise(
+    actions.map(({from, to}) => {
+      return async () => {
+        filesystem.forceCopy(from, to)
+        return {
+          success: true
+        }
+      }
+    })
+  )
+
+  // filesInComponent.forEach(from => {
+  //   const fromRelativePath = filesystem.path.relative(localComponentPath, from)
+  //   const to = filesystem.path.join(renderPrepPath, fromRelativePath)
+  //   filesystem.forceCopy(from, to)
+  // })
   // ListTreeSync
   // Loop Through Each
   //   Copy | CopyAndRender | CopyAndMerge
 
-  return ' '
+  return renderReport
 }
 
 export const renderComponent = async (params, sanitizedComponent) => {

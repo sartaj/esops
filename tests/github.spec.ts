@@ -22,7 +22,7 @@ describe('esops() github features', async assert => {
     // prompts.inject([false])
     await esops({
       destination: cwd,
-      logLevel: 'error'
+      logLevel: 'info'
     })
 
     await assert({
