@@ -65,21 +65,14 @@ const renderPath = async (params, component) => {
   )
 
   const renderReport = await async.seriesPromise(
-    actions.map(({from, to}) => {
-      return async () => {
-        filesystem.forceCopy(from, to)
-        return {
-          success: true
-        }
+    actions.map(({from, to}) => async () => {
+      filesystem.forceCopy(from, to)
+      return {
+        success: true
       }
     })
   )
 
-  // filesInComponent.forEach(from => {
-  //   const fromRelativePath = filesystem.path.relative(localComponentPath, from)
-  //   const to = filesystem.path.join(renderPrepPath, fromRelativePath)
-  //   filesystem.forceCopy(from, to)
-  // })
   // ListTreeSync
   // Loop Through Each
   //   Copy | CopyAndRender | CopyAndMerge

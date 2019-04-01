@@ -32,35 +32,35 @@ describe('esops() node+npm features', async assert => {
     }
   )
 
-  await withTempDir(__dirname, MOCK_STACKS['basic-package-json'], async cwd => {
-    await esops({cwd})
+  //   await withTempDir(__dirname, MOCK_STACKS['basic-package-json'], async cwd => {
+  //     await esops({cwd})
 
-    await assert({
-      given: 'a minimal package with package.json',
-      should: 'generate basic template in cwd',
-      snap: getSortedFilePaths(cwd)
-    })
+  //     await assert({
+  //       given: 'a minimal package with package.json',
+  //       should: 'generate basic template in cwd',
+  //       snap: getSortedFilePaths(cwd)
+  //     })
 
-    await assert({
-      given: 'an included .gitignore',
-      should: 'have updated .gitignore with generated paths',
-      snap: getFileContents(path.join(cwd, '.gitignore'))
-    })
+  //     await assert({
+  //       given: 'an included .gitignore',
+  //       should: 'have updated .gitignore with generated paths',
+  //       snap: getFileContents(path.join(cwd, '.gitignore'))
+  //     })
 
-    await assert({
-      given: 'a minimal package.json',
-      should: 'have contents in package.json',
-      snap: getJsonContents(path.join(cwd, 'package.json'))
-    })
-  })
+  //     await assert({
+  //       given: 'a minimal package.json',
+  //       should: 'have contents in package.json',
+  //       snap: getJsonContents(path.join(cwd, 'package.json'))
+  //     })
+  //   })
 
-  await withTempDir(__dirname, MOCK_STACKS['basic-node-module'], async cwd => {
-    await spawn(`npm`, ['install'], {cwd})
-    await esops({cwd})
-    await assert({
-      given: 'minimal stack from node module',
-      should: 'generate basic template in cwd from node_module',
-      snap: getSortedFilePaths(cwd)
-    })
-  })
+  //   await withTempDir(__dirname, MOCK_STACKS['basic-node-module'], async cwd => {
+  //     await spawn(`npm`, ['install'], {cwd})
+  //     await esops({cwd})
+  //     await assert({
+  //       given: 'minimal stack from node module',
+  //       should: 'generate basic template in cwd from node_module',
+  //       snap: getSortedFilePaths(cwd)
+  //     })
+  //   })
 })
