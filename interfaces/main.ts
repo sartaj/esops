@@ -3,11 +3,11 @@
  */
 
 import {Params} from '../core/types2'
-import async from '../helpers/async'
-import {isString} from '../helpers/sync'
-import {extend} from '../helpers/sync'
+import async from '../utilities/async'
+import {isString} from '../utilities/sync'
+import {extend} from '../utilities/sync'
 import {createFsDriver, log, createResolver} from '../side-effects'
-import {findEsopsConfig} from '../parser/parse'
+import {findEsopsConfig} from '../modules/parse'
 import {getComposeDefinitionFromEsopsConfig} from '../core/lenses'
 
 import esops1 from '../run/esops1'

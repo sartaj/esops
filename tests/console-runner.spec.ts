@@ -5,7 +5,7 @@
 import * as spawn from 'await-spawn'
 import {withTempDir} from './test-utils/withTempDir'
 
-import {MOCK_STACKS} from '../core/examples'
+import {MOCK_STACKS} from './examples'
 import chalk from 'chalk'
 
 function logTitle(title) {

@@ -1,15 +1,13 @@
-import async from '../helpers/async'
-import {throwError} from '../helpers/sync'
-import {findEsopsConfig} from '../parser/parse'
-import {hasEsopsCompose, resolveComponent} from '../parser/parser2'
-
 import {
   getComposeDefinitionFromEsopsConfig,
   sanitizeComponent,
   sanitizeCompose
 } from '../core/lenses'
-
-import {copyToDestination, renderComponent} from '../renderer/render'
+import {findEsopsConfig} from '../modules/parse'
+import {hasEsopsCompose, resolveComponent} from '../modules/parser2'
+import {copyToDestination, renderComponent} from '../modules/render'
+import async from '../utilities/async'
+import {throwError} from '../utilities/sync'
 
 export const walk = async.extend(async params => {
   const {ui} = params.effects

@@ -1,6 +1,6 @@
 import {is, isNil} from 'ramda'
 
-import {isArray, isObject, isString} from '../helpers/sync'
+import {isArray, isObject, isString} from '../utilities/sync'
 import {
   EFFECT_COMPONENT_TYPE,
   FILESYSTEM_EFFECT_PREFIX,

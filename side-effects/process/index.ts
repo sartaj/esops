@@ -1,4 +1,4 @@
-import async from '../../helpers/async'
+import async from '../../utilities/async'
 import {spawnWithDebug} from './spawn'
 
 const asyncSpawn = async.fromNodeCallback(spawnWithDebug)

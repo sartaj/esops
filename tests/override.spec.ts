@@ -13,7 +13,7 @@ import {
 } from './test-utils/fs-utils'
 
 import esops from '../interfaces/main'
-import {MOCK_STACKS} from '../core/examples'
+import {MOCK_STACKS} from './examples'
 
 const describe = withSnapshots(__filename)
 

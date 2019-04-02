@@ -8,8 +8,8 @@ import {
 } from '../core/constants'
 import {CWDNotDefined, NoPathError} from '../core/messages'
 import {Params} from '../core/types2'
-import async from '../helpers/async'
-import {findEsopsConfig} from '../parser/parse'
+import async from '../utilities/async'
+import {findEsopsConfig} from './parse'
 import {
   getComposeDefinitionFromEsopsConfig,
   getComponentType

@@ -1,5 +1,5 @@
 import {PATH_COMPONENT_TYPE} from '../core/constants'
-import async from '../helpers/async'
+import async from '../utilities/async'
 import {getComponentType} from '../core/lenses'
 
 /**

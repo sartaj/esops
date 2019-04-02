@@ -2,7 +2,7 @@
 import {cond, pipe, when} from 'ramda'
 
 import {BadArgumentsMessage, CleanGuide, EsopsHowTo} from '../core/messages'
-import {Conditional, defaultTo} from '../helpers/sync'
+import {Conditional, defaultTo} from '../utilities/sync'
 import {
   command,
   minimist,
