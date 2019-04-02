@@ -13,7 +13,7 @@ import {findEsopsConfig} from '../parser/parse'
 import {
   getComposeDefinitionFromEsopsConfig,
   getComponentType
-} from '../core/helpers'
+} from '../core/lenses'
 
 /**
  * ## Utilties

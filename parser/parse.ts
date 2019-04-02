@@ -17,7 +17,7 @@ import * as path from 'path'
 import {isNil, pipe} from 'ramda'
 
 import {PREFIX, TOGGLE_FILES} from '../core/constants'
-import {convertAllOptionsToHaveProps, isValidOpts} from '../core/helpers'
+import {convertAllOptionsToHaveProps, isValidOpts} from '../core/lenses'
 import {
   ConfigNotFound,
   CWDNotDefined,

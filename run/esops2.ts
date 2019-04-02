@@ -7,7 +7,7 @@ import {
   getComposeDefinitionFromEsopsConfig,
   sanitizeComponent,
   sanitizeCompose
-} from '../core/helpers'
+} from '../core/lenses'
 
 import {copyToDestination, renderComponent} from '../renderer/render'
 

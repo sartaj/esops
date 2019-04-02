@@ -1,6 +1,6 @@
 import {PATH_COMPONENT_TYPE} from '../core/constants'
 import async from '../helpers/async'
-import {getComponentType} from '../core/helpers'
+import {getComponentType} from '../core/lenses'
 
 /**
  * Add To Ignore Files

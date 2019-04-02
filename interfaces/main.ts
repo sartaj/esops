@@ -8,7 +8,7 @@ import {isString} from '../helpers/sync'
 import {extend} from '../helpers/sync'
 import {createFsDriver, log, createResolver} from '../side-effects'
 import {findEsopsConfig} from '../parser/parse'
-import {getComposeDefinitionFromEsopsConfig} from '../core/helpers'
+import {getComposeDefinitionFromEsopsConfig} from '../core/lenses'
 
 import esops1 from '../run/esops1'
 import esops2 from '../run/esops2'
