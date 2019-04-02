@@ -2,13 +2,13 @@
  * Main Usage
  */
 
-import {Run} from '../core/types'
+import {Params} from '../core/types2'
 import async from '../helpers/async'
 import {isString} from '../helpers/sync'
 import {extend} from '../helpers/sync'
 import {createFsDriver, log, createResolver} from '../side-effects'
 import {findEsopsConfig} from '../parser/parse'
-import {getComposeDefinitionFromEsopsConfig} from '../parser/parser2'
+import {getComposeDefinitionFromEsopsConfig} from '../core/helpers'
 
 import esops1 from '../run/esops1'
 import esops2 from '../run/esops2'
@@ -67,7 +67,7 @@ const isProbablyEsops2 = async params => {
  * Run
  */
 
-export const esops: Run = params =>
+export const esops = (params: Params) =>
   async
     .pipe(
       withSideEffects,

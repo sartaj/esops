@@ -1,6 +1,23 @@
-import {is} from 'ramda'
-import {Option, WithProps, Stacks, OptionsWithProps} from './types'
-import {isString} from '../helpers/sync'
+import {is, isNil} from 'ramda'
+
+import {isArray, isObject, isString} from '../helpers/sync'
+import {
+  EFFECT_COMPONENT_TYPE,
+  FILESYSTEM_EFFECT_PREFIX,
+  GIT_URL_PREFIX,
+  GITHUB_PREFIX,
+  LOCAL_ABSOLUTE_PATH_PREFIX,
+  LOCAL_RELATIVE_PATH_PREFIX,
+  PATH_COMPONENT_TYPE,
+  SHELL_EFFECT_PREFIX,
+  URL_COMPONENT_TYPE
+} from './constants'
+import {Option, OptionsWithProps, Stacks, WithProps} from './types'
+import {Compose} from './types2'
+
+/**
+ * ## esops1
+ */
 
 export const isWithProps = opt =>
   Array.isArray(opt) &&
@@ -23,3 +40,58 @@ export const convertAllOptionsToHaveProps = (opts: Stacks): OptionsWithProps =>
     : opts.map((opt: Option) => (isString(opt) ? createDefaultOpt(opt) : opt))
 
 export const isValidOpts = opts => is(String, opts) || is(Array, opts)
+
+/**
+ * ## esops2
+ */
+
+export const getCommand = (composeDefinition: Compose) => composeDefinition[0]
+
+export const getVariables = (composeDefinition: Compose) => composeDefinition[1]
+
+export const getOptions = (composeDefinition: Compose) => composeDefinition[2]
+
+export const getComposeDefinitionFromEsopsConfig = result =>
+  isNil(result)
+    ? null
+    : isString(result)
+    ? [result]
+    : isArray(result)
+    ? result
+    : result.compose
+
+export const sanitizeCompose = (composeDefinition: Compose) =>
+  isString(composeDefinition)
+    ? [[composeDefinition, {}, {}]]
+    : isString(getCommand(composeDefinition)) && composeDefinition.length === 1
+    ? [[composeDefinition[0], {}, {}]]
+    : isArray(composeDefinition) &&
+      isString(getCommand(composeDefinition)) &&
+      isObject(getVariables(composeDefinition))
+    ? [composeDefinition]
+    : composeDefinition
+
+export const sanitizeComponent = async component =>
+  isString(component) ? [component] : component
+
+const isGithub = componentString => componentString.startsWith(GITHUB_PREFIX)
+
+const isGitUrl = componentString => componentString.startsWith(GIT_URL_PREFIX)
+
+const isLocalPath = componentString =>
+  componentString.startsWith(LOCAL_RELATIVE_PATH_PREFIX) ||
+  componentString.startsWith(LOCAL_ABSOLUTE_PATH_PREFIX)
+
+const isEffect = componentString =>
+  componentString.startsWith(SHELL_EFFECT_PREFIX) ||
+  componentString.startsWith(FILESYSTEM_EFFECT_PREFIX)
+
+export const getComponentType = (componentString: string) => {
+  return isGithub(componentString) || isGitUrl(componentString)
+    ? URL_COMPONENT_TYPE
+    : isLocalPath(componentString)
+    ? PATH_COMPONENT_TYPE
+    : isEffect(componentString)
+    ? EFFECT_COMPONENT_TYPE
+    : new Error('Not a component type')
+}

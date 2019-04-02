@@ -1,23 +1,23 @@
-import {isNil, pipe} from 'ramda'
+import {pipe} from 'ramda'
 
+import {
+  GITHUB_PREFIX,
+  NODE_PREFIX,
+  PATH_COMPONENT_TYPE,
+  URL_COMPONENT_TYPE
+} from '../core/constants'
 import {CWDNotDefined, NoPathError} from '../core/messages'
 import {Params} from '../core/types2'
 import async from '../helpers/async'
-import {isArray, isString} from '../helpers/sync'
 import {findEsopsConfig} from '../parser/parse'
+import {
+  getComposeDefinitionFromEsopsConfig,
+  getComponentType
+} from '../core/helpers'
 
-const URL_COMPONENT_TYPE = 'URL'
-const PATH_COMPONENT_TYPE = 'PATH'
-
-const NODE_PREFIX = 'node:'
-const GITHUB_PREFIX = 'github:'
-
-export const getComponentType = (componentString: string) => {
-  return (
-    (componentString.startsWith('github:') && URL_COMPONENT_TYPE) ||
-    PATH_COMPONENT_TYPE
-  )
-}
+/**
+ * ## Utilties
+ */
 
 const getGitInfoFromGithubPath = pipe(
   str => str.substr(GITHUB_PREFIX.length, str.length - 1),
@@ -28,7 +28,11 @@ const getGitInfoFromGithubPath = pipe(
   })
 )
 
-export const parseComponent = async (
+/**
+ * ## Resolvers
+ */
+
+export const parseComponentString = async (
   sanitizedComponent,
   {
     parent,
@@ -64,9 +68,6 @@ export const parseComponent = async (
   }
 }
 
-export const getSpacing = (tab: number): string =>
-  new Array(tab).fill('    ').join('')
-
 export const hasEsopsCompose = async resolvedComponent => {
   const [resolvedComponentString, variables, options] = resolvedComponent
   const nextEsopsConfig = await async.result(
@@ -81,27 +82,28 @@ export const hasEsopsCompose = async resolvedComponent => {
   return isDirectoryWithComposeDefinition
 }
 
-export const sanitizeComponent = async component => {
-  return isString(component) ? [component] : component
-}
-
 export const resolveComponent = params => async sanitizedComponent => {
   try {
-    const {effects} = params
+    const {
+      effects: {ui}
+    } = params
     const componentString = sanitizedComponent[0]
-    const tab = getSpacing(params.treeDepth)
-    effects.ui.info(`${tab}${componentString}`)
-    effects.ui.info(`${tab}  resolving`)
+    const tab = ui.getTabs(params.treeDepth)
+    ui.info(`${tab}${componentString}`)
+    ui.info(`${tab}  resolving`)
 
     const componentType = getComponentType(componentString)
 
     const resolvedComponentString =
       componentType === URL_COMPONENT_TYPE ||
       componentType === PATH_COMPONENT_TYPE
-        ? await async.result(parseComponent(sanitizedComponent, params), true)
+        ? await async.result(
+            parseComponentString(sanitizedComponent, params),
+            true
+          )
         : componentString
 
-    effects.ui.info(`${tab}  resolved`)
+    ui.info(`${tab}  resolved`)
 
     return [
       resolvedComponentString,
@@ -112,15 +114,3 @@ export const resolveComponent = params => async sanitizedComponent => {
     throw params.effects.error.crash()
   }
 }
-
-export const convertSeriesItemsToParallel = infrastructure =>
-  infrastructure.map(item => [item]) // TODO: Allow alternative inputs for infrastructure
-
-export const getComposeDefinitionFromEsopsConfig = result =>
-  isNil(result)
-    ? null
-    : isString(result)
-    ? [result]
-    : isArray(result)
-    ? result
-    : result.compose

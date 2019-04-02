@@ -1,29 +1,32 @@
 import async from '../helpers/async'
 import {throwError} from '../helpers/sync'
-import {map, pipe} from 'ramda'
 import {findEsopsConfig} from '../parser/parse'
+import {hasEsopsCompose, resolveComponent} from '../parser/parser2'
+
 import {
-  getSpacing,
-  convertSeriesItemsToParallel,
   getComposeDefinitionFromEsopsConfig,
-  hasEsopsCompose,
-  resolveComponent,
-  sanitizeComponent
-} from '../parser/parser2'
+  sanitizeComponent,
+  sanitizeCompose
+} from '../core/helpers'
+
 import {copyToDestination, renderComponent} from '../renderer/render'
 
 export const walk = async.extend(async params => {
-  const renderOrRunRecursive = async resolvedComponent => {
+  const {ui} = params.effects
+  const renderOrRunRecursive = async composeDefinition => {
+    const resolvedComponent = await async.pipe(
+      sanitizeComponent,
+      resolveComponent(params)
+    )(composeDefinition)
+
     const componentIsALocalPathWithEsopsCompose = await async.result(
       hasEsopsCompose(resolvedComponent),
       true
     )
 
     if (componentIsALocalPathWithEsopsCompose) {
-      params.effects.ui.info(
-        `${getSpacing(params.treeDepth)}  compose definition found`
-      )
-      params.effects.ui.info(` `)
+      ui.info(`${ui.getTabs(params.treeDepth)}  compose definition found`)
+      ui.info(` `)
       await async.result(
         walk({
           ...params,
@@ -34,33 +37,20 @@ export const walk = async.extend(async params => {
       )
     } else {
       await renderComponent(params, resolvedComponent)
-      params.effects.ui.info(` `)
+      ui.info(` `)
     }
   }
-
-  const runComponent = async.pipe(
-    sanitizeComponent,
-    resolveComponent(params),
-    renderOrRunRecursive
-  )
-
-  const runParallel = pipe(
-    map(component => async () => runComponent(component)),
-    runnerFunc => async () => async.parallel(runnerFunc)
-  )
 
   const runSeries = async.pipe(
     findEsopsConfig,
     getComposeDefinitionFromEsopsConfig,
-    convertSeriesItemsToParallel,
-    map(runParallel),
+    sanitizeCompose,
+    async.mapToAsync(renderOrRunRecursive),
     async.series,
-    () => params
+    results => ({...params, results})
   )
 
-  const {parent} = params
-
-  return runSeries(parent).catch(throwError)
+  return runSeries(params.parent).catch(throwError)
 })
 
 const withDefaultParams = async params => {

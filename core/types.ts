@@ -114,10 +114,11 @@ export type EsopsConfigFile =
   | '.esops-overwrite'
 
 export type Methods =
-  | 'RENDER_THEN_MERGE_JSON'
+  | 'COPY'
   | 'MERGE_JSON'
   | 'MERGE_FILE'
-  | 'RENDER_THEN_MERGE_FILE'
+  | 'RENDER'
+  | 'RENDER_THEN_MERGE'
 
 export type Copies = {
   cwd: Path
@@ -164,7 +165,7 @@ export interface Generator {
  * ## Run
  */
 
-type RunOpts = {
+type Params = {
   cwd?: CWD
   destination?: string
   root?: string
@@ -173,4 +174,4 @@ type RunOpts = {
   components?: Stacks
   logLevel?: string
 }
-export type Run = (opts: RunOpts) => Promise<void>
+export type Run = (params: Params) => Promise<void>

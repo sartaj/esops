@@ -4,6 +4,8 @@ export const isString = (arg: any): arg is string => is(String)(arg)
 
 export const isArray = (arg: any): arg is [] => is(Array)(arg)
 
+export const isObject = val => is(Object)(val) && !isArray(val)
+
 export const throwIfTypeIs = type => arg => {
   if (is(type, arg)) throw arg
   else return arg

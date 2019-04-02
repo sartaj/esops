@@ -1,3 +1,7 @@
+import {PATH_COMPONENT_TYPE} from '../core/constants'
+import async from '../helpers/async'
+import {getComponentType} from '../core/helpers'
+
 /**
  * Add To Ignore Files
  */
@@ -28,15 +32,6 @@ export const updateIgnoreFile = ignoreFilename => filesystem => destination => c
 export const updateGitIgnore = updateIgnoreFile('.gitignore')
 
 export const updateNpmIgnore = updateIgnoreFile('.npmignore')
-
-import async from '../helpers/async'
-import {getComponentType} from '../parser/parser2'
-
-const URL_COMPONENT_TYPE = 'URL'
-const PATH_COMPONENT_TYPE = 'PATH'
-
-const NODE_PREFIX = 'node:'
-const GITHUB_PREFIX = 'github:'
 
 const getSpacing = (tab: number): string => new Array(tab).fill('    ').join('')
 

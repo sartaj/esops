@@ -4,7 +4,7 @@
 import * as pipe from 'promised-pipe'
 import * as result from 'await-result'
 import * as async from 'async'
-import {reduce} from 'ramda'
+import {reduce, map} from 'ramda'
 export {pipe, result}
 
 const promiseFromNodeCallback = cb => (...args) => {
@@ -52,6 +52,8 @@ export const extend = fn => async prev =>
       throw e
     })
 
+export const mapToAsync = fn => map((...args) => async () => fn(...args))
+
 export default {
   pipe,
   result,
@@ -60,5 +62,6 @@ export default {
   series,
   parallel,
   parallelPromise,
-  seriesPromise
+  seriesPromise,
+  mapToAsync
 }
