@@ -1,5 +1,5 @@
 /* 
-  NOTE: This script only runs if process.env.RUN_CONSOLE_TEST is set to truthy
+  NOTE: This script only runs if process.env.NODE_ENV=== 'e2e'
  */
 
 import * as spawn from 'await-spawn'
@@ -101,4 +101,4 @@ async function run() {
   })
 }
 
-process.env.RUN_CONSOLE_TEST && run()
+process.env.NODE_ENV === 'e2e' && run()

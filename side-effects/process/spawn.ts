@@ -7,9 +7,20 @@ function spawnWithDebug(command, args, cb) {
     // stdio: ['pipe', process.stdout, process.stderr],
     shell: true
   })
-  child.on('error', cb)
+  // // child.on('read')
+  // child.stdout.on('data', function(data) {
+  //   console.log('ls command output: ' + data)
+  // })
+  let stderr = ''
+  child.stderr.on('data', function(data) {
+    stderr = data
+  })
+  child.on('error', () => {
+    cb(stderr)
+  })
+
   child.on('close', function(code) {
-    if (code !== 0) return cb(code)
+    if (code !== 0) return cb(stderr)
     cb(null)
   })
   return child

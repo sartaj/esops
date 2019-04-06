@@ -26,7 +26,7 @@ export const tryGitPath = async ({gitUrl, destination, branch}) => {
     if (err) throw err
     return destination
   } catch (e) {
-    throw e
+    throw new Error(e)
   }
 }
 

@@ -14,13 +14,13 @@ export const walk = async.extend(async params => {
 
   try {
     const renderOrRunRecursive = async composeDefinition => {
-      const resolvedComponent = await async
-        .pipe(
+      const [resolutionError, resolvedComponent] = await async.result(
+        async.pipe(
           sanitizeComponent,
           resolveComponent(params)
         )(composeDefinition)
-        .catch(error.crash)
-
+      )
+      if (resolutionError) throw resolutionError
       const componentIsALocalPathWithEsopsCompose = await hasEsopsCompose(
         resolvedComponent
       )
@@ -50,7 +50,7 @@ export const walk = async.extend(async params => {
 
     return runSeries(params.parent).catch(throwError)
   } catch (e) {
-    error.crash(e)
+    throw e
   }
 })
 

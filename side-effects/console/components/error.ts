@@ -38,10 +38,9 @@ export const renderError = e => {
 }
 
 export const crash = e => {
-  const isCorrectType = is(Object, e) || is(String, e)
-  if (!isCorrectType) return null
-  if (process.env.NODE_ENV === 'test') throw e
+  const shouldExit = process.env.NODE_ENV !== 'e2e'
+  const shouldThrow = process.env.NODE_ENV === 'test'
+  if (shouldThrow) throw e
   renderError(e)
-  if (process.env.RUN_CONSOLE_TEST !== '1') process.exit(1)
-  return null
+  shouldExit && process.exit(1)
 }

@@ -58,6 +58,17 @@ ${chalk.red.bold('## Current Working Directory')}
 ${cwd}`)
 )
 
+export const GitFetchFailed = ({pathString, message}) =>
+  chalk.red(
+    `Git fetching ${chalk.red('has failed with the following message:')}`
+  ) +
+  `
+
+${message}
+
+**Component**: \`${pathString}\`
+`
+
 export const FinalReport = ({
   gitignoreUpdated,
   npmignoreUpdated,

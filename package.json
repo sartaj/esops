@@ -21,11 +21,11 @@
   "scripts": {
     "build": "tsc",
     "build:watch": "tsc -w",
-    "debug": "NODE_ENV=test ts-node-dev --inspect --respawn ./node_modules/.bin/tape tests/github.spec.ts | tap-nirvana",
+    "debug": "NODE_ENV=test ts-node-dev --inspect --respawn ./node_modules/.bin/tape tests/**/*.spec.ts | tap-nirvana",
     "test": "NODE_ENV=test ts-node  ./node_modules/.bin/tape tests/**/*.spec.ts | tap-nirvana",
     "test:watch": "NODE_ENV=test ts-node-dev --respawn ./node_modules/.bin/tape tests/**/*.spec.ts | tap-nirvana",
-    "test:console": "npm run build && RUN_CONSOLE_TEST=1 ts-node ./tests/console-runner.spec.ts",
     "test:update": "UPDATE_SNAPSHOTS=1 npm run test",
+    "test:e2e": "npm run build && NODE_ENV=e2e ts-node ./tests/e2e-runner.spec.ts",
     "lint": "eslint modules/**/*.ts interfaces/**/*.ts side-effects/**/*.ts tests** utilities/**/*.ts core/**/*.ts run/**/*.ts",
     "report": "NODE_ENV=test nyc --require ts-node/register tape **/*.spec.ts -x **/library/** | tap-nirvana",
     "local-esops": "ts-node -O '{\"lib\": [ \"es7\" ]}' ./usage/cli.ts --overwrite",

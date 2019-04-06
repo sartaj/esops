@@ -6,7 +6,7 @@ import {
   PATH_COMPONENT_TYPE,
   URL_COMPONENT_TYPE
 } from '../core/constants'
-import {CWDNotDefined, NoPathError} from '../core/messages'
+import {CWDNotDefined, NoPathError, GitFetchFailed} from '../core/messages'
 import {Params} from '../core/types2'
 import async from '../utilities/async'
 import {findEsopsConfig} from './parse'
@@ -32,7 +32,7 @@ const getGitInfoFromGithubPath = pipe(
  * ## Resolvers
  */
 
-export const parseComponentString = async (
+export const fetchComponent = async (
   sanitizedComponent,
   {
     parent,
@@ -49,23 +49,26 @@ export const parseComponentString = async (
     let modulePath
 
     if (!modulePath) modulePath = await tryFSPath(pathString, {cwd: parent})
-
     if (!modulePath && pathString.startsWith(NODE_PREFIX)) {
       const nodePath = pathString.substr(NODE_PREFIX.length)
 
       modulePath = await tryNodePath(nodePath, {cwd: parent})
     }
 
-    if (!modulePath && pathString.startsWith(GITHUB_PREFIX)) {
-      const destination = await appCache.createNewCacheFolder()
-      const {gitUrl, branch} = getGitInfoFromGithubPath(pathString)
-      modulePath = await tryGitPath({gitUrl, destination, branch})
+    try {
+      if (!modulePath && pathString.startsWith(GITHUB_PREFIX)) {
+        const destination = await appCache.createNewCacheFolder()
+        const {gitUrl, branch} = getGitInfoFromGithubPath(pathString)
+        modulePath = await tryGitPath({gitUrl, destination, branch})
+      }
+    } catch (e) {
+      throw new TypeError(GitFetchFailed({pathString, message: e.message}))
     }
 
     if (!modulePath) throw new TypeError(NoPathError({pathString, cwd: parent}))
     return modulePath
   } catch (e) {
-    error.crash(e)
+    throw e
   }
 }
 
@@ -100,10 +103,7 @@ export const resolveComponent = params => async sanitizedComponent => {
     const resolvedComponentString =
       componentType === URL_COMPONENT_TYPE ||
       componentType === PATH_COMPONENT_TYPE
-        ? await async.result(
-            parseComponentString(sanitizedComponent, params),
-            true
-          )
+        ? await async.result(fetchComponent(sanitizedComponent, params), true)
         : componentString
 
     ui.info(`${tab}  resolved`)
@@ -114,6 +114,6 @@ export const resolveComponent = params => async sanitizedComponent => {
       sanitizedComponent[2]
     ]
   } catch (e) {
-    throw params.effects.error.crash()
+    throw e
   }
 }
