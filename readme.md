@@ -1,6 +1,6 @@
 <div align="center">
 
-![](./core/brand/logo.png)
+![esops](./core/brand/logo.png)
 
 </div>
 
