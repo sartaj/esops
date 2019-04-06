@@ -1,6 +1,6 @@
 <div align="center">
 
-![](core/brand/logo.png)
+![](./core/brand/logo.png)
 
 </div>
 
@@ -86,21 +86,21 @@ Config esops in `package.json` or `esops.json`
 **`esops.json`**
 
 ```json
-"node:@myorg/my-stack/stack"
+"node:@my-org/my-stack/stack"
 ```
 
 **`package.json`**
 
 ```json
 {
-  "esops": "node:@myorg/my-stack/stack"
+  "esops": "node:@my-org/my-stack/stack"
 }
 ```
 
 ## Resolution Types
 
 - _Filesystem:_ `['./infrastructure']`
-- _Node Module:_ `['node:@myorg/my-stack/stack']`
+- _Node Module:_ `['node:@my-org/my-stack/stack']`
 
 ## Running
 
