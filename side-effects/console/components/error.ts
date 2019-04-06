@@ -36,11 +36,3 @@ export const renderError = e => {
     borderColor: 'red'
   })
 }
-
-export const crash = e => {
-  const shouldExit = process.env.NODE_ENV !== 'e2e'
-  const shouldThrow = process.env.NODE_ENV === 'test'
-  if (shouldThrow) throw e
-  renderError(e)
-  shouldExit && process.exit(1)
-}

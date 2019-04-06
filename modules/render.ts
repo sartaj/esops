@@ -78,7 +78,7 @@ const renderPathComponent = async (params, component) => {
 
   const renderReport = await async.seriesPromise(
     actions.map(({from, to, ...restProps}) => async () => {
-      ui.info(JSON.stringify(restProps))
+      ui.info(restProps)
       filesystem.forceCopy(from, to)
       return {
         success: true

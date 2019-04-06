@@ -6,7 +6,12 @@ import {Params} from '../core/types2'
 import async from '../utilities/async'
 import {isString} from '../utilities/sync'
 import {extend} from '../utilities/sync'
-import {createFsDriver, log, createResolver} from '../side-effects'
+import {
+  createFsDriver,
+  createResolver,
+  createInteractiveConsoleUX,
+  renderError
+} from '../side-effects'
 import {findEsopsConfig} from '../modules/parse'
 import {getComposeDefinitionFromEsopsConfig} from '../core/lenses'
 
@@ -17,27 +22,27 @@ import esops2 from '../run/esops2'
  * ## Side Effect Commands
  * Side Effects are injected into the program as the `effects` key.
  */
-const getLogLevel = logLevel =>
-  logLevel ? logLevel : process.env.NODE_ENV === 'test' ? 'error' : 'info'
-
-const interactiveUi = ui => ({
-  ...log,
-  ...log.createLogDriver({
-    level: getLogLevel(ui),
-    format: (level, ...args) => args.join(' ')
-  })
-})
 
 const withSideEffects = extend(({logLevel}) => ({
   effects: {
     filesystem: createFsDriver(),
-    ui: interactiveUi(logLevel),
     resolver: createResolver(),
-    error: {
-      crash: log.crash
-    }
+    ui: createInteractiveConsoleUX(logLevel)
   }
 }))
+
+const crash = (e: Error) => {
+  switch (process.env.NODE_ENV) {
+    case 'test':
+      throw e
+    case 'e2e':
+      renderError(e)
+      break
+    default:
+      renderError(e)
+      process.exit(1)
+  }
+}
 
 /**
  * Choose Esops Version
@@ -76,6 +81,6 @@ export const esops = (params: Params) =>
           ? await esops2(params)
           : await esops1(params)
     )(params)
-    .catch(log.crash)
+    .catch(crash)
 
 export default esops
