@@ -11,19 +11,23 @@ const NODE_PREFIX = 'node:'
 const GITHUB_PREFIX = 'github:'
 
 export const tryGitPath = async ({gitUrl, destination, branch}) => {
-  const args = [
-    'clone',
-    '--branch',
-    branch || 'master',
-    '--depth',
-    '1',
-    gitUrl,
-    destination
-  ]
+  try {
+    const args = [
+      'clone',
+      '--branch',
+      branch || 'master',
+      '--depth',
+      '1',
+      gitUrl,
+      destination
+    ]
 
-  const [err] = await spawn('git', args)
-  if (err) throw err
-  return destination
+    const [err] = await spawn('git', args)
+    if (err) throw err
+    return destination
+  } catch (e) {
+    throw e
+  }
 }
 
 export const tryFSPath = (pkg, {cwd}) => {

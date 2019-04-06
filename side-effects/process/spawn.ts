@@ -1,5 +1,3 @@
-export {spawnWithDebug}
-
 const crossSpawn = require('cross-spawn')
 const fs = require('fs')
 
@@ -11,8 +9,10 @@ function spawnWithDebug(command, args, cb) {
   })
   child.on('error', cb)
   child.on('close', function(code) {
-    if (code !== 0) return cb(new Error('Non-zero exit code: ' + code))
+    if (code !== 0) return cb(code)
     cb(null)
   })
   return child
 }
+
+export {spawnWithDebug}

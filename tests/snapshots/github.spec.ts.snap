@@ -5,6 +5,7 @@ module.exports[`Describe esops() github features | Given a github path that comp
   ".node-dev.json",
   ".nycrc",
   ".prettierrc",
+  ".travis.yml",
   ".vscode",
   ".vscode/extensions.json",
   ".vscode/settings.json",
@@ -370,6 +371,7 @@ $RECYCLE.BIN/
 /.node-dev.json
 /.nycrc
 /.prettierrc
+/.travis.yml
 /.vscode/extensions.json
 /.vscode/settings.json
 /package.json

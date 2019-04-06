@@ -21,19 +21,31 @@ const promiseFromNodeCallback = cb => (...args) => {
 
 export const seriesPromise = reduce(
   (promiseChain: Promise<any[]>, currentTask: () => Promise<any>) => {
-    return promiseChain.then(chainResults =>
-      currentTask().then(currentResult => [...chainResults, currentResult])
-    )
+    return promiseChain
+      .then(chainResults =>
+        currentTask()
+          .then(currentResult => [...chainResults, currentResult])
+          .catch(e => {
+            throw e
+          })
+      )
+      .catch(e => {
+        throw e
+      })
   },
   Promise.resolve([])
 )
 
 type AsyncFn = () => Promise<any>
 export const parallelPromise = (parallel: AsyncFn[]) =>
-  Promise.all(parallel.map((fn: AsyncFn) => fn()))
+  Promise.all(parallel.map((fn: AsyncFn) => fn())).catch(e => {
+    throw e
+  })
 
 export const fromNodeCallback = cb => async (...args) =>
-  result(promiseFromNodeCallback(cb)(...args))
+  result(promiseFromNodeCallback(cb)(...args)).catch(e => {
+    throw e
+  })
 
 export const series = <T>(seriesArr: Promise<T>): Promise<T> =>
   new Promise((resolve, reject) => {
@@ -52,7 +64,14 @@ export const extend = fn => async prev =>
       throw e
     })
 
-export const mapToAsync = fn => map((...args) => async () => fn(...args))
+export const mapToAsync = fn =>
+  map((...args) => async () => {
+    try {
+      return fn(...args)
+    } catch (e) {
+      throw e
+    }
+  })
 
 export default {
   pipe,

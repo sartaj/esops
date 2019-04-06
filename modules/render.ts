@@ -1,6 +1,12 @@
 import {PATH_COMPONENT_TYPE} from '../core/constants'
 import async from '../utilities/async'
 import {getComponentType} from '../core/lenses'
+import {
+  checkIfShouldMergeJson,
+  checkIfShouldMergeFiles,
+  checkIfShouldGitPublish,
+  resolveToggles
+} from './toggles-check'
 
 /**
  * Add To Ignore Files
@@ -35,42 +41,50 @@ export const updateNpmIgnore = updateIgnoreFile('.npmignore')
 
 const getSpacing = (tab: number): string => new Array(tab).fill('    ').join('')
 
-const renderPath = async (params, component) => {
+const renderPathComponent = async (params, component) => {
   const {
     effects: {ui, filesystem}
   } = params
+  const {path} = filesystem
 
   const tab = getSpacing(params.treeDepth)
   const [localComponentPath, variables, options] = component
   ui.info(`${tab}  rendering`)
+
   const filesInComponent = filesystem.listTreeSync(localComponentPath)
+
+  const {filesWithoutToggles, toggles} = await resolveToggles(params)(
+    filesInComponent
+  )
+
   const renderPrepPath = await filesystem.appCache.getRenderPrepFolder()
 
   type Actions = {from: string; to: string; fromRelativePath: string}
-
   const actions: Actions[] = await async.seriesPromise(
-    filesInComponent.map(from => async () => {
-      const fromRelativePath = filesystem.path.relative(
-        localComponentPath,
-        from
-      )
-      const to = filesystem.path.join(renderPrepPath, fromRelativePath)
-      return {from, to, fromRelativePath}
-    })
+    async.mapToAsync(async from => {
+      const fromRelativePath = path.relative(localComponentPath, from)
+      return {
+        ...{
+          from,
+          fromRelativePath,
+          to: path.join(renderPrepPath, fromRelativePath)
+        },
+        ...checkIfShouldMergeJson(toggles, fromRelativePath),
+        ...checkIfShouldMergeFiles(toggles, fromRelativePath),
+        ...checkIfShouldGitPublish(toggles, fromRelativePath)
+      }
+    })(filesWithoutToggles)
   )
 
   const renderReport = await async.seriesPromise(
-    actions.map(({from, to}) => async () => {
+    actions.map(({from, to, ...restProps}) => async () => {
+      ui.info(JSON.stringify(restProps))
       filesystem.forceCopy(from, to)
       return {
         success: true
       }
     })
   )
-
-  // ListTreeSync
-  // Loop Through Each
-  //   Copy | CopyAndRender | CopyAndMerge
 
   return renderReport
 }
@@ -89,7 +103,9 @@ export const renderComponent = async (params, sanitizedComponent) => {
   switch (componentType) {
     case PATH_COMPONENT_TYPE:
     default:
-      response = await async.result(renderPath(params, sanitizedComponent))
+      response = await async.result(
+        renderPathComponent(params, sanitizedComponent)
+      )
   }
 
   const [err, result] = response

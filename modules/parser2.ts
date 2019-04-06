@@ -16,7 +16,7 @@ import {
 } from '../core/lenses'
 
 /**
- * ## Utilties
+ * ## Utilities
  */
 
 const getGitInfoFromGithubPath = pipe(
@@ -37,6 +37,7 @@ export const parseComponentString = async (
   {
     parent,
     effects: {
+      error,
       filesystem: {appCache},
       resolver: {tryNodePath, tryGitPath, tryFSPath}
     }
@@ -64,22 +65,24 @@ export const parseComponentString = async (
     if (!modulePath) throw new TypeError(NoPathError({pathString, cwd: parent}))
     return modulePath
   } catch (e) {
-    throw e
+    error.crash(e)
   }
 }
 
 export const hasEsopsCompose = async resolvedComponent => {
-  const [resolvedComponentString, variables, options] = resolvedComponent
-  const nextEsopsConfig = await async.result(
-    findEsopsConfig(resolvedComponentString),
-    true
-  )
-  const nextEsopsComposeDefinition =
-    nextEsopsConfig && getComposeDefinitionFromEsopsConfig(nextEsopsConfig)
-  const isDirectoryWithComposeDefinition =
-    nextEsopsConfig && nextEsopsComposeDefinition ? true : false
+  try {
+    const [resolvedComponentString, variables, options] = resolvedComponent
+    const nextEsopsConfig = await findEsopsConfig(resolvedComponentString)
 
-  return isDirectoryWithComposeDefinition
+    const nextEsopsComposeDefinition =
+      nextEsopsConfig && getComposeDefinitionFromEsopsConfig(nextEsopsConfig)
+    const isDirectoryWithComposeDefinition =
+      nextEsopsConfig && nextEsopsComposeDefinition ? true : false
+
+    return isDirectoryWithComposeDefinition
+  } catch (e) {
+    throw e
+  }
 }
 
 export const resolveComponent = params => async sanitizedComponent => {

@@ -116,31 +116,35 @@ const parseToggles = async (parsePath): Promise<Toggles> =>
  * Read and parse esops config file from `esops.json` or `package.json`.
  */
 export const findEsopsConfig = directory => {
-  let stack = undefined
+  try {
+    let stack = undefined
 
-  if (!stack) {
-    const esopsConfigPath = path.join(directory, 'esops.json')
-    const esopsConfig =
-      fs.existsSync(esopsConfigPath) &&
-      fs.readFileSync(esopsConfigPath, {encoding: 'utf-8'})
+    if (!stack) {
+      const esopsConfigPath = path.join(directory, 'esops.json')
+      const esopsConfig =
+        fs.existsSync(esopsConfigPath) &&
+        fs.readFileSync(esopsConfigPath, {encoding: 'utf-8'})
 
-    if (esopsConfig) {
-      try {
-        stack = JSON.parse(esopsConfig)
-      } catch (e) {
-        throw new TypeError(InvalidOptsError())
+      if (esopsConfig) {
+        try {
+          stack = JSON.parse(esopsConfig)
+        } catch (e) {
+          throw new TypeError(InvalidOptsError())
+        }
       }
     }
-  }
 
-  if (!stack) {
-    const packageJsonPath = path.join(directory, 'package.json')
-    const pkg =
-      fs.existsSync(packageJsonPath) && fs.readPkg.sync({cwd: directory})
-    stack = pkg.esops
-  }
+    if (!stack) {
+      const packageJsonPath = path.join(directory, 'package.json')
+      const pkg =
+        fs.existsSync(packageJsonPath) && fs.readPkg.sync({cwd: directory})
+      stack = pkg.esops
+    }
 
-  return stack
+    return stack
+  } catch (e) {
+    throw e
+  }
 }
 
 /**
@@ -151,29 +155,33 @@ export const parseWorkingDirectory = async ([
   directory,
   props
 ]: LocalWithProps): Promise<ParsedStack> => {
-  if (!directory) throw new TypeError(CWDNotDefined())
+  try {
+    if (!directory) throw new TypeError(CWDNotDefined())
 
-  const stack = findEsopsConfig(directory)
+    const stack = findEsopsConfig(directory)
 
-  const toggles = await parseToggles(directory)
+    const toggles = await parseToggles(directory)
 
-  const files = await listFileTreeSync(directory)
+    const files = await listFileTreeSync(directory)
 
-  if (isNil(stack)) renderConfigNotFound({cwd: directory})
+    if (isNil(stack)) renderConfigNotFound({cwd: directory})
 
-  if (!isValidOpts(stack)) throw new TypeError(InvalidOptsError())
+    if (!isValidOpts(stack)) throw new TypeError(InvalidOptsError())
 
-  log.md(StackConfig(stack))
+    log.md(StackConfig(stack))
 
-  return {
-    directory,
-    cwd: directory,
-    toggles,
-    files,
-    opts: stack,
-    stack,
-    destination: directory,
-    compose: stack
+    return {
+      directory,
+      cwd: directory,
+      toggles,
+      files,
+      opts: stack,
+      stack,
+      destination: directory,
+      compose: stack
+    }
+  } catch (e) {
+    throw e
   }
 }
 
