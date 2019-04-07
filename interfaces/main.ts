@@ -4,7 +4,7 @@
 
 import {Params} from '../core/types2'
 import async from '../utilities/async'
-import {isString} from '../utilities/sync'
+import {isString, throwError} from '../utilities/sync'
 import {extend} from '../utilities/sync'
 import {
   createFsDriver,
@@ -78,8 +78,8 @@ export const esops = (params: Params) =>
       withSideEffects,
       async params =>
         (await isProbablyEsops2(params))
-          ? await esops2(params)
-          : await esops1(params)
+          ? await esops2(params).catch(throwError)
+          : await esops1(params).catch(throwError)
     )(params)
     .catch(crash)
 

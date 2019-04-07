@@ -1,13 +1,14 @@
 import {PATH_COMPONENT_TYPE} from '../core/constants'
-import async from '../utilities/async'
 import {getComponentType} from '../core/lenses'
+import async from '../utilities/async'
+import {throwError} from '../utilities/sync'
 import {
-  checkIfShouldMergeJson,
-  checkIfShouldMergeFiles,
   checkIfShouldGitPublish,
+  checkIfShouldMergeFiles,
+  checkIfShouldMergeJson,
   resolveToggles
 } from './toggles-check'
-
+import {mergeDeepRight} from 'ramda'
 /**
  * Add To Ignore Files
  */
@@ -76,15 +77,44 @@ const renderPathComponent = async (params, component) => {
     })(filesWithoutToggles)
   )
 
-  const renderReport = await async.seriesPromise(
-    actions.map(({from, to, ...restProps}) => async () => {
-      ui.info(restProps)
-      filesystem.forceCopy(from, to)
-      return {
-        success: true
-      }
-    })
-  )
+  const mergeJSON = async manifest => {
+    const {filesystem} = params.effects
+
+    const prevJson = filesystem.existsSync(manifest.to)
+    if (prevJson) {
+      const prev = JSON.parse(filesystem.readFileSync(manifest.to, 'utf-8'))
+      const next = JSON.parse(filesystem.readFileSync(manifest.from, 'utf-8'))
+      const merged = mergeDeepRight(prev, next)
+      const newFile = JSON.stringify(merged, null, 2)
+      filesystem.writeFileSync(manifest.to, newFile)
+    } else {
+      filesystem.forceCopy(manifest.from, manifest.to)
+    }
+  }
+
+  const overrideFile = async manifest => {
+    filesystem.forceCopy(manifest.from, manifest.to)
+  }
+
+  const renderManifest = async manifest => {
+    if (manifest.shouldMergeJson) await mergeJSON(manifest)
+    else await overrideFile(manifest)
+  }
+
+  const renderReport = await async
+    .seriesPromise(
+      actions.map(manifest => async () => {
+        try {
+          await renderManifest(manifest)
+          return {
+            success: true
+          }
+        } catch (e) {
+          throw e
+        }
+      })
+    )
+    .catch(throwError)
 
   return renderReport
 }
@@ -98,7 +128,6 @@ export const renderComponent = async (params, sanitizedComponent) => {
   const [componentString, variables, options] = sanitizedComponent
 
   const componentType = getComponentType(componentString)
-
   let response
   switch (componentType) {
     case PATH_COMPONENT_TYPE:
