@@ -49,7 +49,7 @@ const crash = (e: Error) => {
  */
 
 const isProbablyEsops2 = async params => {
-  if (params.destination) return true
+  if (params.destination || params.root) return true
   let probablyEsops2 = false
   try {
     const {cwd} = params

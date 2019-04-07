@@ -21,8 +21,8 @@ describe('esops() github features', async assert => {
   await withTempDir(__dirname, MOCK_STACKS['github-url'], async cwd => {
     // prompts.inject([false])
     await esops({
-      destination: cwd,
-      logLevel: 'info'
+      root: cwd,
+      logLevel: 'error'
     })
 
     await assert({
@@ -39,6 +39,31 @@ describe('esops() github features', async assert => {
       given: 'a package.json',
       should: 'create merged package.json with manifest',
       snap: getFileContents(path.join(cwd, 'package.json'))
+    })
+  })
+
+  await withTempDir(__dirname, MOCK_STACKS['basic-ts-node'], async cwd => {
+    prompts.inject([false])
+    await esops({
+      root: path.join(cwd, 'infrastructure'),
+      logLevel: 'error'
+    })
+    await assert({
+      given: 'different destination in root esops config',
+      should: 'generate appropriate files',
+      snap: getSortedFilePaths(cwd)
+    })
+
+    await assert({
+      given: 'different destination in root esops config',
+      should: 'merge package.json',
+      snap: getFileContents(path.join(cwd, 'package.json'))
+    })
+
+    await assert({
+      given: 'different destination in root esops config',
+      should: 'create proper .gitignore with manifest',
+      snap: getFileContents(path.join(cwd, '.gitignore'))
     })
   })
 })

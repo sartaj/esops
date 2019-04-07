@@ -1,10 +1,5 @@
 type Path = string
 
-export type Esops = {
-  infrastructure: Path
-  destination: Path
-}
-
 export type ComponentVariables = {}
 
 export type ComponentOptions = {
@@ -30,3 +25,10 @@ export type Params = {
   logLevel?: string
   cwd?: string // deprecated
 }
+
+export type EsopsConfigObject = {
+  destination?: Path
+  compose?: Compose
+}
+
+export type EsopsConfig = EsopsConfigObject | Compose

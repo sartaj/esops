@@ -18,40 +18,40 @@ import {MOCK_STACKS} from './examples'
 const describe = withSnapshots(__filename)
 
 describe('esops() minimal features', async assert => {
-  await withTempDir(__dirname, MOCK_STACKS['basic'], async destination => {
-    await esops({destination})
+  await withTempDir(__dirname, MOCK_STACKS['basic'], async root => {
+    await esops({root})
 
     await assert({
       given: 'a minimal package with no extra files',
       should: 'generate basic template in cwd',
-      snap: getSortedFilePaths(destination)
+      snap: getSortedFilePaths(root)
     })
 
     await assert({
       given: 'no .gitignore',
       should: 'not create a .gitignore',
       expected: null,
-      actual: getFileContents(path.join(destination, '.gitignore'))
+      actual: getFileContents(path.join(root, '.gitignore'))
     })
 
     await assert({
       given: 'no .npmignore',
       should: 'not create a .npmignore',
       expected: null,
-      actual: getFileContents(path.join(destination, '.npmignore'))
+      actual: getFileContents(path.join(root, '.npmignore'))
     })
   })
 
   await withTempDir(
     __dirname,
     MOCK_STACKS['basic-ignore-files'],
-    async destination => {
-      await esops({destination})
+    async root => {
+      await esops({root})
 
       await assert({
         given: 'an included .gitignore',
         should: 'have updated .gitignore with generated file paths',
-        snap: getFileContents(path.join(destination, '.gitignore'))
+        snap: getFileContents(path.join(root, '.gitignore'))
       })
     }
   )

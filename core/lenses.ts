@@ -13,7 +13,7 @@ import {
   URL_COMPONENT_TYPE
 } from './constants'
 import {Option, OptionsWithProps, Stacks, WithProps} from './types'
-import {Compose} from './types2'
+import {Compose, EsopsConfigObject} from './types2'
 
 /**
  * ## esops1
@@ -95,3 +95,10 @@ export const getComponentType = (componentString: string) => {
     ? EFFECT_COMPONENT_TYPE
     : new Error('Not a component type')
 }
+
+export const configIsString = (arg: any): arg is string => is(String)(arg)
+
+export const configIsCompose = (arg: any): arg is Compose => is(Array)(arg)
+
+export const configIsObject = (arg: any): arg is EsopsConfigObject =>
+  is(Object)(arg) && !isArray(arg)

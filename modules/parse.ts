@@ -34,6 +34,7 @@ import {
   Toggles,
   WithProps
 } from '../core/types'
+import {EsopsConfig} from '../core/types2'
 import async from '../utilities/async'
 import {filter, isArray, isString, throwError} from '../utilities/sync'
 import * as log from '../side-effects/console'
@@ -115,6 +116,7 @@ const parseToggles = async (parsePath): Promise<Toggles> =>
  * ### findEsopsConfig
  * Read and parse esops config file from `esops.json` or `package.json`.
  */
+
 export const findEsopsConfig = directory => {
   try {
     let stack = undefined

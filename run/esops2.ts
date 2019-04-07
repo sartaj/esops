@@ -1,17 +1,21 @@
 import {
   getComposeDefinitionFromEsopsConfig,
   sanitizeComponent,
-  sanitizeCompose
+  sanitizeCompose,
+  configIsObject
 } from '../core/lenses'
 import {findEsopsConfig} from '../modules/parse'
-import {hasEsopsCompose, resolveComponent} from '../modules/parser2'
+import {
+  hasEsopsCompose,
+  resolveComponent,
+  findEsopsConfig2
+} from '../modules/parser2'
 import {copyToDestination, renderComponent} from '../modules/render'
 import async from '../utilities/async'
-import {throwError} from '../utilities/sync'
+import {throwError, isObject} from '../utilities/sync'
 
 export const walk = async.extend(async params => {
   const {ui, error} = params.effects
-
   try {
     const renderOrRunRecursive = async composeDefinition => {
       const [resolutionError, resolvedComponent] = await async.result(
@@ -55,15 +59,37 @@ export const walk = async.extend(async params => {
 })
 
 const withDefaultParams = async params => {
-  const destination = params.destination || params.cwd
-  const root = params.root || destination
+  try {
+    const {
+      effects: {
+        filesystem: {path}
+      }
+    } = params
+    const root = params.root || params.cwd
 
-  return {
-    ...params,
-    treeDepth: 0,
-    root,
-    parent: root,
-    destination
+    if (!root) throw new TypeError('no root defined.')
+
+    const rootConfig = await findEsopsConfig2(params)(root)
+
+    const destinationFromConfig =
+      configIsObject(rootConfig) &&
+      rootConfig.destination &&
+      path.join(root, rootConfig.destination)
+
+    const destination = params.destination || destinationFromConfig || root
+
+    const paths = {
+      root,
+      parent: root,
+      destination
+    }
+    return {
+      ...params,
+      treeDepth: 0,
+      ...paths
+    }
+  } catch (e) {
+    throw e
   }
 }
 

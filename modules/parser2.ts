@@ -7,7 +7,7 @@ import {
   URL_COMPONENT_TYPE
 } from '../core/constants'
 import {CWDNotDefined, NoPathError, GitFetchFailed} from '../core/messages'
-import {Params} from '../core/types2'
+import {Params, EsopsConfig} from '../core/types2'
 import async from '../utilities/async'
 import {findEsopsConfig} from './parse'
 import {
@@ -113,6 +113,29 @@ export const resolveComponent = params => async sanitizedComponent => {
       sanitizedComponent[1],
       sanitizedComponent[2]
     ]
+  } catch (e) {
+    throw e
+  }
+}
+
+/**
+ * ### findEsopsConfig
+ * Read and parse esops config file from `esops.json` or `package.json`.
+ */
+
+export const findEsopsConfig2 = params => (directory): EsopsConfig => {
+  const {
+    effects: {filesystem}
+  } = params
+  try {
+    const esopsConfigPath = filesystem.path.join(directory, 'esops.json')
+    const esopsConfig =
+      filesystem.existsSync(esopsConfigPath) &&
+      filesystem.readFileSync(esopsConfigPath, {encoding: 'utf-8'})
+
+    const parsed = JSON.parse(esopsConfig)
+
+    return parsed || {}
   } catch (e) {
     throw e
   }

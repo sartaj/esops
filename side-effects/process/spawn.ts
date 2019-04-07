@@ -7,10 +7,7 @@ function spawnWithDebug(command, args, cb) {
     // stdio: ['pipe', process.stdout, process.stderr],
     shell: true
   })
-  // // child.on('read')
-  // child.stdout.on('data', function(data) {
-  //   console.log('ls command output: ' + data)
-  // })
+
   let stderr = ''
   child.stderr.on('data', function(data) {
     stderr = data

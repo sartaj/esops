@@ -21,13 +21,13 @@ describe('esops() node+npm features', async assert => {
   await withTempDir(
     __dirname,
     MOCK_STACKS['basic-ignore-files'],
-    async destination => {
-      await esops({destination})
+    async root => {
+      await esops({root})
 
       await assert({
         given: 'an included .npmignore',
         should: 'have updated .npmignore with generated file paths',
-        snap: getFileContents(path.join(destination, '.npmignore'))
+        snap: getFileContents(path.join(root, '.npmignore'))
       })
     }
   )

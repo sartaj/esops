@@ -1,0 +1,4 @@
+{
+  "destination": "../",
+  "compose": ["github:sartaj/typescript-node-stack#ts-fp", "./compose"]
+}
