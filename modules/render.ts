@@ -1,5 +1,8 @@
+import {mergeDeepRight} from 'ramda'
+
 import {PATH_COMPONENT_TYPE} from '../core/constants'
 import {getComponentType} from '../core/lenses'
+import {FileNotToggledForMerge} from '../core/messages'
 import async from '../utilities/async'
 import {throwError} from '../utilities/sync'
 import {
@@ -8,7 +11,8 @@ import {
   checkIfShouldMergeJson,
   resolveToggles
 } from './toggles-check'
-import {mergeDeepRight} from 'ramda'
+import {Params} from '../core/types2'
+
 /**
  * Add To Ignore Files
  */
@@ -42,6 +46,21 @@ export const updateNpmIgnore = updateIgnoreFile('.npmignore')
 
 const getSpacing = (tab: number): string => new Array(tab).fill('    ').join('')
 
+/**
+ * ### listFileTreeSync
+ * Get a list of files that ignore directories and toggle files
+ *
+ * TODO: Explore need/use case for folder path support.
+ * TODO: Explore need/use case for allowing esops toggle files to be copies.
+ */
+type ListFiles = (params: Params) => (cwd: string) => string[]
+const listFileTreeSync: ListFiles = ({effects: {filesystem}}) => (
+  cwd: string
+) =>
+  filesystem
+    .listTreeSync(cwd)
+    .filter(filePath => !filesystem.isDirectory.sync(filePath))
+
 const renderPathComponent = async (params, component) => {
   const {
     effects: {ui, filesystem}
@@ -52,7 +71,7 @@ const renderPathComponent = async (params, component) => {
   const [localComponentPath, variables, options] = component
   ui.info(`${tab}  rendering`)
 
-  const filesInComponent = filesystem.listTreeSync(localComponentPath)
+  const filesInComponent = listFileTreeSync(params)(localComponentPath)
 
   const {filesWithoutToggles, toggles} = await resolveToggles(params)(
     filesInComponent
@@ -60,19 +79,19 @@ const renderPathComponent = async (params, component) => {
 
   const renderPrepPath = await filesystem.appCache.getRenderPrepFolder()
 
-  type Actions = {from: string; to: string; fromRelativePath: string}
+  type Actions = {from: string; to: string; relativePath: string}
   const actions: Actions[] = await async.seriesPromise(
     async.mapToAsync(async from => {
-      const fromRelativePath = path.relative(localComponentPath, from)
+      const relativePath = path.relative(localComponentPath, from)
       return {
         ...{
           from,
-          fromRelativePath,
-          to: path.join(renderPrepPath, fromRelativePath)
+          to: path.join(renderPrepPath, relativePath),
+          relativePath
         },
-        ...checkIfShouldMergeJson(toggles, fromRelativePath),
-        ...checkIfShouldMergeFiles(toggles, fromRelativePath),
-        ...checkIfShouldGitPublish(toggles, fromRelativePath)
+        ...checkIfShouldMergeJson(toggles, relativePath),
+        ...checkIfShouldMergeFiles(toggles, relativePath),
+        ...checkIfShouldGitPublish(toggles, relativePath)
       }
     })(filesWithoutToggles)
   )
@@ -92,12 +111,38 @@ const renderPathComponent = async (params, component) => {
     }
   }
 
+  const mergeFile = async manifest => {
+    const {filesystem} = params.effects
+
+    const prevFile = filesystem.existsSync(manifest.to)
+    if (prevFile) {
+      const prev = filesystem.readFileSync(manifest.to, 'utf-8')
+      const next = filesystem.readFileSync(manifest.from, 'utf-8')
+      const merged = prev + '\n' + next
+      const newFile = merged
+      filesystem.writeFileSync(manifest.to, newFile)
+    } else {
+      filesystem.forceCopy(manifest.from, manifest.to)
+    }
+  }
+
   const overrideFile = async manifest => {
-    filesystem.forceCopy(manifest.from, manifest.to)
+    try {
+      const fileAlreadyRendered = filesystem.existsSync(manifest.to)
+      if (fileAlreadyRendered) {
+        throw new Error(FileNotToggledForMerge(manifest))
+      } else {
+        filesystem.forceCopy(manifest.from, manifest.to)
+      }
+    } catch (e) {
+      throw e
+    }
   }
 
   const renderManifest = async manifest => {
+    // TODO: Need to detect if first file doesn't allow merge
     if (manifest.shouldMergeJson) await mergeJSON(manifest)
+    else if (manifest.shouldMergeFile) await mergeFile(manifest)
     else await overrideFile(manifest)
   }
 

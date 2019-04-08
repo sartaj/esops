@@ -18,27 +18,27 @@ import {MOCK_STACKS} from './examples'
 const describe = withSnapshots(__filename)
 
 describe('esops() github features', async assert => {
-  await withTempDir(__dirname, MOCK_STACKS['github-url'], async cwd => {
+  await withTempDir(__dirname, MOCK_STACKS['github-url'], async root => {
     // prompts.inject([false])
     await esops({
-      root: cwd,
+      root,
       logLevel: 'error'
     })
 
     await assert({
       given: 'a github path that composes another github path',
       should: 'generate appropriate files',
-      snap: getSortedFilePaths(cwd)
+      snap: getSortedFilePaths(root)
     })
     await assert({
       given: 'a .gitignore',
       should: 'create merged .gitignore with manifest',
-      snap: getFileContents(path.join(cwd, '.gitignore'))
+      snap: getFileContents(path.join(root, '.gitignore'))
     })
     await assert({
       given: 'a package.json',
       should: 'create merged package.json with manifest',
-      snap: getFileContents(path.join(cwd, 'package.json'))
+      snap: getFileContents(path.join(root, 'package.json'))
     })
   })
 

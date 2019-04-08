@@ -1,7 +1,10 @@
 module.exports[`Describe esops() github features | Given a github path that composes another github path: should generate appropriate files`] = `
 
 [
+  ".eslintignore",
+  ".eslintrc",
   ".gitignore",
+  ".markdownlint.json",
   ".node-dev.json",
   ".nycrc",
   ".prettierrc",
@@ -9,6 +12,7 @@ module.exports[`Describe esops() github features | Given a github path that comp
   ".vscode",
   ".vscode/extensions.json",
   ".vscode/settings.json",
+  "cSpell.json",
   "esops.json",
   "package.json",
   "source",
@@ -368,12 +372,16 @@ $RECYCLE.BIN/
 # End of https://www.gitignore.io/api/node,linux,macos,windows,reactnative
 
 ### ESOPS AUTO GENERATED BEGIN ###
+/.eslintignore
+/.eslintrc
+/.markdownlint.json
 /.node-dev.json
 /.nycrc
 /.prettierrc
 /.travis.yml
 /.vscode/extensions.json
 /.vscode/settings.json
+/cSpell.json
 /package.json
 /source/readme.md
 /tsconfig.json
@@ -397,9 +405,14 @@ module.exports[`Describe esops() github features | Given a package.json: should 
     "report": "NODE_ENV=test nyc --require ts-node/register tape **/*.spec.ts -x **/library/** | tap-nirvana"
   },
   "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^1.6.0",
+    "@typescript-eslint/parser": "^1.6.0",
     "@types/node": "^10.12.9",
     "@types/ramda": "^0.25.43",
     "colors": "^1.3.3",
+    "eslint": "^5.16.0",
+    "eslint-config-prettier": "^4.1.0",
+    "eslint-plugin-promise": "^4.1.1",
     "diff": "^3.5.0",
     "nyc": "^13.3.0",
     "rimraf": "^2.6.2",
@@ -420,7 +433,10 @@ module.exports[`Describe esops() github features | Given a package.json: should 
 module.exports[`Describe esops() github features | Given different destination in root esops config: should generate appropriate files`] = `
 
 [
+  ".eslintignore",
+  ".eslintrc",
   ".gitignore",
+  ".markdownlint.json",
   ".node-dev.json",
   ".nycrc",
   ".prettierrc",
@@ -428,6 +444,7 @@ module.exports[`Describe esops() github features | Given different destination i
   ".vscode",
   ".vscode/extensions.json",
   ".vscode/settings.json",
+  "cSpell.json",
   "infrastructure",
   "infrastructure/compose",
   "infrastructure/compose/.esops-merge-json",
@@ -459,9 +476,14 @@ module.exports[`Describe esops() github features | Given different destination i
     "report": "NODE_ENV=test nyc --require ts-node/register tape **/*.spec.ts -x **/library/** | tap-nirvana"
   },
   "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^1.6.0",
+    "@typescript-eslint/parser": "^1.6.0",
     "@types/node": "^10.12.9",
     "@types/ramda": "^0.25.43",
     "colors": "^1.3.3",
+    "eslint": "^5.16.0",
+    "eslint-config-prettier": "^4.1.0",
+    "eslint-plugin-promise": "^4.1.1",
     "diff": "^3.5.0",
     "nyc": "^13.3.0",
     "rimraf": "^2.6.2",
@@ -871,12 +893,16 @@ $RECYCLE.BIN/
 # End of https://www.gitignore.io/api/node,linux,macos,windows,reactnative
 
 ### ESOPS AUTO GENERATED BEGIN ###
+/.eslintignore
+/.eslintrc
+/.markdownlint.json
 /.node-dev.json
 /.nycrc
 /.prettierrc
 /.travis.yml
 /.vscode/extensions.json
 /.vscode/settings.json
+/cSpell.json
 /package-lock.json
 /package.json
 /source/readme.md
