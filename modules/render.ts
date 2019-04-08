@@ -1,4 +1,4 @@
-import {mergeDeepRight} from 'ramda'
+import {mergeDeepRight, flatten} from 'ramda'
 
 import {PATH_COMPONENT_TYPE} from '../core/constants'
 import {getComponentType} from '../core/lenses'
@@ -7,7 +7,7 @@ import async from '../utilities/async'
 import {throwError} from '../utilities/sync'
 import {
   checkIfShouldGitPublish,
-  checkIfShouldMergeFiles,
+  checkIfShouldMergeFile,
   checkIfShouldMergeJson,
   resolveToggles
 } from './toggles-check'
@@ -90,7 +90,7 @@ const renderPathComponent = async (params, component) => {
           relativePath
         },
         ...checkIfShouldMergeJson(toggles, relativePath),
-        ...checkIfShouldMergeFiles(toggles, relativePath),
+        ...checkIfShouldMergeFile(toggles, relativePath),
         ...checkIfShouldGitPublish(toggles, relativePath)
       }
     })(filesWithoutToggles)
@@ -144,16 +144,17 @@ const renderPathComponent = async (params, component) => {
     if (manifest.shouldMergeJson) await mergeJSON(manifest)
     else if (manifest.shouldMergeFile) await mergeFile(manifest)
     else await overrideFile(manifest)
+    return {
+      ...manifest,
+      success: true
+    }
   }
 
   const renderReport = await async
     .seriesPromise(
       actions.map(manifest => async () => {
         try {
-          await renderManifest(manifest)
-          return {
-            success: true
-          }
+          return await renderManifest(manifest)
         } catch (e) {
           throw e
         }
@@ -194,6 +195,7 @@ export const copyToDestination = async.extend(async params => {
   const {effects, destination} = params
   const {filesystem} = effects
   const renderPrepFolder = await filesystem.appCache.getRenderPrepFolder()
+
   const filesToCopy = await filesystem
     .listTreeSync(renderPrepFolder)
     .filter(filePath => !filesystem.isDirectory.sync(filePath))
@@ -207,10 +209,20 @@ export const copyToDestination = async.extend(async params => {
     }
   })
 
-  const copyManifestForIgnore = copyManifest.filter(({relativePath}) => {
-    const pathName = filesystem.path.basename(relativePath)
-    return pathName !== '.gitignore' && pathName !== '.npmignore'
-  })
+  const report = flatten(params.results)
+
+  const shouldGitPublish = report
+    .filter(({shouldGitPublish}) => shouldGitPublish)
+    .map(({relativePath}) => relativePath)
+
+  effects.ui.info(shouldGitPublish)
+
+  const copyManifestForIgnore = copyManifest
+    .filter(({relativePath}) => {
+      const pathName = filesystem.path.basename(relativePath)
+      return pathName !== '.gitignore' && pathName !== '.npmignore'
+    })
+    .filter(({relativePath}) => !shouldGitPublish.includes(relativePath))
 
   updateGitIgnore(filesystem)(renderPrepFolder)(copyManifestForIgnore)
   updateNpmIgnore(filesystem)(renderPrepFolder)(copyManifestForIgnore)

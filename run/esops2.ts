@@ -12,7 +12,7 @@ import {
 } from '../modules/parser2'
 import {copyToDestination, renderComponent} from '../modules/render'
 import async from '../utilities/async'
-import {throwError, isObject} from '../utilities/sync'
+import {throwError} from '../utilities/sync'
 
 export const walk = async.extend(async params => {
   const {ui, error} = params.effects
@@ -29,6 +29,7 @@ export const walk = async.extend(async params => {
         resolvedComponent
       )
 
+      let report = []
       if (componentIsALocalPathWithEsopsCompose) {
         ui.info(`${ui.getTabs(params.treeDepth)}  compose definition found`)
         ui.info(` `)
@@ -38,9 +39,11 @@ export const walk = async.extend(async params => {
           treeDepth: params.treeDepth + 1
         })
       } else {
-        await renderComponent(params, resolvedComponent)
+        report = await renderComponent(params, resolvedComponent)
         ui.info(` `)
+        return params.results.push(report)
       }
+      return report ? [...params.results, report] : params.results
     }
 
     const runSeries = async.pipe(
@@ -86,7 +89,8 @@ const withDefaultParams = async params => {
     return {
       ...params,
       treeDepth: 0,
-      ...paths
+      ...paths,
+      results: []
     }
   } catch (e) {
     throw e
@@ -99,9 +103,10 @@ const createReport = async params => {
     logLevel,
     effects: {filesystem, ui}
   } = params
-  const files = filesystem.listTreeSync(destination)
-  const filesList = files
-    .map(file => filesystem.path.relative(destination, file))
+  const renderPrepFolder = await filesystem.appCache.getRenderPrepFolder()
+  const filesList = filesystem
+    .listTreeSync(renderPrepFolder)
+    .map(file => filesystem.path.relative(renderPrepFolder, file))
     .join('\n')
 
   ui.md(filesList, logLevel)

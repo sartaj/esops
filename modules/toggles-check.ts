@@ -43,10 +43,18 @@ export const checkIfShouldMergeJson = (togglesMap, file) => {
   }
 }
 
-export const checkIfShouldMergeFiles = (toggles, file) => {
-  return {shouldMergeFiles: shouldInclude(toggles['.esops-merge-file'], file)}
+export const checkIfShouldMergeFile = (togglesMap, file) => {
+  const toggles = togglesMap['.esops-merge-file']
+  const shouldMergeFile = shouldInclude(toggles, file)
+  return {
+    shouldMergeFile
+  }
 }
 
-export const checkIfShouldGitPublish = (toggles, file) => {
-  return {shouldGitPublish: shouldInclude(toggles['.esops-publish-git'], file)}
+export const checkIfShouldGitPublish = (togglesMap, file) => {
+  const toggles = togglesMap['.esops-publish-git']
+  const shouldGitPublish = shouldInclude(toggles, file)
+  return {
+    shouldGitPublish
+  }
 }
