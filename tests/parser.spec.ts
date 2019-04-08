@@ -62,29 +62,29 @@ describe('parsedToGeneratorManifest()', async assert => {
   })
 })
 
-describe('resolver()', async assert => {
-  const config = {
-    cwd: MOCK_STACKS['basic-ignore-files']
-  }
+// describe('resolver()', async assert => {
+//   const config = {
+//     cwd: MOCK_STACKS['basic-ignore-files']
+//   }
 
-  assert({
-    given: 'single FS path',
-    should: 'return fs path as LocalStackWithProps',
-    expected: [[config.cwd + '/', {}]],
-    actual: await resolve('./', config)
-  })
+//   assert({
+//     given: 'single FS path',
+//     should: 'return fs path as LocalStackWithProps',
+//     expected: [[config.cwd + '/', {}]],
+//     actual: await resolve('./', config)
+//   })
 
-  assert({
-    given: 'single FS path as array',
-    should: 'return fs path as LocalStackWithProps',
-    expected: [[config.cwd + '/', {}]],
-    actual: await resolve(['./'], config)
-  })
+//   assert({
+//     given: 'single FS path as array',
+//     should: 'return fs path as LocalStackWithProps',
+//     expected: [[config.cwd + '/', {}]],
+//     actual: await resolve(['./'], config)
+//   })
 
-  assert({
-    given: 'single FS path with props',
-    should: 'return fs path as LocalStackWithProps',
-    expected: [[config.cwd + '/', {}]],
-    actual: await resolve([['./', {}]], config)
-  })
-})
+//   assert({
+//     given: 'single FS path with props',
+//     should: 'return fs path as LocalStackWithProps',
+//     expected: [[config.cwd + '/', {}]],
+//     actual: await resolve([['./', {}]], config)
+//   })
+// })

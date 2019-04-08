@@ -91,6 +91,20 @@ ${gitignoreUpdated ? '.gitignore has been updated.' : ''}
 ${npmignoreUpdated ? '.npmignore has been updated.' : ''}
 `
 
+export const FinalReport2 = ({
+  generatedFiles,
+  destination
+}) => `# Your Destination has Been Updated.
+
+## Files Added
+
+${generatedFiles.map(relativePath => '* `' + relativePath + '`').join('\n')}
+
+## Destination
+\`${destination}\`
+
+`
+
 export const ConfigNotFound = withHowTo(({cwd}) =>
   chalk.red(`No stack config found.
 
@@ -98,6 +112,10 @@ ${chalk.red.bold('## Current Working Directory')}
 
 ${cwd}`)
 )
+
+export const ShowFilesToOverwrite2 = files => `# Files To Be Overwritten
+${files.map(relativePath => `* \`${relativePath}\``).join('\n')}
+`
 
 export const ShowFilesToOverwrite = ({
   generatorManifest

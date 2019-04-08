@@ -41,18 +41,4 @@ describe('esops() minimal features', async assert => {
       actual: getFileContents(path.join(root, '.npmignore'))
     })
   })
-
-  await withTempDir(
-    __dirname,
-    MOCK_STACKS['basic-ignore-files'],
-    async root => {
-      await esops({root})
-
-      await assert({
-        given: 'an included .gitignore',
-        should: 'have updated .gitignore with generated file paths',
-        snap: getFileContents(path.join(root, '.gitignore'))
-      })
-    }
-  )
 })

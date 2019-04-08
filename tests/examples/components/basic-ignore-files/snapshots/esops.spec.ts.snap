@@ -1,0 +1,20 @@
+module.exports[`Describe esops() ignore file generation | Given an included .gitignore: should have updated .gitignore with generated file paths`] = `
+
+
+### ESOPS AUTO GENERATED BEGIN ###
+/.vscode/settings.json
+/src/stores/stores-architecture.md
+/tsconfig.json
+### ESOPS AUTO GENERATED END ###
+`
+
+module.exports[`Describe esops() ignore file generation | Given an included .npmignore: should have updated .npmignore with generated file paths`] = `
+
+/src/**
+### ESOPS AUTO GENERATED BEGIN ###
+/.vscode/settings.json
+/src/stores/stores-architecture.md
+/tsconfig.json
+### ESOPS AUTO GENERATED END ###
+`
+

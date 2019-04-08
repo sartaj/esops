@@ -15,7 +15,8 @@ type Component =
 
 export type Compose = Component | Component[]
 
-// export type
+type Prompt = boolean | Error
+
 export type Params = {
   effects?: any
   destination?: string
@@ -24,6 +25,7 @@ export type Params = {
   compose?: Compose
   logLevel?: string
   cwd?: string // deprecated
+  prompts?: Prompt[]
 }
 
 export type EsopsConfigObject = {

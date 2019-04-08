@@ -1,4 +1,5 @@
 import * as createLogDriver from 'log-driver'
+import * as prompts from 'prompts'
 
 import {announce} from './components/announce'
 import {renderError} from './components/error'
@@ -28,6 +29,7 @@ export const createInteractiveConsoleUX = ui => {
     renderError,
     md,
     mdFile,
+    prompts,
     ...logger,
     info: (...args) => logger.info(prettifyLogArgs(...args))
   }

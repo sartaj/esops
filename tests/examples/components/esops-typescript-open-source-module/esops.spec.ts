@@ -1,5 +1,4 @@
 import * as path from 'path'
-import * as prompts from 'prompts'
 
 import esops from '../../../../interfaces/main'
 import {getFileContents, getSortedFilePaths} from '../../../test-utils/fs-utils'

@@ -14,7 +14,8 @@ describe('esops typescript open source module user', async assert => {
   await withTempDir(__dirname, rootPath, async root => {
     await esops({
       root: path.join(root, 'infrastructure'),
-      logLevel: 'error'
+      logLevel: 'error',
+      prompts: [true]
     })
 
     await assert({

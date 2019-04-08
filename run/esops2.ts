@@ -10,9 +10,10 @@ import {
   resolveComponent,
   findEsopsConfig2
 } from '../modules/parser2'
-import {copyToDestination, renderComponent} from '../modules/render'
+import {copyToDestinationWithPrompts, renderComponent} from '../modules/render'
 import async from '../utilities/async'
 import {throwError} from '../utilities/sync'
+import {FinalReport2} from '../core/messages'
 
 export const walk = async.extend(async params => {
   const {ui, error} = params.effects
@@ -65,6 +66,7 @@ const withDefaultParams = async params => {
   try {
     const {
       effects: {
+        ui,
         filesystem: {path}
       }
     } = params
@@ -86,6 +88,9 @@ const withDefaultParams = async params => {
       parent: root,
       destination
     }
+
+    params.prompts && ui.prompts.inject(params.prompts)
+
     return {
       ...params,
       treeDepth: 0,
@@ -104,18 +109,25 @@ const createReport = async params => {
     effects: {filesystem, ui}
   } = params
   const renderPrepFolder = await filesystem.appCache.getRenderPrepFolder()
-  const filesList = filesystem
+
+  const generatedFiles = filesystem
     .listTreeSync(renderPrepFolder)
     .map(file => filesystem.path.relative(renderPrepFolder, file))
-    .join('\n')
+    .sort()
 
-  ui.md(filesList, logLevel)
+  ui.md(
+    FinalReport2({
+      generatedFiles,
+      destination
+    }),
+    logLevel
+  )
 }
 
 export const esops2 = async.pipe(
   withDefaultParams,
   walk,
-  copyToDestination,
+  copyToDestinationWithPrompts,
   createReport
 )
 export default esops2

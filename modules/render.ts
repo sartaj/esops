@@ -3,7 +3,14 @@ import {flatten, mergeDeepRight} from 'ramda'
 
 import {PATH_COMPONENT_TYPE} from '../core/constants'
 import {getComponentType} from '../core/lenses'
-import {FileNotToggledForMerge} from '../core/messages'
+import {
+  FileNotToggledForMerge,
+  ShowFilesToOverwrite2,
+  FilesNotOverwritten,
+  UserConfirmOverwriteMessage,
+  UserConfirmOverwriteMessageTrue,
+  UserConfirmOverwriteMessageFalse
+} from '../core/messages'
 import {Params} from '../core/types2'
 import async from '../utilities/async'
 import {throwError} from '../utilities/sync'
@@ -231,4 +238,44 @@ export const copyToDestination = async.extend(async params => {
   })
 
   return {copyManifest}
+})
+
+export const copyToDestinationWithPrompts = async.extend(async params => {
+  const {effects, destination} = params
+  const {filesystem, ui} = effects
+  const renderPrepFolder = await filesystem.appCache.getRenderPrepFolder()
+
+  const filesToCopy = await filesystem
+    .listTreeSync(renderPrepFolder)
+    .filter(filePath => !filesystem.isDirectory.sync(filePath))
+    .map(filePath => filesystem.path.relative(renderPrepFolder, filePath))
+
+  const destinationFiles = await filesystem
+    .listTreeSync(destination)
+    .filter(filePath => !filesystem.isDirectory.sync(filePath))
+    .map(filePath => filesystem.path.relative(destination, filePath))
+
+  const existingFiles = filesToCopy.filter(filePath =>
+    destinationFiles.includes(filePath)
+  )
+
+  const filesExist = existingFiles.length > 0
+
+  if (filesExist) {
+    ui.md(ShowFilesToOverwrite2(existingFiles))
+
+    const {userConfirmsOverwrite} = await ui.prompts([
+      {
+        type: 'toggle',
+        name: 'userConfirmsOverwrite',
+        message: UserConfirmOverwriteMessage(),
+        initial: true,
+        active: UserConfirmOverwriteMessageTrue(),
+        inactive: UserConfirmOverwriteMessageFalse()
+      }
+    ])
+
+    if (userConfirmsOverwrite) copyToDestination(params)
+    else ui.md(FilesNotOverwritten())
+  } else copyToDestination(params)
 })

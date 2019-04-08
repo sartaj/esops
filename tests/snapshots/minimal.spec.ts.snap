@@ -17,13 +17,3 @@ module.exports[`Describe esops() minimal features | Given a minimal package with
   "tsconfig.json"
 ]`
 
-module.exports[`Describe esops() minimal features | Given an included .gitignore: should have updated .gitignore with generated file paths`] = `
-
-
-### ESOPS AUTO GENERATED BEGIN ###
-/.vscode/settings.json
-/src/stores/stores-architecture.md
-/tsconfig.json
-### ESOPS AUTO GENERATED END ###
-`
-
