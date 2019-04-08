@@ -5,7 +5,7 @@
 import * as spawn from 'await-spawn'
 import {withTempDir} from './test-utils/withTempDir'
 
-import {MOCK_STACKS} from './examples'
+import {MOCK_STACKS, MOCK_COMPONENTS} from './examples'
 import chalk from 'chalk'
 
 function logTitle(title) {
@@ -16,20 +16,32 @@ async function run() {
   const esops = require('../library/interfaces/main').default
   const esopsCli = require('../library/interfaces/cli').default
 
-  logTitle('basic')
-  await withTempDir(__dirname, MOCK_STACKS['basic'], async cwd => {
-    await esops({destination: cwd})
-  })
+  logTitle('basic-bare-minimum')
+  await withTempDir(
+    __dirname,
+    MOCK_COMPONENTS['basic-bare-minimum'],
+    async root => {
+      await esops({root})
+    }
+  )
 
-  logTitle('basic-gitignore')
-  await withTempDir(__dirname, MOCK_STACKS['basic-ignore-files'], async cwd => {
-    await esops({destination: cwd})
-  })
+  logTitle('basic-ignore-files')
+  await withTempDir(
+    __dirname,
+    MOCK_COMPONENTS['basic-ignore-files'],
+    async root => {
+      await esops({root})
+    }
+  )
 
-  logTitle('basic-package-json')
-  await withTempDir(__dirname, MOCK_STACKS['basic-package-json'], async cwd => {
-    await esops({cwd})
-  })
+  logTitle('esops-typescript-open-source-module')
+  await withTempDir(
+    __dirname,
+    MOCK_COMPONENTS['esops-typescript-open-source-module'],
+    async root => {
+      await esops({root})
+    }
+  )
 
   logTitle('basic-node-module')
   await withTempDir(__dirname, MOCK_STACKS['basic-node-module'], async cwd => {
@@ -52,52 +64,41 @@ async function run() {
     await esops({cwd})
   })
 
-  logTitle('basic-overwrite-cwd-file yes')
+  logTitle('basic-local-overwrite yes')
   await withTempDir(
     __dirname,
-    MOCK_STACKS['basic-overwrite-cwd-file'],
-    async cwd => {
-      const prompts = require('prompts')
-      prompts.inject([true])
-      await esops({cwd})
+    MOCK_COMPONENTS['basic-local-overwrite'],
+    async root => {
+      await esops({root, prompts: [true]})
     }
   )
 
-  logTitle('basic-overwrite-cwd-file no')
+  logTitle('basic-local-overwrite no')
   await withTempDir(
     __dirname,
-    MOCK_STACKS['basic-overwrite-cwd-file'],
-    async cwd => {
-      const prompts = require('prompts')
-      prompts.inject([false])
-      await esops({cwd})
+    MOCK_COMPONENTS['basic-local-overwrite'],
+    async root => {
+      await esops({root, prompts: [false]})
     }
   )
 
   logTitle('basic-overwrite-cwd-file cancel')
   await withTempDir(
     __dirname,
-    MOCK_STACKS['basic-overwrite-cwd-file'],
-    async cwd => {
-      const prompts = require('prompts')
-      prompts.inject([new Error('exit')])
-      await esops({cwd})
+    MOCK_COMPONENTS['basic-local-overwrite'],
+    async root => {
+      await esops({root, prompts: [new Error('exit')]})
     }
   )
 
   logTitle('cli clean')
-  await withTempDir(__dirname, MOCK_STACKS['basic'], async cwd => {
+  await withTempDir(__dirname, [], async cwd => {
     await esopsCli(['clean'])
   })
 
   logTitle('cli help')
-  await withTempDir(__dirname, MOCK_STACKS['basic'], async cwd => {
+  await withTempDir(__dirname, [], async cwd => {
     await esopsCli(['help'])
-  })
-
-  logTitle('cli bad argument')
-  await withTempDir(__dirname, MOCK_STACKS['basic'], async cwd => {
-    await esopsCli(['foo'])
   })
 }
 

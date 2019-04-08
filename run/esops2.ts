@@ -1,3 +1,4 @@
+import chalk from 'chalk'
 import {
   getComposeDefinitionFromEsopsConfig,
   sanitizeComponent,
@@ -123,9 +124,13 @@ const createReport = async params => {
     logLevel
   )
 }
+export const reportWalkStart = async.extend(async params => {
+  params.effects.ui.info(chalk.bold.blue('\ncomposing infrastructure...\n'))
+})
 
 export const esops2 = async.pipe(
   withDefaultParams,
+  reportWalkStart,
   walk,
   copyToDestinationWithPrompts,
   createReport

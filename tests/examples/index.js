@@ -8,6 +8,14 @@ module.exports.MOCK_TEMPLATES = {
   'target-web': path.join(examplesDir, 'templates', 'target-web')
 }
 
+module.exports.MOCK_COMPONENTS = [
+'basic-bare-minimum',
+'basic-ignore-files',
+'basic-local-overwrite',
+'esops-typescript-oos-user',
+'esops-typescript-open-source-module'
+].reduce((mockComponents, next) => ({ ...mockComponents, [next]: path.join(examplesDir, 'components', next, 'module')}), {})
+
 const MOCK_STACKS = [
   'basic',  
   'basic-ignore-files',

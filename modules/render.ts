@@ -52,8 +52,6 @@ export const updateGitIgnore = updateIgnoreFile('.gitignore')
 
 export const updateNpmIgnore = updateIgnoreFile('.npmignore')
 
-const getSpacing = (tab: number): string => new Array(tab).fill('    ').join('')
-
 /**
  * ### listFileTreeSync
  * Get a list of files that ignore directories and toggle files
@@ -75,7 +73,7 @@ const renderPathComponent = async (params, component) => {
   } = params
   const {path} = filesystem
 
-  const tab = getSpacing(params.treeDepth)
+  const tab = ui.getTabs(params.treeDepth)
   const [localComponentPath, variables, options] = component
   ui.info(`${tab}  rendering`)
 
@@ -178,7 +176,7 @@ export const renderComponent = async (params, sanitizedComponent) => {
     effects: {ui}
   } = params
 
-  const tab = getSpacing(params.treeDepth)
+  const tab = ui.getTabs(params.treeDepth)
   const [componentString, variables, options] = sanitizedComponent
 
   const componentType = getComponentType(componentString)

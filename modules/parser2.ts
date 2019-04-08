@@ -1,4 +1,5 @@
 import {pipe} from 'ramda'
+import chalk from 'chalk'
 
 import {
   GITHUB_PREFIX,
@@ -95,7 +96,7 @@ export const resolveComponent = params => async sanitizedComponent => {
     } = params
     const componentString = sanitizedComponent[0]
     const tab = ui.getTabs(params.treeDepth)
-    ui.info(`${tab}${componentString}`)
+    ui.info(`${tab}${chalk.bold(componentString)}`)
     ui.info(`${tab}  resolving`)
 
     const componentType = getComponentType(componentString)

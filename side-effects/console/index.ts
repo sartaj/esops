@@ -6,7 +6,8 @@ import {renderError} from './components/error'
 import {md, mdFile} from './components/markdown'
 import {isObject} from 'util'
 
-const getTabs = (tab: number): string => new Array(tab).fill('    ').join('')
+const getTabs = (tab: number): string =>
+  new Array(tab + 1).fill('    ').join('')
 
 const getLogLevel = logLevel =>
   logLevel ? logLevel : process.env.NODE_ENV === 'test' ? 'error' : 'info'

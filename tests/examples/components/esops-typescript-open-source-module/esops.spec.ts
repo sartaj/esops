@@ -7,7 +7,7 @@ import {withTempDir} from '../../../test-utils/withTempDir'
 
 const describe = withSnapshots(__filename)
 
-const rootPath = path.join(__dirname, './infrastructure')
+const rootPath = path.join(__dirname, './module')
 
 describe('esops typescript open source module', async assert => {
   await withTempDir(__dirname, rootPath, async root => {

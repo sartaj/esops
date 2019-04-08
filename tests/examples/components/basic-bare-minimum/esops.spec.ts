@@ -1,24 +1,16 @@
 import * as path from 'path'
-import * as spawn from 'await-spawn'
 
-import {Try} from 'riteway'
-import * as prompts from 'prompts'
-import {withSnapshots} from './test-utils/withSnapshots'
-import {withTempDir} from './test-utils/withTempDir'
-import {
-  getSortedFilePaths,
-  getFileContents,
-  getJsonContents,
-  cleanErrorString
-} from './test-utils/fs-utils'
-
-import esops from '../interfaces/main'
-import {MOCK_STACKS} from './examples'
+import esops from '../../../../interfaces/main'
+import {getFileContents, getSortedFilePaths} from '../../../test-utils/fs-utils'
+import {withSnapshots} from '../../../test-utils/withSnapshots'
+import {withTempDir} from '../../../test-utils/withTempDir'
 
 const describe = withSnapshots(__filename)
 
+const rootPath = path.join(__dirname, './module')
+
 describe('esops() minimal features', async assert => {
-  await withTempDir(__dirname, MOCK_STACKS['basic'], async root => {
+  await withTempDir(__dirname, rootPath, async root => {
     await esops({root})
 
     await assert({
