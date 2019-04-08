@@ -359,8 +359,8 @@ library
 /.vscode/launch.json
 /.vscode/settings.json
 /cSpell.json
+/infrastructure.md
 /package-lock.json
 /package.json
-/source/readme.md
 /tsconfig.json
 ### ESOPS AUTO GENERATED END ###
