@@ -112,16 +112,7 @@ const createReport = async params => {
   ui.md(filesList, logLevel)
 }
 
-const withErrorLog = async.extend(async () => {
-  // Error.stackTraceLimit = 100
-  // process.on('unhandledRejection', (reason, p) => {
-  //   console.log('Unhandled Rejection at:', reason.stack)
-  //   // application specific logging, throwing an error, or other logic here
-  // })
-})
-
 export const esops2 = async.pipe(
-  withErrorLog,
   withDefaultParams,
   walk,
   copyToDestination,

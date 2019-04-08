@@ -215,8 +215,6 @@ export const copyToDestination = async.extend(async params => {
     .filter(({shouldGitPublish}) => shouldGitPublish)
     .map(({relativePath}) => relativePath)
 
-  effects.ui.info(shouldGitPublish)
-
   const copyManifestForIgnore = copyManifest
     .filter(({relativePath}) => {
       const pathName = filesystem.path.basename(relativePath)
