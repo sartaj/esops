@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 import {cond, pipe, when} from 'ramda'
+import * as path from 'path'
 
 import {BadArgumentsMessage, CleanGuide, EsopsHowTo} from '../core/messages'
 import {Conditional, defaultTo} from '../utilities/sync'
@@ -24,14 +25,23 @@ const onNotFound: Conditional = [
   args => willAnnounce(BadArgumentsMessage, {args: args._})()
 ]
 
-const runApp: Conditional = defaultTo(() => {
+const runApp: Conditional = defaultTo(commands => {
+  const userRoot = commands._[0]
+  const userDestination = commands._[1]
   const cwd = process.cwd()
-  run({cwd})
+
+  const root = path.resolve(cwd, userRoot || '')
+  const destination = userDestination && path.resolve(cwd, userDestination)
+  run({root, destination})
 })
 
 const onFlags = pipe(onOverwriteFlag)
 
-const onCommand = cond([onHelp, onClean, onNotFound, runApp])
+const onCommand = cond([
+  onHelp,
+  onClean, //onNotFound,
+  runApp
+])
 
 type CLI = (argv: string[]) => void
 const cli: CLI = pipe(

@@ -2,6 +2,7 @@
   "destination": "../",
   "compose": [
     "github:sartaj/typescript-node-stack#2019-01",
-    "github:sartaj/ts-fp#2019-01-03"
+    "github:sartaj/ts-fp#2019-01-03",
+    "./compose"
   ]
 }
