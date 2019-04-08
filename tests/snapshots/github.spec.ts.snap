@@ -11,6 +11,7 @@ module.exports[`Describe esops() github features | Given a github path that comp
   ".travis.yml",
   ".vscode",
   ".vscode/extensions.json",
+  ".vscode/launch.json",
   ".vscode/settings.json",
   "cSpell.json",
   "esops.json",
@@ -378,8 +379,8 @@ $RECYCLE.BIN/
 /.node-dev.json
 /.nycrc
 /.prettierrc
-/.travis.yml
 /.vscode/extensions.json
+/.vscode/launch.json
 /.vscode/settings.json
 /cSpell.json
 /package.json
@@ -443,6 +444,7 @@ module.exports[`Describe esops() github features | Given different destination i
   ".travis.yml",
   ".vscode",
   ".vscode/extensions.json",
+  ".vscode/launch.json",
   ".vscode/settings.json",
   "cSpell.json",
   "infrastructure",
@@ -899,8 +901,8 @@ $RECYCLE.BIN/
 /.node-dev.json
 /.nycrc
 /.prettierrc
-/.travis.yml
 /.vscode/extensions.json
+/.vscode/launch.json
 /.vscode/settings.json
 /cSpell.json
 /package-lock.json

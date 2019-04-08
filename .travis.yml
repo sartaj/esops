@@ -1,0 +1,6 @@
+language: node_js
+before_install:
+  - npm i -g esops
+  - esops ./infrastructure
+node_js:
+  - 'node'
