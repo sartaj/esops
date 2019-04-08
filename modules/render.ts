@@ -1,8 +1,10 @@
-import {mergeDeepRight, flatten} from 'ramda'
+import * as stringify from 'json-stable-stringify'
+import {flatten, mergeDeepRight} from 'ramda'
 
 import {PATH_COMPONENT_TYPE} from '../core/constants'
 import {getComponentType} from '../core/lenses'
 import {FileNotToggledForMerge} from '../core/messages'
+import {Params} from '../core/types2'
 import async from '../utilities/async'
 import {throwError} from '../utilities/sync'
 import {
@@ -11,7 +13,6 @@ import {
   checkIfShouldMergeJson,
   resolveToggles
 } from './toggles-check'
-import {Params} from '../core/types2'
 
 /**
  * Add To Ignore Files
@@ -104,7 +105,7 @@ const renderPathComponent = async (params, component) => {
       const prev = JSON.parse(filesystem.readFileSync(manifest.to, 'utf-8'))
       const next = JSON.parse(filesystem.readFileSync(manifest.from, 'utf-8'))
       const merged = mergeDeepRight(prev, next)
-      const newFile = JSON.stringify(merged, null, 2)
+      const newFile = stringify(merged, {space: 2})
       filesystem.writeFileSync(manifest.to, newFile)
     } else {
       filesystem.forceCopy(manifest.from, manifest.to)
