@@ -1,23 +1,31 @@
 import chalk from 'chalk'
+
 import {
+  configIsObject,
   getComposeDefinitionFromEsopsConfig,
   sanitizeComponent,
-  sanitizeCompose,
-  configIsObject
+  sanitizeCompose
 } from '../core/lenses'
-import {findEsopsConfig} from '../modules/parse'
+import {ConfigNotFound, FinalReport2} from '../core/messages'
+import {Params} from '../core/types2'
 import {
+  findEsopsConfig2,
   hasEsopsCompose,
-  resolveComponent,
-  findEsopsConfig2
+  resolveComponent
 } from '../modules/parser2'
 import {copyToDestinationWithPrompts, renderComponent} from '../modules/render'
+import {
+  createFsDriver,
+  createInteractiveConsoleUX,
+  createResolver,
+  renderError
+} from '../side-effects'
 import async from '../utilities/async'
 import {throwError} from '../utilities/sync'
-import {FinalReport2, ConfigNotFound} from '../core/messages'
+import {extend} from '../utilities/sync'
 
 export const walk = async.extend(async params => {
-  const {ui, error} = params.effects
+  const {ui} = params.effects
   try {
     const renderOrRunRecursive = async composeDefinition => {
       const [resolutionError, resolvedComponent] = await async.result(
@@ -28,8 +36,8 @@ export const walk = async.extend(async params => {
       )
       if (resolutionError) throw resolutionError
       const componentIsALocalPathWithEsopsCompose = await hasEsopsCompose(
-        resolvedComponent
-      )
+        params
+      )(resolvedComponent)
 
       let report = []
       if (componentIsALocalPathWithEsopsCompose) {
@@ -49,7 +57,7 @@ export const walk = async.extend(async params => {
     }
 
     const runSeries = async.pipe(
-      findEsopsConfig,
+      findEsopsConfig2(params),
       async s => {
         if (!s) throw new TypeError(ConfigNotFound({cwd: params.parent}))
         return s
@@ -132,11 +140,46 @@ export const reportWalkStart = async.extend(async params => {
   params.effects.ui.info(chalk.bold.blue('\ncomposing infrastructure...\n'))
 })
 
-export const esops2 = async.pipe(
-  withDefaultParams,
-  reportWalkStart,
-  walk,
-  copyToDestinationWithPrompts,
-  createReport
-)
-export default esops2
+/**
+ * ## Side Effect Commands
+ * Side Effects are injected into the program as the `effects` key.
+ */
+
+const withSideEffects = extend(({logLevel}) => ({
+  effects: {
+    filesystem: createFsDriver(),
+    resolver: createResolver(),
+    ui: createInteractiveConsoleUX(logLevel)
+  }
+}))
+
+const crash = (e: Error) => {
+  switch (process.env.NODE_ENV) {
+    case 'test':
+      throw e
+    case 'e2e':
+      renderError(e)
+      break
+    default:
+      renderError(e)
+      process.exit(1)
+  }
+}
+
+/**
+ * Run
+ */
+
+export const esops = (params: Params) =>
+  async
+    .pipe(
+      withSideEffects,
+      withDefaultParams,
+      reportWalkStart,
+      walk,
+      copyToDestinationWithPrompts,
+      createReport
+    )(params)
+    .catch(crash)
+
+export default esops

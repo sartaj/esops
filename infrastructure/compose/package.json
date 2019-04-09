@@ -13,12 +13,12 @@
     "type": "git",
     "url": "git+https://github.com/sartaj/esops.git"
   },
-  "main": "library/interfaces/main.js",
-  "bin": "library/interfaces/cli.js",
+  "main": "library/index.js",
+  "bin": "library/cli/cli.js",
   "scripts": {
     "test:update-snaps": "UPDATE_SNAPSHOTS=1 npm run test",
     "test:e2e": "npm run build && NODE_ENV=e2e ts-node ./tests/e2e-runner.spec.ts",
-    "local-esops": "npx ts-node ./interfaces/cli.ts ./infrastructure"
+    "local-esops": "npx ts-node ./cli/cli.ts ./infrastructure"
   },
   "dependencies": {
     "async": "2.6.2",

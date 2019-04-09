@@ -15,7 +15,6 @@ import {
 } from '../core/messages'
 import {Params, EsopsConfig} from '../core/types2'
 import async from '../utilities/async'
-import {findEsopsConfig} from './parse'
 import {
   getComposeDefinitionFromEsopsConfig,
   getComponentType
@@ -78,10 +77,12 @@ export const fetchComponent = async (
   }
 }
 
-export const hasEsopsCompose = async resolvedComponent => {
+export const hasEsopsCompose = params => async resolvedComponent => {
   try {
     const [resolvedComponentString, variables, options] = resolvedComponent
-    const nextEsopsConfig = await findEsopsConfig(resolvedComponentString)
+    const nextEsopsConfig = await findEsopsConfig2(params)(
+      resolvedComponentString
+    )
 
     const nextEsopsComposeDefinition =
       nextEsopsConfig && getComposeDefinitionFromEsopsConfig(nextEsopsConfig)
@@ -129,7 +130,9 @@ export const resolveComponent = params => async sanitizedComponent => {
  * Read and parse esops config file from `esops.json` or `package.json`.
  */
 
-export const findEsopsConfig2 = params => (directory): EsopsConfig => {
+export const findEsopsConfig2 = params => async (
+  directory
+): Promise<EsopsConfig> => {
   const {
     effects: {filesystem}
   } = params
@@ -147,7 +150,7 @@ export const findEsopsConfig2 = params => (directory): EsopsConfig => {
       }
     })()
 
-    return parsed || {}
+    return parsed || null
   } catch (e) {
     throw e
   }

@@ -13,7 +13,7 @@ function logTitle(title) {
 }
 
 async function run() {
-  const esops = require('../library/interfaces/main').default
+  const esops = require('../library').default
   const esopsCli = require('../library/interfaces/cli').default
 
   logTitle('basic-bare-minimum')
@@ -44,24 +44,24 @@ async function run() {
   )
 
   logTitle('basic-node-module')
-  await withTempDir(__dirname, MOCK_STACKS['basic-node-module'], async cwd => {
-    await spawn(`npm`, ['install'], {cwd})
-    await esops({cwd})
+  await withTempDir(__dirname, MOCK_STACKS['basic-node-module'], async root => {
+    await spawn(`npm`, ['install'], {root})
+    await esops({root})
   })
 
   logTitle('basic-bad-path')
-  await withTempDir(__dirname, MOCK_STACKS['basic-bad-path'], async cwd => {
-    await esops({cwd})
+  await withTempDir(__dirname, MOCK_STACKS['basic-bad-path'], async root => {
+    await esops({root})
   })
 
   logTitle('basic-bad-config')
-  await withTempDir(__dirname, MOCK_STACKS['basic-bad-config'], async cwd => {
-    await esops({cwd})
+  await withTempDir(__dirname, MOCK_STACKS['basic-bad-config'], async root => {
+    await esops({root})
   })
 
   logTitle('basic-no-config')
-  await withTempDir(__dirname, MOCK_STACKS['basic-no-config'], async cwd => {
-    await esops({cwd})
+  await withTempDir(__dirname, MOCK_STACKS['basic-no-config'], async root => {
+    await esops({root})
   })
 
   logTitle('basic-local-overwrite yes')
