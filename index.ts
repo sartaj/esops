@@ -1,5 +1,3 @@
-import chalk from 'chalk'
-
 import {
   configIsObject,
   getComposeDefinitionFromEsopsConfig,
@@ -136,8 +134,8 @@ const createReport = async params => {
     logLevel
   )
 }
-export const reportWalkStart = async.extend(async params => {
-  params.effects.ui.info(chalk.bold.blue('\ncomposing infrastructure...\n'))
+export const reportWalkStart = async.extend(async ({effects: {ui}}) => {
+  ui.info(ui.chalk.bold.blue('\ncomposing infrastructure...\n'))
 })
 
 /**

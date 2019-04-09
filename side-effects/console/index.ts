@@ -1,6 +1,6 @@
+import chalk from 'chalk'
 import * as createLogDriver from 'log-driver'
 import * as prompts from 'prompts'
-
 import {announce} from './components/announce'
 import {renderError} from './components/error'
 import {md, mdFile} from './components/markdown'
@@ -32,7 +32,8 @@ export const createInteractiveConsoleUX = ui => {
     mdFile,
     prompts,
     ...logger,
-    info: (...args) => logger.info(prettifyLogArgs(...args))
+    info: (...args) => logger.info(prettifyLogArgs(...args)),
+    chalk
   }
 }
 

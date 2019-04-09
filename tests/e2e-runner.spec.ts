@@ -2,7 +2,6 @@
   NOTE: This script only runs if process.env.NODE_ENV=== 'e2e'
  */
 
-import * as spawn from 'await-spawn'
 import {withTempDir} from './test-utils/withTempDir'
 
 import {MOCK_STACKS, MOCK_COMPONENTS} from './examples'
@@ -14,7 +13,7 @@ function logTitle(title) {
 
 async function run() {
   const esops = require('../library').default
-  const esopsCli = require('../library/interfaces/cli').default
+  const esopsCli = require('../library/cli/cli').default
 
   logTitle('basic-bare-minimum')
   await withTempDir(
