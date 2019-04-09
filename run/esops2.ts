@@ -14,7 +14,7 @@ import {
 import {copyToDestinationWithPrompts, renderComponent} from '../modules/render'
 import async from '../utilities/async'
 import {throwError} from '../utilities/sync'
-import {FinalReport2} from '../core/messages'
+import {FinalReport2, ConfigNotFound} from '../core/messages'
 
 export const walk = async.extend(async params => {
   const {ui, error} = params.effects
@@ -50,6 +50,10 @@ export const walk = async.extend(async params => {
 
     const runSeries = async.pipe(
       findEsopsConfig,
+      async s => {
+        if (!s) throw new TypeError(ConfigNotFound({cwd: params.parent}))
+        return s
+      },
       getComposeDefinitionFromEsopsConfig,
       sanitizeCompose,
       async.mapToAsync(renderOrRunRecursive),

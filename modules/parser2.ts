@@ -7,7 +7,12 @@ import {
   PATH_COMPONENT_TYPE,
   URL_COMPONENT_TYPE
 } from '../core/constants'
-import {CWDNotDefined, NoPathError, GitFetchFailed} from '../core/messages'
+import {
+  CWDNotDefined,
+  NoPathError,
+  GitFetchFailed,
+  InvalidOptsError
+} from '../core/messages'
 import {Params, EsopsConfig} from '../core/types2'
 import async from '../utilities/async'
 import {findEsopsConfig} from './parse'
@@ -134,7 +139,13 @@ export const findEsopsConfig2 = params => (directory): EsopsConfig => {
       filesystem.existsSync(esopsConfigPath) &&
       filesystem.readFileSync(esopsConfigPath, {encoding: 'utf-8'})
 
-    const parsed = JSON.parse(esopsConfig)
+    const parsed = (() => {
+      try {
+        return JSON.parse(esopsConfig)
+      } catch {
+        throw new TypeError(InvalidOptsError())
+      }
+    })()
 
     return parsed || {}
   } catch (e) {

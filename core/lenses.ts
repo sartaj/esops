@@ -14,6 +14,7 @@ import {
 } from './constants'
 import {Option, OptionsWithProps, Stacks, WithProps} from './types'
 import {Compose, EsopsConfigObject} from './types2'
+import {InvalidOptsError} from './messages'
 
 /**
  * ## esops1
@@ -60,16 +61,22 @@ export const getComposeDefinitionFromEsopsConfig = result =>
     ? result
     : result.compose
 
-export const sanitizeCompose = (composeDefinition: Compose) =>
-  isString(composeDefinition)
-    ? [[composeDefinition, {}, {}]]
-    : isString(getCommand(composeDefinition)) && composeDefinition.length === 1
-    ? [[composeDefinition[0], {}, {}]]
-    : isArray(composeDefinition) &&
-      isString(getCommand(composeDefinition)) &&
-      isObject(getVariables(composeDefinition))
-    ? [composeDefinition]
-    : composeDefinition
+export const sanitizeCompose = (composeDefinition: Compose) => {
+  try {
+    return isString(composeDefinition)
+      ? [[composeDefinition, {}, {}]]
+      : isString(getCommand(composeDefinition)) &&
+        composeDefinition.length === 1
+      ? [[composeDefinition[0], {}, {}]]
+      : isArray(composeDefinition) &&
+        isString(getCommand(composeDefinition)) &&
+        isObject(getVariables(composeDefinition))
+      ? [composeDefinition]
+      : composeDefinition
+  } catch {
+    throw new TypeError(InvalidOptsError())
+  }
+}
 
 export const sanitizeComponent = async component =>
   isString(component) ? [component] : component

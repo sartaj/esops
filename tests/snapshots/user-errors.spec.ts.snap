@@ -1,9 +1,6 @@
-module.exports[`Describe esops1() user errors | Given no config found: should provide a friendly message on how to use esops`] = `
+module.exports[`Describe esops() user errors | Given no config found: should provide a friendly message on how to use esops`] = `
 
-TypeError: Your stack definition is invalid.
-Please add a a valid stack config to \`esops.json\` or \`package.json\`.
-
-A valid stack config will be a path to a directory you want to copy from.
+TypeError: No esops.json found at /current/working/directory
 
  ••• 
 ## How To
@@ -34,7 +31,7 @@ If global, just run \`esops\`. If local, use \`npx esops\`. Files will be genera
 
 `
 
-module.exports[`Describe esops1() user errors | Given a bad path in the config: should throw a friendly error`] = `
+module.exports[`Describe esops() user errors | Given a bad path in the config: should throw a friendly error`] = `
 
 TypeError: Path \`./infrastructure\` not found.
 
@@ -71,12 +68,11 @@ If global, just run \`esops\`. If local, use \`npx esops\`. Files will be genera
 
 `
 
-module.exports[`Describe esops1() user errors | Given an invalid config object: should throw a friendly error`] = `
+module.exports[`Describe esops() user errors | Given an invalid config object: should throw a friendly error`] = `
 
-TypeError: Your stack definition is invalid.
-Please add a a valid stack config to \`esops.json\` or \`package.json\`.
+TypeError: Your \`esops.json\` config is invalid.
+Please add a valid config to \`esops.json\`.
 
-A valid stack config will be a path to a directory you want to copy from.
 
  ••• 
 ## How To
@@ -107,12 +103,11 @@ If global, just run \`esops\`. If local, use \`npx esops\`. Files will be genera
 
 `
 
-module.exports[`Describe esops1() user errors | Given non parseable: should throw a friendly error`] = `
+module.exports[`Describe esops() user errors | Given non parseable: should throw a friendly error`] = `
 
-TypeError: Your stack definition is invalid.
-Please add a a valid stack config to \`esops.json\` or \`package.json\`.
+TypeError: Your \`esops.json\` config is invalid.
+Please add a valid config to \`esops.json\`.
 
-A valid stack config will be a path to a directory you want to copy from.
 
  ••• 
 ## How To

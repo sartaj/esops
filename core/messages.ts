@@ -36,10 +36,9 @@ const withHowTo = messageFunc => (args?: any) =>
   messageFunc(args) + '\n\n ••• \n' + EsopsHowTo()
 
 export const InvalidOptsError = withHowTo(() =>
-  chalk.red(`Your stack definition is invalid.
-Please add a a valid stack config to \`esops.json\` or \`package.json\`.
-
-A valid stack config will be a path to a directory you want to copy from.`)
+  chalk.red(`Your \`esops.json\` config is invalid.
+Please add a valid config to \`esops.json\`.
+`)
 )
 
 export const BadArgumentsMessage = withHowTo(({args}) =>
@@ -106,11 +105,7 @@ ${generatedFiles.map(relativePath => '* `' + relativePath + '`').join('\n')}
 `
 
 export const ConfigNotFound = withHowTo(({cwd}) =>
-  chalk.red(`No stack config found.
-
-${chalk.red.bold('## Current Working Directory')}
-
-${cwd}`)
+  chalk.red(`No esops.json found at ${cwd}`)
 )
 
 export const ShowFilesToOverwrite2 = files => `# Files To Be Overwritten
