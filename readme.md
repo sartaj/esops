@@ -1,6 +1,6 @@
 <div align="center">
 
-![esops](./core/brand/logo.png)
+![esops](./doc-assets/logo.png)
 
 </div>
 
