@@ -2,7 +2,7 @@
 import {cond, pipe, when} from 'ramda'
 import * as path from 'path'
 
-import {BadArgumentsMessage, CleanGuide, EsopsHowTo} from '../core/messages'
+import {BadArgumentsMessage, CleanGuide, EsopsHowTo} from '../domain/messages'
 import {Conditional, defaultTo} from '../utilities/sync'
 import {
   command,

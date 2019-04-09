@@ -6,19 +6,16 @@ import {
   NODE_PREFIX,
   PATH_COMPONENT_TYPE,
   URL_COMPONENT_TYPE
-} from '../core/constants'
+} from './constants'
 import {
   CWDNotDefined,
   NoPathError,
   GitFetchFailed,
   InvalidOptsError
-} from '../core/messages'
-import {Params, EsopsConfig} from '../core/types'
+} from './messages'
+import {Params, EsopsConfig} from './types'
 import async from '../utilities/async'
-import {
-  getComposeDefinitionFromEsopsConfig,
-  getComponentType
-} from '../core/lenses'
+import {getComposeDefinitionFromEsopsConfig, getComponentType} from './lenses'
 
 /**
  * ## Utilities

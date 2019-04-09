@@ -43,12 +43,6 @@ async function run() {
     }
   )
 
-  logTitle('basic-node-module')
-  await withTempDir(__dirname, MOCK_STACKS['basic-node-module'], async root => {
-    await spawn(`npm`, ['install'], {root})
-    await esops({root})
-  })
-
   logTitle('basic-bad-path')
   await withTempDir(__dirname, MOCK_STACKS['basic-bad-path'], async root => {
     await esops({root})

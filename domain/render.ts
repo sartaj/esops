@@ -1,8 +1,8 @@
 import * as stringify from 'json-stable-stringify'
 import {flatten, mergeDeepRight} from 'ramda'
 
-import {PATH_COMPONENT_TYPE} from '../core/constants'
-import {getComponentType} from '../core/lenses'
+import {PATH_COMPONENT_TYPE} from './constants'
+import {getComponentType} from './lenses'
 import {
   FileNotToggledForMerge,
   ShowFilesToOverwrite2,
@@ -10,8 +10,8 @@ import {
   UserConfirmOverwriteMessage,
   UserConfirmOverwriteMessageTrue,
   UserConfirmOverwriteMessageFalse
-} from '../core/messages'
-import {Params} from '../core/types'
+} from './messages'
+import {Params} from './types'
 import async from '../utilities/async'
 import {throwError} from '../utilities/sync'
 import {

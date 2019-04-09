@@ -3,8 +3,8 @@ import * as path from 'path'
 import {pipe} from 'ramda'
 import * as resolvePkg from 'resolve-pkg'
 
-import {CWDNotDefined, NoPathError} from '../../core/messages'
-import {Params} from '../../core/types'
+import {CWDNotDefined, NoPathError} from '../../domain/messages'
+import {Params} from '../../domain/types'
 import {spawn} from '../process'
 
 const NODE_PREFIX = 'node:'
