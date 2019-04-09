@@ -12,11 +12,6 @@ import {
 
 import run from '../'
 
-const onOverwriteFlag = when(command.hasFlag('overwrite', 'o'), argv => {
-  require('prompts').inject([true])
-  return argv
-})
-
 const onHelp: Conditional = [command.first('help'), willAnnounce(EsopsHowTo)]
 
 const onClean: Conditional = [command.first('clean'), willAnnounce(CleanGuide)]
@@ -30,13 +25,12 @@ const runApp: Conditional = defaultTo(commands => {
   const userRoot = commands._[0]
   const userDestination = commands._[1]
   const cwd = process.cwd()
-
+  const overwrite = commands.o || commands.overwrite
+  const prompts = overwrite ? [true] : undefined
   const root = path.resolve(cwd, userRoot || '')
   const destination = userDestination && path.resolve(cwd, userDestination)
-  run({root, destination})
+  run({root, destination, prompts})
 })
-
-const onFlags = pipe(onOverwriteFlag)
 
 const onCommand = cond([
   onHelp,
@@ -47,7 +41,6 @@ const onCommand = cond([
 type CLI = (argv: string[]) => void
 const cli: CLI = pipe(
   minimist,
-  onFlags,
   onCommand
 )
 
