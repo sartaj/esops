@@ -10,7 +10,7 @@ import {
   willAnnounce
 } from '../side-effects/console/components/cli'
 
-import run from '../run/run'
+import run from '../'
 
 const onOverwriteFlag = when(command.hasFlag('overwrite', 'o'), argv => {
   require('prompts').inject([true])

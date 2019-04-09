@@ -11,7 +11,7 @@ import {
   UserConfirmOverwriteMessageTrue,
   UserConfirmOverwriteMessageFalse
 } from '../core/messages'
-import {Params} from '../core/types2'
+import {Params} from '../core/types'
 import async from '../utilities/async'
 import {throwError} from '../utilities/sync'
 import {

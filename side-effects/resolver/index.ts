@@ -4,7 +4,7 @@ import {pipe} from 'ramda'
 import * as resolvePkg from 'resolve-pkg'
 
 import {CWDNotDefined, NoPathError} from '../../core/messages'
-import {Params} from '../../core/types2'
+import {Params} from '../../core/types'
 import {spawn} from '../process'
 
 const NODE_PREFIX = 'node:'

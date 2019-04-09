@@ -13,7 +13,7 @@ import {
   GitFetchFailed,
   InvalidOptsError
 } from '../core/messages'
-import {Params, EsopsConfig} from '../core/types2'
+import {Params, EsopsConfig} from '../core/types'
 import async from '../utilities/async'
 import {
   getComposeDefinitionFromEsopsConfig,

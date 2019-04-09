@@ -12,7 +12,7 @@ import {
   SHELL_EFFECT_PREFIX,
   URL_COMPONENT_TYPE
 } from './constants'
-import {Compose, EsopsConfigObject} from './types2'
+import {Compose, EsopsConfigObject} from './types'
 import {InvalidOptsError} from './messages'
 
 /**

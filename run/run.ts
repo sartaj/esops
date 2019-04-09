@@ -7,12 +7,12 @@ import {
   sanitizeCompose
 } from '../core/lenses'
 import {ConfigNotFound, FinalReport2} from '../core/messages'
-import {Params} from '../core/types2'
+import {Params} from '../core/types'
 import {
   findEsopsConfig2,
   hasEsopsCompose,
   resolveComponent
-} from '../modules/parser2'
+} from '../modules/parser'
 import {copyToDestinationWithPrompts, renderComponent} from '../modules/render'
 import {
   createFsDriver,
