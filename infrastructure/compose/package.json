@@ -1,7 +1,7 @@
 {
   "name": "esops",
-  "version": "2.5.7",
-  "description": " Decouple your infrastructure with auto-ignored template generation.",
+  "version": "3.0.0",
+  "description": "Decouple your infrastructure with composable auto-ignored template generation.",
   "keywords": [],
   "author": "Sartaj<sartaj@sartaj.me>",
   "license": "MIT",

@@ -7,8 +7,8 @@
 <h1 align="center">esops</h1>
 
 <div align="center">
-  <h3 align="center">Decoupled Infrastructure</h3>
-  <h6 align="center">Template Generation with a Twist: Automatically Add Generated Files to Ignore Files.</h6>
+  <h3 align="center">Decoupled & Composable Infrastructure</h3>
+  <h6 align="center">Decouple your infrastructure with composable auto-ignored template generation Files.</h6>
 </div>
 
 <p align="center">
@@ -21,6 +21,8 @@
 </p>
 
 - **Decouple Codependent Config Files**: manage codependent config files like `.eslintrc`, `tsconfig.json`, `.prettierrc`, `.editorconfig`, and `.vscode` files in a separate directory or module.
+- **Decouple devDependencies**: Create your final `package.json` from composable pieces of `package.json`. This allows you manage devDependencies as a separate repository.
+- **Compose Your Dev Environment**: Compose elements of your dev environment and infrastructure from smaller pieces. `esops` uses user-defined explicit merge rules and enforces the use of git tags for immutable version management for infrastructure components.
 - **Provide Reference Implementations and Design Docs**: Create reference implementations that can be installed without polluting your `git` or `npm` publishes.
 
 <div align="center">
@@ -29,37 +31,11 @@
 
 </div>
 
-## Try It
-
-1. Create a folder: `mkdir test`
-2. Initialize Git: `git init`
-3. Create a `.gitignore` and add `node_modules` to it.
-4. Create a `package.json` with the following:
-
-_note:_ The [prepare hook in npm](https://docs.npmjs.com/misc/scripts) will run on every publish and dev install.
-
-```json
-{
-  "scripts": {
-    "prepare": "esops"
-  },
-  "devDependencies": {
-    "esops": "latest",
-    "typescript-node-stack": "github:sartaj/typescript-node-stack",
-    "typescript": "latest",
-    "nyc": "latest"
-  },
-  "esops": "node:typescript-node-stack/stack"
-}
-```
-
-5. Run `npm install` or `yarn`, watch how all the config files are generated. Notice how all of the config files are ignored by git. 🙌🏾
-
 ### Packs To Try
 
-| **package**                                                                                                            | **description**                              |
-| ---------------------------------------------------------------------------------------------------------------------- | -------------------------------------------- |
-| [`{ "typescript-node-stack": "github:sartaj/typescript-node-stack" }`](http://github.com/sartaj/typescript-node-stack) | Have typescript with node tests ready to go. |
+| **package**                                                                               | **description**                              |
+| ----------------------------------------------------------------------------------------- | -------------------------------------------- |
+| [`"github:sartaj/typescript-node-stack"`](http://github.com/sartaj/typescript-node-stack) | Have typescript with node tests ready to go. |
 
 ## Install
 
@@ -81,40 +57,22 @@ yarn add esops --dev`
 
 ## Setup
 
-Config esops in `package.json` or `esops.json`
+Config esops in `esops.json`
 
 **`esops.json`**
 
 ```json
-"node:@my-org/my-stack/stack"
-```
-
-**`package.json`**
-
-```json
-{
-  "esops": "node:@my-org/my-stack/stack"
-}
+["github:sartaj/typescript-node-stack#master"]
 ```
 
 ## Resolution Types
 
 - _Filesystem:_ `['./infrastructure']`
-- _Node Module:_ `['node:@my-org/my-stack/stack']`
+- _GitHub:_ `['github:user/repo#tag|branch']`
 
 ## Running
 
 If global, just run `esops`. If local, use `npx esops`. Files will be generated, and if you have a `.gitignore`, it will be updated to include the generated files.
-
-A good place to run esops would be as a [prepare](https://docs.npmjs.com/misc/scripts) command in your npm scripts, as it will run esops on every dev install.
-
-```json
-{
-  "scripts": {
-    "prepare": "esops --overwrite"
-  }
-}
-```
 
 ## To Clean Files
 
