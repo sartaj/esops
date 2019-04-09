@@ -110,6 +110,8 @@ module.exports[`Describe esops typescript open source module user | Given differ
 
 module.exports[`Describe esops typescript open source module user | Given different destination in root esops config: should create proper .gitignore with manifest`] = `
 
+# build folder
+library
 
 # Created by https://www.gitignore.io/api/node,linux,macos,windows,reactnative
 # Edit at https://www.gitignore.io/?templates=node,linux,macos,windows,reactnative

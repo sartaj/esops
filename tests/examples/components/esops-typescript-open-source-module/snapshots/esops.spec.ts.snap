@@ -22,6 +22,8 @@ module.exports[`Describe esops typescript open source module | Given a github pa
 
 module.exports[`Describe esops typescript open source module | Given a .gitignore: should create merged .gitignore with manifest`] = `
 
+# build folder
+library
 
 # Created by https://www.gitignore.io/api/node,linux,macos,windows,reactnative
 # Edit at https://www.gitignore.io/?templates=node,linux,macos,windows,reactnative
