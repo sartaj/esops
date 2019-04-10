@@ -13,7 +13,7 @@ function logTitle(title) {
 
 async function run() {
   const esops = require('../library').default
-  const esopsCli = require('../library/cli/cli').default
+  const esopsCli = require('../library/interfaces/cli').default
 
   logTitle('basic-bare-minimum')
   await withTempDir(

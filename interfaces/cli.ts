@@ -1,8 +1,8 @@
 #!/usr/bin/env node
-import {cond, pipe, when} from 'ramda'
+import {cond, pipe} from 'ramda'
 import * as path from 'path'
 
-import {BadArgumentsMessage, CleanGuide, EsopsHowTo} from '../domain/messages'
+import {CleanGuide, EsopsHowTo} from '../domain/messages'
 import {Conditional, defaultTo} from '../utilities/sync'
 import {
   command,
@@ -10,16 +10,11 @@ import {
   willAnnounce
 } from '../side-effects/console/components/cli'
 
-import run from '../'
+import esops from './node'
 
 const onHelp: Conditional = [command.first('help'), willAnnounce(EsopsHowTo)]
 
 const onClean: Conditional = [command.first('clean'), willAnnounce(CleanGuide)]
-
-const onNotFound: Conditional = [
-  command.notFound,
-  args => willAnnounce(BadArgumentsMessage, {args: args._})()
-]
 
 const runApp: Conditional = defaultTo(commands => {
   const userRoot = commands._[0]
@@ -29,14 +24,10 @@ const runApp: Conditional = defaultTo(commands => {
   const prompts = overwrite ? [true] : undefined
   const root = path.resolve(cwd, userRoot || '')
   const destination = userDestination && path.resolve(cwd, userDestination)
-  run({root, destination, prompts})
+  esops({root, destination, prompts})
 })
 
-const onCommand = cond([
-  onHelp,
-  onClean, //onNotFound,
-  runApp
-])
+const onCommand = cond([onHelp, onClean, runApp])
 
 type CLI = (argv: string[]) => void
 const cli: CLI = pipe(
