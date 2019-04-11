@@ -2,6 +2,7 @@ module.exports[`Describe esops() ignore file generation | Given an included .git
 
 
 ### ESOPS AUTO GENERATED BEGIN ###
+/.npmignore
 /.vscode/settings.json
 /src/stores/stores-architecture.md
 /tsconfig.json
@@ -12,6 +13,7 @@ module.exports[`Describe esops() ignore file generation | Given an included .npm
 
 /src/**
 ### ESOPS AUTO GENERATED BEGIN ###
+/.gitignore
 /.vscode/settings.json
 /src/stores/stores-architecture.md
 /tsconfig.json

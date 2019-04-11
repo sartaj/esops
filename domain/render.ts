@@ -13,7 +13,7 @@ import {
 } from './messages'
 import {Params} from './types'
 import async from '../utilities/async'
-import {throwError} from '../utilities/sync'
+import {throwError, extend} from '../utilities/sync'
 import {
   checkIfShouldGitPublish,
   checkIfShouldMergeFile,
@@ -25,15 +25,28 @@ import {
  * Add To Ignore Files
  */
 
-// [How to exclude file only from root folder in Git](https://stackoverflow.com/a/3637678)
-const addSlashForGitIgnore = relativePath => `/${relativePath}`
-
-export const updateIgnoreFile = ignoreFilename => filesystem => destination => copyManifest => {
+export const updateIgnoreFile = ignoreFilename => filesystem => destination => filesToNotIgnore => copyManifest => {
   const ignoreFile = filesystem.path.join(destination, ignoreFilename)
+
+  // [How to exclude file only from root folder in Git](https://stackoverflow.com/a/3637678)
+  const addSlashForGitIgnore = relativePath => `/${relativePath}`
+
+  const commentOutIfShouldPublish = relativePath =>
+    filesToNotIgnore.includes(relativePath.substr(1)) // substr(1) to remove added slash on previous mapping
+      ? `#shouldPublish:${relativePath}`
+      : relativePath
+
   if (filesystem.existsSync(ignoreFile)) {
     const ignorePaths = copyManifest
       .map(({relativePath}) => relativePath)
+      .filter(relativePath => {
+        // Don't add self
+        const pathName = filesystem.path.basename(relativePath)
+        return pathName !== ignoreFilename
+      })
       .map(addSlashForGitIgnore)
+      .map(commentOutIfShouldPublish) // the comment can be used later for deleting generated files
+      .sort()
       .join('\n')
 
     const startLine = '### ESOPS AUTO GENERATED BEGIN ###'
@@ -217,19 +230,18 @@ export const copyToDestination = async.extend(async params => {
 
   const report = flatten(params.results)
 
-  const shouldGitPublish = report
+  const filesToGitPublish = report
     .filter(({shouldGitPublish}) => shouldGitPublish)
     .map(({relativePath}) => relativePath)
 
-  const copyManifestForIgnore = copyManifest
-    .filter(({relativePath}) => {
-      const pathName = filesystem.path.basename(relativePath)
-      return pathName !== '.gitignore' && pathName !== '.npmignore'
-    })
-    .filter(({relativePath}) => !shouldGitPublish.includes(relativePath))
+  const filesToNpmPublish = report
+    .filter(({shouldNpmPublish}) => shouldNpmPublish)
+    .map(({relativePath}) => relativePath)
 
-  updateGitIgnore(filesystem)(renderPrepFolder)(copyManifestForIgnore)
-  updateNpmIgnore(filesystem)(renderPrepFolder)(copyManifestForIgnore)
+  effects.ui.info(copyManifest.filter(({shouldGitPublish}) => shouldGitPublish))
+
+  updateGitIgnore(filesystem)(renderPrepFolder)(filesToGitPublish)(copyManifest)
+  updateNpmIgnore(filesystem)(renderPrepFolder)(filesToNpmPublish)(copyManifest)
 
   copyManifest.forEach(({fromPath, toPath}) => {
     filesystem.forceCopy(fromPath, toPath)

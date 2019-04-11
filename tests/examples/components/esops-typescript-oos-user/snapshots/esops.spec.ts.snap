@@ -102,8 +102,8 @@ module.exports[`Describe esops typescript open source module user | Given differ
     "build:watch": "tsc -w",
     "debug": "NODE_ENV=test ts-node-dev --inspect --respawn ./node_modules/.bin/tape tests/**.spec.ts | tap-nirvana",
     "report": "NODE_ENV=test nyc --require ts-node/register tape **/*.spec.ts -x **/library/** | tap-nirvana",
-    "test": "NODE_ENV=test ts-node ./node_modules/.bin/tape tests/**/*.spec.ts | tap-nirvana",
-    "test:watch": "NODE_ENV=test ts-node-dev --respawn ./node_modules/.bin/tape tests/**/*.spec.ts | tap-nirvana"
+    "test": "NODE_ENV=test ts-node ./node_modules/.bin/tape '{,!(node_modules)/**/}*.spec.ts' | tap-nirvana",
+    "test:watch": "NODE_ENV=test ts-node-dev --respawn ./node_modules/.bin/tape '{,!(node_modules)/**/}*.spec.ts' | tap-nirvana"
   },
   "version": "2.5.7"
 }`
@@ -462,6 +462,7 @@ $RECYCLE.BIN/
 # End of https://www.gitignore.io/api/node,linux,macos,windows,reactnative
 
 ### ESOPS AUTO GENERATED BEGIN ###
+#shouldPublish:/.travis.yml
 /.eslintignore
 /.eslintrc
 /.markdownlint.json

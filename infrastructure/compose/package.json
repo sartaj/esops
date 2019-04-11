@@ -1,6 +1,6 @@
 {
   "name": "esops",
-  "version": "3.0.2",
+  "version": "3.0.4",
   "description": "Decouple your infrastructure with composable auto-ignored template generation.",
   "keywords": [],
   "author": "Sartaj<sartaj@sartaj.me>",
@@ -18,7 +18,7 @@
   "scripts": {
     "test:update-snaps": "UPDATE_SNAPSHOTS=1 npm run test",
     "test:e2e": "npm run build && NODE_ENV=e2e ts-node ./tests/e2e-runner.spec.ts",
-    "local-esops": "npx ts-node ./cli/cli.ts ./infrastructure"
+    "local-esops": "npx ts-node ./interfaces/cli.ts ./infrastructure"
   },
   "dependencies": {
     "async": "2.6.2",
