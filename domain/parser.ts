@@ -74,24 +74,9 @@ export const fetchComponent = async (
   }
 }
 
-export const hasEsopsCompose = params => async resolvedComponent => {
-  try {
-    const [resolvedComponentString, variables, options] = resolvedComponent
-    const nextEsopsConfig = await findEsopsConfig2(params)(
-      resolvedComponentString
-    )
-
-    const nextEsopsComposeDefinition =
-      nextEsopsConfig && getComposeDefinitionFromEsopsConfig(nextEsopsConfig)
-    const isDirectoryWithComposeDefinition =
-      nextEsopsConfig && nextEsopsComposeDefinition ? true : false
-
-    return isDirectoryWithComposeDefinition
-  } catch (e) {
-    throw e
-  }
-}
-
+/**
+ * ## Resolvers
+ */
 export const resolveComponent = params => async sanitizedComponent => {
   try {
     const {
@@ -123,11 +108,34 @@ export const resolveComponent = params => async sanitizedComponent => {
 }
 
 /**
+ * ### hasEsopsCompose
+ * Check if resolved component has an esops compose definition.
+ */
+export const hasEsopsCompose = params => async (
+  resolvedComponent
+): Promise<boolean> => {
+  try {
+    const [resolvedComponentString, variables, options] = resolvedComponent
+    const nextEsopsConfig = await findEsopsConfig(params)(
+      resolvedComponentString
+    )
+
+    const nextEsopsComposeDefinition =
+      nextEsopsConfig && getComposeDefinitionFromEsopsConfig(nextEsopsConfig)
+    const isDirectoryWithComposeDefinition =
+      nextEsopsConfig && nextEsopsComposeDefinition ? true : false
+
+    return isDirectoryWithComposeDefinition
+  } catch (e) {
+    throw e
+  }
+}
+
+/**
  * ### findEsopsConfig
  * Read and parse esops config file from `esops.json` or `package.json`.
  */
-
-export const findEsopsConfig2 = params => async (
+export const findEsopsConfig = params => async (
   directory
 ): Promise<EsopsConfig> => {
   const {

@@ -1,0 +1,16 @@
+{
+  "name": "esops",
+  "version": "2.5.7",
+  "description": " Decouple your infrastructure with auto-ignored template generation.",
+  "keywords": [],
+  "author": "Sartaj<sartaj@sartaj.me>",
+  "license": "MIT",
+  "homepage": "https://github.com/sartaj/esops#readme",
+  "bugs": {
+    "url": "https://github.com/sartaj/esops/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sartaj/esops.git"
+  }
+}
