@@ -1,6 +1,6 @@
 import * as path from 'path'
 
-import esops from '../../library'
+import esops from '../../index'
 import {getFileContents} from '../../test-utilities/fs-utils'
 import {withSnapshots} from '../../test-utilities/withSnapshots'
 import {withTempDir} from '../../test-utilities/withTempDir'

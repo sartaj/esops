@@ -1,5 +1,3 @@
-import {flatten} from 'ramda'
-
 import async from '../utilities/async'
 import {
   FilesNotOverwritten,
@@ -31,13 +29,11 @@ export const copyToDestination = async.extend(async params => {
     }
   })
 
-  const report = flatten(params.results)
-
-  const filesToGitPublish = report
+  const filesToGitPublish = params.results
     .filter(({shouldGitPublish}) => shouldGitPublish)
     .map(({relativePath}) => relativePath)
 
-  const filesToNpmPublish = report
+  const filesToNpmPublish = params.results
     .filter(({shouldNpmPublish}) => shouldNpmPublish)
     .map(({relativePath}) => relativePath)
 

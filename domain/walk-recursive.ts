@@ -1,3 +1,5 @@
+import {flatten} from 'ramda'
+
 import async from '../utilities/async'
 import {throwError} from '../utilities/sync'
 import {
@@ -59,3 +61,7 @@ export const walk = async.extend(async params => {
     throw e
   }
 })
+
+export const flattenWalkResults = async.extend(async params => ({
+  results: flatten(params.results)
+}))

@@ -1,6 +1,6 @@
 import * as path from 'path'
 
-import esops from '../../library'
+import esops from '../../index'
 import {
   getFileContents,
   getSortedFilePaths

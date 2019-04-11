@@ -17,17 +17,17 @@ A valid stack config will be a path to a directory you want to copy from.
 #### in \`esops.json\`
 
 \`\`\`json
-"node:@myorg/my-stack/stack"
+"node:@my-org/my-stack/stack"
 \`\`\`
 
 #### in \`package.json\`
 
-\`{ "esops": "node:@myorg/my-stack/stack" }\`
+\`{ "esops": "node:@my-org/my-stack/stack" }\`
 
 ### Resolution Types
 
 - _Filesystem:_ \`'./infrastructure'\`
-- _Node Module:_ \`'node:@myorg/my-stack/stack'\`
+- _Node Module:_ \`'node:@my-org/my-stack/stack'\`
 
 ### Run \`esops\`
 

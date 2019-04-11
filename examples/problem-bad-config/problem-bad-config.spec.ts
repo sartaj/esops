@@ -1,7 +1,7 @@
 import * as path from 'path'
 import {Try} from 'riteway'
 
-import esops from '../../library'
+import esops from '../../index'
 import {cleanErrorString} from '../../test-utilities/fs-utils'
 import {withSnapshots} from '../../test-utilities/withSnapshots'
 import {withTempDir} from '../../test-utilities/withTempDir'

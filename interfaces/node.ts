@@ -14,13 +14,16 @@ import {extend} from '../utilities/sync'
  * Side Effects are injected into the program as the `effects` key.
  */
 
-const withSideEffects = extend(({logLevel}) => ({
-  effects: {
-    filesystem: createFsDriver(),
-    resolver: createResolver(),
-    ui: createInteractiveConsoleUX(logLevel)
+const withSideEffects = extend(({logLevel}) => {
+  debugger
+  return {
+    effects: {
+      filesystem: createFsDriver(),
+      resolver: createResolver(),
+      ui: createInteractiveConsoleUX(logLevel)
+    }
   }
-}))
+})
 
 const crash = (e: Error) => {
   switch (process.env.NODE_ENV) {
