@@ -17,7 +17,7 @@
   "bin": "library/interfaces/cli.js",
   "scripts": {
     "test:update-snaps": "UPDATE_SNAPSHOTS=1 npm run test",
-    "test:e2e": "npm run build && NODE_ENV=e2e ts-node ./tests/e2e-runner.spec.ts",
+    "test:e2e": "npm run build && NODE_ENV=e2e ts-node ./test-utilities/e2e-runner.spec.ts",
     "local-esops": "npx ts-node ./interfaces/cli.ts ./infrastructure"
   },
   "dependencies": {
