@@ -1,10 +1,10 @@
 import * as path from 'path'
 import {Try} from 'riteway'
 
-import esops from '../../'
-import {cleanErrorString} from '../../tests/test-utils/fs-utils'
-import {withSnapshots} from '../../tests/test-utils/withSnapshots'
-import {withTempDir} from '../../tests/test-utils/withTempDir'
+import esops from '../../library'
+import {cleanErrorString} from '../../test-utilities/fs-utils'
+import {withSnapshots} from '../../test-utilities/withSnapshots'
+import {withTempDir} from '../../test-utilities/withTempDir'
 
 const rootPath = path.join(__dirname, './module')
 

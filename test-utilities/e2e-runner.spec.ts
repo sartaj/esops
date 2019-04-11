@@ -2,7 +2,7 @@
   NOTE: This script only runs if process.env.NODE_ENV=== 'e2e'
  */
 
-import {withTempDir} from './test-utils/withTempDir'
+import {withTempDir} from './withTempDir'
 
 import {MOCK_COMPONENTS} from '../examples'
 import chalk from 'chalk'

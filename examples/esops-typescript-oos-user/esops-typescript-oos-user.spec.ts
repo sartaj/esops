@@ -1,13 +1,12 @@
 import * as path from 'path'
-import * as prompts from 'prompts'
 
-import esops from '../../'
+import esops from '../../library'
 import {
   getFileContents,
   getSortedFilePaths
-} from '../../tests/test-utils/fs-utils'
-import {withSnapshots} from '../../tests/test-utils/withSnapshots'
-import {withTempDir} from '../../tests/test-utils/withTempDir'
+} from '../../test-utilities/fs-utils'
+import {withSnapshots} from '../../test-utilities/withSnapshots'
+import {withTempDir} from '../../test-utilities/withTempDir'
 
 const describe = withSnapshots(__filename)
 
