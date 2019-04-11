@@ -160,3 +160,18 @@ export const findEsopsConfig = params => async (
     throw e
   }
 }
+
+/**
+ * ### listFileTreeSync
+ * Get a list of files that ignore directories and toggle files
+ *
+ * TODO: Explore need/use case for folder path support.
+ * TODO: Explore need/use case for allowing esops toggle files to be copies.
+ */
+type ListFiles = (params: Params) => (cwd: string) => string[]
+export const listFileTreeSync: ListFiles = ({effects: {filesystem}}) => (
+  cwd: string
+) =>
+  filesystem
+    .listTreeSync(cwd)
+    .filter(filePath => !filesystem.isDirectory.sync(filePath))
