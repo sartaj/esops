@@ -1,0 +1,37 @@
+module.exports[`Describe esops() user errors | Given a bad path in the config: should throw a friendly error`] = `
+
+TypeError: Path \`./infrastructure\` not found.
+
+## Current Working Directory
+
+/current/working/directory
+
+ ••• 
+## How To
+Esops works by adding a valid stack config to \`esops.json\` or \`package.json\`.
+
+A valid stack config will be a path to a directory you want to copy from.
+
+### Configure esops in \`package.json\` or \`esops.json\`
+
+#### in \`esops.json\`
+
+\`\`\`json
+"node:@myorg/my-stack/stack"
+\`\`\`
+
+#### in \`package.json\`
+
+\`{ "esops": "node:@myorg/my-stack/stack" }\`
+
+### Resolution Types
+
+- _Filesystem:_ \`'./infrastructure'\`
+- _Node Module:_ \`'node:@myorg/my-stack/stack'\`
+
+### Run \`esops\`
+
+If global, just run \`esops\`. If local, use \`npx esops\`. Files will be generated, and if you have a \`.gitignore\`, it will be updated to include the generated files.
+
+`
+
