@@ -238,8 +238,6 @@ export const copyToDestination = async.extend(async params => {
     .filter(({shouldNpmPublish}) => shouldNpmPublish)
     .map(({relativePath}) => relativePath)
 
-  effects.ui.info(copyManifest.filter(({shouldGitPublish}) => shouldGitPublish))
-
   updateGitIgnore(filesystem)(renderPrepFolder)(filesToGitPublish)(copyManifest)
   updateNpmIgnore(filesystem)(renderPrepFolder)(filesToNpmPublish)(copyManifest)
 

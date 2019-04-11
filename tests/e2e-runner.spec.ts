@@ -4,7 +4,7 @@
 
 import {withTempDir} from './test-utils/withTempDir'
 
-import {MOCK_STACKS, MOCK_COMPONENTS} from './examples'
+import {MOCK_COMPONENTS} from '../examples'
 import chalk from 'chalk'
 
 function logTitle(title) {
@@ -42,20 +42,32 @@ async function run() {
     }
   )
 
-  logTitle('basic-bad-path')
-  await withTempDir(__dirname, MOCK_STACKS['basic-bad-path'], async root => {
-    await esops({root})
-  })
+  logTitle('problem-bad-path')
+  await withTempDir(
+    __dirname,
+    MOCK_COMPONENTS['problem-bad-path'],
+    async root => {
+      await esops({root})
+    }
+  )
 
-  logTitle('basic-bad-config')
-  await withTempDir(__dirname, MOCK_STACKS['basic-bad-config'], async root => {
-    await esops({root})
-  })
+  logTitle('problem-bad-config')
+  await withTempDir(
+    __dirname,
+    MOCK_COMPONENTS['problem-bad-config'],
+    async root => {
+      await esops({root})
+    }
+  )
 
-  logTitle('basic-no-config')
-  await withTempDir(__dirname, MOCK_STACKS['basic-no-config'], async root => {
-    await esops({root})
-  })
+  logTitle('problem-no-config')
+  await withTempDir(
+    __dirname,
+    MOCK_COMPONENTS['problem-no-config'],
+    async root => {
+      await esops({root})
+    }
+  )
 
   logTitle('basic-local-overwrite yes')
   await withTempDir(

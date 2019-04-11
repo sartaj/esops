@@ -1,7 +1,0 @@
-{
-  "name": "esops-test",
-  "devDependencies": {
-    "@test/infrastructure": "file:./infrastructure"
-  },
-  "esops": "node:@test/infrastructure/basic"
-}
