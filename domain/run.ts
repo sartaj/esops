@@ -2,7 +2,7 @@ import async from '../utilities/async'
 import {copyToDestinationWithPrompts} from './copy-to-destination'
 import {createReport, reportWalkStart} from './messages'
 import {Params} from './types'
-import {walk} from './walk'
+import {walk} from './walk-recursive'
 import {withDefaultParams} from './with-default-params'
 
 /**
