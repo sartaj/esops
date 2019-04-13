@@ -147,10 +147,11 @@ export const createReport = async.extend(async params => {
   const {
     destination,
     logLevel,
-    effects: {filesystem, ui}
+    effects: {filesystem, ui},
+    filesWritten
   } = params
+  if (!filesWritten) return false
   const renderPrepFolder = await filesystem.appCache.getRenderPrepFolder()
-
   const generatedFiles = filesystem
     .listTreeSync(renderPrepFolder)
     .map(file => filesystem.path.relative(renderPrepFolder, file))
@@ -163,6 +164,7 @@ export const createReport = async.extend(async params => {
     }),
     logLevel
   )
+  return true
 })
 
 export const reportWalkStart = async.extend(async ({effects: {ui}}) => {

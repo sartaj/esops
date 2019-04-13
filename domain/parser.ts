@@ -47,14 +47,15 @@ export const fetchComponent = async (
 ) => {
   try {
     const pathString = sanitizedComponent[0]
-    if (!parent) throw new TypeError(CWDNotDefined())
+    const parentPath = parent[0]
+    if (!parentPath) throw new TypeError(CWDNotDefined())
     let modulePath
 
-    if (!modulePath) modulePath = await tryFSPath(pathString, {cwd: parent})
+    if (!modulePath) modulePath = await tryFSPath(pathString, {cwd: parentPath})
     if (!modulePath && pathString.startsWith(NODE_PREFIX)) {
       const nodePath = pathString.substr(NODE_PREFIX.length)
 
-      modulePath = await tryNodePath(nodePath, {cwd: parent})
+      modulePath = await tryNodePath(nodePath, {cwd: parentPath})
     }
 
     try {
@@ -67,7 +68,8 @@ export const fetchComponent = async (
       throw new TypeError(GitFetchFailed({pathString, message: e.message}))
     }
 
-    if (!modulePath) throw new TypeError(NoPathError({pathString, cwd: parent}))
+    if (!modulePath)
+      throw new TypeError(NoPathError({pathString, cwd: parentPath}))
     return modulePath
   } catch (e) {
     throw e

@@ -13,6 +13,7 @@ import {renderComponent} from './render'
 
 export const walk = async.extend(async params => {
   const {ui} = params.effects
+  ui.info(params.parent[0])
   try {
     const renderOrRunRecursive = async composeDefinition => {
       const [resolutionError, resolvedComponent] = await async.result(
@@ -32,7 +33,7 @@ export const walk = async.extend(async params => {
         ui.info(` `)
         await walk({
           ...params,
-          parent: resolvedComponent[0],
+          parent: resolvedComponent,
           treeDepth: params.treeDepth + 1
         })
       } else {
@@ -45,9 +46,10 @@ export const walk = async.extend(async params => {
 
     const runSeries = async.pipe(
       findEsopsConfig(params),
-      async s => {
-        if (!s) throw new TypeError(ConfigNotFound({cwd: params.parent}))
-        return s
+      async localPath => {
+        if (!localPath)
+          throw new TypeError(ConfigNotFound({cwd: params.parent[0]}))
+        return localPath
       },
       getComposeDefinitionFromEsopsConfig,
       sanitizeCompose,
@@ -56,7 +58,7 @@ export const walk = async.extend(async params => {
       results => ({...params, results})
     )
 
-    return runSeries(params.parent).catch(throwError)
+    return runSeries(params.parent[0]).catch(throwError)
   } catch (e) {
     throw e
   }

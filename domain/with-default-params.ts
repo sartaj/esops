@@ -24,7 +24,7 @@ export const withDefaultParams = async params => {
 
     const paths = {
       root,
-      parent: root,
+      parent: [root, null, null],
       destination
     }
 

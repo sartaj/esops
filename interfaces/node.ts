@@ -1,9 +1,10 @@
 import {run} from '../domain/run'
-import {Params} from '../domain/types'
+import {UserParams} from '../domain/types'
 import {
   createFsDriver,
   createInteractiveConsoleUX,
   createResolver,
+  createShell,
   renderError
 } from '../side-effects'
 import async from '../utilities/async'
@@ -19,7 +20,8 @@ const withSideEffects = extend(({logLevel}) => {
     effects: {
       filesystem: createFsDriver(),
       resolver: createResolver(),
-      ui: createInteractiveConsoleUX(logLevel)
+      ui: createInteractiveConsoleUX(logLevel),
+      shell: createShell()
     }
   }
 })
@@ -41,7 +43,7 @@ const crash = (e: Error) => {
  * Run
  */
 
-export const esops = (params: Params) =>
+export const esops = (params: UserParams) =>
   async
     .pipe(
       withSideEffects,
