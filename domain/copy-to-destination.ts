@@ -82,7 +82,15 @@ export const copyToDestinationWithPrompts = async.extend(async params => {
       }
     ])
 
-    if (userConfirmsOverwrite) copyToDestination(params)
-    else ui.md(FilesNotOverwritten())
-  } else copyToDestination(params)
+    if (userConfirmsOverwrite) {
+      copyToDestination(params)
+      return {destinationUpdated: true}
+    } else {
+      ui.md(FilesNotOverwritten())
+      return {destinationUpdated: false}
+    }
+  } else {
+    copyToDestination(params)
+    return {destinationUpdated: false}
+  }
 })

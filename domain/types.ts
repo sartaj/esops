@@ -8,24 +8,34 @@ export type ComponentOptions = {
   overwrite: []
 }
 
-type Component =
+export type Component =
   | string
   | [string, ComponentVariables]
   | [string, ComponentVariables, ComponentOptions]
+
+export type SanitizedComponent = [string, ComponentVariables, ComponentOptions]
 
 export type Compose = Component | Component[]
 
 type Prompt = boolean | Error
 
-export type Params = {
-  effects?: any
+export type UserParams = {
+  root: string
   destination?: string
-  root?: string
-  parent?: string
   compose?: Compose
   logLevel?: string
-  cwd?: string // deprecated
   prompts?: Prompt[]
+}
+
+export type Params = {
+  effects: any
+  destination: string
+  root: string
+  parent: SanitizedComponent
+  compose?: Compose
+  logLevel: string
+  prompts: Prompt[]
+  treeDepth: number
 }
 
 export type EsopsConfigObject = {

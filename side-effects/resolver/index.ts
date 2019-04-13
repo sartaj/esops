@@ -3,8 +3,6 @@ import * as path from 'path'
 import {pipe} from 'ramda'
 import * as resolvePkg from 'resolve-pkg'
 
-import {CWDNotDefined, NoPathError} from '../../domain/messages'
-import {Params} from '../../domain/types'
 import {spawn} from '../process'
 
 const NODE_PREFIX = 'node:'
@@ -56,49 +54,8 @@ const extractGitInfoFromGithubPath = pipe(
   })
 )
 
-export const resolvePath = async (
-  pathString,
-  {
-    cwd,
-    effects: {
-      filesystem: {appCache}
-    }
-  }: Params
-) => {
-  try {
-    if (!cwd) throw new TypeError(CWDNotDefined())
-    let modulePath
-    if (!modulePath) modulePath = await tryFSPath(pathString, {cwd})
-
-    if (!modulePath && pathString.startsWith(NODE_PREFIX)) {
-      const nodePath = pathString.substr(NODE_PREFIX.length)
-      modulePath = await tryNodePath(nodePath, {cwd})
-    }
-
-    if (!modulePath && pathString.startsWith(GITHUB_PREFIX)) {
-      const destination = await appCache.createNewCacheFolder()
-      const {gitUrl, branch} = extractGitInfoFromGithubPath(pathString)
-      modulePath = await tryGitPath({gitUrl, destination, branch})
-    }
-
-    /**
-     * ## TODO: Support More Paths
-     * Potential Paths:
-     *  - tryHTTPFetch
-     *  - tryGitFetch
-     *  - tryNPMInstall
-     *  - tryTorrent
-     **/
-    if (!modulePath) throw new TypeError(NoPathError({pathString, cwd}))
-    return modulePath
-  } catch (e) {
-    throw e
-  }
-}
-
 export const createResolver = () => ({
   tryGitPath,
   tryFSPath,
   tryNodePath
 })
-export default resolvePath

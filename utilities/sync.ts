@@ -33,3 +33,11 @@ export const extend = next => previous => ({
   ...previous,
   ...(is(Function, next) ? next(previous) : next)
 })
+
+export const Try = fn => {
+  try {
+    return [null, fn()]
+  } catch (e) {
+    return [e, null]
+  }
+}

@@ -3,8 +3,12 @@ import {PATH_COMPONENT_TYPE, EFFECT_COMPONENT_TYPE} from './constants'
 import {getComponentType} from './lenses'
 import {renderPathComponent} from './render-path'
 import {renderEffectComponent} from './render-effect'
+import {Params, SanitizedComponent} from './types'
 
-export const renderComponent = async (params, sanitizedComponent) => {
+export const renderComponent = async (
+  params: Params,
+  sanitizedComponent: SanitizedComponent
+) => {
   const {
     effects: {ui}
   } = params
@@ -13,7 +17,6 @@ export const renderComponent = async (params, sanitizedComponent) => {
   const [componentString, variables, options] = sanitizedComponent
 
   const componentType = getComponentType(componentString)
-  // params.effects.ui.info(componentType)
   let response
   switch (componentType) {
     case EFFECT_COMPONENT_TYPE:
