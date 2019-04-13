@@ -1,24 +1,27 @@
 {
   "name": "esops",
-  "version": "3.0.4",
   "description": "Decouple your infrastructure with composable auto-ignored template generation.",
-  "keywords": [],
+  "version": "3.0.4",
+  "scripts": {
+    "local-esops": "npx ts-node ./interfaces/cli.ts ./infrastructure",
+    "test:e2e": "npm run build && NODE_ENV=e2e ts-node ./test-utilities/e2e-runner.spec.ts",
+    "test:update-snaps": "UPDATE_SNAPSHOTS=1 npm run test"
+  },
   "author": "Sartaj<sartaj@sartaj.me>",
   "license": "MIT",
   "homepage": "https://github.com/sartaj/esops#readme",
-  "bugs": {
-    "url": "https://github.com/sartaj/esops/issues"
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/sartaj/esops.git"
   },
+  "bugs": {
+    "url": "https://github.com/sartaj/esops/issues"
+  },
   "main": "library/index.js",
-  "bin": "library/interfaces/cli.js",
-  "scripts": {
-    "test:update-snaps": "UPDATE_SNAPSHOTS=1 npm run test",
-    "test:e2e": "npm run build && NODE_ENV=e2e ts-node ./test-utilities/e2e-runner.spec.ts",
-    "local-esops": "npx ts-node ./interfaces/cli.ts ./infrastructure"
+  "bin": {
+   "esops": "library/interfaces/cli.js",
+   "esops-npm": "library/interfaces/esops-npm.js",
+   "esops-yarn": "library/interfaces/esops-yarn.js"
   },
   "dependencies": {
     "async": "2.6.2",
@@ -43,9 +46,10 @@
     "prompts": "2.0.0",
     "read-pkg": "4.0.1",
     "resolve-pkg": "1.0.0",
+    "shelljs": "^0.8.3",
+    "tmp": "0.0.33",
     "update-generated-text-fs": "1.0.0",
-    "wrap-ansi": "4.0.0",
-    "tmp": "0.0.33"
+    "wrap-ansi": "4.0.0"
   },
   "devDependencies": {
     "await-spawn": "2.1.2",
