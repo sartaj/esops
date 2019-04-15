@@ -5,7 +5,8 @@ import {
   createInteractiveConsoleUX,
   createResolver,
   createShell,
-  renderError
+  renderError,
+  vm
 } from '../side-effects'
 import async from '../utilities/async'
 import {extend} from '../utilities/sync'
@@ -21,7 +22,8 @@ const withSideEffects = extend(({logLevel}) => {
       filesystem: createFsDriver(),
       resolver: createResolver(),
       ui: createInteractiveConsoleUX(logLevel),
-      shell: createShell()
+      shell: createShell(),
+      vm
     }
   }
 })
