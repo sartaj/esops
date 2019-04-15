@@ -56,7 +56,7 @@ function addToPackageJson(dependencies: string[], opts) {
       if (!dep[1]) {
         const results = String(execSync(`npm show ${dep[0]} version`)).trim()
         if (!results) {
-          console.log(results)
+          console.error(results)
           process.exit(1)
         }
         return {[dep[0]]: results}

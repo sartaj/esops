@@ -7,6 +7,11 @@
         "var1": "test"
       }
     ],
-    ["./test-variables"]
+    [
+      "./test-variables",
+      {
+        "var1": "parental advisory"
+      }
+    ]
   ]
 }

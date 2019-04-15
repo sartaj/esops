@@ -13,7 +13,6 @@ import {renderComponent} from './render'
 
 export const walk = async.extend(async params => {
   const {ui} = params.effects
-  ui.info(params.parent[0])
   try {
     const renderOrRunRecursive = async composeDefinition => {
       const [resolutionError, resolvedComponent] = await async.result(
