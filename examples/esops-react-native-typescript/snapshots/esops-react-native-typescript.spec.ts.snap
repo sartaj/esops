@@ -59,6 +59,8 @@ module.exports[`Describe esops react native typescript | Given esops_react_nativ
   "app.json",
   "babel.config.js",
   "index.js",
+  "infrastructure",
+  "infrastructure/esops.json",
   "ios",
   "ios/TestProject",
   "ios/TestProject-tvOS",
@@ -86,6 +88,7 @@ module.exports[`Describe esops react native typescript | Given esops_react_nativ
   "ios/TestProjectTests/TestProjectTests.m",
   "metro.config.js",
   "package.json",
+  "readme.md",
   "yarn.lock"
 ]`
 

@@ -5,7 +5,7 @@ import {throwError} from '../utilities/sync'
 // import {EFFECT_COMPONENT_TYPE, LOCAL_PATH_COMPONENT_TYPE} from './constants'
 // import {getComponentType} from './lenses'
 import {FileNotToggledForMerge} from './messages'
-import {listFileTreeSync} from './parser'
+import {listFileTreeSync} from './resolver'
 // import {renderEffectComponent} from './render-effect'
 import {
   checkIfShouldGitPublish,
@@ -125,38 +125,3 @@ export const renderComponent = async (
   ui.info(`${tab}  rendered`)
   return renderReport
 }
-
-// export const renderComponents = async (
-//   params: Params,
-//   sanitizedComponent: SanitizedComponent
-// ) => {
-//   const {
-//     effects: {ui}
-//   } = params
-
-//   const tab = ui.getTabs(params.treeDepth)
-//   const [componentString, variables, options] = sanitizedComponent
-
-//   const componentType = getComponentType(componentString)
-//   let response
-//   switch (componentType) {
-//     case EFFECT_COMPONENT_TYPE:
-//       response = await async.result(
-//         renderEffectComponent(params, sanitizedComponent)
-//       )
-//     case LOCAL_PATH_COMPONENT_TYPE:
-//       response = await async.result(
-//         renderPathComponent(params, sanitizedComponent)
-//       )
-//       break
-//     default:
-//       throw new Error('command not recognized.')
-//   }
-
-//   const [err, result] = response
-//   if (err) throw err
-
-//   ui.info(`${tab}  rendered`)
-
-//   return result
-// }
