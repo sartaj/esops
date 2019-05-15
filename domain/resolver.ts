@@ -1,92 +1,13 @@
-import {pipe} from 'ramda'
 import chalk from 'chalk'
 
-import {
-  GITHUB_PREFIX,
-  NODE_PREFIX,
-  LOCAL_PATH_COMPONENT_TYPE,
-  GITHUB_COMPONENT_TYPE,
-  EFFECT_COMPONENT_TYPE,
-  NODE_COMPONENT_TYPE
-} from './constants'
-import {
-  CWDNotDefined,
-  NoPathError,
-  GitFetchFailed,
-  InvalidOptsError
-} from './messages'
-import {Params, EsopsConfig} from './types'
+import {CWDNotDefined, InvalidOptsError} from './messages'
+import {EsopsConfig} from './types'
 import async from '../utilities/async'
 import {
   getComposeDefinitionFromEsopsConfig,
-  getComponentType,
   sanitizeComponent,
-  getCommand,
   getCommandFromSanitized
 } from './lenses'
-import {resolveEffectComponent} from '../extensions/resolvers/effects/resolve-effect'
-
-/**
- * ## Utilities
- */
-
-const getGitInfoFromGithubPath = pipe(
-  str => str.substr(GITHUB_PREFIX.length, str.length - 1),
-  str => str.split('#'),
-  ([githubPath, branch]) => ({
-    gitUrl: `https://github.com/${githubPath}.git`,
-    branch
-  })
-)
-
-/**
- * ## Resolvers
- */
-
-export const resolveGithub = async (
-  sanitizedComponent,
-  {
-    effects: {
-      filesystem: {appCache},
-      resolver: {tryGitPath}
-    }
-  }
-) => {
-  const pathString = sanitizedComponent[0]
-
-  try {
-    const destination = await appCache.createNewCacheFolder()
-    const {gitUrl, branch} = getGitInfoFromGithubPath(pathString)
-    const modulePath = await tryGitPath({gitUrl, destination, branch})
-
-    return modulePath
-  } catch (e) {
-    throw new TypeError(GitFetchFailed({pathString, message: e.message}))
-  }
-}
-
-export const resolveFS = async (params, sanitizedComponent) => {
-  try {
-    const {
-      parent,
-      effects: {
-        resolver: {tryFSPath}
-      }
-    } = params
-    const componentString = getCommandFromSanitized(sanitizedComponent)
-    const parentPath = getCommand(parent)
-
-    const resolvedPath = await tryFSPath(componentString, {cwd: parentPath})
-
-    if (!resolvedPath) {
-      throw new TypeError(
-        NoPathError({pathString: componentString, cwd: parentPath})
-      )
-    } else return resolvedPath
-  } catch (e) {
-    throw e
-  }
-}
 
 /**
  * ## Resolvers
@@ -94,43 +15,22 @@ export const resolveFS = async (params, sanitizedComponent) => {
 export const resolveSanitizedComponent = params => async sanitizedComponent => {
   try {
     const {
-      effects: {
-        ui,
-        resolver: {tryNodePath}
-      },
+      effects: {ui},
       parent
     } = params
     const componentString: string = getCommandFromSanitized(sanitizedComponent)
-    const parentPath = getCommand(parent)
+    const parentPath = getCommandFromSanitized(parent)
     const tab = ui.getTabs(params.treeDepth)
+
     if (!parentPath) throw new TypeError(CWDNotDefined())
 
     ui.info(`${tab}${chalk.bold(componentString)}`)
     ui.info(`${tab}  resolving`)
 
-    const componentType = getComponentType(componentString)
-
-    const resolvedComponentString = await (async () => {
-      try {
-        switch (componentType) {
-          case LOCAL_PATH_COMPONENT_TYPE:
-            return async.result(resolveFS(params, sanitizedComponent), true)
-          case NODE_COMPONENT_TYPE:
-            return async.result(tryNodePath(componentType, {cwd: parentPath}))
-          case GITHUB_COMPONENT_TYPE:
-            return async.result(resolveGithub(sanitizedComponent, params), true)
-          case EFFECT_COMPONENT_TYPE:
-            return async.result(
-              resolveEffectComponent(params, sanitizedComponent),
-              true
-            )
-          default:
-            throw new TypeError(NoPathError({componentString, cwd: parentPath}))
-        }
-      } catch (e) {
-        throw e
-      }
-    })()
+    const resolvedComponentString = await async.result(
+      params.effects.resolve(params, sanitizedComponent),
+      true
+    )
 
     ui.info(`${tab}  resolved`)
 
@@ -143,6 +43,14 @@ export const resolveSanitizedComponent = params => async sanitizedComponent => {
     throw e
   }
 }
+
+export const resolveComponent = params => composeDefinition =>
+  async.result(
+    async.pipe(
+      sanitizeComponent,
+      resolveSanitizedComponent(params)
+    )(composeDefinition)
+  )
 
 /**
  * ### hasEsopsCompose
@@ -212,11 +120,3 @@ export const listFileTreeSync: ListFiles = ({effects: {filesystem}}) => (
   filesystem
     .listTreeSync(cwd)
     .filter(filePath => !filesystem.isDirectory.sync(filePath))
-
-export const resolveComponent = params => composeDefinition =>
-  async.result(
-    async.pipe(
-      sanitizeComponent,
-      resolveSanitizedComponent(params)
-    )(composeDefinition)
-  )

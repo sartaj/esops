@@ -67,3 +67,8 @@ export type Report = {
   shouldGitPublish: boolean
   mergeJsonArrays: string[]
 }[]
+
+export type ResolverFunc = (
+  params: any,
+  sanitizedComponent: any
+) => Promise<string>

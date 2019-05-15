@@ -1,7 +1,6 @@
 import {
   createFsDriver,
   createInteractiveConsoleUX,
-  createResolver,
   createShell,
   renderError,
   vm
@@ -13,7 +12,7 @@ import {createReport, reportWalkStart} from './messages'
 import {UserParams} from './types'
 import {flattenWalkResults, walk} from './walk-recursive'
 import {withDefaultParams} from './with-default-params'
-
+import resolve from '../extensions/resolvers'
 /**
  * ## Side Effect Commands
  * Side Effects are injected into the program as the `effects` key.
@@ -23,10 +22,10 @@ const withSideEffects = extend(({logLevel}) => {
   return {
     effects: {
       filesystem: createFsDriver(),
-      resolver: createResolver(),
       ui: createInteractiveConsoleUX(logLevel),
       shell: createShell(),
-      vm
+      vm,
+      resolve
     }
   }
 })

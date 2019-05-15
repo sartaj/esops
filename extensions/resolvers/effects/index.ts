@@ -5,6 +5,13 @@ import {
   parseComponentStringVariables
 } from '../../../domain/parse-variables'
 
+const EFFECT_COMPONENT_TYPE = 'EFFECT'
+const SHELL_EFFECT_PREFIX = 'shell.'
+const FILESYSTEM_EFFECT_PREFIX = 'filesystem.'
+const isEffect = componentString =>
+  componentString.startsWith(SHELL_EFFECT_PREFIX) ||
+  componentString.startsWith(FILESYSTEM_EFFECT_PREFIX)
+
 const runEffect = async (
   {
     effects: {
@@ -46,12 +53,8 @@ export const resolveEffectComponent = async (
   await runEffect(params, effectWithTempDirectoryContext)
 
   return resolveDirectory
-  // const effectComponent = [
-  //   resolveDirectory,
-  //   sanitizedComponent[1],
-  //   sanitizedComponent[2]
-  // ]
-
-  // const results = await renderPathComponent(params, effectComponent)
-  // return results
 }
+
+export const is = isEffect
+export const COMPONENT_TYPE = EFFECT_COMPONENT_TYPE
+export const resolve = resolveEffectComponent
