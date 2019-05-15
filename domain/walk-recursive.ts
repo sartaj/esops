@@ -4,29 +4,28 @@ import async from '../utilities/async'
 import {throwError} from '../utilities/sync'
 import {
   getComposeDefinitionFromEsopsConfig,
-  sanitizeComponent,
-  sanitizeCompose
+  sanitizeComposeParam
 } from './lenses'
 import {ConfigNotFound} from './messages'
-import {findEsopsConfig, hasEsopsCompose, resolveComponent} from './parser'
+import {findEsopsConfig, hasEsopsCompose, parseComponent} from './parser'
 import {renderComponent} from './render'
+import {Report} from './types'
 
 export const walk = async.extend(async params => {
   const {ui} = params.effects
   try {
     const renderOrRunRecursive = async composeDefinition => {
-      const [resolutionError, resolvedComponent] = await async.result(
-        async.pipe(
-          sanitizeComponent,
-          resolveComponent(params)
-        )(composeDefinition)
+      const [resolutionError, resolvedComponent] = await parseComponent(params)(
+        composeDefinition
       )
+
       if (resolutionError) throw resolutionError
+
       const componentIsALocalPathWithEsopsCompose = await hasEsopsCompose(
         params
       )(resolvedComponent)
 
-      let report = []
+      let report: Report = []
       if (componentIsALocalPathWithEsopsCompose) {
         ui.info(`${ui.getTabs(params.treeDepth)}  compose definition found`)
         ui.info(` `)
@@ -43,15 +42,19 @@ export const walk = async.extend(async params => {
       return report ? [...params.results, report] : params.results
     }
 
-    const runSeries = async.pipe(
+    const getComposeDefinition = async.pipe(
       findEsopsConfig(params),
-      async localPath => {
-        if (!localPath)
+      async function checkForEsopsConfigPath(esopsConfigPath) {
+        if (!esopsConfigPath)
           throw new TypeError(ConfigNotFound({cwd: params.parent[0]}))
-        return localPath
+        return esopsConfigPath
       },
       getComposeDefinitionFromEsopsConfig,
-      sanitizeCompose,
+      sanitizeComposeParam
+    )
+
+    const runSeries = async.pipe(
+      getComposeDefinition,
       async.mapToAsync(renderOrRunRecursive),
       async.series,
       results => ({...params, results})
@@ -63,6 +66,7 @@ export const walk = async.extend(async params => {
   }
 })
 
+/* Since the walk is recursive, the results from the walk could be a deeply nested array. */
 export const flattenWalkResults = async.extend(async params => ({
   results: flatten(params.results)
 }))

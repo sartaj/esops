@@ -1,33 +1,43 @@
-/**
- * Produces a function which uses template strings to do simple interpolation from objects.
- *
- * Usage:
- *    var makeMeKing = generateTemplateString('${name} is now the king of ${country}!');
- *
- *    console.log(makeMeKing({ name: 'Bryan', country: 'Scotland'}));
- *    // Logs 'Bryan is now the king of Scotland!'
- */
-export const generateTemplateString = (function() {
-  var cache = {}
+import {is, map} from 'ramda'
 
-  function generateTemplate(template) {
-    var fn = cache[template]
+import {Try} from '../utilities/sync'
 
-    if (!fn) {
-      // Replace ${expressions} (etc) with ${map.expressions}.
+var compile = require('es6-template-strings/compile')
+var resolve = require('es6-template-strings/resolve-to-string')
 
-      var sanitized = template
-        .replace(/\$\{([\s]*[^;\s\{]+[\s]*)\}/g, function(_, match) {
-          return `\$\{map.${match.trim()}\}`
-        })
-        // Afterwards, replace anything that's not ${map.expressions}' (etc) with a blank string.
-        .replace(/(\$\{(?!map\.)[^}]+\})/g, '')
+export const generateTemplateString = (str: string) => vars =>
+  resolve(compile(str), vars)
 
-      fn = Function('map', `return \`${sanitized}\``)
-    }
+const isMappable = x => is(Object, x) || is(Array, x)
 
-    return fn
+const deepMap = fn => map(x => (isMappable(x) ? deepMap(fn)(x) : fn(x)))
+
+export const parseVariables = ({parent, child, ...rest}) => {
+  const parentVariables = parent[1] || {}
+  const childVariables = child[1] || {}
+
+  const context = {
+    parent: parentVariables,
+    ...rest
   }
 
-  return generateTemplate
-})()
+  const parsedVariables = deepMap(value =>
+    is(String) ? generateTemplateString(value)(context) : value
+  )(childVariables)
+
+  const variables = {
+    ...context,
+    ...parsedVariables
+  }
+  return variables
+}
+
+export const parseComponentStringVariables = (
+  componentString,
+  parsedVariables
+) => {
+  const [err, effect] = Try(() =>
+    generateTemplateString(componentString)(parsedVariables)
+  )
+  return [err, effect]
+}

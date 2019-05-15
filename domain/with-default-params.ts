@@ -32,8 +32,8 @@ export const withDefaultParams = async params => {
 
     return {
       ...params,
-      treeDepth: 0,
       ...paths,
+      treeDepth: 0,
       results: []
     }
   } catch (e) {

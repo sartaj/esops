@@ -12,7 +12,7 @@ const describe = withSnapshots(__filename)
 
 const rootPath = path.join(__dirname, './module')
 
-describe('esops react native typescript', async assert => {
+describe('esops recursive variables', async assert => {
   await withTempDir(__dirname, rootPath, async root => {
     await esops({
       root: path.join(root, 'infrastructure'),

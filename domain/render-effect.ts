@@ -1,55 +1,55 @@
 import {Params, SanitizedComponent} from './types'
-import {Try} from '../utilities/sync'
 import {VariableError} from './errors'
-import {generateTemplateString} from './parse-variables'
-import {map, is} from 'ramda'
+import {parseVariables, parseComponentStringVariables} from './parse-variables'
+// import {renderPathComponent} from './render'
 
-const isMappable = x => is(Object, x) || is(Array, x)
-
-const deepMap = fn => map(x => (isMappable(x) ? deepMap(fn)(x) : fn(x)))
-
-const parseVariables = (parentComponent, childComponent) => {
-  const parentVariables = parentComponent[1] || {}
-  const childVariables = childComponent[1] || {}
-
-  const context = {
-    parent: parentVariables
-  }
-
-  const parsedVariables = deepMap(value =>
-    is(String) ? generateTemplateString(value)(context) : value
-  )(childVariables)
-
-  const variables = {
-    ...context,
-    ...parsedVariables
-  }
-  return variables
+const runEffect = async (
+  {
+    effects: {
+      shell,
+      vm,
+      filesystem: {path}
+    }
+  },
+  effect
+) => {
+  vm.runInNewContext(effect, {shell, path})
 }
 
-const parseEffectString = (componentString, parsedVariables) => {
-  const [err, effect] = Try(() =>
-    generateTemplateString(componentString)(parsedVariables)
-  )
-  return [err, effect]
-}
-
-const runEffect = ({shell, vm}, effect) => {
-  vm.runInNewContext(effect, {shell})
-}
-
-export const renderEffectComponent = (
-  params: Params,
+export const resolveEffectComponent = async (
+  params,
   sanitizedComponent: SanitizedComponent
 ) => {
   const componentString = sanitizedComponent[0]
+  const resolveDirectory = await params.effects.filesystem.appCache.createNewCacheFolder()
+  const renderDirectory = await params.effects.filesystem.appCache.getRenderPrepFolder()
 
-  const variables = parseVariables(params.parent, sanitizedComponent)
+  const variables = parseVariables({
+    parent: params.parent,
+    child: sanitizedComponent,
+    destination: params.destination,
+    resolveDirectory,
+    renderDirectory
+  })
 
-  const [err, effect] = parseEffectString(componentString, variables)
+  const [err, effect] = parseComponentStringVariables(
+    componentString,
+    variables
+  )
 
   if (err) throw new VariableError(err)
-  const {vm, shell} = params.effects
-  runEffect({shell, vm}, effect)
-  return true
+
+  const effectWithTempDirectoryContext = `shell.cd('${resolveDirectory}'); ${effect}`
+
+  await runEffect(params, effectWithTempDirectoryContext)
+
+  return resolveDirectory
+  // const effectComponent = [
+  //   resolveDirectory,
+  //   sanitizedComponent[1],
+  //   sanitizedComponent[2]
+  // ]
+
+  // const results = await renderPathComponent(params, effectComponent)
+  // return results
 }

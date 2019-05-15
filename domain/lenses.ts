@@ -8,16 +8,21 @@ import {
   GITHUB_PREFIX,
   LOCAL_ABSOLUTE_PATH_PREFIX,
   LOCAL_RELATIVE_PATH_PREFIX,
-  PATH_COMPONENT_TYPE,
+  LOCAL_PATH_COMPONENT_TYPE,
   SHELL_EFFECT_PREFIX,
-  URL_COMPONENT_TYPE
+  GITHUB_COMPONENT_TYPE,
+  NODE_PREFIX,
+  NODE_COMPONENT_TYPE
 } from './constants'
-import {Compose, EsopsConfigObject} from './types'
+import {Compose, EsopsConfigObject, SanitizedComponent} from './types'
 import {InvalidOptsError} from './messages'
 
 /**
  * ## esops2
  */
+
+export const getCommandFromSanitized = (component: SanitizedComponent) =>
+  component[0]
 
 export const getCommand = (composeDefinition: Compose) => composeDefinition[0]
 
@@ -34,7 +39,7 @@ export const getComposeDefinitionFromEsopsConfig = result =>
     ? result
     : result.compose
 
-export const sanitizeCompose = (composeDefinition: Compose) => {
+export const sanitizeComposeParam = (composeDefinition: Compose) => {
   try {
     return isString(composeDefinition)
       ? [[composeDefinition, {}, {}]]
@@ -66,11 +71,16 @@ const isEffect = componentString =>
   componentString.startsWith(SHELL_EFFECT_PREFIX) ||
   componentString.startsWith(FILESYSTEM_EFFECT_PREFIX)
 
+const isNodeResolver = componentString =>
+  componentString.startsWith(NODE_PREFIX)
+
 export const getComponentType = (componentString: string) => {
   return isGithub(componentString) || isGitUrl(componentString)
-    ? URL_COMPONENT_TYPE
+    ? GITHUB_COMPONENT_TYPE
     : isLocalPath(componentString)
-    ? PATH_COMPONENT_TYPE
+    ? LOCAL_PATH_COMPONENT_TYPE
+    : isNodeResolver(componentString)
+    ? NODE_COMPONENT_TYPE
     : isEffect(componentString)
     ? EFFECT_COMPONENT_TYPE
     : new Error('Not a component type')
