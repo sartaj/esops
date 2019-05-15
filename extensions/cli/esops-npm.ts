@@ -1,9 +1,9 @@
 import {execSync} from 'child_process'
 import * as stableStringify from 'json-stable-stringify'
 import * as path from 'path'
-import createFsSideEffects from '../side-effects/fs'
-import {createInteractiveConsoleUX} from '../side-effects'
-import {minimist} from '../side-effects/console/components/cli'
+import createFsSideEffects from '../../side-effects/fs'
+import {createInteractiveConsoleUX} from '../../side-effects'
+import {minimist} from '../../side-effects/console/components/cli'
 
 const fs = createFsSideEffects()
 const ui = createInteractiveConsoleUX('info')

@@ -1,2 +1,2 @@
-export * from './interfaces/node'
-export {default} from './interfaces/node'
+export * from './domain'
+export {default} from './domain'

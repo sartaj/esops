@@ -13,9 +13,10 @@ export const TOGGLE_FILES = [
   `.${BRAND}/${PREFIX}template`
 ]
 
-export const URL_COMPONENT_TYPE = 'URL'
-export const PATH_COMPONENT_TYPE = 'PATH'
+export const GITHUB_COMPONENT_TYPE = 'URL'
+export const LOCAL_PATH_COMPONENT_TYPE = 'PATH'
 export const EFFECT_COMPONENT_TYPE = 'EFFECT'
+export const NODE_COMPONENT_TYPE = 'NODE'
 
 export const NODE_PREFIX = 'node:'
 export const GITHUB_PREFIX = 'github:'

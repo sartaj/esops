@@ -2,15 +2,15 @@
 import {cond, pipe} from 'ramda'
 import * as path from 'path'
 
-import {CleanGuide, EsopsHowTo} from '../domain/messages'
-import {Conditional, defaultTo} from '../utilities/sync'
+import {CleanGuide, EsopsHowTo} from '../../domain/messages'
+import {Conditional, defaultTo} from '../../utilities/sync'
 import {
   command,
   minimist,
   willAnnounce
-} from '../side-effects/console/components/cli'
+} from '../../side-effects/console/components/cli'
 
-import esops from './node'
+import esops from '../../domain'
 
 const onHelp: Conditional = [command.first('help'), willAnnounce(EsopsHowTo)]
 

@@ -11,7 +11,7 @@ export type ComponentOptions = {
 export type Component =
   | string
   | [string, ComponentVariables]
-  | [string, ComponentVariables, ComponentOptions]
+  | SanitizedComponent
 
 export type SanitizedComponent = [string, ComponentVariables, ComponentOptions]
 
@@ -27,14 +27,27 @@ export type UserParams = {
   prompts?: Prompt[]
 }
 
+export type Effects = {
+  filesystem: {
+    appCache: {
+      getRenderPrepFolder: () => Promise<string>
+    }
+  }
+  resolver: {}
+  ui: {}
+  shell: {}
+  vm: {}
+}
+
 export type Params = {
-  effects: any
+  effects: {}
   destination: string
   root: string
   parent: SanitizedComponent
   compose?: Compose
   logLevel: string
   prompts: Prompt[]
+  results: Report[]
   treeDepth: number
 }
 
@@ -44,3 +57,13 @@ export type EsopsConfigObject = {
 }
 
 export type EsopsConfig = EsopsConfigObject | Compose
+
+export type Report = {
+  from: string
+  to: string
+  relativePath: string
+  shouldMergeJson: boolean
+  shouldMergeFile: boolean
+  shouldGitPublish: boolean
+  mergeJsonArrays: string[]
+}[]

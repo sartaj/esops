@@ -366,3 +366,5 @@ $RECYCLE.BIN/
 /package.json
 /tsconfig.json
 ### ESOPS AUTO GENERATED END ###
+
+.tmp
