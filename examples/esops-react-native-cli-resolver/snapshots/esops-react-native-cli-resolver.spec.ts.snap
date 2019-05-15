@@ -1,4 +1,4 @@
-module.exports[`Describe esops react native typescript | Given esops_react_native_typescript: should generate correct files`] = `
+module.exports[`Describe esops react native cli resolver | Given esops_react_native_resolver: should generate correct files`] = `
 
 [
   ".buckconfig",
@@ -92,7 +92,7 @@ module.exports[`Describe esops react native typescript | Given esops_react_nativ
   "yarn.lock"
 ]`
 
-module.exports[`Describe esops react native typescript | Given esops_react_native_typescript: should generate correct package.json`] = `
+module.exports[`Describe esops react native cli resolver | Given esops_react_native_resolver: should generate correct package.json`] = `
 
 {
   "name": "TestProject",
@@ -120,7 +120,7 @@ module.exports[`Describe esops react native typescript | Given esops_react_nativ
 }
 `
 
-module.exports[`Describe esops react native typescript | Given esops_react_native_typescript: should generate correct .gitignore`] = `
+module.exports[`Describe esops react native cli resolver | Given esops_react_native_resolver: should generate correct .gitignore`] = `
 
 # OSX
 #

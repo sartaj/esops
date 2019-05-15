@@ -72,3 +72,9 @@ export type ResolverFunc = (
   params: any,
   sanitizedComponent: any
 ) => Promise<string>
+
+export type ResolverExtension = {
+  is: (componentString: string) => boolean
+  resolve: ResolverFunc
+  COMPONENT_TYPE: string
+}

@@ -13,7 +13,7 @@ const describe = withSnapshots(__filename)
 
 const rootPath = path.join(__dirname, './module')
 
-describe('esops react native typescript', async assert => {
+describe('esops react native cli resolver', async assert => {
   await withTempDir(__dirname, rootPath, async root => {
     await esops({
       root: path.join(root, 'infrastructure'),
@@ -22,19 +22,19 @@ describe('esops react native typescript', async assert => {
     })
 
     await assert({
-      given: 'esops_react_native_typescript',
+      given: 'esops_react_native_resolver',
       should: 'generate correct files',
       snap: getSortedFilePaths(root)
     })
 
     await assert({
-      given: 'esops_react_native_typescript',
+      given: 'esops_react_native_resolver',
       should: 'generate correct package.json',
       snap: getFileContents(path.join(root, 'package.json'))
     })
 
     await assert({
-      given: 'esops_react_native_typescript',
+      given: 'esops_react_native_resolver',
       should: 'generate correct .gitignore',
       snap: getFileContents(path.join(root, '.gitignore'))
     })
