@@ -1,5 +1,5 @@
 import {configIsObject} from './lenses'
-import {findEsopsConfig} from './parser'
+import {findEsopsConfig} from './resolver'
 
 export const withDefaultParams = async params => {
   try {

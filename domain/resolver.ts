@@ -24,7 +24,7 @@ import {
   getCommand,
   getCommandFromSanitized
 } from './lenses'
-import {resolveEffectComponent} from './render-effect'
+import {resolveEffectComponent} from '../extensions/resolvers/effects/resolve-effect'
 
 /**
  * ## Utilities
@@ -91,7 +91,7 @@ export const resolveFS = async (params, sanitizedComponent) => {
 /**
  * ## Resolvers
  */
-export const resolveComponent = params => async sanitizedComponent => {
+export const resolveSanitizedComponent = params => async sanitizedComponent => {
   try {
     const {
       effects: {
@@ -213,10 +213,10 @@ export const listFileTreeSync: ListFiles = ({effects: {filesystem}}) => (
     .listTreeSync(cwd)
     .filter(filePath => !filesystem.isDirectory.sync(filePath))
 
-export const parseComponent = params => composeDefinition =>
+export const resolveComponent = params => composeDefinition =>
   async.result(
     async.pipe(
       sanitizeComponent,
-      resolveComponent(params)
+      resolveSanitizedComponent(params)
     )(composeDefinition)
   )

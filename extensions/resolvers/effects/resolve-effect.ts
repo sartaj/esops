@@ -1,7 +1,9 @@
-import {Params, SanitizedComponent} from './types'
-import {VariableError} from './errors'
-import {parseVariables, parseComponentStringVariables} from './parse-variables'
-// import {renderPathComponent} from './render'
+import {SanitizedComponent} from '../../../domain/types'
+import {VariableError} from '../../../domain/errors'
+import {
+  parseVariables,
+  parseComponentStringVariables
+} from '../../../domain/parse-variables'
 
 const runEffect = async (
   {
