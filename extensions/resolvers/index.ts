@@ -1,43 +1,37 @@
 import {getCommandFromSanitized} from '../../domain/lenses'
-import {ResolverFunc} from '../../domain/types'
-import {NoPathError} from '../../domain/messages'
+import {ResolverExtension} from '../../domain/types'
 import * as effects from './effects'
 import * as github from './github'
 import * as localPath from './local-path'
 import * as nodeModule from './node-module'
+import * as reactNativeCli from './react-native-cli'
 
-const UNKNOWN_COMPONENT_TYPE = 'UNKNOWN'
+const RESOLVERS_LIST: ResolverExtension[] = [
+  localPath,
+  github,
+  nodeModule,
+  reactNativeCli,
+  effects
+]
 
-const getComponentType = (componentString: string) =>
-  github.is(componentString)
-    ? github.COMPONENT_TYPE
-    : localPath.is(componentString)
-    ? localPath.COMPONENT_TYPE
-    : nodeModule.is(componentString)
-    ? nodeModule.COMPONENT_TYPE
-    : effects.is(componentString)
-    ? effects.COMPONENT_TYPE
-    : UNKNOWN_COMPONENT_TYPE
-
-export const resolvers = {
-  [effects.COMPONENT_TYPE]: effects.resolve,
-  [github.COMPONENT_TYPE]: github.resolve,
-  [localPath.COMPONENT_TYPE]: localPath.resolve,
-  [nodeModule.COMPONENT_TYPE]: nodeModule.resolve
+const getResolver = (componentString: string): ResolverExtension => {
+  const resolverFound = RESOLVERS_LIST.find(resolver =>
+    resolver.is(componentString)
+  )
+  if (!resolverFound)
+    throw new Error(`${componentString} did not match any resolvers.
+    Known resolvers:
+    ${RESOLVERS_LIST.map(resolver => `* ${resolver.COMPONENT_TYPE}`).join('\n')}
+    `)
+  else return resolverFound
 }
 
 export const resolve = async (params, sanitizedComponent) => {
-  const {parent} = params
   const componentString: string = getCommandFromSanitized(sanitizedComponent)
-  const parentPath = getCommandFromSanitized(parent)
-  const componentType = getComponentType(componentString)
 
-  if (componentType === 'UNKNOWN')
-    throw new TypeError(NoPathError({componentString, cwd: parentPath}))
+  const resolver = getResolver(componentString)
 
-  const resolver: ResolverFunc = resolvers[componentType]
-
-  const resolved = await resolver(params, sanitizedComponent)
+  const resolved = await resolver.resolve(params, sanitizedComponent)
 
   return resolved
 }

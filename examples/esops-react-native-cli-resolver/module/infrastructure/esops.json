@@ -1,0 +1,11 @@
+{
+  "destination": "../",
+  "compose": [
+    "react-native-cli",
+    {
+      "AppName": "TesterApplication",
+      "version": "",
+      "template": "typescript"
+    }
+  ]
+}
