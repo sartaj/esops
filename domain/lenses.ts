@@ -1,21 +1,7 @@
 import {is, isNil} from 'ramda'
-
 import {isArray, isObject, isString} from '../utilities/sync'
-import {
-  EFFECT_COMPONENT_TYPE,
-  FILESYSTEM_EFFECT_PREFIX,
-  GIT_URL_PREFIX,
-  GITHUB_PREFIX,
-  LOCAL_ABSOLUTE_PATH_PREFIX,
-  LOCAL_RELATIVE_PATH_PREFIX,
-  LOCAL_PATH_COMPONENT_TYPE,
-  SHELL_EFFECT_PREFIX,
-  GITHUB_COMPONENT_TYPE,
-  NODE_PREFIX,
-  NODE_COMPONENT_TYPE
-} from './constants'
-import {Compose, EsopsConfigObject, SanitizedComponent} from './types'
 import {InvalidOptsError} from './messages'
+import {Compose, EsopsConfigObject, SanitizedComponent} from './types'
 
 /**
  * ## esops2
@@ -58,33 +44,6 @@ export const sanitizeComposeParam = (composeDefinition: Compose) => {
 
 export const sanitizeComponent = async component =>
   isString(component) ? [component] : component
-
-const isGithub = componentString => componentString.startsWith(GITHUB_PREFIX)
-
-const isGitUrl = componentString => componentString.startsWith(GIT_URL_PREFIX)
-
-const isLocalPath = componentString =>
-  componentString.startsWith(LOCAL_RELATIVE_PATH_PREFIX) ||
-  componentString.startsWith(LOCAL_ABSOLUTE_PATH_PREFIX)
-
-const isEffect = componentString =>
-  componentString.startsWith(SHELL_EFFECT_PREFIX) ||
-  componentString.startsWith(FILESYSTEM_EFFECT_PREFIX)
-
-const isNodeResolver = componentString =>
-  componentString.startsWith(NODE_PREFIX)
-
-export const getComponentType = (componentString: string) => {
-  return isGithub(componentString) || isGitUrl(componentString)
-    ? GITHUB_COMPONENT_TYPE
-    : isLocalPath(componentString)
-    ? LOCAL_PATH_COMPONENT_TYPE
-    : isNodeResolver(componentString)
-    ? NODE_COMPONENT_TYPE
-    : isEffect(componentString)
-    ? EFFECT_COMPONENT_TYPE
-    : new Error('Not a component type')
-}
 
 export const configIsString = (arg: any): arg is string => is(String)(arg)
 
