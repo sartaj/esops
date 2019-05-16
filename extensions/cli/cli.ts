@@ -10,7 +10,7 @@ import {
   willAnnounce
 } from '../../side-effects/console/components/cli'
 
-import esops from '../../core'
+import esops from '../../'
 
 const onHelp: Conditional = [command.first('help'), willAnnounce(EsopsHowTo)]
 
