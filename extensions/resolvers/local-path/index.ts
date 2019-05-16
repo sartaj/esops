@@ -1,7 +1,7 @@
 import * as fs from 'fs'
 import * as path from 'path'
-import {getCommand, getCommandFromSanitized} from '../../../domain/lenses'
-import {NoPathError} from '../../../domain/messages'
+import {getCommand, getCommandFromSanitized} from '../../../core/lenses'
+import {NoPathError} from '../../../core/messages'
 
 const LOCAL_PATH_COMPONENT_TYPE = 'PATH'
 const LOCAL_RELATIVE_PATH_PREFIX = '.'

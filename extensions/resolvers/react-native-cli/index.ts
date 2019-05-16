@@ -1,4 +1,4 @@
-import {ResolverFunc} from '../../../domain/types'
+import {ResolverFunc} from '../../../core/types'
 
 const PREFIX = 'react-native-cli'
 

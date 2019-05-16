@@ -7,7 +7,6 @@ module.exports.MOCK_COMPONENTS = [
 'basic-ignore-files',
 'basic-local-overwrite',
 'esops-typescript-oos-user',
-'esops-typescript-open-source-module',
 'problem-bad-path',
 'problem-bad-config',
 'problem-bad-json',

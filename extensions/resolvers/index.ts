@@ -1,5 +1,5 @@
-import {getCommandFromSanitized} from '../../domain/lenses'
-import {ResolverExtension} from '../../domain/types'
+import {getCommandFromSanitized} from '../../core/lenses'
+import {ResolverExtension} from '../../core/types'
 import * as effects from './effects'
 import * as github from './github'
 import * as localPath from './local-path'

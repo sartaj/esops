@@ -1,9 +1,9 @@
 import * as path from 'path'
 
 import esops from '../../index'
-import {getFileContents} from '../../test-utilities/fs-utils'
-import {withSnapshots} from '../../test-utilities/withSnapshots'
-import {withTempDir} from '../../test-utilities/withTempDir'
+import {getFileContents} from '../../../test-utilities/fs-utils'
+import {withSnapshots} from '../../../test-utilities/withSnapshots'
+import {withTempDir} from '../../../test-utilities/withTempDir'
 
 const rootPath = path.join(__dirname, './module')
 

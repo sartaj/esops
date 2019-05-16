@@ -1,5 +1,5 @@
 import {pipe} from 'ramda'
-import {GitFetchFailed} from '../../../domain/messages'
+import {GitFetchFailed} from '../../../core/messages'
 import {spawn} from '../../../side-effects/process'
 
 export const GITHUB_COMPONENT_TYPE = 'GITHUB'
