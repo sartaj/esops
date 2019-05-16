@@ -4,8 +4,32 @@
 
 import {withTempDir} from './withTempDir'
 
-import {MOCK_COMPONENTS} from '../examples'
 import chalk from 'chalk'
+
+const path = require('path')
+
+const rootDir = path.join(__dirname, '../')
+
+const BASIC_COMPONENTS = [
+  'basic-bare-minimum',
+  'basic-ignore-files',
+  'basic-local-overwrite',
+  'basic-compose',
+  'problem-bad-path',
+  'problem-bad-config',
+  'problem-bad-json',
+  'problem-no-config'
+].reduce(
+  (mockComponents, next) => ({
+    ...mockComponents,
+    [next]: path.join(rootDir, 'domain', 'tests', next, 'module')
+  }),
+  {}
+)
+
+const MOCK_COMPONENTS = {
+  ...BASIC_COMPONENTS
+}
 
 function logTitle(title) {
   console.log(chalk.bold.blue(title))

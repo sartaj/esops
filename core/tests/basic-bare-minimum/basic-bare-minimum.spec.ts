@@ -4,9 +4,9 @@ import esops from '../../index'
 import {
   getFileContents,
   getSortedFilePaths
-} from '../../test-utilities/fs-utils'
-import {withSnapshots} from '../../test-utilities/withSnapshots'
-import {withTempDir} from '../../test-utilities/withTempDir'
+} from '../../../test-utilities/fs-utils'
+import {withSnapshots} from '../../../test-utilities/withSnapshots'
+import {withTempDir} from '../../../test-utilities/withTempDir'
 
 const describe = withSnapshots(__filename)
 

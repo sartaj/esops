@@ -1,6 +1,6 @@
 import * as resolvePkg from 'resolve-pkg'
-import {getCommand, getCommandFromSanitized} from '../../../domain/lenses'
-import {CWDNotDefined} from '../../../domain/messages'
+import {getCommand, getCommandFromSanitized} from '../../../core/lenses'
+import {CWDNotDefined} from '../../../core/messages'
 import async from '../../../utilities/async'
 
 const NODE_PREFIX = 'node:'

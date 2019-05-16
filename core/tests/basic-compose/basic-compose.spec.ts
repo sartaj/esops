@@ -1,18 +1,18 @@
 import * as path from 'path'
 
-import esops from '../../index'
+import esops from '../../../index'
 import {
   getFileContents,
   getSortedFilePaths
-} from '../../test-utilities/fs-utils'
-import {withSnapshots} from '../../test-utilities/withSnapshots'
-import {withTempDir} from '../../test-utilities/withTempDir'
+} from '../../../test-utilities/fs-utils'
+import {withSnapshots} from '../../../test-utilities/withSnapshots'
+import {withTempDir} from '../../../test-utilities/withTempDir'
 
 const describe = withSnapshots(__filename)
 
 const rootPath = path.join(__dirname, './module')
 
-describe('esops typescript open source module user', async assert => {
+describe('esops basics compose capabilities', async assert => {
   await withTempDir(__dirname, rootPath, async root => {
     await esops({
       root: path.join(root, 'infrastructure'),

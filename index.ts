@@ -1,2 +1,2 @@
-export * from './domain'
-export {default} from './domain'
+export * from './core'
+export {default} from './core'

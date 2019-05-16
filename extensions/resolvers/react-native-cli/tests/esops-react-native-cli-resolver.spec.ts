@@ -1,13 +1,13 @@
 import * as path from 'path'
 
-import esops from '../../index'
+import esops from '../../../../index'
 
-import {withSnapshots} from '../../test-utilities/withSnapshots'
-import {withTempDir} from '../../test-utilities/withTempDir'
+import {withSnapshots} from '../../../../test-utilities/withSnapshots'
+import {withTempDir} from '../../../../test-utilities/withTempDir'
 import {
   getFileContents,
   getSortedFilePaths
-} from '../../test-utilities/fs-utils'
+} from '../../../../test-utilities/fs-utils'
 
 const describe = withSnapshots(__filename)
 
@@ -17,7 +17,7 @@ describe('esops react native cli resolver', async assert => {
   await withTempDir(__dirname, rootPath, async root => {
     await esops({
       root: path.join(root, 'infrastructure'),
-      logLevel: 'info',
+      logLevel: 'error',
       prompts: [true]
     })
 

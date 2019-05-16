@@ -1,9 +1,9 @@
-import {SanitizedComponent} from '../../../domain/types'
-import {VariableError} from '../../../domain/errors'
+import {SanitizedComponent} from '../../../core/types'
+import {VariableError} from '../../../core/errors'
 import {
   parseVariables,
   parseComponentStringVariables
-} from '../../../domain/parse-variables'
+} from '../../../core/parse-variables'
 
 const EFFECT_COMPONENT_TYPE = 'EFFECT'
 const SHELL_EFFECT_PREFIX = 'shell.'
