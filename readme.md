@@ -1,6 +1,6 @@
 <div align="center">
 
-![esops](./doc-assets/logo.png)
+![esops](./infrastructure/doc-assets/logo.png)
 
 </div>
 
@@ -27,7 +27,7 @@
 
 <div align="center">
 
-![ ](./doc-assets/esops-demo.gif)
+![ ](./infrastructure/doc-assets/esops-demo.gif)
 
 </div>
 
