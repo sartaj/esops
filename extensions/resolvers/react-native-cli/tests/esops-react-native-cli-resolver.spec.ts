@@ -2,12 +2,12 @@ import * as path from 'path'
 
 import esops from '../../../../index'
 
-import {withSnapshots} from '../../../../test-utilities/withSnapshots'
-import {withTempDir} from '../../../../test-utilities/withTempDir'
+import {withSnapshots} from 'riteway-fs-snapshots/withSnapshots'
+import {withTempDir} from 'riteway-fs-snapshots/withTempDir'
 import {
   getFileContents,
   getSortedFilePaths
-} from '../../../../test-utilities/fs-utils'
+} from 'riteway-fs-snapshots/fs-utils'
 
 const describe = withSnapshots(__filename)
 

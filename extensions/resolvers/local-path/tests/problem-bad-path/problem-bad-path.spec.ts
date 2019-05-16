@@ -2,9 +2,9 @@ import * as path from 'path'
 import {Try} from 'riteway'
 
 import esops from '../../../../../index'
-import {cleanErrorString} from '../../../../../test-utilities/fs-utils'
-import {withSnapshots} from '../../../../../test-utilities/withSnapshots'
-import {withTempDir} from '../../../../../test-utilities/withTempDir'
+import {cleanErrorString} from 'riteway-fs-snapshots/fs-utils'
+import {withSnapshots} from 'riteway-fs-snapshots/withSnapshots'
+import {withTempDir} from 'riteway-fs-snapshots/withTempDir'
 
 const rootPath = path.join(__dirname, './module')
 

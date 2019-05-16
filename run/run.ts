@@ -1,3 +1,9 @@
+import {copyToDestinationWithPrompts} from '../core/copy-to-destination'
+import {createReport, reportWalkStart} from '../core/messages'
+import {UserParams} from '../core/types'
+import {flattenWalkResults, walk} from '../core/walk-recursive'
+import {withDefaultParams} from '../core/with-default-params'
+import resolve from '../extensions/resolvers'
 import {
   createFsDriver,
   createInteractiveConsoleUX,
@@ -7,12 +13,6 @@ import {
 } from '../side-effects'
 import async from '../utilities/async'
 import {extend} from '../utilities/sync'
-import {copyToDestinationWithPrompts} from './copy-to-destination'
-import {createReport, reportWalkStart} from './messages'
-import {UserParams} from './types'
-import {flattenWalkResults, walk} from './walk-recursive'
-import {withDefaultParams} from './with-default-params'
-import resolve from '../extensions/resolvers'
 /**
  * ## Side Effect Commands
  * Side Effects are injected into the program as the `effects` key.

@@ -2,7 +2,7 @@
   NOTE: This script only runs if process.env.NODE_ENV=== 'e2e'
  */
 
-import {withTempDir} from './withTempDir'
+import {withTempDir} from 'riteway-fs-snapshots/withTempDir'
 
 import chalk from 'chalk'
 
