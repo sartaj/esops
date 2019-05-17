@@ -10,12 +10,14 @@ export type ComponentOptions = {
 
 export type Component =
   | string
-  | [string, ComponentVariables]
+  | [string, ComponentVariables?, ComponentOptions?]
   | SanitizedComponent
 
 export type SanitizedComponent = [string, ComponentVariables, ComponentOptions]
 
 export type Compose = Component | Component[]
+
+export type SanitizedCompose = SanitizedComponent[]
 
 type Prompt = boolean | Error
 

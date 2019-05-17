@@ -3,6 +3,7 @@ import chalk from 'chalk'
 import {CWDNotDefined, InvalidOptsError} from './messages'
 import {EsopsConfig} from './types'
 import async from '../utilities/async'
+import {parseJSON} from '../utilities/sync'
 import {
   getComposeDefinitionFromEsopsConfig,
   sanitizeComponent,
@@ -88,13 +89,13 @@ export const findEsopsConfig = params => async (
   } = params
   try {
     const esopsConfigPath = filesystem.path.join(directory, 'esops.json')
-    const esopsConfig =
-      filesystem.existsSync(esopsConfigPath) &&
-      filesystem.readFileSync(esopsConfigPath, {encoding: 'utf-8'})
+    const esopsConfig = filesystem.existsSync(esopsConfigPath)
+      ? filesystem.readFileSync(esopsConfigPath, {encoding: 'utf-8'})
+      : '{}'
 
     const parsed = (() => {
       try {
-        return JSON.parse(esopsConfig)
+        return parseJSON(esopsConfig)
       } catch {
         throw new TypeError(InvalidOptsError())
       }

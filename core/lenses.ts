@@ -1,7 +1,14 @@
-import {is, isNil} from 'ramda'
+import {is, isNil, pipe} from 'ramda'
 import {isArray, isObject, isString} from '../utilities/sync'
 import {InvalidOptsError} from './messages'
-import {Compose, EsopsConfigObject, SanitizedComponent} from './types'
+import {
+  Compose,
+  Component,
+  EsopsConfigObject,
+  SanitizedComponent,
+  SanitizedCompose,
+  EsopsConfig
+} from './types'
 
 /**
  * ## esops2
@@ -16,6 +23,33 @@ export const getVariables = (composeDefinition: Compose) => composeDefinition[1]
 
 export const getOptions = (composeDefinition: Compose) => composeDefinition[2]
 
+interface EsopsConfigObjectWithCompose extends EsopsConfigObject {
+  compose: NonNullable<EsopsConfigObject['compose']>
+}
+export const isEsopsConfigObjectWithCompose = (
+  arg: unknown
+): arg is EsopsConfigObjectWithCompose =>
+  typeof arg === 'object' && !isNil(arg) && arg.hasOwnProperty('compose')
+
+const isComposeArrayOfCommands = (arg: Compose): arg is Component[] => false
+
+export const isComposeCommand = (arg: Compose): arg is Component =>
+  isString(arg) || // './foo'
+  (isArray(arg) && arg.length === 1 && isString(arg[0])) || // ['./foo']
+  (isArray(arg) && arg.length > 1 && isString(arg[0]) && !isString(arg[1])) || // compose: ['./foo'], not ['./foo', './test'], which is compose
+  (isArray(arg) && isString(arg[0])) || // compose: ['./foo']
+  false
+
+export const getLastCommandFromConfig = (esopsJson: EsopsConfig) => {
+  isEsopsConfigObjectWithCompose(esopsJson)
+    ? isComposeArrayOfCommands(esopsJson.compose)
+      ? getCommand(esopsJson.compose.slice(-1))
+      : isComposeCommand(esopsJson.compose)
+      ? getCommand(esopsJson.compose)
+      : ''
+    : ''
+}
+
 export const getComposeDefinitionFromEsopsConfig = result =>
   isNil(result)
     ? null
@@ -25,6 +59,7 @@ export const getComposeDefinitionFromEsopsConfig = result =>
     ? result
     : result.compose
 
+// TODO: Add SanitizedComponent to the return of this
 export const sanitizeComposeParam = (composeDefinition: Compose) => {
   try {
     return isString(composeDefinition)
@@ -41,6 +76,11 @@ export const sanitizeComposeParam = (composeDefinition: Compose) => {
     throw new TypeError(InvalidOptsError())
   }
 }
+
+export const getSanitizedComposeFromEsopsConfig = pipe(
+  getComposeDefinitionFromEsopsConfig,
+  sanitizeComposeParam
+)
 
 export const sanitizeComponent = async component =>
   isString(component) ? [component] : component

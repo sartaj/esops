@@ -1,12 +1,9 @@
 import * as stringify from 'json-stable-stringify'
 import {mergeDeepRight} from 'ramda'
 import async from '../utilities/async'
-import {throwError} from '../utilities/sync'
-// import {EFFECT_COMPONENT_TYPE, LOCAL_PATH_COMPONENT_TYPE} from './constants'
-// import {getComponentType} from './lenses'
+import {throwError, parseJSON} from '../utilities/sync'
 import {FileNotToggledForMerge} from './messages'
 import {listFileTreeSync} from './resolver'
-// import {renderEffectComponent} from './render-effect'
 import {
   checkIfShouldGitPublish,
   checkIfShouldMergeFile,
@@ -61,8 +58,8 @@ export const renderComponent = async (
 
     const prevJson = filesystem.existsSync(manifest.to)
     if (prevJson) {
-      const prev = JSON.parse(filesystem.readFileSync(manifest.to, 'utf-8'))
-      const next = JSON.parse(filesystem.readFileSync(manifest.from, 'utf-8'))
+      const prev = parseJSON(filesystem.readFileSync(manifest.to, 'utf-8'))
+      const next = parseJSON(filesystem.readFileSync(manifest.from, 'utf-8'))
       const merged = mergeDeepRight(prev, next)
       const newFile = stringify(merged, {space: 2})
       filesystem.writeFileSync(manifest.to, newFile)
