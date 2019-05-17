@@ -1,0 +1,12 @@
+{
+  "destination": "../",
+  "compose": [
+    [
+      "react-native-cli",
+      {
+        "AppName": "TesterApplication"
+      }
+    ],
+    ["rm ./App.js"]
+  ]
+}

@@ -19,7 +19,7 @@ export const resolve: ResolverFunc = async (params, sanitizedComponent) => {
     const variables = {
       AppName: `${parent.AppName || 'TestProject'}`,
       version: `${parent.version || '5.0.1'}`,
-      template: `${parent.template || 'typescript'}`,
+      template: `${parent.template || ''}`,
       resolveDirectory,
       renderDirectory,
       destination: params.destination,
@@ -34,8 +34,12 @@ export const resolve: ResolverFunc = async (params, sanitizedComponent) => {
     shell.exec(`command -v yo || npm i -g yo`)
     shell.exec(`command -v react-native-cli || npm i -g react-native-cli`)
 
+    const template = variables.template
+      ? `--template=${variables.template}`
+      : ''
+
     /* Making money moves */
-    shell.exec(`react-native init ${variables.AppName}`, {
+    shell.exec(`react-native init ${variables.AppName} ${template} `, {
       cwd: `${variables.resolveDirectory}`
     })
 
