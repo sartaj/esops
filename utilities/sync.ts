@@ -1,8 +1,9 @@
-import {is, Pred, T, curry} from 'ramda'
+import {is, Pred, T, curry, pipe} from 'ramda'
+import * as stripJsonComments from 'strip-json-comments'
 
 export const isString = (arg: any): arg is string => is(String)(arg)
 
-export const isArray = (arg: any): arg is [] => is(Array)(arg)
+export const isArray = (arg: any): arg is any[] => is(Array)(arg)
 
 export const isObject = (arg: any): arg is Object =>
   is(Object)(arg) && !isArray(arg)
@@ -41,3 +42,9 @@ export const Try = fn => {
     return [e, null]
   }
 }
+
+type ParseJSON = (json: string) => Object
+export const parseJSON: ParseJSON = pipe(
+  stripJsonComments,
+  JSON.parse
+)

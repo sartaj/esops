@@ -1,9 +1,12 @@
 import {execSync} from 'child_process'
 import * as stableStringify from 'json-stable-stringify'
+import {EsopsConfig} from 'library/core/types'
 import * as path from 'path'
-import createFsSideEffects from '../../side-effects/fs'
+import {getSanitizedComposeFromEsopsConfig} from '../../core/lenses'
 import {createInteractiveConsoleUX} from '../../side-effects'
 import {minimist} from '../../side-effects/console/components/cli'
+import createFsSideEffects from '../../side-effects/fs'
+import {isString, parseJSON} from '../../utilities/sync'
 
 const fs = createFsSideEffects()
 const ui = createInteractiveConsoleUX('info')
@@ -67,7 +70,7 @@ function addToPackageJson(dependencies: string[], opts) {
     .reduce((packages, pkg) => ({...packages, ...pkg}), {})
 
   const pkgJsonDir = path.resolve(opts.cwd, 'package.json')
-  const pkgJson = JSON.parse(fs.readFileSync(pkgJsonDir, 'utf-8'))
+  const pkgJson = parseJSON(fs.readFileSync(pkgJsonDir, 'utf-8'))
   const depType = opts.dev
     ? 'devDependencies'
     : opts.peer
@@ -87,7 +90,7 @@ function addToPackageJson(dependencies: string[], opts) {
 
 function removeFromPackageJson(dependencies: string[], opts) {
   const pkgJsonDir = path.resolve(opts.cwd, 'package.json')
-  let pkgJson = JSON.parse(fs.readFileSync(pkgJsonDir, 'utf-8'))
+  let pkgJson = parseJSON(fs.readFileSync(pkgJsonDir, 'utf-8'))
 
   const depType = opts.dev
     ? 'devDependencies'
@@ -104,15 +107,21 @@ function removeFromPackageJson(dependencies: string[], opts) {
 
 const resolveEsops = opts => {
   const esopsDir = path.resolve(opts.cwd, 'esops.json')
-  const esopsJson = JSON.parse(fs.readFileSync(esopsDir, 'utf-8'))
+  const esopsJson: EsopsConfig = parseJSON(fs.readFileSync(esopsDir, 'utf-8'))
+
+  const composeDefinition = getSanitizedComposeFromEsopsConfig(esopsJson)
 
   const destination = esopsJson.destination
     ? path.resolve(opts.cwd, esopsJson.destination)
     : opts.cwd
 
-  const lastCompose = esopsJson.compose && esopsJson.compose.slice(-1)[0]
-  const lastComposePath = path.resolve(opts.cwd, lastCompose)
-  const lastComposeIsLocalPath = lastCompose.startsWith('.')
+  // TODO: Properly sanitized esops JSON won't need all this
+  const lastCompose = composeDefinition.slice(-1)
+  const firstItem = lastCompose[0]
+  const lastComposeString = isString(firstItem) ? firstItem : ''
+
+  const lastComposePath = path.resolve(opts.cwd, lastComposeString)
+  const lastComposeIsLocalPath = lastComposeString.startsWith('.')
 
   if (!lastComposeIsLocalPath) {
     throw new Error(

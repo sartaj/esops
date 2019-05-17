@@ -1,0 +1,25 @@
+{
+  "name": "riteway-fs-snapshots",
+  "description": "Snapshot test runner useful for filesystem scripts like template generators.",
+  "version": "1.0.1",
+  "author": "Sartaj<sartaj@sartaj.me>",
+  "license": "MIT",
+  "homepage": "https://github.com/sartaj/riteway-fs-snapshots#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sartaj/riteway-fs-snapshots.git"
+  },
+  "bugs": {
+    "url": "https://github.com/sartaj/riteway-fs-snapshots/issues"
+  },
+  "main": "library/index.js",
+  "dependencies": {
+    "fs-jetpack": "2.2.0",
+    "fs-plus": "3.0.2",
+    "minimist": "1.2.0",
+    "shelljs": "^0.8.3",
+    "colors": "1.3.3",
+    "rimraf": "2.6.2",
+    "ramda": "0.26.1"
+  }
+}
