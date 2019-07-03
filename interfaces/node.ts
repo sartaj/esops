@@ -15,7 +15,6 @@ import {extend} from '../utilities/sync'
  */
 
 const withSideEffects = extend(({logLevel}) => {
-  debugger
   return {
     effects: {
       filesystem: createFsDriver(),
