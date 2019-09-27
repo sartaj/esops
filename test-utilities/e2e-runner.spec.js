@@ -153,7 +153,7 @@ async function run() {
     async root => {
       await esops({
         root: `${tmpPath}/infrastructure`,
-        prompts: [true]
+        prompts: [true] // FIXME: Prompts isn't overwriting in this test for some reason
       })
     }
   )
