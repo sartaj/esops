@@ -4,14 +4,12 @@ import * as effects from './effects'
 import * as github from './github'
 import * as localPath from './local-path'
 import * as nodeModule from './node-module'
-import * as reactNativeCli from './react-native-cli'
 import * as rm from './rm'
 
 const RESOLVERS_LIST: ResolverExtension[] = [
   localPath,
   github,
   nodeModule,
-  reactNativeCli,
   effects,
   rm
 ]
