@@ -1,19 +1,22 @@
 import chalk from 'chalk'
-
-import {CWDNotDefined, InvalidOptsError} from './messages'
-import {EsopsConfig} from './types'
+import * as minimist from 'minimist'
+import * as localPath from '../extensions/resolvers/local-path'
 import async from '../utilities/async'
 import {parseJSON} from '../utilities/sync'
 import {
+  getCommandFromSanitized,
   getComposeDefinitionFromEsopsConfig,
-  sanitizeComponent,
-  getCommandFromSanitized
+  sanitizeComponent
 } from './lenses'
+import {CWDNotDefined, InvalidOptsError} from './messages'
+import {EsopsConfig, Params} from './types'
 
 /**
  * ## Resolvers
  */
-export const resolveSanitizedComponent = params => async sanitizedComponent => {
+export const resolveSanitizedComponent = (
+  params: Params
+) => async sanitizedComponent => {
   try {
     const {
       effects: {ui},
@@ -45,10 +48,29 @@ export const resolveSanitizedComponent = params => async sanitizedComponent => {
   }
 }
 
-export const resolveComponent = params => composeDefinition =>
+export const parseOptions = async sanitizedComponent => {
+  if (!localPath.is(sanitizedComponent[0])) return sanitizedComponent
+
+  const processed = minimist(sanitizedComponent[0].split(' '))
+  if (processed._.filter(s => s).length > 1)
+    throw new TypeError(
+      `${sanitizedComponent} has too many commands. Each line can only do 1 command, and options follow cli syntax.`
+    )
+  return [
+    processed._[0],
+    sanitizedComponent[1],
+    {
+      ...sanitizeComponent[2],
+      ...processed
+    }
+  ]
+}
+
+export const resolveComponent = (params: Params) => composeDefinition =>
   async.result(
     async.pipe(
       sanitizeComponent,
+      parseOptions,
       resolveSanitizedComponent(params)
     )(composeDefinition)
   )
@@ -57,11 +79,11 @@ export const resolveComponent = params => composeDefinition =>
  * ### hasEsopsCompose
  * Check if resolved component has an esops compose definition.
  */
-export const hasEsopsCompose = params => async (
+export const hasEsopsCompose = (params: Params) => async (
   resolvedComponent
 ): Promise<boolean> => {
   try {
-    const [resolvedComponentString, variables, options] = resolvedComponent
+    const [resolvedComponentString] = resolvedComponent
     const nextEsopsConfig = await findEsopsConfig(params)(
       resolvedComponentString
     )
@@ -81,7 +103,7 @@ export const hasEsopsCompose = params => async (
  * ### findEsopsConfig
  * Read and parse esops config file from `esops.json` or `package.json`.
  */
-export const findEsopsConfig = params => async (
+export const findEsopsConfig = (params: Params) => async (
   directory
 ): Promise<EsopsConfig> => {
   const {
@@ -114,7 +136,7 @@ export const findEsopsConfig = params => async (
  * TODO: Explore need/use case for folder path support.
  * TODO: Explore need/use case for allowing esops toggle files to be copies.
  */
-type ListFiles = (params) => (cwd: string) => string[]
+type ListFiles = (params: Params) => (cwd: string) => string[]
 export const listFileTreeSync: ListFiles = ({effects: {filesystem}}) => (
   cwd: string
 ) =>

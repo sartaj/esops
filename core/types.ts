@@ -1,4 +1,25 @@
-type Path = string
+import {sanitizeComponent} from './lenses'
+import {listTreeSync} from 'fs-plus'
+import {Path} from 'path'
+import {PathLike} from 'fs'
+
+// TODO: Figure out how to import path as a module without this patch.
+declare module 'path' {
+  interface Path {
+    normalize(p: string): string
+    join(...paths: any[]): string
+    resolve(...pathSegments: any[]): string
+    isAbsolute(p: string): boolean
+    relative(from: string, to: string): string
+    dirname(p: string): string
+    basename(p: string, ext?: string): string
+    extname(p: string): string
+    sep: string
+    delimiter: string
+    parse(p: string): ParsedPath
+    format(pP: FormatInputPathObject): string
+  }
+}
 
 export type ComponentVariables = {}
 
@@ -6,6 +27,10 @@ export type ComponentOptions = {
   mergeJson: []
   mergeFiles: []
   overwrite: []
+  merge: boolean
+  publish: boolean
+  o: string
+  out: string
 }
 
 export type Component =
@@ -31,18 +56,33 @@ export type UserParams = {
 
 export type Effects = {
   filesystem: {
+    path: Path
     appCache: {
       getRenderPrepFolder: () => Promise<string>
     }
+    listTreeSync: (str: string) => string[]
+    isDirectory: {
+      sync: (isDirectory: string) => boolean
+    }
+    existsSync: (str: string) => boolean
+    readFileSync(path: PathLike, options?: {encoding: string} | string): string
+    writeFileSync: (s1: string, s2: string) => void
+    forceCopy: (s1: string, s2: string) => void
   }
-  resolver: {}
-  ui: {}
+  resolve: (
+    params: Params,
+    sanitizeComponent: SanitizedComponent
+  ) => SanitizedComponent
+  ui: {
+    getTabs: (n: number) => string
+    info: (u: unknown) => void
+  }
   shell: {}
   vm: {}
 }
 
 export type Params = {
-  effects: {}
+  effects: Effects
   destination: string
   root: string
   parent: SanitizedComponent
@@ -54,13 +94,13 @@ export type Params = {
 }
 
 export type EsopsConfigObject = {
-  destination?: Path
+  destination?: string
   compose?: Compose
 }
 
 export type EsopsConfig = EsopsConfigObject | Compose
 
-export type Report = {
+export type Manifest = {
   from: string
   to: string
   relativePath: string
@@ -68,7 +108,10 @@ export type Report = {
   shouldMergeFile: boolean
   shouldGitPublish: boolean
   mergeJsonArrays: string[]
-}[]
+}
+
+export type Actions = Manifest[]
+export type Report = Manifest[]
 
 export type ResolverFunc = (
   params: any,
