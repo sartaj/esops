@@ -351,6 +351,7 @@ $RECYCLE.BIN/
 
 .tmp
 ### ESOPS AUTO GENERATED BEGIN ###
+#shouldPublish:/.travis.yml
 /.eslintignore
 /.eslintrc
 /.markdownlint.json
