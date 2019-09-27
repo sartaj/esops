@@ -1,6 +1,6 @@
 import {execSync} from 'child_process'
 import * as stableStringify from 'json-stable-stringify'
-import {EsopsConfig} from 'library/core/types'
+import {EsopsConfig} from '../../core/types'
 import * as path from 'path'
 import {getSanitizedComposeFromEsopsConfig} from '../../core/lenses'
 import {createInteractiveConsoleUX} from '../../side-effects'

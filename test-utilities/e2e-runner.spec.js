@@ -2,9 +2,11 @@
   NOTE: This script only runs if process.env.NODE_ENV=== 'e2e'
  */
 
-import {withTempDir} from 'riteway-fs-snapshots/withTempDir'
+const {
+  withTempDir
+} = require('riteway-fs-snapshots/withTempDir')
 
-import chalk from 'chalk'
+const chalk = require('chalk')
 
 const path = require('path')
 
@@ -23,8 +25,7 @@ const BASIC_COMPONENTS = [
   (mockComponents, next) => ({
     ...mockComponents,
     [next]: path.join(rootDir, 'domain', 'tests', next, 'module')
-  }),
-  {}
+  }), {}
 )
 
 const MOCK_COMPONENTS = {
@@ -37,14 +38,16 @@ function logTitle(title) {
 
 async function run() {
   const esops = require('../library').default
-  const esopsCli = require('../library/interfaces/cli').default
+  const esopsCli = require('../library/extensions/cli/cli').default
 
   logTitle('basic-bare-minimum')
   await withTempDir(
     __dirname,
     MOCK_COMPONENTS['basic-bare-minimum'],
     async root => {
-      await esops({root})
+      await esops({
+        root
+      })
     }
   )
 
@@ -53,7 +56,9 @@ async function run() {
     __dirname,
     MOCK_COMPONENTS['basic-ignore-files'],
     async root => {
-      await esops({root})
+      await esops({
+        root
+      })
     }
   )
 
@@ -62,7 +67,9 @@ async function run() {
     __dirname,
     MOCK_COMPONENTS['esops-typescript-open-source-module'],
     async root => {
-      await esops({root})
+      await esops({
+        root
+      })
     }
   )
 
@@ -71,7 +78,9 @@ async function run() {
     __dirname,
     MOCK_COMPONENTS['problem-bad-path'],
     async root => {
-      await esops({root})
+      await esops({
+        root
+      })
     }
   )
 
@@ -80,7 +89,9 @@ async function run() {
     __dirname,
     MOCK_COMPONENTS['problem-bad-config'],
     async root => {
-      await esops({root})
+      await esops({
+        root
+      })
     }
   )
 
@@ -89,7 +100,9 @@ async function run() {
     __dirname,
     MOCK_COMPONENTS['problem-no-config'],
     async root => {
-      await esops({root})
+      await esops({
+        root
+      })
     }
   )
 
@@ -98,7 +111,10 @@ async function run() {
     __dirname,
     MOCK_COMPONENTS['basic-local-overwrite'],
     async root => {
-      await esops({root, prompts: [true]})
+      await esops({
+        root,
+        prompts: [true]
+      })
     }
   )
 
@@ -107,7 +123,10 @@ async function run() {
     __dirname,
     MOCK_COMPONENTS['basic-local-overwrite'],
     async root => {
-      await esops({root, prompts: [false]})
+      await esops({
+        root,
+        prompts: [false]
+      })
     }
   )
 
@@ -116,7 +135,10 @@ async function run() {
     __dirname,
     MOCK_COMPONENTS['basic-local-overwrite'],
     async root => {
-      await esops({root, prompts: [new Error('exit')]})
+      await esops({
+        root,
+        prompts: [new Error('exit')]
+      })
     }
   )
 

@@ -1,4 +1,4 @@
-import {flatten} from 'ramda'
+import {flatten, isEmpty} from 'ramda'
 
 import async from '../utilities/async'
 import {throwError} from '../utilities/sync'
@@ -54,7 +54,7 @@ export const walk = async.extend(async params => {
     const getComposeDefinition = async.pipe(
       findEsopsConfig(params),
       async function checkForEsopsConfigPath(esopsConfigPath) {
-        if (!esopsConfigPath)
+        if (isEmpty(esopsConfigPath))
           throw new TypeError(ConfigNotFound({cwd: params.parent[0]}))
         return esopsConfigPath
       },
