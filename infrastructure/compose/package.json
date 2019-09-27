@@ -1,9 +1,9 @@
 {
   "name": "esops",
   "description": "Decouple your infrastructure with composable auto-ignored template generation.",
-  "version": "3.0.4",
+  "version": "3.1.0",
   "scripts": {
-    "local-esops": "npx ts-node ./interfaces/cli.ts ./infrastructure",
+    "local-esops": "npx ts-node ./extensions/cli/cli.ts ./infrastructure",
     "test:e2e": "npm run build && NODE_ENV=e2e ts-node ./test-utilities/e2e-runner.spec.ts",
     "test:update-snaps": "UPDATE_SNAPSHOTS=1 npm run test"
   },
@@ -19,9 +19,9 @@
   },
   "main": "library/index.js",
   "bin": {
-    "esops": "library/interfaces/cli.js",
-    "esops-npm": "library/interfaces/esops-npm.js",
-    "esops-yarn": "library/interfaces/esops-yarn.js"
+    "esops": "library/extensions/cli/cli.js",
+    "esops-npm": "library/extensions/cli/esops-npm.js",
+    "esops-yarn": "library/interfaces/cli/esops-yarn.js"
   },
   "dependencies": {
     "async": "2.6.2",

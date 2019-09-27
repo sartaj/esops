@@ -5,7 +5,9 @@
 const {
   withTempDir
 } = require('riteway-fs-snapshots/withTempDir')
-
+const {
+  execSync
+} = require('child_process')
 const chalk = require('chalk')
 
 const path = require('path')
@@ -17,14 +19,13 @@ const BASIC_COMPONENTS = [
   'basic-ignore-files',
   'basic-local-overwrite',
   'basic-compose',
-  'problem-bad-path',
   'problem-bad-config',
   'problem-bad-json',
   'problem-no-config'
 ].reduce(
   (mockComponents, next) => ({
     ...mockComponents,
-    [next]: path.join(rootDir, 'domain', 'tests', next, 'module')
+    [next]: path.join(rootDir, 'core', 'tests', next, 'module')
   }), {}
 )
 
@@ -62,24 +63,14 @@ async function run() {
     }
   )
 
-  logTitle('esops-typescript-open-source-module')
-  await withTempDir(
-    __dirname,
-    MOCK_COMPONENTS['esops-typescript-open-source-module'],
-    async root => {
-      await esops({
-        root
-      })
-    }
-  )
-
   logTitle('problem-bad-path')
   await withTempDir(
     __dirname,
     MOCK_COMPONENTS['problem-bad-path'],
     async root => {
       await esops({
-        root
+        root,
+        prompts: [true]
       })
     }
   )
@@ -151,6 +142,23 @@ async function run() {
   await withTempDir(__dirname, [], async cwd => {
     await esopsCli(['help'])
   })
+
+  logTitle('esops-meta')
+
+  const tmpPath = path.join(__dirname, 'tmp-esops-clone')
+  execSync(`git clone https://github.com/sartaj/esops ${tmpPath}`)
+  await withTempDir(
+    __dirname,
+    tmpPath,
+    async root => {
+      await esops({
+        root: `${tmpPath}/infrastructure`,
+        prompts: [true]
+      })
+    }
+  )
+  execSync(`rm -rf ${tmpPath}`)
+
 }
 
 process.env.NODE_ENV === 'e2e' && run()
