@@ -349,7 +349,10 @@ $RECYCLE.BIN/
 
 # End of https://www.gitignore.io/api/node,linux,macos,windows,reactnative
 
+
+#### ESOPS EXTRA IGNORES
 .tmp
+
 ### ESOPS AUTO GENERATED BEGIN ###
 #shouldPublish:/.travis.yml
 /.eslintignore

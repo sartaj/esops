@@ -1,4 +1,9 @@
 {
   "destination": "../",
-  "compose": ["github:sartaj/typescript-node-stack#ts-fp", "./.gitignore --merge", "./package-extend.json --merge -o './package.json' ", "./package-lock.json"]
+  "compose": [
+    "github:sartaj/typescript-node-stack#ts-fp",
+    "./.gitignore-extend -o ./.gitignore --merge",
+    "./package-extend.json -o ./package.json --merge",
+    "./package-lock.json"
+  ]
 }
