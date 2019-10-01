@@ -21,7 +21,7 @@
   "bin": {
     "esops": "library/extensions/cli/cli.js",
     "esops-npm": "library/extensions/cli/esops-npm.js",
-    "esops-yarn": "library/interfaces/cli/esops-yarn.js"
+    "esops-yarn": "library/extensions/cli/esops-yarn.js"
   },
   "dependencies": {
     "async": "2.6.2",
