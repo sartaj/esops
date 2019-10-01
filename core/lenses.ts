@@ -6,7 +6,6 @@ import {
   Component,
   EsopsConfigObject,
   SanitizedComponent,
-  SanitizedCompose,
   EsopsConfig
 } from './types'
 

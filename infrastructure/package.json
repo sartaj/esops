@@ -1,12 +1,7 @@
 {
   "name": "esops",
   "description": "Decouple your infrastructure with composable auto-ignored template generation.",
-  "version": "3.2.0",
-  "scripts": {
-    "local-esops": "npx ts-node ./extensions/cli/cli.ts ./infrastructure",
-    "test:e2e": "npm run build && NODE_ENV=e2e node ./test-utilities/e2e-runner.spec.js",
-    "test:update-snaps": "UPDATE_SNAPSHOTS=1 npm run test"
-  },
+  "version": "3.2.2",
   "author": "Sartaj<sartaj@sartaj.me>",
   "license": "MIT",
   "homepage": "https://github.com/sartaj/esops#readme",
@@ -19,9 +14,12 @@
   },
   "main": "library/index.js",
   "bin": {
-    "esops": "library/extensions/cli/cli.js",
-    "esops-npm": "library/extensions/cli/esops-npm.js",
-    "esops-yarn": "library/extensions/cli/esops-yarn.js"
+    "esops": "library/extensions/cli/cli.js"
+  },
+  "scripts": {
+    "local-esops": "npx ts-node ./extensions/cli/cli.ts ./infrastructure",
+    "test:e2e": "npm run build && NODE_ENV=e2e node ./test-utilities/e2e-runner.spec.js",
+    "test:update-snaps": "UPDATE_SNAPSHOTS=1 npm run test"
   },
   "dependencies": {
     "async": "2.6.2",
@@ -37,7 +35,7 @@
     "json-stable-stringify": "1.0.1",
     "log-driver": "1.2.7",
     "loglevel": "1.6.1",
-    "marked": "0.6.2",
+    "marked": "0.7.0",
     "marked-terminal": "3.0.0",
     "minimist": "1.2.0",
     "mkdirp": "0.5.1",

@@ -367,7 +367,6 @@ $RECYCLE.BIN/
 /.vscode/settings.json
 /cSpell.json
 /infrastructure.md
-/package-lock.json
 /package.json
 /tsconfig.json
 ### ESOPS AUTO GENERATED END ###

@@ -2,8 +2,7 @@
   "destination": "../",
   "compose": [
     "github:sartaj/typescript-node-stack#ts-fp",
-    "./.gitignore-extend -o ./.gitignore --merge",
-    "./package-extend.json -o ./package.json --merge",
-    "./package-lock.json"
+    "./.gitignore --merge",
+    "./package.json --merge"
   ]
 }
