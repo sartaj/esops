@@ -1,6 +1,4 @@
 import chalk from 'chalk'
-import * as minimist from 'minimist'
-import * as localPath from '../extensions/resolvers/local-path'
 import async from '../utilities/async'
 import {parseJSON} from '../utilities/sync'
 import {
@@ -48,29 +46,10 @@ export const resolveSanitizedComponent = (
   }
 }
 
-export const parseOptions = async sanitizedComponent => {
-  if (!localPath.is(sanitizedComponent[0])) return sanitizedComponent
-
-  const processed = minimist(sanitizedComponent[0].split(' '))
-  if (processed._.filter(s => s).length > 1)
-    throw new TypeError(
-      `${sanitizedComponent} has too many commands. Each line can only do 1 command, and options follow cli syntax.`
-    )
-  return [
-    processed._[0],
-    sanitizedComponent[1],
-    {
-      ...sanitizeComponent[2],
-      ...processed
-    }
-  ]
-}
-
 export const resolveComponent = (params: Params) => composeDefinition =>
   async.result(
     async.pipe(
       sanitizeComponent,
-      parseOptions,
       resolveSanitizedComponent(params)
     )(composeDefinition)
   )

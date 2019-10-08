@@ -2,7 +2,7 @@ import * as fs from 'fs'
 import * as path from 'path'
 import {getCommand, getCommandFromSanitized} from '../../../core/lenses'
 import {NoPathError} from '../../../core/messages'
-
+import {parseCLIStyleComponentOptions} from '../../../core/parse-component'
 const LOCAL_PATH_COMPONENT_TYPE = 'PATH'
 const LOCAL_RELATIVE_PATH_PREFIX = '.'
 const LOCAL_ABSOLUTE_PATH_PREFIX = '/'
@@ -22,7 +22,9 @@ export const tryFSPath = (pkg, {cwd}) => {
 export const resolveLocalPath = async (params, sanitizedComponent) => {
   try {
     const {parent} = params
-    const componentString = getCommandFromSanitized(sanitizedComponent)
+    const parsedComponent = parseCLIStyleComponentOptions(sanitizedComponent)
+    const componentString = getCommandFromSanitized(parsedComponent)
+
     const parentPath = getCommand(parent)
 
     const resolvedPath = await tryFSPath(componentString, {cwd: parentPath})
