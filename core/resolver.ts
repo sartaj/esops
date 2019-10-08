@@ -8,6 +8,7 @@ import {
 } from './lenses'
 import {CWDNotDefined, InvalidOptsError} from './messages'
 import {EsopsConfig, Params} from './types'
+import {parseCLIStyleComponentOptions} from './parse-component'
 
 /**
  * ## Resolvers
@@ -21,6 +22,12 @@ export const resolveSanitizedComponent = (
       parent
     } = params
     const componentString: string = getCommandFromSanitized(sanitizedComponent)
+
+    const parsedOptions =
+      componentString.startsWith('rm') || componentString.startsWith('shell')
+        ? ['', {}, {}]
+        : parseCLIStyleComponentOptions(sanitizedComponent)
+
     const parentPath = getCommandFromSanitized(parent)
     const tab = ui.getTabs(params.treeDepth)
 
@@ -28,7 +35,6 @@ export const resolveSanitizedComponent = (
 
     ui.info(`${tab}${chalk.bold(componentString)}`)
     ui.info(`${tab}  resolving`)
-
     const resolvedComponentString = await async.result(
       params.effects.resolve(params, sanitizedComponent),
       true
@@ -38,8 +44,8 @@ export const resolveSanitizedComponent = (
 
     return [
       resolvedComponentString,
-      sanitizedComponent[1],
-      sanitizedComponent[2]
+      {...sanitizedComponent[1], ...parsedOptions[1]},
+      {...sanitizedComponent[2], ...parsedOptions[2]}
     ]
   } catch (e) {
     throw e

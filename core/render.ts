@@ -11,6 +11,7 @@ import {
   resolveToggles
 } from './toggles-check'
 import {Params, SanitizedComponent, Report, Manifest} from './types'
+import {getCommand} from './lenses'
 
 /**
  * Render Path
@@ -72,18 +73,11 @@ const renderManifest = (params: Params) => async (manifest: Manifest) => {
   }
 }
 
-export const renderComponent = async (
-  params,
-  component: SanitizedComponent
-): Promise<Report> =>
-  params.effects.filesystem.isDirectory.sync(component[0])
-    ? renderDirectory(params, component)
-    : renderFile(params, component)
-
 export const renderDirectory = async (
   params,
   component: SanitizedComponent
 ): Promise<Report> => {
+  console.log('render directory')
   const {
     effects: {ui, filesystem}
   } = params
@@ -156,7 +150,7 @@ export const renderFile = async (
   const [localComponentPath, variables, options] = component
   ui.info(`${tab}  file found, rendering...`)
   const from = localComponentPath
-  const relativePath = path.relative(params.root, from)
+  const relativePath = path.relative(params.parent[0], from)
   const renderPrepPath = await filesystem.appCache.getRenderPrepFolder()
   const to = path.join(renderPrepPath, options.o || options.out || relativePath)
   const fileIsJSON = isFileJSON(params)(from)
@@ -175,3 +169,11 @@ export const renderFile = async (
   ui.info(`${tab}  rendered`)
   return [renderReport]
 }
+
+export const renderComponent = async (
+  params,
+  component: SanitizedComponent
+): Promise<Report> =>
+  params.effects.filesystem.isDirectory.sync(getCommand(component))
+    ? renderDirectory(params, component)
+    : renderFile(params, component)

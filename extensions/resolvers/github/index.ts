@@ -44,7 +44,7 @@ const getGitInfoFromGithubPath = pipe(
 export const resolveGithub = async (
   {
     effects: {
-      filesystem: {appCache, path, listTreeSync, readFileSync}
+      filesystem: {appCache, path}
     }
   }: Params,
   sanitizedComponent
@@ -57,9 +57,9 @@ export const resolveGithub = async (
     const {gitUrl, branch} = getGitInfoFromGithubPath(pathString)
     const modulePath = await tryGitPath({gitUrl, destination, branch})
 
-    const root = options.root ? path.join(modulePath, options.root) : modulePath
-
-    // console.log(root, listTreeSync(root))
+    const root = options.subdir
+      ? path.join(modulePath, options.subdir)
+      : modulePath
 
     return root
   } catch (e) {

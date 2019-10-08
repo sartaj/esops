@@ -32,6 +32,7 @@ export type ComponentOptions = {
   o: string
   out: string
   root?: string
+  subdir?: string
 }
 
 export type Component =

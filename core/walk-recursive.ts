@@ -26,7 +26,6 @@ export const walk = async.extend(async params => {
       const componentIsALocalPathWithEsopsCompose = await hasEsopsCompose(
         params
       )(resolvedComponent)
-
       /* the report from the render is used for copying */
       let report: Report = []
 
