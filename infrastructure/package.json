@@ -1,7 +1,7 @@
 {
   "name": "esops",
   "description": "Decouple your infrastructure with composable auto-ignored template generation.",
-  "version": "3.3.0",
+  "version": "3.4.0",
   "author": "Sartaj<sartaj@sartaj.me>",
   "license": "MIT",
   "homepage": "https://github.com/sartaj/esops#readme",
@@ -57,5 +57,9 @@
     "rimraf": "2.6.2",
     "riteway-fs-snapshots": "1.0.1",
     "shorthash": "0.0.2"
-  }
+  },
+  "files": [
+    "lib/**/!(*.spec).d.ts",
+    "lib/**/!(*.spec).js"
+  ]
 }
