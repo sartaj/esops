@@ -1,7 +1,6 @@
 import {existsSync, mkdirSync, readFileSync, writeFileSync} from 'fs'
 import {listTreeSync, copySync} from 'fs-plus'
 import {copy} from 'fs-jetpack'
-import * as readPkg from 'read-pkg'
 import {createAppCache} from './app-cache'
 
 export default () => ({
@@ -23,7 +22,6 @@ export default () => ({
   copySync,
   readFileSync,
   writeFileSync,
-  readPkg,
   existsSync,
   mkdirSync
 })

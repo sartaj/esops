@@ -12,9 +12,9 @@
   "bugs": {
     "url": "https://github.com/sartaj/esops/issues"
   },
-  "main": "library/index.js",
+  "main": "lib/index.js",
   "bin": {
-    "esops": "library/extensions/cli/cli.js"
+    "esops": "lib/extensions/cli/cli.js"
   },
   "scripts": {
     "local-esops": "npx ts-node ./extensions/cli/cli.ts ./infrastructure",

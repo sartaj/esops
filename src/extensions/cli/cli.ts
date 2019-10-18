@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+import {UserParams} from './../../core/types'
 import {cond, pipe} from 'ramda'
 import * as path from 'path'
 
@@ -9,7 +10,6 @@ import {
   minimist,
   willAnnounce
 } from '../../side-effects/console/components/cli'
-
 import esops from '../../'
 
 const onHelp: Conditional = [command.first('help'), willAnnounce(EsopsHowTo)]
@@ -21,10 +21,12 @@ const runApp: Conditional = defaultTo(commands => {
   const userDestination = commands._[1]
   const cwd = process.cwd()
   const overwrite = commands.o || commands.overwrite
+  const logLevel = commands.logLevel
   const prompts = overwrite ? [true] : undefined
   const root = path.resolve(cwd, userRoot || '')
   const destination = userDestination && path.resolve(cwd, userDestination)
-  esops({root, destination, prompts})
+  const params: UserParams = {root, destination, prompts, logLevel}
+  esops(params)
 })
 
 const onCommand = cond([onHelp, onClean, runApp])

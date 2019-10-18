@@ -156,9 +156,18 @@ export const renderFile = async (
   const [localComponentPath, variables, options] = component
   ui.info(`${tab}  file found, rendering...`)
   const from = localComponentPath
-  const relativePath = path.relative(params.root, from)
+  ui.trace(`from ${from}`)
+  ui.trace(`parent ${params.parent[0]}`)
+  const parentRoot = params.parent[0]
+  const relativePath = path.relative(parentRoot, from)
+  ui.trace(`relative path ${relativePath}`)
   const renderPrepPath = await filesystem.appCache.getRenderPrepFolder()
+  ui.trace(`renderPrepPath ${renderPrepPath}`)
+  ui.trace(
+    `options.o || options.out ${options.o || options.out ? true : false}`
+  )
   const to = path.join(renderPrepPath, options.o || options.out || relativePath)
+  ui.trace(`to ${to}`)
   const fileIsJSON = isFileJSON(params)(from)
   const manifest = {
     from,

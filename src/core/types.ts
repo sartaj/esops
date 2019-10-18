@@ -50,7 +50,7 @@ export type UserParams = {
   root: string
   destination?: string
   compose?: Compose
-  logLevel?: string
+  logLevel: string
   prompts?: Prompt[]
 }
 
@@ -76,6 +76,9 @@ export type Effects = {
   ui: {
     getTabs: (n: number) => string
     info: (u: unknown) => void
+    trace: (u: unknown) => void
+    md: (u: unknown) => void
+    prompts: <T>(u: unknown[]) => T
   }
   shell: {}
   vm: {}
