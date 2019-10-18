@@ -50,7 +50,7 @@ export type UserParams = {
   root: string
   destination?: string
   compose?: Compose
-  logLevel: string
+  logLevel?: string
   prompts?: Prompt[]
 }
 
