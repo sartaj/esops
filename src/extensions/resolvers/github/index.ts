@@ -1,7 +1,8 @@
 import {pipe} from 'ramda'
 import {GitFetchFailed} from '../../../core/messages'
+import {parseCLIStyleComponentOptions} from '../../../core/parse-component'
 import {spawn} from '../../../side-effects/process'
-
+import {Params} from './../../../core/types'
 export const GITHUB_COMPONENT_TYPE = 'GITHUB'
 export const GITHUB_PREFIX = 'github:'
 export const isGithub = componentString =>
@@ -43,21 +44,28 @@ const getGitInfoFromGithubPath = pipe(
 export const resolveGithub = async (
   {
     effects: {
-      filesystem: {appCache}
+      filesystem: {appCache, path}
     }
-  },
+  }: Params,
   sanitizedComponent
 ) => {
-  const pathString = sanitizedComponent[0]
+  const parsedComponent = parseCLIStyleComponentOptions(sanitizedComponent)
+  const [pathString, variables, options] = parsedComponent
 
   try {
     const destination = await appCache.createNewCacheFolder()
     const {gitUrl, branch} = getGitInfoFromGithubPath(pathString)
     const modulePath = await tryGitPath({gitUrl, destination, branch})
 
-    return modulePath
+    const root = options.subdir
+      ? path.join(modulePath, options.subdir)
+      : modulePath
+
+    return root
   } catch (e) {
-    throw new TypeError(GitFetchFailed({pathString, message: e.message}))
+    throw new TypeError(
+      GitFetchFailed({pathString: sanitizedComponent[0], message: e.message})
+    )
   }
 }
 export default resolveGithub

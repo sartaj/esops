@@ -11,6 +11,7 @@ import {
   resolveToggles
 } from './toggles-check'
 import {Params, SanitizedComponent, Report, Manifest} from './types'
+import {getCommand} from './lenses'
 
 /**
  * Render Path
@@ -71,14 +72,6 @@ const renderManifest = (params: Params) => async (manifest: Manifest) => {
     success: true
   }
 }
-
-export const renderComponent = async (
-  params,
-  component: SanitizedComponent
-): Promise<Report> =>
-  params.effects.filesystem.isDirectory.sync(component[0])
-    ? renderDirectory(params, component)
-    : renderFile(params, component)
 
 export const renderDirectory = async (
   params,
@@ -184,3 +177,11 @@ export const renderFile = async (
   ui.info(`${tab}  rendered`)
   return [renderReport]
 }
+
+export const renderComponent = async (
+  params,
+  component: SanitizedComponent
+): Promise<Report> =>
+  params.effects.filesystem.isDirectory.sync(getCommand(component))
+    ? renderDirectory(params, component)
+    : renderFile(params, component)

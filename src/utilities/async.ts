@@ -47,7 +47,7 @@ export const fromNodeCallback = cb => async (...args) =>
     throw e
   })
 
-export const series = <T>(seriesArr: Promise<T>): Promise<T> =>
+export const series = <T>(seriesArr: Promise<T>[]): Promise<T> =>
   new Promise((resolve, reject) => {
     async.series(seriesArr, (err, result: T) => {
       if (err) reject(err)

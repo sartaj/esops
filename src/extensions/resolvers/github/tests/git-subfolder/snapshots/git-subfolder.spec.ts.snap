@@ -1,0 +1,57 @@
+module.exports[`Describe esops subfolder | Given a github path that composes another github path: should generate appropriate files`] = `
+
+[
+  ".eslintrc",
+  ".gitignore",
+  ".markdownlint.json",
+  ".prettierrc",
+  ".vscode",
+  ".vscode/settings.json",
+  "cSpell.json",
+  "esops.json",
+  "package.json",
+  "tsconfig.json"
+]`
+
+module.exports[`Describe esops subfolder | Given a .gitignore: should create merged .gitignore with manifest`] = `
+
+lib
+### ESOPS AUTO GENERATED BEGIN ###
+#shouldPublish:/package.json
+/.eslintrc
+/.markdownlint.json
+/.prettierrc
+/.vscode/settings.json
+/cSpell.json
+/tsconfig.json
+### ESOPS AUTO GENERATED END ###
+`
+
+module.exports[`Describe esops subfolder | Given a package.json: should create merged package.json with manifest`] = `
+
+{
+  "dependencies": {
+    "ramda": "0.26.1"
+  },
+  "devDependencies": {
+    "@types/ramda": "^0.25.43",
+    "@typescript-eslint/eslint-plugin": "2.4.0",
+    "@typescript-eslint/parser": "2.4.0",
+    "eslint": "6.1.0",
+    "eslint-config-prettier": "6.4.0",
+    "eslint-plugin-prettier": "3.1.1",
+    "eslint-plugin-react": "7.16.0",
+    "esops": "3.4.0",
+    "prettier": "1.18.2",
+    "typescript": "3.6.4"
+  },
+  "main": "lib/index.js",
+  "scripts": {
+    "build": "tsc",
+    "esops": "esops --overwrite",
+    "prepare": "esops",
+    "watch": "tsc --watch"
+  },
+  "types": "lib/index.d.ts"
+}`
+

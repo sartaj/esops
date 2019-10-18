@@ -13,6 +13,7 @@ const describe = withSnapshots(__filename)
 const rootPath = path.join(__dirname, './module')
 
 describe('esops recursive variables', async assert => {
+  console.warn('@DEPRECATE will be deprecated and rethought.')
   await withTempDir(__dirname, rootPath, async root => {
     await esops({
       root: path.join(root, 'infrastructure'),

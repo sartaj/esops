@@ -31,6 +31,8 @@ export type ComponentOptions = {
   publish: boolean
   o: string
   out: string
+  root?: string
+  subdir?: string
 }
 
 export type Component =
@@ -59,6 +61,7 @@ export type Effects = {
     path: Path
     appCache: {
       getRenderPrepFolder: () => Promise<string>
+      createNewCacheFolder: () => Promise<string>
     }
     listTreeSync: (str: string) => string[]
     isDirectory: {

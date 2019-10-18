@@ -9,7 +9,7 @@ import * as rm from './rm'
 const RESOLVERS_LIST: ResolverExtension[] = [
   localPath,
   github,
-  nodeModule,
+  // nodeModule, // TODO: Disable for now as lack of design thought.
   effects,
   rm
 ]

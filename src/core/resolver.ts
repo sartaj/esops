@@ -1,6 +1,4 @@
 import chalk from 'chalk'
-import * as minimist from 'minimist'
-import * as localPath from '../extensions/resolvers/local-path'
 import async from '../utilities/async'
 import {parseJSON} from '../utilities/sync'
 import {
@@ -10,6 +8,7 @@ import {
 } from './lenses'
 import {CWDNotDefined, InvalidOptsError} from './messages'
 import {EsopsConfig, Params} from './types'
+import {parseCLIStyleComponentOptions} from './parse-component'
 
 /**
  * ## Resolvers
@@ -23,6 +22,12 @@ export const resolveSanitizedComponent = (
       parent
     } = params
     const componentString: string = getCommandFromSanitized(sanitizedComponent)
+
+    const parsedOptions =
+      componentString.startsWith('rm') || componentString.startsWith('shell')
+        ? ['', {}, {}]
+        : parseCLIStyleComponentOptions(sanitizedComponent)
+
     const parentPath = getCommandFromSanitized(parent)
     const tab = ui.getTabs(params.treeDepth)
 
@@ -30,7 +35,6 @@ export const resolveSanitizedComponent = (
 
     ui.info(`${tab}${chalk.bold(componentString)}`)
     ui.info(`${tab}  resolving`)
-
     const resolvedComponentString = await async.result(
       params.effects.resolve(params, sanitizedComponent),
       true
@@ -40,37 +44,18 @@ export const resolveSanitizedComponent = (
 
     return [
       resolvedComponentString,
-      sanitizedComponent[1],
-      sanitizedComponent[2]
+      {...sanitizedComponent[1], ...parsedOptions[1]},
+      {...sanitizedComponent[2], ...parsedOptions[2]}
     ]
   } catch (e) {
     throw e
   }
 }
 
-export const parseOptions = async sanitizedComponent => {
-  if (!localPath.is(sanitizedComponent[0])) return sanitizedComponent
-
-  const processed = minimist(sanitizedComponent[0].split(' '))
-  if (processed._.filter(s => s).length > 1)
-    throw new TypeError(
-      `${sanitizedComponent} has too many commands. Each line can only do 1 command, and options follow cli syntax.`
-    )
-  return [
-    processed._[0],
-    sanitizedComponent[1],
-    {
-      ...sanitizeComponent[2],
-      ...processed
-    }
-  ]
-}
-
 export const resolveComponent = (params: Params) => composeDefinition =>
   async.result(
     async.pipe(
       sanitizeComponent,
-      parseOptions,
       resolveSanitizedComponent(params)
     )(composeDefinition)
   )

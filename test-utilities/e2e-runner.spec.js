@@ -157,7 +157,7 @@ async function run() {
       })
     }
   )
-  // execSync(`rm -rf ${tmpPath}`)
+  execSync(`rm -rf ${tmpPath}`)
 
 }
 

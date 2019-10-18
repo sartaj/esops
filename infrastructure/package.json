@@ -1,7 +1,7 @@
 {
   "name": "esops",
   "description": "Decouple your infrastructure with composable auto-ignored template generation.",
-  "version": "3.4.0",
+  "version": "3.5.0",
   "author": "Sartaj<sartaj@sartaj.me>",
   "license": "MIT",
   "homepage": "https://github.com/sartaj/esops#readme",
