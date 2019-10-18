@@ -1,6 +1,6 @@
 <div align="center">
 
-![esops](./infrastructure/doc-assets/logo.png)
+![esops](./doc-assets/logo.png)
 
 </div>
 
@@ -20,14 +20,14 @@
   </a>
 </p>
 
-- **Decouple Codependent Config Files**: manage codependent config files like `.eslintrc`, `tsconfig.json`, `.prettierrc`, `.editorconfig`, and `.vscode` files in a separate directory or module.
-- **Decouple devDependencies**: Create your final `package.json` from composable pieces of `package.json`. This allows you manage devDependencies as a separate repository.
-- **Compose Your Dev Environment**: Compose elements of your dev environment and infrastructure from smaller pieces. `esops` uses user-defined explicit merge rules and enforces the use of git tags for immutable version management for infrastructure components.
-- **Provide Reference Implementations and Design Docs**: Create reference implementations that can be installed without polluting your `git` or `npm` publishes.
+-   **Decouple Codependent Config Files**: manage codependent config files like `.eslintrc`, `tsconfig.json`, `.prettierrc`, `.editorconfig`, and `.vscode` files in a separate directory or module.
+-   **Decouple devDependencies**: Create your final `package.json` from composable pieces of `package.json`. This allows you manage devDependencies as a separate repository.
+-   **Compose Your Dev Environment**: Compose elements of your dev environment and infrastructure from smaller pieces. `esops` uses user-defined explicit merge rules and enforces the use of git tags for immutable version management for infrastructure components.
+-   **Provide Reference Implementations and Design Docs**: Create reference implementations that can be installed without polluting your `git` or `npm` publishes.
 
 <div align="center">
 
-![ ](./infrastructure/doc-assets/esops-demo.gif)
+![ ](./doc-assets/esops-demo.gif)
 
 </div>
 
@@ -67,8 +67,8 @@ Config esops in `esops.json`
 
 ## Resolution Types
 
-- _Filesystem:_ `['./infrastructure']`
-- _GitHub:_ `['github:user/repo#tag|branch']`
+-   _Filesystem:_ `['./infrastructure']`
+-   _GitHub:_ `['github:user/repo#tag|branch']`
 
 ## Running
 
@@ -88,4 +88,4 @@ New `eslint` settings? Need to support `prettier` now? Someone on the team wants
 
 ## Credits
 
-- Logo: [Gilbert Baker Font](https://www.typewithpride.com/)
+-   Logo: [Gilbert Baker Font](https://www.typewithpride.com/)

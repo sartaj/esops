@@ -1,0 +1,5 @@
+ [
+   "github:sartaj/esops-ts#2019-10-18-8 --subdir ts-node",
+   "github:sartaj/esops-ts#2019-10-18-8 --subdir ts-ramda",
+   "./package.extend.json -o ./package.json --merge"
+ ]

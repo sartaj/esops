@@ -1,8 +1,0 @@
-{
-  "destination": "../",
-  "compose": [
-    "github:sartaj/typescript-node-stack#ts-fp",
-    "./.gitignore --merge",
-    "./package.json --merge"
-  ]
-}

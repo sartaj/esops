@@ -57,9 +57,5 @@
     "rimraf": "2.6.2",
     "riteway-fs-snapshots": "1.0.1",
     "shorthash": "0.0.2"
-  },
-  "files": [
-    "lib/**/!(*.spec).d.ts",
-    "lib/**/!(*.spec).js"
-  ]
+  }
 }

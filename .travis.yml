@@ -1,6 +1,6 @@
 language: node_js
 before_install:
   - npm i -g esops
-  - esops ./infrastructure --overwrite
+  - esops --overwrite
 node_js:
   - 'node'
